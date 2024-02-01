@@ -4,9 +4,9 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon } from "react-icons/fa";
 
 const Header = () => {
-   const path = useLocation().pathname
+    const path = useLocation().pathname
   return (
-   <Navbar className="border-b-2 sticky top-0 bg-slate-200 shadow-md">
+    <Navbar className="border-b-2 sticky top-0 bg-slate-200 shadow-md">
       <Link to='/' className="self-center">
          <img src="cleansy.png" alt="logo" width='100' />
       </Link>
@@ -38,7 +38,7 @@ const Header = () => {
                <Link to='/projects'>Projects</Link>
             </Navbar.Link>
          </Navbar.Collapse>
-   </Navbar>
+    </Navbar>
   )
 }
 
