@@ -1,0 +1,17 @@
+{
+  "name": "cleansy",
+  "version": "1.0.0",
+  "description": "<h1>\r   <a href=\"#\"><p>Cleansy</p></a>\r </h1>",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon backend/server.js",
+    "start": "node backend/server.js"
+  },
+  "author": "syntaxsquad",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemon": "^3.0.3"
+  }
+}
