@@ -51,7 +51,7 @@ const SignUp = () => {
       <div className="flex p-3 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-10 md:gap-20">
         {/* left side */}
         <div className="flex-1">
-          <img src="signup.webp" alt="signUp" className="mx-auto" />
+          <img src="Signup.png" alt="signUp" className="mx-auto" />
           <p className="text-sm font-semibold capitalize mb-5">Unlock a hassle-free living experience with Cleansy! Simplify apartment management and embrace the ease of organized living. Join us today!</p>
           <Link to='/' className="self-center">
             <img src="cleansy.png" alt="logo" width='150' />
