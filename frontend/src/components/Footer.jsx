@@ -6,7 +6,7 @@ const FooterComponent = () => {
   return (
     <Footer container className="border border-t-8 border-orange-500 shadow-md">
       <div className="w-full max-w-7xl mx-auto">
-         <div className="grid w-full justify-between sm:flex">
+         <div className="grid w-full justify-between sm:flex md:grid-cols-1">
             <div className="mt-5">
                <Link to='/' className="self-center">
                   <img src="cleansy.png" alt="logo" width='150' />
