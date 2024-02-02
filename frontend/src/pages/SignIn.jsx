@@ -5,6 +5,7 @@ import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import { toast } from 'react-toastify';
 import { signInStart, signInSuccess, signInFailure } from "../../redux/user/userSlice.js";
 import { useDispatch, useSelector } from "react-redux";
+import OAuth from "../components/OAuth.jsx";
 
 const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -60,7 +61,7 @@ const SignIn = () => {
       <div className="flex p-3 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-10 md:gap-20">
         {/* left side */}
         <div className="flex-1">
-          <img src="Login.png" alt="signIn" className="mx-auto" />
+          <img src="Login.png" alt="signIn" width={550} className="mx-auto" />
           <p className="text-sm font-semibold capitalize mb-5">Step into the heart of your home. Sign in to Cleansy and let the simplicity begin. Your apartment, your rules, effortlessly managed. Ready to dive in?</p>
           <Link to='/' className="self-center">
             <img src="cleansy.png" alt="logo" width='150' />
@@ -81,6 +82,10 @@ const SignIn = () => {
             <Button type="submit" className="bg-gradient-to-r from-sky-600 to-blue-900 uppercase" disabled={loading}>
               {loading ? <><Spinner size='sm'/><span className="pl-3">Loading...</span></> : 'Sign In'}
             </Button>
+            <div className='flex items-center before:border-t before:flex-1 before:border-gray-300  after:border-t after:flex-1 after:border-gray-300'>
+              <p className='text-center font-semibold mx-4'>OR</p>
+            </div>
+            <OAuth />
           </form>
           <div className="flex gap-2 text-sm mt-5">
             <span>Don't have an account?</span>

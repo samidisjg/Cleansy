@@ -3,6 +3,7 @@ import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
 import { toast } from 'react-toastify';
+import OAuth from "../components/OAuth";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -51,7 +52,7 @@ const SignUp = () => {
       <div className="flex p-3 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-10 md:gap-20">
         {/* left side */}
         <div className="flex-1">
-          <img src="Signup.png" alt="signUp" className="mx-auto" />
+          <img src="Signup.png" alt="signUp" width={550}  className="mx-auto" />
           <p className="text-sm font-semibold capitalize mb-5">Unlock a hassle-free living experience with Cleansy! Simplify apartment management and embrace the ease of organized living. Join us today!</p>
           <Link to='/' className="self-center">
             <img src="cleansy.png" alt="logo" width='150' />
@@ -76,6 +77,10 @@ const SignUp = () => {
             <Button type="submit" className="bg-gradient-to-r from-sky-600 to-blue-900 uppercase" disabled={loading}>
               {loading ? <><Spinner size='sm'/><span className="pl-3">Loading...</span></> : 'Sign Up'}
             </Button>
+            <div className='flex items-center before:border-t before:flex-1 before:border-gray-300  after:border-t after:flex-1 after:border-gray-300'>
+              <p className='text-center font-semibold mx-4'>OR</p>
+            </div>
+            <OAuth />
           </form>
           <div className="flex gap-2 text-sm mt-5">
             <span>Have an account?</span>
