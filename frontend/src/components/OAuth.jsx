@@ -40,8 +40,8 @@ const OAuth = () => {
    }
 
   return (
-    <Button type="button" className="bg-gradient-to-r from-orange-500 to-red-800 uppercase" onClick={handleGoogleClick}>
-      <FcGoogle className='text-2xl bg-white rounded-full mr-2'/> Continue With Google
+    <Button type="button" gradientDuoTone="pinkToOrange" onClick={handleGoogleClick} className="uppercase">
+      <FcGoogle className='text-2xl bg-white rounded-full mr-2 u'/> Continue With Google
    </Button>
   )
 }

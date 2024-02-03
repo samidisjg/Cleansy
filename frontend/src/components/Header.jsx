@@ -4,12 +4,29 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon, FaSun } from "react-icons/fa";
 import { useSelector, useDispatch } from 'react-redux'
 import { toggleTheme } from "../../redux/theme/themeSlice";
+import { signOutSuccess } from "../../redux/user/userSlice";
 
 const Header = () => {
     const path = useLocation().pathname
     const dispatch = useDispatch()
     const {currentUser} = useSelector(state => state.user)
     const {theme} = useSelector(state => state.theme)
+
+   const handleSignout = async () => {
+      try {
+        const res = await fetch('/api/user/signout', {
+          method: 'POST'
+        })
+        const data = await res.json()
+        if(!res.ok) {
+          console.log(data.message);
+        } else {
+          dispatch(signOutSuccess())
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
   return (
     <Navbar className="border-b-2 sticky top-0 bg-slate-200 shadow-md z-50">
       <Link to='/' className="self-center">
@@ -38,11 +55,11 @@ const Header = () => {
                      <Dropdown.Item>Profile</Dropdown.Item>
                   </Link>
                   <Dropdown.Divider />
-                  <Dropdown.Item>Sign Out</Dropdown.Item>
+                  <Dropdown.Item onClick={handleSignout}>Sign Out</Dropdown.Item>
                </Dropdown>
             ) : (
                <Link to='/sign-in'>
-                  <Button className="bg-gradient-to-r from-sky-600 to-blue-900" outline>
+                  <Button gradientDuoTone='purpleToBlue' outline>
                      Sign In
                   </Button>
                </Link>
