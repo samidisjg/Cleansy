@@ -74,7 +74,7 @@ const SignUp = () => {
               <TextInput type={showPassword ? "text" : "password"} placeholder="*************" id="password" onChange={handleChange} />
               {showPassword ? (<BsFillEyeSlashFill className='absolute right-3 top-9 text-md cursor-pointer' onClick={() => setShowPassword((prevState) => !prevState)}/>) : (<BsFillEyeFill className='absolute right-3 top-9 text-md cursor-pointer' onClick={() => setShowPassword((prevState) => !prevState)}/>)}
             </div>
-            <Button type="submit" className="bg-gradient-to-r from-sky-600 to-blue-900 uppercase" disabled={loading}>
+            <Button type="submit" gradientDuoTone='purpleToBlue' className="uppercase" disabled={loading}>
               {loading ? <><Spinner size='sm'/><span className="pl-3">Loading...</span></> : 'Sign Up'}
             </Button>
             <div className='flex items-center before:border-t before:flex-1 before:border-gray-300  after:border-t after:flex-1 after:border-gray-300'>

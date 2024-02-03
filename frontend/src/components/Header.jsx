@@ -42,7 +42,7 @@ const Header = () => {
                </Dropdown>
             ) : (
                <Link to='/sign-in'>
-                  <Button className="bg-gradient-to-r from-sky-600 to-blue-900" outline>
+                  <Button gradientDuoTone='purpleToBlue' outline>
                      Sign In
                   </Button>
                </Link>
