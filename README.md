@@ -2,7 +2,7 @@
   <a href="#"><p>Cleansy</p></a>
 </h1>
 
-<p><a href="#"><img src="https://skillicons.dev/icons?i=mongo,express,react,nodejs,vite,redux,tailwind,flowbite,firebase,vscode,github" width=350></a></p>
+<p><a href="#"><img src="https://skillicons.dev/icons?i=mongo,express,react,nodejs,vite,redux,tailwind,firebase,vscode,github" width=350></a></p>
 
 ## Table of Contents
 - [Installation](#installation)
