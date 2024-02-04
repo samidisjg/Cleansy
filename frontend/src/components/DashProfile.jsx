@@ -1,4 +1,4 @@
-import { Alert, Button, Modal, TextInput } from 'flowbite-react'
+import { Alert, Button, Modal, Spinner, TextInput } from 'flowbite-react'
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage'
 import { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux'
 import { HiOutlineExclamationCircle } from 'react-icons/hi'
 
 const DashProfile = () => {
-  const {currentUser, error} = useSelector(state => state.user)
+  const {currentUser, error, loading} = useSelector(state => state.user)
   const [imageFile, setImageFile] = useState(null)
   const [imageFileUrl, setImageFileUrl] = useState(null)
   const [imageFileUploadedProgress, setImageFileUploadedProgress] = useState(null)
@@ -171,7 +171,9 @@ const DashProfile = () => {
         <TextInput type='text' id='username' placeholder='Username' defaultValue={currentUser.username} onChange={handleChange}/>
         <TextInput type='email' id='email' placeholder='Email' defaultValue={currentUser.email} onChange={handleChange}/>
         <TextInput type='password' id='password' placeholder='password' onChange={handleChange}/>
-        <Button type='submit' gradientDuoTone='purpleToBlue' className="uppercase">Update</Button>
+        <Button type='submit' gradientDuoTone='purpleToBlue' className="uppercase" disabled={loading || imageFileUploading}>
+          {loading ? <><Spinner size='sm'/><span className="pl-3">Loading...</span></> : 'Update'}
+        </Button>
       </form>
       <div className="text-red-500 flex justify-between mt-5">
         <span className='cursor-pointer' onClick={() => setShowModal(true)}>Delete Account</span>
