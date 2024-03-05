@@ -57,7 +57,7 @@ const SignIn = () => {
   
   return (
     <div className="min-h-screen mt-20">
-      <h1 className='text-3xl text-center mt-6 font-bold underline text-blue-950 dark:text-slate-300'>Sign In</h1>
+      <h1 className='text-3xl text-center mt-6 font-extrabold underline text-blue-950 dark:text-slate-300'>Login to your account</h1>
       <div className="flex p-3 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-10 md:gap-20">
         {/* left side */}
         <div className="flex-1">
