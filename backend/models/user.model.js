@@ -23,6 +23,43 @@ const UserSchema = new mongoose.Schema({
          type: Boolean,
          default: false,
       },
+      isUserAdmin: {
+         type: Boolean,
+         default: false,
+      },
+      isPropertyAdmin: {
+         type: Boolean,
+         default: false,
+      },
+      isVisitorAdmin: {
+         type: Boolean,
+         default: false,
+      },
+      isAnnouncementAdmin: {
+         type: Boolean,
+         default: false,
+      },
+      isBookingAdmin: {
+         type: Boolean,
+         default: false,
+      },
+      isStaffAdmin: {
+         type: Boolean,
+         default: false,
+      },
+      isBillingAdmin: {
+         type: Boolean,
+         default: false,
+      },
+      isFacilityAdmin: {
+         type: Boolean,
+         default: false,
+      },
+      isFacilityServiceAdmin: {
+         type: Boolean,
+         default: false,
+      },
+      
 }, {timestamps: true});
 
 const User = mongoose.model("User", UserSchema);

@@ -46,7 +46,7 @@ export const signIn = async (req, res, next) => {
          return next(errorHandler(400, "Invalid password"));
       }
 
-      const token = jwt.sign({ id: validUser._id, isAdmin: validUser.isAdmin }, process.env.JWT_SECRET);
+      const token = jwt.sign({ id: validUser._id, isAdmin: validUser.isAdmin, isUserAdmin: validUser.isUserAdmin, isPropertyAdmin: validUser.isPropertyAdmin, isVisitorAdmin: validUser.isVisitorAdmin, isAnnouncementAdmin: validUser.isAnnouncementAdmin, isBookingAdmin: validUser.isBookingAdmin, isStaffAdmin: validUser.isStaffAdmin, isBillingAdmin: validUser.isBillingAdmin, isFacilityAdmin: validUser.isFacilityAdmin, isFacilityServiceAdmin: validUser.isFacilityServiceAdmin }, process.env.JWT_SECRET);
 
       const { password: pass, ...rest} = validUser._doc;
       res.status(200).cookie('access_token', token, {
@@ -63,7 +63,7 @@ export const google = async (req, res, next) => {
    try {
       const user = await User.findOne({ email });
       if(user) {
-         const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin }, process.env.JWT_SECRET);
+         const token = jwt.sign({ id: user._id, isAdmin: user.isAdmin, isUserAdmin: user.isUserAdmin, isPropertyAdmin: user.isPropertyAdmin, isVisitorAdmin: user.isVisitorAdmin, isAnnouncementAdmin: user.isAnnouncementAdmin, isBookingAdmin: user.isBookingAdmin, isStaffAdmin: user.isStaffAdmin, isBillingAdmin: user.isBillingAdmin, isFacilityAdmin: user.isFacilityAdmin, isFacilityServiceAdmin: user.isFacilityServiceAdmin }, process.env.JWT_SECRET);
          const { password, ...rest } = user._doc;
          res.status(200).cookie('access_token', token, {
             httpOnly: true,
@@ -78,7 +78,7 @@ export const google = async (req, res, next) => {
             profilePicture: googlePhotoURL,
          });
          await newUser.save();
-         const token = jwt.sign({ id: newUser._id, isAdmin: newUser.isAdmin }, process.env.JWT_SECRET);
+         const token = jwt.sign({ id: newUser._id, isAdmin: newUser.isAdmin, isUserAdmin: newUser.isUserAdmin, isPropertyAdmin: newUser.isPropertyAdmin, isVisitorAdmin: newUser.isVisitorAdmin, isAnnouncementAdmin: newUser.isAnnouncementAdmin, isBookingAdmin: newUser.isBookingAdmin, isStaffAdmin: newUser.isStaffAdmin, isBillingAdmin: newUser.isBillingAdmin, isFacilityAdmin: newUser.isFacilityAdmin, isFacilityServiceAdmin: newUser.isFacilityServiceAdmin }, process.env.JWT_SECRET);
          const { password, ...rest } = newUser._doc;
          res.status(200).cookie('access_token', token, {
             httpOnly: true,
