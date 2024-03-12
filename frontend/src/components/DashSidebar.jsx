@@ -46,11 +46,22 @@ const DashSidebar = () => {
                </Sidebar.Item>
             </Link>
             {
-              currentUser.isAdmin && (
+              currentUser.isUserAdmin && (
                 <>
                   <Link to='/dashboard?tab=users'>
                     <Sidebar.Item active={tab === 'users'} icon={HiOutlineUserGroup} as='div'>
                       Users
+                    </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
+            {
+              currentUser.isPropertyAdmin && (
+                <>
+                  <Link to='/dashboard?tab=properties'>
+                    <Sidebar.Item active={tab === 'properties'} icon={HiOutlineUserGroup} as='div'>
+                      Properties
                     </Sidebar.Item>
                   </Link>
                 </>
