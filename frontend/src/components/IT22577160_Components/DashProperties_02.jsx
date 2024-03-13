@@ -7,6 +7,7 @@ const DashProperties_02 = () => {
       {currentUser.isPropertyAdmin && (
          <div>
             <h1>Properties</h1>
+            <p>Manage your properties here</p>
          </div>
          
       )}
