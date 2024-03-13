@@ -67,6 +67,17 @@ const DashSidebar = () => {
                 </>
               )
             }
+            {
+              currentUser.isBillingAdmin && (
+                <>
+                  <Link to='/dashboard?tab=payments'>
+                    <Sidebar.Item active={tab === 'payments'} icon={HiOutlineUserGroup} as='div'>
+                      Payments
+                    </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
             <Sidebar.Item icon={HiArrowSmRight} className='cursor-pointer' onClick={handleSignout}>
                Sign Out
             </Sidebar.Item>

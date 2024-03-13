@@ -4,6 +4,7 @@ import DashSidebar from "../components/DashSidebar";
 import DashProfile from "../components/DashProfile";
 import DashUsers from "../components/DashUsers";
 import DashProperties_02 from "../components/IT22577160_Components/DashProperties_02";
+import DashPayments_03 from './../components/IT22602978_Components/DashPayments_03';
 
 
 const Dashboard = () => {
@@ -28,6 +29,8 @@ const Dashboard = () => {
       {tab === 'properties' && <DashProperties_02 />}
       {/* users */}
       {tab === 'users' && <DashUsers/>}
+      {/* payments */}
+      {tab === 'payments' && <DashPayments_03/>}
     </div>
   )
 }
