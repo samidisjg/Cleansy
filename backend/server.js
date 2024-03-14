@@ -4,6 +4,7 @@ import dbConnection from './dbConfig/dbConnection.js';
 import userRoutes from './routes/user.route.js';
 import authRoutes from './routes/auth.route.js';
 import apartmentListingRoutes from './routes/IT22577160_Routes/apartmentListing.route_02.js';
+import RequestLeaveRoutes from './routes/IT22603418_Routes/RequestLeave.route_04.js';
 import cookieParser from 'cookie-parser';
 
 dotenv.config();
@@ -22,6 +23,8 @@ app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 // IT22577160 Routes
 app.use('/api/apartmentListing', apartmentListingRoutes);
+// IT603418 Routes
+app.use('/api/RequestLeave', RequestLeaveRoutes);
 
 app.use((err, req, res, next) => {
    const statusCode = err.statusCode || 500;
