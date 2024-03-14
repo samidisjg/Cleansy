@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import AddPaymentProfile from "../../pages/IT22602978_Pages/AddPaymentProfile";
 
 
 const DashPayments_03 = () => {
@@ -8,7 +9,7 @@ const DashPayments_03 = () => {
       {currentUser.isBillingAdmin && (
          <div>
             <h1>Payments</h1>
-            <p>Manage your payments here</p>
+            <p>Manage youruser  payments here</p>
          </div>
          
       )}

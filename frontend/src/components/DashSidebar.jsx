@@ -1,6 +1,6 @@
 import { Sidebar } from "flowbite-react"
 import { useEffect, useState } from "react";
-import { HiArrowSmRight, HiOutlineUserGroup, HiUser } from "react-icons/hi";
+import { HiArrowSmRight, HiDocument, HiOutlineUserCircle, HiOutlineUserGroup, HiShoppingBag, HiUser } from "react-icons/hi";
 import { Link, useLocation } from "react-router-dom";
 import { signOutSuccess } from "../../redux/user/userSlice";
 import { useDispatch } from 'react-redux'
@@ -44,7 +44,25 @@ const DashSidebar = () => {
                <Sidebar.Item active={tab === 'profile'} icon={HiUser} label={currentUser.isAdmin ? 'Admin' : 'User'} labelColor='dark' as='div'>
                   Profile
                </Sidebar.Item>
+
             </Link>
+            <>
+            <Link to ='/dashboard?tab=userpayments'>
+                <Sidebar.Item active={tab === 'userpayments'} icon={HiShoppingBag} as='div'>
+                  User Payments
+                </Sidebar.Item>
+            </Link>
+            {tab === 'userpayments' && (
+                  <div className="dropdown">
+                    <Link to ='/dashboard?tab=addpayments'>
+                      <Sidebar.Item active={tab === 'addpayments'}  as='div'>
+                        Add Payment Profile
+                      </Sidebar.Item>
+                    </Link>
+                  </div>
+                )}
+                </>
+
             {
               currentUser.isUserAdmin && (
                 <>
@@ -53,6 +71,7 @@ const DashSidebar = () => {
                       Users
                     </Sidebar.Item>
                   </Link>
+
                 </>
               )
             }
@@ -68,16 +87,17 @@ const DashSidebar = () => {
               )
             }
             {
-              currentUser.isBillingAdmin && (
-                <>
-                  <Link to='/dashboard?tab=payments'>
-                    <Sidebar.Item active={tab === 'payments'} icon={HiOutlineUserGroup} as='div'>
-                      Payments
-                    </Sidebar.Item>
-                  </Link>
-                </>
-              )
-            }
+            currentUser.isBillingAdmin && (
+              <>
+                <Link to='/dashboard?tab=payments'>
+                  <Sidebar.Item active={tab === 'payments'} icon={HiDocument} as='div'>
+                    Payments
+                  </Sidebar.Item>
+                </Link>
+              </>
+            )
+          }
+
             <Sidebar.Item icon={HiArrowSmRight} className='cursor-pointer' onClick={handleSignout}>
                Sign Out
             </Sidebar.Item>
