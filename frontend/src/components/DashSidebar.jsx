@@ -68,6 +68,17 @@ const DashSidebar = () => {
               )
             }
             {
+              currentUser.isFacilityServiceAdmin && (
+                <>
+                  <Link to='/dashboard?tab=services'>
+                    <Sidebar.Item active={tab === 'services'} icon={HiOutlineUserGroup} as='div'>
+                      Services
+                    </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
+            {
               currentUser.isStaffAdmin && (
                 <>
                   <Link to='/dashboard?tab=staffs'>

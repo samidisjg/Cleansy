@@ -9,6 +9,7 @@ import { updateStart, updateSuccess, updateFailure, deleteUserStart, deleteUserS
 import { useDispatch } from 'react-redux'
 import { HiOutlineExclamationCircle } from 'react-icons/hi'
 import { FcHome } from 'react-icons/fc'
+import {Link} from 'react-router-dom'
 
 const DashProfile = () => {
   const {currentUser, error, loading} = useSelector(state => state.user)
@@ -178,9 +179,13 @@ const DashProfile = () => {
       </form>
       {
         !currentUser.isAdmin && (
-          <Button type='submit' gradientDuoTone="pinkToOrange" className='flex flex-col gap-4 w-full uppercase my-4'>
-            <FcHome className='mr-2 text-3xl bg-red-300 rounded-full p-1 border-2' />Sell or Rent Your Apartments
-          </Button>
+          <>
+            <Link to={'/create-apartmentListing'}>
+              <Button type='submit' gradientDuoTone="pinkToOrange" className='flex flex-col gap-4 w-full uppercase my-4'>
+                <FcHome className='mr-2 text-3xl bg-red-300 rounded-full p-1 border-2' />Sell or Rent Your Apartments
+              </Button>
+            </Link>
+          </>
         )
       }
       <div className="text-red-500 flex justify-between mt-5">

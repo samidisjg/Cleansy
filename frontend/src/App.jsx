@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Footer from './components/Footer'
 import Dashboard from './pages/Dashboard'
 import PrivateRoute from './components/PrivateRoute'
+import CreateApartmentListing from './pages/IT22577160_Pages/CreateApartmentListing'
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
               <Route path='/sign-up' element={<SignUp/>}/>
               <Route element={<PrivateRoute/>}>
                 <Route path='/dashboard' element={<Dashboard/>}/>
+                <Route path='/create-apartmentListing' element={<CreateApartmentListing/>}/>
               </Route>
               <Route path='/projects' element={<Projects/>}/>
             </Routes>
