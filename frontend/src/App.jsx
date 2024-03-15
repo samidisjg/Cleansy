@@ -11,6 +11,7 @@ import Footer from './components/Footer'
 import Dashboard from './pages/Dashboard'
 import PrivateRoute from './components/PrivateRoute'
 import CreateApartmentListing from './pages/IT22577160_Pages/CreateApartmentListing'
+import UpdateApartmentListing_02 from './pages/IT22577160_Pages/UpdateApartmentListing_02'
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               <Route element={<PrivateRoute/>}>
                 <Route path='/dashboard' element={<Dashboard/>}/>
                 <Route path='/create-apartmentListing' element={<CreateApartmentListing/>}/>
+                <Route path='/update-apartmentListing/:listingId' element={<UpdateApartmentListing_02/>}/>
               </Route>
               <Route path='/projects' element={<Projects/>}/>
             </Routes>
