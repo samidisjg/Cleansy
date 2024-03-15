@@ -7,6 +7,7 @@ import apartmentListingRoutes from "./routes/IT22577160_Routes/apartmentListing.
 import cookieParser from "cookie-parser";
 import serviceListingRoutes from "./routes/IT22350114_Routes/serviceListingRoute.js";
 
+
 dotenv.config();
 
 const app = express();
@@ -27,6 +28,8 @@ app.use("/api/apartmentListing", apartmentListingRoutes);
 
 // IT22350114 Routes
 app.use("/api/serviceListing", serviceListingRoutes);
+
+
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
