@@ -4,6 +4,7 @@ import DashSidebar from "../components/DashSidebar";
 import DashProfile from "../components/DashProfile";
 import DashUsers from "../components/DashUsers";
 import DashProperties_02 from "../components/IT22577160_Components/DashProperties_02";
+import DashServices from "../components/IT22350114_Components/DashServices";
 import DashPayments_03 from './../components/IT22602978_Components/DashPayments_03';
 import DashUserPayments_03 from './../components/IT22602978_Components/DashUserPayments_03';
 import AddPaymentProfile from './IT22602978_Pages/AddPaymentProfile';
@@ -31,6 +32,8 @@ const Dashboard = () => {
       {tab === 'properties' && <DashProperties_02 />}
       {/* users */}
       {tab === 'users' && <DashUsers/>}
+      {/* services */}
+      {tab === 'services' && <DashServices />}
       {/* payments */}
       {tab === 'payments' && <DashPayments_03/>}
       {/* user payments */}
