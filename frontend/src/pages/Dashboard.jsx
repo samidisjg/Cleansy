@@ -5,7 +5,7 @@ import DashProfile from "../components/DashProfile";
 import DashUsers from "../components/DashUsers";
 import DashProperties_02 from "../components/IT22577160_Components/DashProperties_02";
 import DashServices from "../components/IT22350114_Components/DashServices";
-import DashMaintenance from "../components/IT22607232_Components/DashMaintenance";
+
 
 const Dashboard = () => {
   const location = useLocation();
@@ -32,8 +32,7 @@ const Dashboard = () => {
       {/* services */}
       {tab === "services" && <DashServices />}
 
-      {/* maintenance */}
-      {tab === "maintenance" && <DashMaintenance />}
+  
     </div>
   );
 };
