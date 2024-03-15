@@ -11,6 +11,8 @@ import Footer from './components/Footer'
 import Dashboard from './pages/Dashboard'
 import PrivateRoute from './components/PrivateRoute'
 import CreateApartmentListing from './pages/IT22577160_Pages/CreateApartmentListing'
+import DashMaintenance from './components/IT22607232_Components/DashMaintenance'
+import TaskAssign from './pages/IT22607232_Pages/s1_TaskAssignCreation'
 
 
 
@@ -29,6 +31,8 @@ function App() {
               <Route element={<PrivateRoute/>}>
                 <Route path='/dashboard' element={<Dashboard/>}/>
                 <Route path='/create-apartmentListing' element={<CreateApartmentListing/>}/>
+                <Route exact path="/" component={DashMaintenance} />
+              <Route path="/s1_TaskAssignCreation" component={TaskAssign} />
               </Route>
               <Route path='/projects' element={<Projects/>}/>
               

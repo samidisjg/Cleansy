@@ -8,6 +8,8 @@ import DashServices from "../components/IT22350114_Components/DashServices";
 import DashPayments_03 from './../components/IT22602978_Components/DashPayments_03';
 import DashUserPayments_03 from './../components/IT22602978_Components/DashUserPayments_03';
 import AddPaymentProfile from './IT22602978_Pages/AddPaymentProfile';
+import DashMaintenance from "../components/IT22607232_Components/DashMaintenance"
+			  
 
 
 const Dashboard = () => {
@@ -40,6 +42,8 @@ const Dashboard = () => {
       {tab === 'userpayments' && <DashUserPayments_03/>}
       {/* add payments */}
       {tab === 'addpayments' && <AddPaymentProfile/>}
+      {/* maintenance */}
+      {tab === "maintenance" && <DashMaintenance />}
     </div>
   )
 }
