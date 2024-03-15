@@ -9,8 +9,6 @@ import TaskAssignRoute from "./routes/IT22607232_Routes/s1_TaskAssignRoute.js";
 import cookieParser from "cookie-parser";
 import serviceListingRoutes from "./routes/IT22350114_Routes/serviceListingRoute.js";
 
-
-
 dotenv.config();
 
 const app = express();
@@ -39,6 +37,8 @@ app.use("/api/taskAssign", TaskAssignRoute);
 
 
 
+
+
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   const message = err.message || "Internal Server Error";
@@ -48,3 +48,5 @@ app.use((err, req, res, next) => {
     message,
   });
 });
+
+

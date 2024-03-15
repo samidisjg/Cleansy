@@ -15,8 +15,6 @@ import DashMaintenance from './components/IT22607232_Components/DashMaintenance'
 import TaskAssign from './pages/IT22607232_Pages/s1_TaskAssignCreation'
 
 
-
-
 function App() {
   return (
     <>
@@ -31,8 +29,10 @@ function App() {
               <Route element={<PrivateRoute/>}>
                 <Route path='/dashboard' element={<Dashboard/>}/>
                 <Route path='/create-apartmentListing' element={<CreateApartmentListing/>}/>
-                <Route exact path="/" component={DashMaintenance} />
-              <Route path="/s1_TaskAssignCreation" component={TaskAssign} />
+                <Route path="/" element={<DashMaintenance/>} />
+                <Route path="/task-assign" element={<TaskAssign/>} />
+                
+           
               </Route>
               <Route path='/projects' element={<Projects/>}/>
               
