@@ -5,6 +5,7 @@ import DashProfile from "../components/DashProfile";
 import DashUsers from "../components/DashUsers";
 import DashProperties_02 from "../components/IT22577160_Components/DashProperties_02";
 import DashServices from "../components/IT22350114_Components/DashServices";
+import DashApartmentList_02 from "../components/IT22577160_Components/DashApartmentList_02";
 
 
 const Dashboard = () => {
@@ -31,6 +32,8 @@ const Dashboard = () => {
       {tab === 'users' && <DashUsers/>}
       {/* services */}
       {tab === 'services' && <DashServices />}
+      {/* Apartment List */}
+      {tab === 'apartmentList' && <DashApartmentList_02 />}
     </div>
   )
 }
