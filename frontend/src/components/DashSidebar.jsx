@@ -78,6 +78,19 @@ const DashSidebar = () => {
                 </>
               )
             }
+             {
+              currentUser.isFacilityAdmin && (
+                <>
+                  <Link to='/dashboard?tab=maintenance'>
+                    <Sidebar.Item active={tab === 'maintenance'} icon={HiOutlineUserGroup} as='div'>
+                      Maintenance Tasks
+                    </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
+
+            
             <Sidebar.Item icon={HiArrowSmRight} className='cursor-pointer' onClick={handleSignout}>
                Sign Out
             </Sidebar.Item>

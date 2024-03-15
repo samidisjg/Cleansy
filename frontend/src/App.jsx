@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import Home from './pages/Home'
 import About from './pages/About'
 import SignIn from './pages/SignIn'
@@ -11,6 +11,11 @@ import Footer from './components/Footer'
 import Dashboard from './pages/Dashboard'
 import PrivateRoute from './components/PrivateRoute'
 import CreateApartmentListing from './pages/IT22577160_Pages/CreateApartmentListing'
+
+
+import DashMaintenance from './components/IT22607232_Components/DashMaintenance'
+import TaskAssign from './pages/IT22607232_Pages/s1_TaskAssignCreation'
+
 
 function App() {
   return (
@@ -28,7 +33,14 @@ function App() {
                 <Route path='/create-apartmentListing' element={<CreateApartmentListing/>}/>
               </Route>
               <Route path='/projects' element={<Projects/>}/>
+              <Route exact path="/" component={DashMaintenance} />
+              <Route path="/s1_TaskAssignCreation" component={TaskAssign} />
             </Routes>
+
+          
+                
+      
+     
           </div>
         <Footer />
       </Router>
