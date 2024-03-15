@@ -126,7 +126,7 @@ const CreateApartmentListing = () => {
          if(data.success === false) {
             setError(data.message);
          }
-         navigate(`/apartmentListing/${data._id}`)
+         navigate(`/dashboard?tab=apartmentList`)
       } catch (error) {
          setError(error.message);
          setLoading(false);
@@ -201,7 +201,7 @@ const CreateApartmentListing = () => {
                   <TextInput type="number" onChange={handleChange} value={regularPrice} id="regularPrice" min='50' max='10000000' className="w-[50%]" required />
                   <div>
                      <p className="font-semibold">Regular Price</p>
-                     <span className="text-xs">(Rs / month)</span>
+                     <span className="text-xs">($ / month)</span>
                   </div>
                </div>
                {offer && (
@@ -209,7 +209,7 @@ const CreateApartmentListing = () => {
                      <TextInput type="number" onChange={handleChange} value={discountPrice} id="discountPrice" min='0' max='10000000' className="w-[50%]" required />
                      <div>
                         <p className="font-semibold">Discount Price</p>
-                        <span className="text-xs">(Rs / month)</span>
+                        <span className="text-xs">($ / month)</span>
                      </div>
                   </div>
                )}

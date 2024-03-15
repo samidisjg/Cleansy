@@ -3,12 +3,14 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { MdLocationOn, MdEdit } from "react-icons/md";
 import { FaTrash } from "react-icons/fa";
-
+import {Modal, Button} from 'flowbite-react'
+import { HiOutlineExclamationCircle } from 'react-icons/hi'
 
 const DashApartmentList_02 = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [apartmentListing, setApartmentListing] = useState([]);
   const [showListingError, setShowListingError] = useState(false);
+  const [showModal, setShowModal] = useState(false)
 
   useEffect(() => {
     const fetchApartmentListing = async () => {
@@ -28,7 +30,22 @@ const DashApartmentList_02 = () => {
     fetchApartmentListing()
   }, [currentUser._id]);
 
-  console.log(apartmentListing);
+  const handleApartmentListingDelete = async (listingId) => {
+    try {
+      const res = await fetch(`/api/apartmentListing/delete/${listingId}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      if(data.success === false) {
+        console.log(data.message);
+        return;
+      }
+      setApartmentListing((prev) => prev.filter((listing) => listing._id !== listingId));
+      setShowModal(false);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 
   return (
     <div className='max-full px-3 mt-6 mx-auto'>
@@ -63,11 +80,26 @@ const DashApartmentList_02 = () => {
                             </div>
                           </div>
                         </Link>
-                        <FaTrash className="absolute bottom-2 right-2 text-red-500 hover:text-red-700 transition ease-in-out duration-200 cursor-pointer h-[14px]" />
+                        <FaTrash onClick={() => setShowModal(true)} className="absolute bottom-2 right-2 text-red-500 hover:text-red-700 transition ease-in-out duration-200 cursor-pointer h-[14px]" />
                         <Link to={`/update-apartmentListing/${listing._id}`}>
                           <MdEdit className="absolute bottom-2 right-7 text-green-500 hover:text-green-700 transition ease-in-out duration-200 h-4" />
                         </Link>
-                      </li>
+                      </li>    
+                        <Modal show={showModal} onClose={() => setShowModal(false)} popup size='md'>
+                          <Modal.Header />
+                          <Modal.Body>
+                            <div className="text-center">
+                              <HiOutlineExclamationCircle className="h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto" />
+                              <h3 className="mb-5 text-lg text-gray-500 dark:text-gray-400">Are you sure you want to delete your account?</h3>
+                              <div className="flex justify-center gap-4">
+                                <Button color="failure" onClick={() => handleApartmentListingDelete(listing._id)}>
+                                    Yes I'm Sure
+                                </Button>
+                                <Button color='gray' onClick={() => setShowModal(false)}>No, Cancel</Button>
+                              </div>
+                            </div>
+                          </Modal.Body>
+                        </Modal>
                   </div>
                 </>
               ))
