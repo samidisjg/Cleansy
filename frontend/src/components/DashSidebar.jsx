@@ -61,7 +61,7 @@ const DashSidebar = () => {
                     </Link>
                   </div>
                 )}
-                </>
+              </>
 
             {
               currentUser.isUserAdmin && (
