@@ -9,6 +9,7 @@ const Projects = () => {
           <form className="flex flex-col gap-4 w-full justify-center">
             <div>
               <Label  value="Username"/>
+              <Button/>
               <TextInput type="text"  placeholder="Username" />
             </div>
             <div>
