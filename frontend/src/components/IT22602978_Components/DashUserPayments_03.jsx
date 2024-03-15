@@ -9,7 +9,7 @@ const DashPayments_03 = () => {
     <div>
       {currentUser.isBillingAdmin && (
          <div>
-            <h1> User Payments</h1>
+           <h1>payments!!!!!</h1>
             
          </div>
          
