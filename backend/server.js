@@ -25,8 +25,8 @@ app.use("/api/auth", authRoutes);
 
 // IT22577160 Routes
 app.use("/api/apartmentListing", apartmentListingRoutes);
-// IT603418 Routes
-app.use('/api/RequestLeave', RequestLeaveRoutes);
+// IT22603418 Routes
+app.use("/api/RequestLeave", RequestLeaveRoutes);
 
 // IT22350114 Routes
 //app.use("/api/serviceListing", serviceListingRoutes);

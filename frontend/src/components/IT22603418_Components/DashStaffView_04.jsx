@@ -1,13 +1,12 @@
 import { useSelector } from "react-redux";
 
-const newreq = () => {
+const DashStaffView_04 = () => {
    const { currentUser } = useSelector((state) => state.user);
   return (
     <div>
       {currentUser.isStaffAdmin && (
-         <div>
-            <h1>new req</h1>
-            <p>Sample</p>
+         <div >
+            <H1>Insert Success</H1>
          </div>
          
       )}
@@ -15,4 +14,4 @@ const newreq = () => {
   )
 }
 
-export default newreq
+export default DashStaffView_04

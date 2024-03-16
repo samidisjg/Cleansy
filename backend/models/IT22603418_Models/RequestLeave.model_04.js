@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 
 const RequestLeaveSchema = new mongoose.Schema({
-    staffName: {
+    staffID: {
         type: String,
         required: true,
     },
-    staffID: {
+    staffName: {
         type: String,
         required: true,
     },
@@ -23,23 +23,18 @@ const RequestLeaveSchema = new mongoose.Schema({
     },
     leaveRequestFor: {
         type: String,
-        required: true,
     },
     startDate: {
-        type: Date,
-        required: true,
+        type: String,
     },
     endDate: {
-        type: Date,
-        required: true,
+        type: String,
     },
     startTime: {
-        type: String,
-        required: true,
+        type: String
     },
     endTime: {
-        type: String,
-        required: true,
+        type: String
     },
     comments: {
         type: String,

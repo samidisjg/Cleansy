@@ -11,6 +11,7 @@ import Footer from './components/Footer'
 import Dashboard from './pages/Dashboard'
 import PrivateRoute from './components/PrivateRoute'
 import CreateApartmentListing from './pages/IT22577160_Pages/CreateApartmentListing'
+import RequestLeave_04 from './pages/IT22603418_Pages/RequestLeave_04'
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
                 <Route path='/create-apartmentListing' element={<CreateApartmentListing/>}/>
               </Route>
               <Route path='/projects' element={<Projects/>}/>
+              <Route path='/create' element={<RequestLeave_04/>}/>
             </Routes>
           </div>
         <Footer />
