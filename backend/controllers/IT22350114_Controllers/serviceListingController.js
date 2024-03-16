@@ -1,4 +1,4 @@
-import ServiceListing from "../../models/IT22350114_Models/serviceListingModel";
+import ServiceListing from "../../models/IT22350114_Models/serviceListingModel.js";
 
 export const createServiceListing = async (req, res, next) => {
   try {
