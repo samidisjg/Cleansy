@@ -5,6 +5,7 @@ import userRoutes from './routes/user.route.js';
 import authRoutes from './routes/auth.route.js';
 import apartmentListingRoutes from './routes/IT22577160_Routes/apartmentListing.route_02.js';
 import cookieParser from 'cookie-parser';
+import amenitiesListingRoutes from './routes/IT22003546_Routes/amenitiesListing.route.js';
 
 dotenv.config();
 
@@ -22,6 +23,8 @@ app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 // IT22577160 Routes
 app.use('/api/apartmentListing', apartmentListingRoutes);
+// IT22003546 Routes
+app.use('/api/amenitiesListing', amenitiesListingRoutes);
 
 app.use((err, req, res, next) => {
    const statusCode = err.statusCode || 500;
