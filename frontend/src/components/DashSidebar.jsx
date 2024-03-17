@@ -119,7 +119,17 @@ const DashSidebar = () => {
                 </>
               )
             }
-
+            {
+              currentUser.isAnnouncementAdmin && (
+                <>
+                  <Link to='/dashboard?tab=announsment'>
+                    <Sidebar.Item active={tab === 'announsment'} icon={HiOutlineUserGroup} as='div'>
+                      Announcement Tasks
+                    </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
             
             <Sidebar.Item icon={HiArrowSmRight} className='cursor-pointer' onClick={handleSignout}>
                Sign Out
