@@ -13,6 +13,7 @@ import PrivateRoute from './components/PrivateRoute'
 import CreateApartmentListing from './pages/IT22577160_Pages/CreateApartmentListing'
 import DashMaintenance from './components/IT22607232_Components/DashMaintenance'
 import TaskAssign from './pages/IT22607232_Pages/s1_TaskAssignCreation'
+import RequestLeave_04 from './pages/IT22603418_Pages/RequestLeave_04'
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
               </Route>
               <Route path='/projects' element={<Projects/>}/>
               
+              <Route path='/create_04' element={<RequestLeave_04/>}/>
             </Routes>
 
           
