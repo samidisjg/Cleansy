@@ -11,8 +11,6 @@ import cookieParser from "cookie-parser";
 import serviceListingRoutes from "./routes/IT22350114_Routes/serviceListingRoute.js";
 import amenitiesListingRoutes from './routes/IT22003546_Routes/amenitiesListing.route.js';
 
-
-
 dotenv.config();
 
 const app = express();
@@ -47,6 +45,8 @@ app.use('/api/amenitiesListing', amenitiesListingRoutes);
 
 
 
+
+
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   const message = err.message || "Internal Server Error";
@@ -56,3 +56,5 @@ app.use((err, req, res, next) => {
     message,
   });
 });
+
+
