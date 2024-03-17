@@ -16,11 +16,7 @@ const PaymentProfileCreationSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-    },
-    codeString: {
-        type: String,
-        required: true,
-    },
+    }
 
 
 
