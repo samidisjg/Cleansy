@@ -1,8 +1,8 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { toast } from 'react-toastify';
 import { Button, Label, TextInput, Select, Textarea } from "flowbite-react";
-import { Navigate } from "react-router-dom";
+import RequestDetails_04 from './RequestDetails_04';
 
 
 const RequestLeave_04 = () => {
@@ -18,19 +18,29 @@ const RequestLeave_04 = () => {
         endTime: '',
         comments: '',
     });
-
     const { staffName, email, phoneNo, leaveType, startDate, endDate, startTime, endTime, comments } = formData;
-
     const [errorMessage, setErrorMessage] = useState(null);
     const [loading, setLoading] = useState(false);
     const [ShowRequestError, setShowRequestError] = useState(false);
     const [selectedOption, setSelectedOption] = useState('date'); // Initialize state for selected option
     const [LeaveRequestList, setLeaveRequestList] = useState([]);
-
+    const [showRequests, setShowRequests] = useState(false); // State variable to track visibility of requests
+    //validation for date pick
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.id]: e.target.value });
+        const { id, value } = e.target;
+        setFormData({ ...formData, [id]: value });
+        // If start date is being changed, update the minimum value for the end date
+        if (id === 'startDate') {
+            setFormData({
+                ...formData,
+                [id]: value,
+                endDate: value // Reset end date to start date if end date is prior to start date
+            });
+        }
+        // Check form validity after each change
+        validateForm();
     };
-
+    //date and time option change in request form
     const handleOptionChange = (event) => {
         const selected = event.target.value;
         setSelectedOption(selected);
@@ -50,14 +60,23 @@ const RequestLeave_04 = () => {
                 endTime: ''
             });
         }
-    };
 
+    };
+    //request leave form validation
     const handleSubmit = async (e) => {
         e.preventDefault();
+        // Form Fields validation
         if (!formData.staffName || !formData.email || !formData.phoneNo || !formData.leaveType) {
-            return setErrorMessage('Please fill out all the fields');
+            toast.error('Please fill out all the fields');
+            return;
+        }
+        // Phone number validation
+        if (formData.phoneNo.length !== 10 || isNaN(formData.phoneNo)) {
+            toast.error('Phone number should have 10 digits');
+            return;
         }
         try {
+
             setLoading(true);
             setErrorMessage(null);
             const res = await fetch('/api/RequestLeave/create_04', {
@@ -79,39 +98,69 @@ const RequestLeave_04 = () => {
                 toast.success("Leave Request Created Successfully");
             }
 
-
         } catch (error) {
             setErrorMessage(error.message);
             setLoading(false);
         }
     };
-
+    //function to View Details
     const handleViewRequests = async (e) => {
-        e.preventDefault();
         try {
             setLoading(true);
             setErrorMessage(null);
             const res = await fetch(`/api/RequestLeave/get_04/${currentUser._id}`);
             const data = await res.json();
+            setLoading(false);
             if (data.success === false) {
                 setErrorMessage(data.message);
             }
             if (res.status === 200) {
-                //  Navigate
-                // Successful response
+                setLeaveRequestList(data); // Update LeaveRequestList state with fetched data
                 toast.success("Requests loaded successfully.");
             } else if (res.status === 404) {
                 toast.error("No request leave entries found for this staffID");
             } else {
-                // Other error
                 toast.error("An error occurred while loading requests.");
             }
         } catch (error) {
-            // Network or other error
             setErrorMessage(error.message);
             setLoading(false);
         }
-    }
+    };
+    // Function to toggle visibility of requests
+    const toggleShowRequests = () => {
+        if (!showRequests) {
+            handleViewRequests();
+        }
+        setShowRequests(!showRequests);
+    };
+    
+    // Function to handle deletion of a leave request
+    const handleDeleteRequest = async (requestId) => {
+        // Display confirmation dialog
+        const confirmDelete = window.confirm("Are you sure you want to delete this request?");
+        if (!confirmDelete) {
+            return; // If user cancels deletion, exit function
+        }
+    
+        try {
+            const res = await fetch(`/api/RequestLeave/delete_04/${requestId}`, {
+                method: 'DELETE'
+            });
+            if (res.ok) {
+                // Remove the deleted request from the list
+                setLeaveRequestList(prevList => prevList.filter(request => request._id !== requestId));
+                toast.success("Request deleted successfully.");
+            } else {
+                // Handle error response
+                const errorData = await res.json();
+                toast.error(errorData.message || "Failed to delete request.");
+            }
+        } catch (error) {
+            // Handle network or other errors
+            toast.error("An error occurred while deleting request.");
+        }
+    };
 
     return (
         <div>
@@ -173,11 +222,11 @@ const RequestLeave_04 = () => {
                                 <div className="flex gap-32">
                                     <div>
                                         <Label value="Start Date" />
-                                        <TextInput type="date" id="startDate" required onChange={handleChange} value={startDate} />
+                                        <TextInput type="date" id="startDate" required onChange={handleChange} value={startDate} min={new Date().toISOString().split('T')[0]} />
                                     </div>
                                     <div>
                                         <Label value="End Date" />
-                                        <TextInput type="date" id="endDate" required onChange={handleChange} value={endDate} />
+                                        <TextInput type="date" id="endDate" required onChange={handleChange} value={endDate} min={startDate} />
                                     </div>
                                 </div>
                             </>
@@ -203,21 +252,17 @@ const RequestLeave_04 = () => {
                         <Button type="submit" gradientDuoTone='purpleToBlue' >
                             Request Leave
                         </Button>
-                        <Button type="button" gradientDuoTone='purpleToBlue' onClick={handleViewRequests}>
-                            View Requests
+                        <Button gradientDuoTone='purpleToBlue' onClick={toggleShowRequests}>
+                            {showRequests ? "Hide Requests" : "View Requests"}
                         </Button>
 
                         {ShowRequestError &&
                             <Alert className="mt-7 py-3 bg-gradient-to-r from-red-100 via-red-300 to-red-400 shadow-shadowOne text-center text-red-600 text-base tracking-wide animate-bounce">{errorMessageText}</Alert>}
-                        {/* {LeaveRequestList && LeaveRequestList.length > 0 &&
-                            LeaveRequestList.map((requestLeave) => (
-                                <div key={requestLeave._id} className="">
-                                    <link to={`RequestLeave/get_04/${currentUser._id}`}>
-                                    6.53
-                                    </link>
-                                </div>
-                            ))
-                        } */}
+                        {showRequests && LeaveRequestList && LeaveRequestList.length > 0 && LeaveRequestList.map((request) => (
+                            <div key={request._id}>
+                                <RequestDetails_04 request={request} showDetails={showRequests} onDeleteRequest={handleDeleteRequest}/> {/* Pass down showDetails prop */}
+                            </div>
+                        ))}
                     </form>
                 </div>
             )}

@@ -38,6 +38,21 @@ export const getRequestLeave = async (req, res, next) => {
    }
 }
 
+//Delete Leave Request
+export const deleteRequestLeave = async (req, res, next) => {
+   try {
+     const { _id } = req.params; // Correctly access _id from req.params
+     await RequestLeave.findByIdAndDelete(_id);
+     return res.status(200).json({
+       success: true,
+       message: "Leave Request deleted",
+     });
+   } catch (error) {
+     next(error);
+   }
+};
+
+
 
 
 
