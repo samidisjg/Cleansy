@@ -34,6 +34,10 @@ const AddPaymentProfile = () => {
     if (!formData.ownerUsername || !formData.ownerhousenumber || !formData.password) {
       return setErrorMessage('Please fill out all the fields');
     }
+    if(formData.ownerUsername!==currentUser.username){
+      return setErrorMessage('Username does not match with your username');
+    }
+
     try {
       setLoading(true);
       setErrorMessage(null);
