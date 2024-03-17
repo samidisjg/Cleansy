@@ -9,7 +9,11 @@ const TaskAssignSchema = new mongoose.Schema({
       type: String,
       required: true,
    },
-   TaskName: {
+   Name: {
+      type: String,
+      required: true,
+   },
+   Description: {
       type: String,
       required: true,
    },
@@ -25,12 +29,13 @@ const TaskAssignSchema = new mongoose.Schema({
       type: String,
       required: true,
    },
-   Duration: {
+   DurationDays: {
       type: Number,
       required: true,
    },
   
 }, {timestamps:true});
+
 
 const TaskAssign = mongoose.model('TaskAssign', TaskAssignSchema);
 export default TaskAssign;
