@@ -1,7 +1,7 @@
 import { Button, Checkbox, FileInput, Label, Select, TextInput, Textarea } from "flowbite-react"
 import { Link } from "react-router-dom"
 
-const Projects = () => {
+const TaskAssign = () => {
   return (
     <div className="min-h-screen mt-20">
         <h1 className="text-3xl text-center mt-6 font-extrabold underline text-blue-950 dark:text-slate-300">Project templates</h1>
@@ -9,7 +9,6 @@ const Projects = () => {
           <form className="flex flex-col gap-4 w-full justify-center">
             <div>
               <Label  value="Username"/>
-              <Button/>
               <TextInput type="text"  placeholder="Username" />
             </div>
             <div>
@@ -50,4 +49,4 @@ const Projects = () => {
   )
 }
 
-export default Projects
+export default TaskAssign

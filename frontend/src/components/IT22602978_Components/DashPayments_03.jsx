@@ -1,13 +1,14 @@
 import { useSelector } from "react-redux";
 
-const DashProperties_02 = () => {
+
+const DashPayments_03 = () => {
    const { currentUser } = useSelector((state) => state.user);
   return (
     <div>
-      {currentUser.isPropertyAdmin && (
+      {currentUser.isBillingAdmin && (
          <div>
-            <h1>Properties</h1>
-            <p>Manage your properties here</p>
+            <h1>Payments</h1>
+            <p>Manage your payments here</p>
          </div>
          
       )}
@@ -15,4 +16,4 @@ const DashProperties_02 = () => {
   )
 }
 
-export default DashProperties_02
+export default DashPayments_03
