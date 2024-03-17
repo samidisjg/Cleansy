@@ -14,12 +14,11 @@ router.post("/create", verifyToken, createServiceListing);
 router.get("/read", verifyToken, getAllServiceListings);
 
 // Update a service listing
-router.put("/update/id", verifyToken, updateServiceListing);
+router.put("/update/:id", verifyToken, updateServiceListing);
 
 // Delete a service listing
-router.delete("/delete/id", verifyToken, deleteServiceListing);
+router.delete("/delete/:id", verifyToken, deleteServiceListing);
 
 //update a service
-
 
 export default router;

@@ -49,7 +49,8 @@ export const updateServiceListing = async (req, res, next) => {
 //Delete a service listing
 export const deleteServiceListing = async (req, res, next) => {
   try {
-    await ServiceListing.findByIdAndDelete(req.params);
+    const { id } = req.params;
+    await ServiceListing.findByIdAndDelete(id);
     return res.status(200).json({
       success: true,
       message: "Service listing deleted successfully",
