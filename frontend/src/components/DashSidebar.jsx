@@ -1,5 +1,6 @@
 import { Sidebar } from "flowbite-react"
 import { useEffect, useState } from "react";
+import { MdOutlineHomeWork } from "react-icons/md";
 import { HiArrowSmRight, HiDocument, HiOutlineUserCircle, HiOutlineUserGroup, HiShoppingBag, HiUser } from "react-icons/hi";
 import { Link, useLocation } from "react-router-dom";
 import { signOutSuccess } from "../../redux/user/userSlice";
@@ -64,6 +65,17 @@ const DashSidebar = () => {
               </>
 
             {
+              currentUser.isBookingAdmin && (
+                <>
+                <Link to="/dashboard?tab=amenity">
+                  <Sidebar.Item active={tab == "amenity"} icon={HiOutlineUserGroup} as='div'>
+                    Amenity
+                  </Sidebar.Item>
+                </Link>
+                </>
+              )
+            }
+            {
               currentUser.isUserAdmin && (
                 <>
                   <Link to='/dashboard?tab=users'>
@@ -108,6 +120,7 @@ const DashSidebar = () => {
                 </>
               )
             }
+
              {
               currentUser.isFacilityAdmin && (
                 <>
@@ -121,6 +134,28 @@ const DashSidebar = () => {
             }
 
             
+            {
+              currentUser.isStaffAdmin && (
+                <>
+                  <Link to='/dashboard?tab=staffs'>
+                    <Sidebar.Item active={tab === 'staffs'} icon={HiOutlineUserGroup} as='div'>
+                      Staff
+                     </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
+            {
+              !currentUser.isAdmin && (
+                <>
+                  <Link to='/dashboard?tab=apartmentList'>
+                    <Sidebar.Item active={tab === 'apartmentList'} icon={MdOutlineHomeWork} as='div'>
+                      Apartment List
+                    </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
             <Sidebar.Item icon={HiArrowSmRight} className='cursor-pointer' onClick={handleSignout}>
                Sign Out
             </Sidebar.Item>

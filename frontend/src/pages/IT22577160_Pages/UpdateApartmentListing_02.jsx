@@ -1,11 +1,11 @@
 import { Alert, Button, FileInput, TextInput, Textarea } from "flowbite-react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { app } from "../../firebase"
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage"
 import { useSelector } from "react-redux"
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
-const CreateApartmentListing = () => {
+const UpdateApartmentListing_02 = () => {
    const {currentUser} = useSelector(state => state.user);
    const [files, setFiles] = useState([])
    const [formData, setFormData] = useState({
@@ -29,6 +29,21 @@ const CreateApartmentListing = () => {
    const [error, setError] = useState(false);
    const [loading, setLoading] = useState(false);
    const navigate = useNavigate();
+   const params =  useParams();
+
+   useEffect(() => {
+      const fetchApartmentListing = async () => {
+         const listingId = params.listingId;
+         const res = await fetch(`/api/apartmentListing/getListing/${listingId}`);
+         const data = await res.json();
+         if(data.success === false) {
+            console.log(data.message);
+            return;
+         }
+         setFormData(data);
+      }
+      fetchApartmentListing();
+   }, [])
 
    const handleImageSubmit = () => {
       if(files.length > 0 && files.length + formData.imageUrls.length < 7) {
@@ -111,7 +126,7 @@ const CreateApartmentListing = () => {
          if(+formData.regularPrice < +formData.discountPrice) return setError('Discount price must be lower than regular price')
          setLoading(true);
          setError(false);
-         const res = await fetch('/api/apartmentListing/create', {
+         const res = await fetch(`/api/apartmentListing/update/${params.listingId}`, {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json',
@@ -135,7 +150,7 @@ const CreateApartmentListing = () => {
 
   return (
     <main className="p-3 max-w-4xl mx-auto mb-10">
-      <h1 className="text-3xl text-center my-7 font-extrabold underline text-blue-950 dark:text-slate-300">Create Apartment Listing</h1>
+      <h1 className="text-3xl text-center my-7 font-extrabold underline text-blue-950 dark:text-slate-300">Update Apartment Listing</h1>
       <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
          <div className="flex flex-col gap-4 flex-1">
             <TextInput type="text" onChange={handleChange} value={ownerName} placeholder='Apartment Owner Name' id="ownerName" maxLength={62} minLength={10} required  />
@@ -232,7 +247,7 @@ const CreateApartmentListing = () => {
                   </>
                ))
             }
-            <Button type="submit" gradientDuoTone='purpleToBlue' className="uppercase" disabled={loading || uploading}>{loading ? 'Creating...' : 'Create Apartment Listing'}</Button>
+            <Button type="submit" gradientDuoTone='purpleToBlue' className="uppercase" disabled={loading || uploading}>{loading ? 'Updating...' : 'Update Apartment Listing'}</Button>
             {error && <Alert className='mt-7 py-3 bg-gradient-to-r from-red-100 via-red-300 to-red-400 shadow-shadowOne text-center text-red-600 text-base tracking-wide animate-bounce'>{error}</Alert>}
          </div>
       </form>
@@ -240,4 +255,4 @@ const CreateApartmentListing = () => {
   )
 }
 
-export default CreateApartmentListing
+export default UpdateApartmentListing_02
