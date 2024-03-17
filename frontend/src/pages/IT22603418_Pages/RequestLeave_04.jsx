@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { toast } from 'react-toastify';
 import { Button, Label, TextInput, Select, Textarea } from "flowbite-react";
+import { Navigate } from "react-router-dom";
+
 
 const RequestLeave_04 = () => {
     const { currentUser } = useSelector((state) => state.user);
@@ -11,9 +13,9 @@ const RequestLeave_04 = () => {
         phoneNo: '',
         leaveType: '',
         startDate: '',
-        endDate:'',
-        startTime:'',
-        endTime:'',
+        endDate: '',
+        startTime: '',
+        endTime: '',
         comments: '',
     });
 
@@ -21,7 +23,9 @@ const RequestLeave_04 = () => {
 
     const [errorMessage, setErrorMessage] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [ShowRequestError, setShowRequestError] = useState(false);
     const [selectedOption, setSelectedOption] = useState('date'); // Initialize state for selected option
+    const [LeaveRequestList, setLeaveRequestList] = useState([]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -37,7 +41,7 @@ const RequestLeave_04 = () => {
         } else {
             const today = new Date();
             const formattedDate = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')}`;
-            
+
             setFormData({
                 ...formData,
                 startDate: formattedDate,
@@ -56,7 +60,7 @@ const RequestLeave_04 = () => {
         try {
             setLoading(true);
             setErrorMessage(null);
-            const res = await fetch('/api/RequestLeave/create', {
+            const res = await fetch('/api/RequestLeave/create_04', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -72,14 +76,42 @@ const RequestLeave_04 = () => {
                 setErrorMessage(data.message);
             }
             if (res.status === 201) {
-                navigate('/');
                 toast.success("Leave Request Created Successfully");
             }
+
+
         } catch (error) {
             setErrorMessage(error.message);
             setLoading(false);
         }
     };
+
+    const handleViewRequests = async (e) => {
+        e.preventDefault();
+        try {
+            setLoading(true);
+            setErrorMessage(null);
+            const res = await fetch(`/api/RequestLeave/get_04/${currentUser._id}`);
+            const data = await res.json();
+            if (data.success === false) {
+                setErrorMessage(data.message);
+            }
+            if (res.status === 200) {
+                //  Navigate
+                // Successful response
+                toast.success("Requests loaded successfully.");
+            } else if (res.status === 404) {
+                toast.error("No request leave entries found for this staffID");
+            } else {
+                // Other error
+                toast.error("An error occurred while loading requests.");
+            }
+        } catch (error) {
+            // Network or other error
+            setErrorMessage(error.message);
+            setLoading(false);
+        }
+    }
 
     return (
         <div>
@@ -171,6 +203,21 @@ const RequestLeave_04 = () => {
                         <Button type="submit" gradientDuoTone='purpleToBlue' >
                             Request Leave
                         </Button>
+                        <Button type="button" gradientDuoTone='purpleToBlue' onClick={handleViewRequests}>
+                            View Requests
+                        </Button>
+
+                        {ShowRequestError &&
+                            <Alert className="mt-7 py-3 bg-gradient-to-r from-red-100 via-red-300 to-red-400 shadow-shadowOne text-center text-red-600 text-base tracking-wide animate-bounce">{errorMessageText}</Alert>}
+                        {/* {LeaveRequestList && LeaveRequestList.length > 0 &&
+                            LeaveRequestList.map((requestLeave) => (
+                                <div key={requestLeave._id} className="">
+                                    <link to={`RequestLeave/get_04/${currentUser._id}`}>
+                                    6.53
+                                    </link>
+                                </div>
+                            ))
+                        } */}
                     </form>
                 </div>
             )}
