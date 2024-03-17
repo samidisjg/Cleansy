@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import Home from './pages/Home'
 import About from './pages/About'
 import SignIn from './pages/SignIn'
@@ -12,6 +12,11 @@ import Dashboard from './pages/Dashboard'
 import PrivateRoute from './components/PrivateRoute'
 import CreateApartmentListing from './pages/IT22577160_Pages/CreateApartmentListing'
 import UpdateApartmentListing_02 from './pages/IT22577160_Pages/UpdateApartmentListing_02'
+import DashMaintenance from './components/IT22607232_Components/DashMaintenance'
+import TaskAssign from './pages/IT22607232_Pages/s1_TaskAssignCreation'
+import RequestLeave_04 from './pages/IT22603418_Pages/RequestLeave_04'
+
+
 
 function App() {
   return (
@@ -28,9 +33,14 @@ function App() {
                 <Route path='/dashboard' element={<Dashboard/>}/>
                 <Route path='/create-apartmentListing' element={<CreateApartmentListing/>}/>
                 <Route path='/update-apartmentListing/:listingId' element={<UpdateApartmentListing_02/>}/>
+                <Route path="/" element={<DashMaintenance/>} />
+                <Route path="/task-assign" element={<TaskAssign/>} />
+            
               </Route>
               <Route path='/projects' element={<Projects/>}/>
+              <Route path='/create_04' element={<RequestLeave_04/>}/>
             </Routes>
+
           </div>
         <Footer />
       </Router>
