@@ -1,41 +1,17 @@
 import React from 'react';
 import { Button } from "flowbite-react";
-import { toast } from 'react-toastify';
 
-const RequestDetails_04 = ({ request, showDetails, onDeleteRequest }) => {
+const RequestDetails_04 = ({ request, showDetails, onDeleteRequest, onEditAction }) => {
     if (!request || !showDetails) {
         return null; // Return null to hide the component when showDetails is false
     }
     // Destructure request details from props
     const { _id, staffName, email, phoneNo, leaveType, startDate, endDate, startTime, endTime, comments, status } = request;
-    
-    //function to delete a leave request
-    const handleDeleteRequest = async (requestId) => {
-        // Display confirmation dialog
-        const confirmDelete = window.confirm("Are you sure you want to delete this request?");
-        if (!confirmDelete) {
-            return; // If user cancels deletion, exit function
-        }
-    
-        try {
-            const res = await fetch(`/api/RequestLeave/delete_04/${requestId}`, {
-                method: 'DELETE'
-            });
-            if (res.ok) {
-                // Update UI to remove the deleted request from the list
-                setLeaveRequestList(prevList => prevList.filter(request => request._id !== requestId));
-                toast.success("Request deleted successfully.");
-            } else {
-                // Handle error response
-                const errorData = await res.json();
-                toast.error(errorData.message || "Failed to delete request.");
-            }
-        } catch (error) {
-            // Handle network or other errors
-            toast.error("An error occurred while deleting request.");
-        }
+
+    // Function to delete a leave request
+    const handleDeleteRequest = async () => {
+        onDeleteRequest(_id); // Invoke onDeleteRequest with the request ID
     };
-    
 
     return (
         <div className="max-w-md mx-auto bg-white shadow-md rounded-lg overflow-hidden">
@@ -87,12 +63,12 @@ const RequestDetails_04 = ({ request, showDetails, onDeleteRequest }) => {
                     </tr>
                     <tr className="border-b">
                         <td className="py-2 px-4">
-                            <Button gradientDuoTone='purpleToBlue' className="mr-2" style={{ width: "100px" }}>
+                            <Button gradientDuoTone='purpleToBlue' className="mr-2" style={{ width: "100px" }} onClick={() => onEditAction(request)}>
                                 Edit
                             </Button>
                         </td>
                         <td>
-                            <Button gradientDuoTone='purpleToBlue' style={{ width: "100px" }} onClick={() => handleDeleteRequest(_id)}>
+                            <Button gradientDuoTone="pinkToOrange" style={{ width: "100px" }} onClick={() => handleDeleteRequest(_id)}>
                                 Delete
                             </Button>
                         </td>

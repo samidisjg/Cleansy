@@ -25,6 +25,10 @@ const RequestLeave_04 = () => {
     const [selectedOption, setSelectedOption] = useState('date'); // Initialize state for selected option
     const [LeaveRequestList, setLeaveRequestList] = useState([]);
     const [showRequests, setShowRequests] = useState(false); // State variable to track visibility of requests
+    // Add state variables for edit mode and operation
+    const [editMode, setEditMode] = useState(false);
+    const [operation, setOperation] = useState("create");
+
     //validation for date pick
     const handleChange = (e) => {
         const { id, value } = e.target;
@@ -37,9 +41,8 @@ const RequestLeave_04 = () => {
                 endDate: value // Reset end date to start date if end date is prior to start date
             });
         }
-        // Check form validity after each change
-        validateForm();
     };
+
     //date and time option change in request form
     const handleOptionChange = (event) => {
         const selected = event.target.value;
@@ -62,47 +65,7 @@ const RequestLeave_04 = () => {
         }
 
     };
-    //request leave form validation
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        // Form Fields validation
-        if (!formData.staffName || !formData.email || !formData.phoneNo || !formData.leaveType) {
-            toast.error('Please fill out all the fields');
-            return;
-        }
-        // Phone number validation
-        if (formData.phoneNo.length !== 10 || isNaN(formData.phoneNo)) {
-            toast.error('Phone number should have 10 digits');
-            return;
-        }
-        try {
 
-            setLoading(true);
-            setErrorMessage(null);
-            const res = await fetch('/api/RequestLeave/create_04', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    staffID: `${currentUser._id}`,
-                    ...formData,
-                })
-            });
-            const data = await res.json();
-            setLoading(false);
-            if (data.success === false) {
-                setErrorMessage(data.message);
-            }
-            if (res.status === 201) {
-                toast.success("Leave Request Created Successfully");
-            }
-
-        } catch (error) {
-            setErrorMessage(error.message);
-            setLoading(false);
-        }
-    };
     //function to View Details
     const handleViewRequests = async (e) => {
         try {
@@ -127,6 +90,7 @@ const RequestLeave_04 = () => {
             setLoading(false);
         }
     };
+
     // Function to toggle visibility of requests
     const toggleShowRequests = () => {
         if (!showRequests) {
@@ -134,7 +98,7 @@ const RequestLeave_04 = () => {
         }
         setShowRequests(!showRequests);
     };
-    
+
     // Function to handle deletion of a leave request
     const handleDeleteRequest = async (requestId) => {
         // Display confirmation dialog
@@ -142,7 +106,7 @@ const RequestLeave_04 = () => {
         if (!confirmDelete) {
             return; // If user cancels deletion, exit function
         }
-    
+
         try {
             const res = await fetch(`/api/RequestLeave/delete_04/${requestId}`, {
                 method: 'DELETE'
@@ -161,6 +125,91 @@ const RequestLeave_04 = () => {
             toast.error("An error occurred while deleting request.");
         }
     };
+
+    // handleSubmit to handle both create and update operations
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        //Form Fields validation
+        if (!formData.staffName || !formData.email || !formData.phoneNo || !formData.leaveType) {
+            toast.error('Please fill out all the fields');
+            return;
+        }
+        // Phone number validation
+        if (formData.phoneNo.length !== 10 || isNaN(formData.phoneNo)) {
+            toast.error('Phone number should have 10 digits');
+            return;
+        }
+        try {
+            setLoading(true);
+            setErrorMessage(null);
+            const url = operation === "create" ? "/api/RequestLeave/create_04" : `/api/RequestLeave/update_04/${formData._id}`;
+            const method = operation === "create" ? "POST" : "PUT";
+            const res = await fetch(url, {
+                method,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    staffID: currentUser._id,
+                    ...formData,
+                })
+            });
+            const data = await res.json();
+            setLoading(false);
+            if (data.success === false) {
+                setErrorMessage(data.message);
+            }
+            if (res.status === 201 || res.status === 200) {
+                toast.success(operation === "create" ? "Leave Request Created Successfully" : "Leave Request Updated Successfully");
+                // Clear the form data after successful submission
+                setFormData({
+                    staffName: '',
+                    email: '',
+                    phoneNo: '',
+                    leaveType: '',
+                    startDate: '',
+                    endDate: '',
+                    startTime: '',
+                    endTime: '',
+                    comments: '',
+                });
+            }
+            // Refresh the request list if updating a request
+            if (operation !== "create") {
+                handleViewRequests();
+            } else {
+                // Update the list of leave requests with the new data
+                setLeaveRequestList(prevList => {
+                    const index = prevList.findIndex(item => item._id === formData._id);
+                    if (index !== -1) {
+                        const updatedList = [...prevList];
+                        updatedList[index] = { ...formData };
+                        return updatedList;
+                    } else {
+                        return prevList;
+                    }
+                });
+            }
+            // Exit edit mode
+            setEditMode(false);
+            setOperation("create");
+
+        } catch (error) {
+            setErrorMessage(error.message);
+            setLoading(false);
+        }
+    };
+
+    // handleEditAction to set the form data and switch to edit mode
+    const handleEditAction = (requestData) => {
+        setFormData({ ...requestData });
+        setEditMode(true);
+        setOperation("update");
+        // Scroll to the form
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
 
     return (
         <div>
@@ -249,8 +298,8 @@ const RequestLeave_04 = () => {
                             <Textarea id="comments" placeholder='Type here...' rows='3' maxLength='200' onChange={handleChange} value={comments} />
                         </div>
 
-                        <Button type="submit" gradientDuoTone='purpleToBlue' >
-                            Request Leave
+                        <Button type="submit" gradientDuoTone={editMode ? 'pinkToOrange' : 'purpleToBlue'}>
+                            {editMode ? "Update Request" : "Request Leave"}
                         </Button>
                         <Button gradientDuoTone='purpleToBlue' onClick={toggleShowRequests}>
                             {showRequests ? "Hide Requests" : "View Requests"}
@@ -260,7 +309,7 @@ const RequestLeave_04 = () => {
                             <Alert className="mt-7 py-3 bg-gradient-to-r from-red-100 via-red-300 to-red-400 shadow-shadowOne text-center text-red-600 text-base tracking-wide animate-bounce">{errorMessageText}</Alert>}
                         {showRequests && LeaveRequestList && LeaveRequestList.length > 0 && LeaveRequestList.map((request) => (
                             <div key={request._id}>
-                                <RequestDetails_04 request={request} showDetails={showRequests} onDeleteRequest={handleDeleteRequest}/> {/* Pass down showDetails prop */}
+                                <RequestDetails_04 request={request} showDetails={showRequests} onEditAction={handleEditAction} onDeleteRequest={handleDeleteRequest} />
                             </div>
                         ))}
                     </form>
