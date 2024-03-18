@@ -1,4 +1,4 @@
-import Announcement from "../../models/IT22196460_Models/AnnouncementModel";
+import Announcement from "../../models/IT22196460_Models/AnnouncementModel.js";
 
 // create a new announcement 
 export const createAnnouncement = async(req, res, Next) => {

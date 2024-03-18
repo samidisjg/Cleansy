@@ -1,6 +1,6 @@
 import express from 'express';
-import {createAnnouncement, getAnnouncement, updateAnnouncement, deleteAnnouncement } from '../../controllers/IT22196460_Controllers/AnnouncementController';
-import { verifyToken } from '../../utils/verifyUser';
+import {createAnnouncement, getAnnouncement, updateAnnouncement, deleteAnnouncement } from '../../controllers/IT22196460_Controllers/AnnouncementController.js';
+import { verifyToken } from '../../utils/verifyUser.js';
 
 const router = express.Router();
 

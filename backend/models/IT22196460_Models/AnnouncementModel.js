@@ -1,5 +1,4 @@
-const mongoose = require('mongoose')
-
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const AnnouncementSchema = new Schema({
@@ -13,7 +12,7 @@ const AnnouncementSchema = new Schema({
         required: true
     },
     Content : {
-        type : Text,
+        type : String,
         required: true
     },
     Category_ID : {
@@ -38,5 +37,5 @@ const AnnouncementSchema = new Schema({
     },
 }, {timestamps:true});
 
-const Announcement = mongoose.Model("Announcement",AnnouncementSchema);
+const Announcement = mongoose.model('Announcement', AnnouncementSchema)
 export default Announcement;
