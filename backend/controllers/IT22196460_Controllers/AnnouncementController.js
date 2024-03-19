@@ -101,4 +101,3 @@ export const getAnnouncement = async(req, res, next) => {
 };
 
 
-module.exports = router;

@@ -12,6 +12,7 @@ import DashUserPayments_03 from './../components/IT22602978_Components/DashUserP
 import AddPaymentProfile from './IT22602978_Pages/AddPaymentProfile';
 import DashMaintenance from "../components/IT22607232_Components/DashMaintenance"
 import Chukki from "../components/IT22196460_Components/Chukki";
+import AnnouncementPage from "../components/IT22196460_Components/AnnouncementPage";
 			  
 import { DashAmenity } from "../components/IT22003546_Components/DashAmenity";
 
