@@ -20,7 +20,7 @@ export const createAnnouncement = async(req, res, Next) => {
         console.error("Error creating announcement : ", error.message);
         res.status(500).json({message: "Faild to create announcement"});
     }
-}
+};
 
 // Read all announcements
 export const getAnnouncements = async(req, res, next) => {
@@ -31,7 +31,7 @@ export const getAnnouncements = async(req, res, next) => {
         console.error("Error fetching announcements: ",error.message);
         res.status(500).json({message: "Failed to fetch announcements"});
     }
-}
+};
 
 // Update announcement
 export const updateAnnouncement = async(req, res, next) => {
@@ -64,7 +64,7 @@ export const updateAnnouncement = async(req, res, next) => {
         console.error("Error updating announcement:", error.message);
         res.status(500).json({message: "Failed to update announcement"});
     }
-}
+};
 
 //Delete announcement
 export const deleteAnnouncement = async(req, res, next) => {
@@ -81,7 +81,7 @@ export const deleteAnnouncement = async(req, res, next) => {
         console.error("Error deleting announcement:", error.message);
         res.status(500).json({message: "Failed to delete announcement "});
     }
-}
+};
 
 //Read announcement
 export const getAnnouncement = async(req, res, next) => {
@@ -98,7 +98,7 @@ export const getAnnouncement = async(req, res, next) => {
         console.error("Error fetching announcement:", error.message);
         res.status(500).json({message: "Failed to fetch announcemen"});
     }
-}
+};
 
 
 module.exports = router;
