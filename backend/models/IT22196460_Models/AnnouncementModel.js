@@ -27,14 +27,14 @@ const AnnouncementSchema = new Schema({
         type : Date,
         required: true
     },
-    Update_At : {
+    /*Update_At : {
         type : Date,
         required: true
     },
     Published : {
         type : Boolean,
         required: true
-    },
+    },*/
 }, {timestamps:true});
 
 const Announcement = mongoose.model('Announcement', AnnouncementSchema)

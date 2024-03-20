@@ -11,7 +11,6 @@ import DashPayments_03 from './../components/IT22602978_Components/DashPayments_
 import DashUserPayments_03 from './../components/IT22602978_Components/DashUserPayments_03';
 import AddPaymentProfile from './IT22602978_Pages/AddPaymentProfile';
 import DashMaintenance from "../components/IT22607232_Components/DashMaintenance"
-import Chukki from "../components/IT22196460_Components/Chukki";
 import AnnouncementPage from "../components/IT22196460_Components/AnnouncementPage";
 			  
 import { DashAmenity } from "../components/IT22003546_Components/DashAmenity";
@@ -53,8 +52,8 @@ const Dashboard = () => {
       {tab === 'addpayments' && <AddPaymentProfile/>}
       {/* maintenance */}
       {tab === "maintenance" && <DashMaintenance />}
-      {/* maintenance */}
-      {tab === "announsment" && <Chukki />}
+      {/* Announcement */}
+      {tab === "announsment" && <AnnouncementPage />}
        {/* amenity */}
       {tab == 'amenity' && <DashAmenity/>}
     </div>

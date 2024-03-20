@@ -11,7 +11,7 @@ import RequestLeaveRoutes from './routes/IT22603418_Routes/RequestLeave.route_04
 import cookieParser from "cookie-parser";
 import serviceListingRoutes from "./routes/IT22350114_Routes/serviceListingRoute.js";
 import amenitiesListingRoutes from './routes/IT22003546_Routes/amenitiesListing.route.js';
-import AnnouncementsRoutes from './routes/IT22196460_Routes/AnnouncementsRoutes.js'
+import AnnouncementsRoutes from './routes/IT22196460_Routes/AnnouncementsRoutes.js';
 dotenv.config();
 
 const app = express();

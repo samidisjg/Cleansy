@@ -59,32 +59,36 @@ const CreateAnnouncements = () => {
     };
 
     return(
-        <div>
-            <h2>Create Announcement</h2>
+        <div className="max-w-3xl mx-auto p-6 bg-white shadow-md rounded-lg">
+            <h2 className="text-3xl font-semibold mb-6">Create Announcement</h2>
             {error && <Alert type="danger">{error}</Alert>}
             {success && <Alert type="success">Announcement created Successfully!</Alert>}
-            <form onSubmit={handleSubmit}>
-                <Label>
-                    Announcement ID:
-                    <TextInput type="text" name="Announcement_ID" value={FormData.Announcement_ID} onChange={handleChange} />
+            <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                <Label className="flex flex-col">
+                    <span className="text-sm font-semibold mb-1">Announcement ID:</span>                    
+                    <TextInput type="text" name="Announcement_ID" value={FormData.Announcement_ID} onChange={handleChange} className="px-4 py-2 rounded-lg border-gray-300 focus:outline-none focus:border-blue-500" />
                 </Label>
-                <Label>
-                    Title:
-                    <TextInput type="text" name="Title" value={FormData.Title} onChange={handleChange} />
+                    <Label className="flex flex-col">
+                    <span className="text-sm font-semibold mb-1">Title:</span>
+                    <TextInput type="text" name="Title" value={FormData.Title} onChange={handleChange} className="px-4 py-2 rounded-lg border-gray-300 focus:outline-none focus:border-blue-500"/>
                 </Label>
-                <Label>
-                    Content:
-                    <TextInput type="textarea" name="Content" value={FormData.Content} onChange={handleChange} />
+                <Label className="flex flex-col">
+                    <span className="text-sm font-semibold mb-1">Content:</span>
+                    <TextInput type="textarea" name="Content" value={FormData.Content} onChange={handleChange} className="px-4 py-2 rounded-lg border-gray-300 focus:outline-none focus:border-blue-500"/>
                 </Label>
-                <Label>
-                    Category ID:
-                    <TextInput type="text" name="Category_ID" value={FormData.Category_ID} onChange={handleChange} />
+                <Label className="flex flex-col">
+                    <span className="text-sm font-semibold mb-1">Category ID:</span>
+                    <TextInput type="text" name="Category_ID" value={FormData.Category_ID} onChange={handleChange} className="px-4 py-2 rounded-lg border-gray-300 focus:outline-none focus:border-blue-500"/>
                 </Label>
-                <Label>
-                    Attachment URL:
-                    <TextInput type="text" name="Attachment_URL" value={FormData.Attachment_URL} onChange={handleChange} />
+                <Label className="flex flex-col">
+                     <span className="text-sm font-semibold mb-1">Attachment URL:</span>
+                    <TextInput type="text" name="Attachment_URL" value={FormData.Attachment_URL} onChange={handleChange} className="px-4 py-2 rounded-lg border-gray-300 focus:outline-none focus:border-blue-500"/>
                 </Label>
-                <Button type="submit" disabled={loading}>Submit</Button>
+                </div>
+                <Button type="submit" disabled={loading} className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline">
+                    {loading ? "Submitting..." : "Submit"}
+                </Button>
                 {loading && <span>Loading...........</span>}
             </form>
         </div>
