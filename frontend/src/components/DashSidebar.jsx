@@ -121,7 +121,7 @@ const DashSidebar = () => {
               )
             }
 
-             {
+            {
               currentUser.isFacilityAdmin && (
                 <>
                   <Link to='/dashboard?tab=maintenance'>
@@ -138,6 +138,18 @@ const DashSidebar = () => {
                   <Link to='/dashboard?tab=announsment'>
                     <Sidebar.Item active={tab === 'announsment'} icon={HiOutlineUserGroup} as='div'>
                       Announcement Tasks
+                    </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
+
+            {
+              currentUser.isAnnouncementAdmin && (
+                <>
+                  <Link to='/dashboard?tab=notification'>
+                    <Sidebar.Item active={tab === 'notification'} icon={HiOutlineUserGroup} as='div'>
+                      Notification
                     </Sidebar.Item>
                   </Link>
                 </>

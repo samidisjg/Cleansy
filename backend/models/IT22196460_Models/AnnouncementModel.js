@@ -37,5 +37,5 @@ const AnnouncementSchema = new Schema({
     },*/
 }, {timestamps:true});
 
-const Announcement = mongoose.model('Announcement', AnnouncementSchema)
+const Announcement = mongoose.model('Announcement', AnnouncementSchema);
 export default Announcement;
