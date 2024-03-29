@@ -4,7 +4,7 @@ import { UseSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 
-const CreateAnnouncements = () => {
+const AnnouncementPage = () => {
 
     const [formData, setFormData] = useState({
         Announcement_ID: '',
@@ -119,7 +119,7 @@ return (
   );
 };
 
-export default CreateAnnouncements;
+export default AnnouncementPage;
 
 
 
