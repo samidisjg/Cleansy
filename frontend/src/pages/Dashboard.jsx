@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import DashSidebar from "../components/DashSidebar";
 import DashProfile from "../components/DashProfile";
 import DashUsers from "../components/DashUsers";
-import DashProperties_02 from "../components/IT22577160_Components/DashProperties_02";
+import DashSharedResourcesList_02 from "../components/IT22577160_Components/DashSharedResourcesList_02";
 import DashStaff_04 from "../components/IT22603418_Components/DashStaff_04";
 import DashServices from "../components/IT22350114_Components/DashServices";
 import DashApartmentList_02 from "../components/IT22577160_Components/DashApartmentList_02";
@@ -14,6 +14,7 @@ import DashMaintenance from "../components/IT22607232_Components/DashMaintenance
 import AnnouncementPage from "../components/IT22196460_Components/AnnouncementPage";
 			  
 import { DashAmenity } from "../components/IT22003546_Components/DashAmenity";
+
 
 
 const Dashboard = () => {
@@ -35,7 +36,7 @@ const Dashboard = () => {
       {/* profile */}
       {tab === 'profile' && <DashProfile/>}
       {/* properties */}
-      {tab === 'properties' && <DashProperties_02 />}
+      {tab === 'properties' && <DashSharedResourcesList_02 />}
       {/* users */}
       {tab === 'users' && <DashUsers/>}
       {/* staffs */}
