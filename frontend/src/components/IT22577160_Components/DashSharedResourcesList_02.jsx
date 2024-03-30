@@ -111,7 +111,7 @@ const DashSharedResourcesList_02 = () => {
                           </span>
                         </Table.Cell>
                         <Table.Cell>
-                          <Link className="text-teal-500 hover:underline" to={`/update-resources/${resources._id}`}>
+                          <Link className="text-teal-500 hover:underline" to={`/update-sharedResourceListing/${resources._id}`}>
                             <span >Edit</span>
                           </Link>
                         </Table.Cell>
