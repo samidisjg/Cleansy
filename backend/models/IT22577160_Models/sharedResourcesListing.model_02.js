@@ -31,6 +31,10 @@ const SharedResourcesListingSchema = new mongoose.Schema({
       type: String,
       required: true
    },
+   type: {
+      type: String,
+      required: true,
+   },
    offer: {
       type: Boolean,
       required: true,
