@@ -1,12 +1,14 @@
 import { Alert, Button, Textarea } from 'flowbite-react';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
+import Comment_02 from './Comment_02';
 
 const CommentSection_02 = ({resourceId}) => {
    const { currentUser } = useSelector((state) => state.user);
    const [comment, setComment] = useState('')
    const [commentError, setCommentError] = useState(null)
+   const [comments, setComments] = useState([])
 
    const handleSubmit = async (e) => {
       e.preventDefault();
@@ -29,11 +31,27 @@ const CommentSection_02 = ({resourceId}) => {
          if(res.ok) {
             setComment('');
             setCommentError(null);
+            setComments([data, ...comments]);
          }    
       } catch (error) {
          setCommentError(error.message);
       }
    }
+
+   useEffect(() => {
+      const fetchComments = async () => {
+         try {
+            const res = await fetch(`/api/comment/getPostComments/${resourceId}`);
+            const data = await res.json();
+            if(res.ok) {
+               setComments(data);
+            }
+         } catch (error) {
+            console.log(error.message);
+         }
+      }
+      fetchComments();
+   }, [resourceId])
 
   return (
     <div className='max-w-2xl mx-auto w-full p-3'>
@@ -67,6 +85,25 @@ const CommentSection_02 = ({resourceId}) => {
                   )
                }
             </form>
+         )
+      }
+      {
+         comments.length === 0 ? (
+            <p className='className="text-sm my-5"'>No Comments Yet!</p>
+         ) : (
+            <>
+               <div className='text-sm my-5 flex items-center gap-1'>
+                  <p>Comments</p>
+                  <div className='border border-gray-400 py-1 px-2 rounded-sm'>
+                     <p>{comments.length}</p>
+                  </div>
+               </div>
+               {
+                  comments.map(comment => (
+                     <Comment_02 key={comment._id} comment={comment} />
+                  ))
+               }
+            </>
          )
       }
     </div>
