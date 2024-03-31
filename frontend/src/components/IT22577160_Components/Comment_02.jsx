@@ -4,7 +4,7 @@ import { FaThumbsUp } from 'react-icons/fa'
 import { useSelector } from 'react-redux';
 import { Button, Textarea } from 'flowbite-react';
 
-const Comment_02 = ({comment, onLike, onEdit}) => {
+const Comment_02 = ({comment, onLike, onEdit, onDelete}) => {
    const [user, setUser] = useState({});
    const [isEditing, setIsEditing] = useState(false);
    const [editedContent, setEditedContent] = useState(comment.content);
@@ -87,7 +87,7 @@ const Comment_02 = ({comment, onLike, onEdit}) => {
                         currentUser && (currentUser._id === comment.userId || currentUser.isAdmin) && (
                            <>
                               <button type='button' onClick={handleEdit} className='text-gray-400 hover:text-blue-500' >Edit</button>
-                              <button type='button' className='text-gray-400 hover:text-red-500'>Delete</button>
+                              <button type='button' className='text-gray-400 hover:text-red-500' onClick={() => onDelete(comment._id)}>Delete</button>
                            </>
                         )
                      }
