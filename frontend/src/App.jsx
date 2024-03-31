@@ -15,6 +15,8 @@ import UpdateApartmentListing_02 from './pages/IT22577160_Pages/UpdateApartmentL
 import DashMaintenance from './components/IT22607232_Components/DashMaintenance'
 import TaskAssign from './pages/IT22607232_Pages/s1_TaskAssignCreation'
 import RequestLeave_04 from './pages/IT22603418_Pages/RequestLeave_04'
+import Updatepaymentpage_03 from './pages/IT22602978_Pages/Updatepaymentpage_03';
+
 
 
 
@@ -30,11 +32,13 @@ function App() {
               <Route path='/sign-in' element={<SignIn/>}/>
               <Route path='/sign-up' element={<SignUp/>}/>
               <Route element={<PrivateRoute/>}>
-                <Route path='/dashboard' element={<Dashboard/>}/>
+                <Route path='/dashboard/*' element={<Dashboard/>}/>
                 <Route path='/create-apartmentListing' element={<CreateApartmentListing/>}/>
                 <Route path='/update-apartmentListing/:listingId' element={<UpdateApartmentListing_02/>}/>
+                <Route path='/update-paymentprofile/:data' element={<Updatepaymentpage_03/>}/>
                 <Route path="/" element={<DashMaintenance/>} />
                 <Route path="/task-assign" element={<TaskAssign/>} />
+                
             
               </Route>
               <Route path='/projects' element={<Projects/>}/>
