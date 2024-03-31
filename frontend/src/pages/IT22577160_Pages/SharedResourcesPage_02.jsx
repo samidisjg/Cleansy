@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { AiFillHeart, AiFillStar, AiOutlineEye, AiOutlineHeart, AiOutlineShoppingCart, AiOutlineStar } from 'react-icons/ai';
 import { Link, useParams } from 'react-router-dom';
 import { FaRegMessage } from "react-icons/fa6";
+import CommentSection_02 from '../../components/IT22577160_Components/CommentSection_02';
 
 const SharedResourcesPage_02 = () => {
    const { resourceSlug } = useParams();
@@ -118,7 +119,7 @@ const SharedResourcesPage_02 = () => {
       </div>
       <div className='flex justify-between max-w-2xl mx-auto mt-5 gap-6 w-full'>
          <Button color='dark' size='md' >Add to Cart <span className='pl-2'><AiOutlineShoppingCart size={15} /></span></Button>
-         <div className='text-sm text-teal-600 font-semibold'>
+         <div className='text-sm text-teal-500 font-semibold'>
             {resources && resources.quantity + " In Stock" }
          </div>
          {/* <Button color='dark' size='md' >Send Message <span className='pl-2'><FaRegMessage size={15} /></span></Button> */}
@@ -137,6 +138,7 @@ const SharedResourcesPage_02 = () => {
             </div>
          </div>
       </div>
+      <CommentSection_02 resourceId={resources._id}/>
     </main>
   )
 }

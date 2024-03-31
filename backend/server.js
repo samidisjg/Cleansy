@@ -12,6 +12,7 @@ import cookieParser from "cookie-parser";
 import serviceListingRoutes from "./routes/IT22350114_Routes/serviceListingRoute.js";
 import amenitiesListingRoutes from './routes/IT22003546_Routes/amenitiesListing.route.js';
 import sharedResourcesListingRoutes from './routes/IT22577160_Routes/sharedResourcesListing.route_02.js';
+import commentRoutes from './routes/IT22577160_Routes/comment.route_02.js';
 
 dotenv.config();
 
@@ -44,6 +45,7 @@ app.use("/api/taskAssign", TaskAssignRoute);
 // IT22577160 Routes
 app.use('/api/apartmentListing', apartmentListingRoutes);
 app.use('/api/sharedResourcesListing', sharedResourcesListingRoutes);
+app.use('/api/comment', commentRoutes);
 
 // IT22003546 Routes
 app.use('/api/amenitiesListing', amenitiesListingRoutes);
