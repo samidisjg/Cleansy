@@ -78,6 +78,12 @@ const CommentSection_02 = ({resourceId}) => {
       }
    }
 
+   const handleEdit = async (comment, editedContent) => {
+      setComments(comments.map((c) =>
+         c._id === comment._id ? { ...c, content: editedContent } : c
+      ))
+   }
+
   return (
     <div className='max-w-2xl mx-auto w-full p-3'>
       {currentUser ? (
@@ -125,7 +131,7 @@ const CommentSection_02 = ({resourceId}) => {
                </div>
                {
                   comments.map(comment => (
-                     <Comment_02 key={comment._id} comment={comment} onLike={handleLike} />
+                     <Comment_02 key={comment._id} comment={comment} onLike={handleLike} onEdit={handleEdit}/>
                   ))
                }
             </>
