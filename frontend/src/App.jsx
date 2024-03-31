@@ -15,6 +15,9 @@ import UpdateApartmentListing_02 from './pages/IT22577160_Pages/UpdateApartmentL
 import DashMaintenance from './components/IT22607232_Components/DashMaintenance'
 import TaskAssign from './pages/IT22607232_Pages/s1_TaskAssignCreation'
 import RequestLeave_04 from './pages/IT22603418_Pages/RequestLeave_04'
+import OnlyPropertyAdminPrivateRoute_02 from './components/IT22577160_Components/OnlyPropertyAdminPrivateRoute_02'
+import CreateSharedResources_02 from './pages/IT22577160_Pages/CreateSharedResources_02'
+import UpdateSharedResources_02 from './pages/IT22577160_Pages/UpdateSharedResources_02'
 import Updatepaymentpage_03 from './pages/IT22602978_Pages/Updatepaymentpage_03';
 
 
@@ -40,6 +43,10 @@ function App() {
                 <Route path="/task-assign" element={<TaskAssign/>} />
                 
             
+              </Route>
+              <Route element={<OnlyPropertyAdminPrivateRoute_02/>}>
+                <Route path="/create-sharedResourceListing" element={<CreateSharedResources_02/>} />
+                <Route path="/update-sharedResourceListing/:resourceId" element={<UpdateSharedResources_02 />} />
               </Route>
               <Route path='/projects' element={<Projects/>}/>
               <Route path='/create_04' element={<RequestLeave_04/>}/>

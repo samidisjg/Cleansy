@@ -6,6 +6,7 @@ import { Link, useLocation } from "react-router-dom";
 import { signOutSuccess } from "../../redux/user/userSlice";
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
+import { GrResources } from "react-icons/gr";
 
 const DashSidebar = () => {
   const location = useLocation();
@@ -91,8 +92,8 @@ const DashSidebar = () => {
               currentUser.isPropertyAdmin && (
                 <>
                   <Link to='/dashboard?tab=properties'>
-                    <Sidebar.Item active={tab === 'properties'} icon={HiOutlineUserGroup} as='div'>
-                      Properties
+                    <Sidebar.Item active={tab === 'properties'} icon={GrResources} as='div'>
+                      Shared Resources
                     </Sidebar.Item>
                   </Link>
                 </>
