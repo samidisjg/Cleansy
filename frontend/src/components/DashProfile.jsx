@@ -9,6 +9,7 @@ import { updateStart, updateSuccess, updateFailure, deleteUserStart, deleteUserS
 import { useDispatch } from 'react-redux'
 import { HiOutlineExclamationCircle } from 'react-icons/hi'
 import { FcHome } from 'react-icons/fc'
+import { GrResources } from "react-icons/gr";
 import {Link} from 'react-router-dom'
 
 const DashProfile = () => {
@@ -144,7 +145,7 @@ const DashProfile = () => {
 
   return (
     <div className="max-w-lg mx-auto p-3 w-full">
-      <h1 className='text-center my-7 font-semibold text-3xl underline'>Profile</h1>
+      <h1 className='text-center my-7 font-extrabold text-3xl underline'>Profile</h1>
       <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
         <input type="file" accept='image/*' onChange={handleImageChange} ref={filePickerRef} hidden/>
         <div className="relative w-32 h-32 self-center cursor-pointer shadow-md overflow-hidden rounded-full" onClick={() => filePickerRef.current.click()}>
@@ -183,6 +184,17 @@ const DashProfile = () => {
             <Link to={'/create-apartmentListing'}>
               <Button type='submit' gradientDuoTone="pinkToOrange" className='flex flex-col gap-4 w-full uppercase my-4'>
                 <FcHome className='mr-2 text-3xl bg-red-300 rounded-full p-1 border-2' />Sell or Rent Your Apartments
+              </Button>
+            </Link>
+          </>
+        )
+      }
+      {
+        currentUser.isPropertyAdmin && (
+          <>
+            <Link to={'/create-sharedResourceListing'}>
+              <Button type='submit' gradientDuoTone="pinkToOrange" className='flex flex-col gap-4 w-full uppercase my-4'>
+                <GrResources className='mr-2 text-3xl bg-red-300 rounded-full p-1 border-2' />Manage Properties 
               </Button>
             </Link>
           </>

@@ -11,9 +11,15 @@ import Footer from './components/Footer'
 import Dashboard from './pages/Dashboard'
 import PrivateRoute from './components/PrivateRoute'
 import CreateApartmentListing from './pages/IT22577160_Pages/CreateApartmentListing'
+import UpdateApartmentListing_02 from './pages/IT22577160_Pages/UpdateApartmentListing_02'
 import DashMaintenance from './components/IT22607232_Components/DashMaintenance'
 import TaskAssign from './pages/IT22607232_Pages/s1_TaskAssignCreation'
-
+import RequestLeave_04 from './pages/IT22603418_Pages/RequestLeave_04'
+import OnlyPropertyAdminPrivateRoute_02 from './components/IT22577160_Components/OnlyPropertyAdminPrivateRoute_02'
+import CreateSharedResources_02 from './pages/IT22577160_Pages/CreateSharedResources_02'
+import UpdateSharedResources_02 from './pages/IT22577160_Pages/UpdateSharedResources_02'
+import SharedResourcesPage_02 from './pages/IT22577160_Pages/SharedResourcesPage_02'
+import ScrollToTop_02 from './components/IT22577160_Components/ScrollToTop_02'
 
 
 
@@ -21,6 +27,7 @@ function App() {
   return (
     <>
       <Router>
+        <ScrollToTop_02 />
         <Header />
           <div className='min-h-screen'>
             <Routes>
@@ -31,17 +38,20 @@ function App() {
               <Route element={<PrivateRoute/>}>
                 <Route path='/dashboard' element={<Dashboard/>}/>
                 <Route path='/create-apartmentListing' element={<CreateApartmentListing/>}/>
-                <Route exact path="/" component={DashMaintenance} />
-              <Route path="/s1_TaskAssignCreation" component={TaskAssign} />
+                <Route path='/update-apartmentListing/:listingId' element={<UpdateApartmentListing_02/>}/>
+                <Route path="/" element={<DashMaintenance/>} />
+                <Route path="/task-assign" element={<TaskAssign/>} />
+            
+              </Route>
+              <Route element={<OnlyPropertyAdminPrivateRoute_02/>}>
+                <Route path="/create-sharedResourceListing" element={<CreateSharedResources_02/>} />
+                <Route path="/update-sharedResourceListing/:resourceId" element={<UpdateSharedResources_02 />} />
               </Route>
               <Route path='/projects' element={<Projects/>}/>
-              
+              <Route path='/create_04' element={<RequestLeave_04/>}/>
+              <Route path='/sharedResource/:resourceSlug' element={<SharedResourcesPage_02 />}/>
             </Routes>
 
-          
-                
-      
-     
           </div>
         <Footer />
       </Router>

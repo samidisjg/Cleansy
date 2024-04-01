@@ -22,8 +22,27 @@ const ServiceListingSchema = new mongoose.Schema(
       type: Array,
       required: true,
     },
-    userRef: {
-      type: String,
+    serviceAvailability: {
+      type: Boolean,
+      required: true,
+    },
+    serviceContactInfo: {
+      phone: {
+        type: String,
+        required: true,
+      },
+      email: {
+        type: String,
+        required: true,
+      },
+      address: {
+        type: String,
+        required: true,
+      },
+    },
+
+    serviceRequirements: {
+      type: [String],
       required: true,
     },
   },
