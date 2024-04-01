@@ -20,6 +20,8 @@ import CreateSharedResources_02 from './pages/IT22577160_Pages/CreateSharedResou
 import UpdateSharedResources_02 from './pages/IT22577160_Pages/UpdateSharedResources_02'
 import Updatepaymentpage_03 from './pages/IT22602978_Pages/Updatepaymentpage_03';
 
+import SharedResourcesPage_02 from './pages/IT22577160_Pages/SharedResourcesPage_02'
+import ScrollToTop_02 from './components/IT22577160_Components/ScrollToTop_02'
 
 
 
@@ -27,6 +29,7 @@ function App() {
   return (
     <>
       <Router>
+        <ScrollToTop_02 />
         <Header />
           <div className='min-h-screen'>
             <Routes>
@@ -50,6 +53,7 @@ function App() {
               </Route>
               <Route path='/projects' element={<Projects/>}/>
               <Route path='/create_04' element={<RequestLeave_04/>}/>
+              <Route path='/sharedResource/:resourceSlug' element={<SharedResourcesPage_02 />}/>
             </Routes>
 
           </div>
