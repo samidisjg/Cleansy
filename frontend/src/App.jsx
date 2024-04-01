@@ -37,6 +37,8 @@ function App() {
                 <Route path='/update-apartmentListing/:listingId' element={<UpdateApartmentListing_02/>}/>
                 <Route path="/" element={<DashMaintenance/>} />
                 <Route path="/task-assign" element={<TaskAssign/>} />
+                <Route path="/task-assign/:id" element={<s1_UpdateTasks/>} />
+
             
               </Route>
               <Route element={<OnlyPropertyAdminPrivateRoute_02/>}>

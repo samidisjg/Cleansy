@@ -21,10 +21,6 @@ const TaskAssignSchema = new mongoose.Schema({
       type: String,
       required: true,
    },
-   Date: {
-      type: Date,
-      required: true,
-   },
    Location: {
       type: String,
       required: true,
@@ -32,8 +28,8 @@ const TaskAssignSchema = new mongoose.Schema({
    DurationDays: {
       type: Number,
       required: true,
-   },
-  
+   }
+ 
 }, {timestamps:true});
 
 
