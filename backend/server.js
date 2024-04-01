@@ -8,6 +8,7 @@ import apartmentListingRoutes from "./routes/IT22577160_Routes/apartmentListing.
 import PaymentProfileCreationRoutes from "./routes/IT22602978_Routes/PaymentProfileCreation.route_03.js";
 import TaskAssignRoute from "./routes/IT22607232_Routes/s1_TaskAssignRoute.js";
 import RequestLeaveRoutes from './routes/IT22603418_Routes/RequestLeave.route_04.js';
+import StaffAdminRoutes from './routes/IT22603418_Routes/StaffAdmin.route_04.js';
 import cookieParser from "cookie-parser";
 import serviceListingRoutes from "./routes/IT22350114_Routes/serviceListingRoute.js";
 import amenitiesListingRoutes from './routes/IT22003546_Routes/amenitiesListing.route.js';
@@ -31,8 +32,10 @@ app.use("/api/auth", authRoutes);
 
 // IT22602978 Routes
 app.use("/api/PaymentProfileCreation",PaymentProfileCreationRoutes)
+
 // IT22603418 Routes
 app.use("/api/RequestLeave", RequestLeaveRoutes);
+app.use("/api/StaffAdmin", StaffAdminRoutes);
 
 // IT22350114 Routes
 app.use("/api/serviceListing", serviceListingRoutes);

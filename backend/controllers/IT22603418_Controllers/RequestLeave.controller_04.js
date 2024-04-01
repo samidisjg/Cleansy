@@ -74,8 +74,16 @@ export const deleteRequestLeave = async (req, res, next) => {
    }
 };
 
+// Controller function to get the count of requests for a specific user
+export const getRequestCount = async (req, res) => {
+   try {
+       // Fetch the count of requests for the specified user from the database
+       const requestCount = await RequestLeave.countDocuments({ staffID: req.params.staffID });
 
-
-
-
-
+       // Respond with the request count
+       res.json({ count: requestCount });
+   } catch (error) {
+       console.error("Error fetching request count:", error);
+       res.status(500).json({ error: 'Internal Server Error' });
+   }
+};

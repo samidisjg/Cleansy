@@ -5,6 +5,7 @@ import DashProfile from "../components/DashProfile";
 import DashUsers from "../components/DashUsers";
 import DashProperties_02 from "../components/IT22577160_Components/DashProperties_02";
 import DashStaff_04 from "../components/IT22603418_Components/DashStaff_04";
+import RequestLeave_04 from "./IT22603418_Pages/RequestLeave_04";
 import DashServices from "../components/IT22350114_Components/DashServices";
 import DashApartmentList_02 from "../components/IT22577160_Components/DashApartmentList_02";
 import DashPayments_03 from './../components/IT22602978_Components/DashPayments_03';
@@ -12,6 +13,7 @@ import DashUserPayments_03 from './../components/IT22602978_Components/DashUserP
 import AddPaymentProfile from './IT22602978_Pages/AddPaymentProfile';
 import DashMaintenance from "../components/IT22607232_Components/DashMaintenance"
 import { DashAmenity } from "../components/IT22003546_Components/DashAmenity";
+import StaffAdminDash_04 from './IT22603418_Pages/StaffAdminDash_04';
 
 
 const Dashboard = () => {
@@ -38,6 +40,8 @@ const Dashboard = () => {
       {tab === 'users' && <DashUsers/>}
       {/* staffs */}
       {tab === 'staffs' && <DashStaff_04/>}
+      {tab === 'leaveRequest' && <RequestLeave_04/>}
+      {tab === 'staffAdmin' && <StaffAdminDash_04/>}
       {/* services */}
       {tab === 'services' && <DashServices />}
       {/* Apartment List */}

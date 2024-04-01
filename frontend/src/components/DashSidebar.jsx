@@ -10,13 +10,13 @@ import { useSelector } from 'react-redux'
 const DashSidebar = () => {
   const location = useLocation();
   const dispatch = useDispatch()
-  const {currentUser} = useSelector(state => state.user)
+  const { currentUser } = useSelector(state => state.user)
   const [tab, setTab] = useState('')
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const tabFromUrl = urlParams.get('tab');
-    if(tabFromUrl) {
+    if (tabFromUrl) {
       setTab(tabFromUrl)
     }
   }, [location.search])
@@ -27,7 +27,7 @@ const DashSidebar = () => {
         method: 'POST'
       })
       const data = await res.json()
-      if(!res.ok) {
+      if (!res.ok) {
         console.log(data.message);
       } else {
         dispatch(signOutSuccess())
@@ -40,65 +40,80 @@ const DashSidebar = () => {
   return (
     <Sidebar className="w-full md:w-56 shadow-md">
       <Sidebar.Items>
-         <Sidebar.ItemGroup className="flex flex-col gap-1">
-            <Link to='/dashboard?tab=profile'>
-               <Sidebar.Item active={tab === 'profile'} icon={HiUser} label={currentUser.isAdmin ? 'Admin' : 'User'} labelColor='dark' as='div'>
-                  Profile
-               </Sidebar.Item>
+        <Sidebar.ItemGroup className="flex flex-col gap-1">
+          <Link to='/dashboard?tab=profile'>
+            <Sidebar.Item active={tab === 'profile'} icon={HiUser} label={currentUser.isAdmin ? 'Admin' : 'User'} labelColor='dark' as='div'>
+              Profile
+            </Sidebar.Item>
 
-            </Link>
-            <>
-            <Link to ='/dashboard?tab=userpayments'>
-                <Sidebar.Item active={tab === 'userpayments'} icon={HiShoppingBag} as='div'>
-                  User Payments
-                </Sidebar.Item>
+          </Link>
+          <>
+            <Link to='/dashboard?tab=userpayments'>
+              <Sidebar.Item active={tab === 'userpayments'} icon={HiShoppingBag} as='div'>
+                User Payments
+              </Sidebar.Item>
             </Link>
             {tab === 'userpayments' && (
-                  <div className="dropdown">
-                    <Link to ='/dashboard?tab=addpayments'>
-                      <Sidebar.Item active={tab === 'addpayments'}  as='div'>
-                        Add Payment Profile
-                      </Sidebar.Item>
-                    </Link>
-                  </div>
-                )}
-              </>
+              <div className="dropdown">
+                <Link to='/dashboard?tab=addpayments'>
+                  <Sidebar.Item active={tab === 'addpayments'} as='div'>
+                    Add Payment Profile
+                  </Sidebar.Item>
+                </Link>
+              </div>
+            )}
+       
+            <Link to='/dashboard?tab=staffs'>
+              <Sidebar.Item active={tab === 'staffs'} icon={HiOutlineUserGroup} as='div'>
+                Staff
+              </Sidebar.Item>
+            </Link>
+            {tab === 'staffs' && (
+              <div className="dropdown">
+                <Link to='/dashboard?tab=leaveRequest'>
+                  <Sidebar.Item active={tab === 'leaveRequest'} as='div'>
+                    Leave Request
+                  </Sidebar.Item>
+                </Link>
+              </div>
+            )}
+          </>
 
-            {
-              currentUser.isBookingAdmin && (
-                <>
+          {
+            currentUser.isBookingAdmin && (
+              <>
                 <Link to="/dashboard?tab=amenity">
                   <Sidebar.Item active={tab == "amenity"} icon={HiOutlineUserGroup} as='div'>
                     Amenity
                   </Sidebar.Item>
                 </Link>
-                </>
-              )
-            }
-            {
-              currentUser.isUserAdmin && (
-                <>
-                  <Link to='/dashboard?tab=users'>
-                    <Sidebar.Item active={tab === 'users'} icon={HiOutlineUserGroup} as='div'>
-                      Users
-                    </Sidebar.Item>
-                  </Link>
+              </>
+            )
+          }
+          {
+            currentUser.isUserAdmin && (
+              <>
+                <Link to='/dashboard?tab=users'>
+                  <Sidebar.Item active={tab === 'users'} icon={HiOutlineUserGroup} as='div'>
+                    Users
+                  </Sidebar.Item>
+                </Link>
 
-                </>
-              )
-            }
-            {
-              currentUser.isPropertyAdmin && (
-                <>
-                  <Link to='/dashboard?tab=properties'>
-                    <Sidebar.Item active={tab === 'properties'} icon={HiOutlineUserGroup} as='div'>
-                      Properties
-                    </Sidebar.Item>
-                  </Link>
-                </>
-              )
-            }
-            {
+              </>
+            )
+          }
+          {
+            currentUser.isPropertyAdmin && (
+              <>
+                <Link to='/dashboard?tab=properties'>
+                  <Sidebar.Item active={tab === 'properties'} icon={HiOutlineUserGroup} as='div'>
+                    Properties
+                  </Sidebar.Item>
+                </Link>
+              </>
+            )
+          }
+          {
             currentUser.isBillingAdmin && (
               <>
                 <Link to='/dashboard?tab=payments'>
@@ -109,57 +124,58 @@ const DashSidebar = () => {
               </>
             )
           }
-            {
-              currentUser.isFacilityServiceAdmin && (
-                <>
-                  <Link to='/dashboard?tab=services'>
-                    <Sidebar.Item active={tab === 'services'} icon={HiOutlineUserGroup} as='div'>
-                      Services
-                    </Sidebar.Item>
-                  </Link>
-                </>
-              )
-            }
+          {
+            currentUser.isFacilityServiceAdmin && (
+              <>
+                <Link to='/dashboard?tab=services'>
+                  <Sidebar.Item active={tab === 'services'} icon={HiOutlineUserGroup} as='div'>
+                    Services
+                  </Sidebar.Item>
+                </Link>
+              </>
+            )
+          }
 
-             {
-              currentUser.isFacilityAdmin && (
-                <>
-                  <Link to='/dashboard?tab=maintenance'>
-                    <Sidebar.Item active={tab === 'maintenance'} icon={HiOutlineUserGroup} as='div'>
-                      Maintenance Tasks
-                    </Sidebar.Item>
-                  </Link>
-                </>
-              )
-            }
+          {
+            currentUser.isFacilityAdmin && (
+              <>
+                <Link to='/dashboard?tab=maintenance'>
+                  <Sidebar.Item active={tab === 'maintenance'} icon={HiOutlineUserGroup} as='div'>
+                    Maintenance Tasks
+                  </Sidebar.Item>
+                </Link>
+              </>
+            )
+          }
 
-            
-            {
-              currentUser.isStaffAdmin && (
-                <>
-                  <Link to='/dashboard?tab=staffs'>
-                    <Sidebar.Item active={tab === 'staffs'} icon={HiOutlineUserGroup} as='div'>
-                      Staff
-                     </Sidebar.Item>
-                  </Link>
-                </>
-              )
-            }
-            {
-              !currentUser.isAdmin && (
-                <>
-                  <Link to='/dashboard?tab=apartmentList'>
-                    <Sidebar.Item active={tab === 'apartmentList'} icon={MdOutlineHomeWork} as='div'>
-                      Apartment List
-                    </Sidebar.Item>
-                  </Link>
-                </>
-              )
-            }
-            <Sidebar.Item icon={HiArrowSmRight} className='cursor-pointer' onClick={handleSignout}>
-               Sign Out
-            </Sidebar.Item>
-         </Sidebar.ItemGroup>
+
+          {
+            currentUser.isStaffAdmin && (
+              <>
+
+                <Link to='/dashboard?tab=staffAdmin'>
+                  <Sidebar.Item active={tab === 'staffAdmin'} icon={HiOutlineUserGroup} as='div'>
+                    Staff Admin
+                  </Sidebar.Item>
+                </Link>
+              </>
+            )
+          }
+          {
+            !currentUser.isAdmin && (
+              <>
+                <Link to='/dashboard?tab=apartmentList'>
+                  <Sidebar.Item active={tab === 'apartmentList'} icon={MdOutlineHomeWork} as='div'>
+                    Apartment List
+                  </Sidebar.Item>
+                </Link>
+              </>
+            )
+          }
+          <Sidebar.Item icon={HiArrowSmRight} className='cursor-pointer' onClick={handleSignout}>
+            Sign Out
+          </Sidebar.Item>
+        </Sidebar.ItemGroup>
       </Sidebar.Items>
     </Sidebar>
   )

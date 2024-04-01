@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { toast } from 'react-toastify';
 import { Button, Label, TextInput, Select, Textarea } from "flowbite-react";
@@ -17,8 +17,9 @@ const RequestLeave_04 = () => {
         startTime: '',
         endTime: '',
         comments: '',
+        status: 'pending review',
     });
-    const { staffName, email, phoneNo, leaveType, startDate, endDate, startTime, endTime, comments } = formData;
+    const { staffName, email, phoneNo, leaveType, startDate, endDate, startTime, endTime, comments, status } = formData;
     const [errorMessage, setErrorMessage] = useState(null);
     const [loading, setLoading] = useState(false);
     const [ShowRequestError, setShowRequestError] = useState(false);
@@ -28,6 +29,25 @@ const RequestLeave_04 = () => {
     // Add state variables for edit mode and operation
     const [editMode, setEditMode] = useState(false);
     const [operation, setOperation] = useState("create");
+    //count of request
+    const [requestCount, setRequestCount] = useState(0);
+
+    useEffect(() => {
+        const fetchRequestCounts = async () => {
+            try {
+                const res = await fetch(`/api/RequestLeave/count_04/${currentUser._id}`);
+                const data = await res.json();
+                if (res.ok) {
+                    setRequestCount(data.count);
+                }
+
+            } catch (error) {
+                console.error("Error fetching request counts:", error);
+            }
+        };
+
+        fetchRequestCounts();
+    }, [currentUser._id]);
 
     //validation for date pick
     const handleChange = (e) => {
@@ -79,8 +99,10 @@ const RequestLeave_04 = () => {
             }
             if (res.status === 200) {
                 setLeaveRequestList(data); // Update LeaveRequestList state with fetched data
+                setRequestCount(data.length); // Update request count
                 toast.success("Requests loaded successfully.");
             } else if (res.status === 404) {
+                setRequestCount(data.length); // Set request count to 0 if no requests found
                 toast.error("No request leave entries found for this staffID");
             } else {
                 toast.error("An error occurred while loading requests.");
@@ -114,6 +136,7 @@ const RequestLeave_04 = () => {
             if (res.ok) {
                 // Remove the deleted request from the list
                 setLeaveRequestList(prevList => prevList.filter(request => request._id !== requestId));
+                setRequestCount(prevCount => prevCount - 1); // Update request count
                 toast.success("Request deleted successfully.");
             } else {
                 // Handle error response
@@ -130,7 +153,7 @@ const RequestLeave_04 = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        //Form Fields validation
+        // Form Fields validation
         if (!formData.staffName || !formData.email || !formData.phoneNo || !formData.leaveType) {
             toast.error('Please fill out all the fields');
             return;
@@ -140,6 +163,13 @@ const RequestLeave_04 = () => {
             toast.error('Phone number should have 10 digits');
             return;
         }
+        // Staff Name validation
+        const staffNameRegex = /^[a-zA-Z\s]+$/;
+        if (!staffNameRegex.test(formData.staffName)) {
+            toast.error('Staff Name should only contain letters and spaces');
+            return;
+        }
+
         try {
             setLoading(true);
             setErrorMessage(null);
@@ -161,6 +191,30 @@ const RequestLeave_04 = () => {
                 setErrorMessage(data.message);
             }
             if (res.status === 201 || res.status === 200) {
+                // Fetch the updated request count
+                const countRes = await fetch(`/api/RequestLeave/count_04/${currentUser._id}`);
+                const countData = await countRes.json();
+                if (countRes.ok) {
+                    // Update the request count
+                    setRequestCount(countData.count);
+                }
+
+                // Submit to StaffAdmin
+                if (operation === "create") {
+                    const staffAdminRes = await fetch("/api/StaffAdmin/create", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            staffID: currentUser._id,
+                            reqType: formData.leaveType,
+                            duration: '',
+                            status: 'pending', // Assuming status is defined elsewhere in your code
+                        })
+                    });
+                }
+
                 toast.success(operation === "create" ? "Leave Request Created Successfully" : "Leave Request Updated Successfully");
                 // Clear the form data after successful submission
                 setFormData({
@@ -210,111 +264,108 @@ const RequestLeave_04 = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-
     return (
         <div>
-            {currentUser.isStaffAdmin && (
-                <div className="max-w-lg mx-auto p-3 w-full">
-                    <h1 className="text-3xl text-center my-7 font-extrabold underline text-blue-950 dark:text-slate-300">Leave Request Form</h1>
-                    <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-                        <div>
-                            <Label value="Staff Name" />
-                            <TextInput type="text" id="staffName" placeholder="Staff Name" value={staffName} required onChange={handleChange} />
-                        </div>
-                        <div>
-                            <Label value="Email" />
-                            <TextInput type="email" id="email" placeholder="example@gmail.com" required onChange={handleChange} value={email} />
-                        </div>
-                        <div>
-                            <Label value="Phone No" />
-                            <TextInput type="text" id="phoneNo" placeholder="Phone No" required onChange={handleChange} value={phoneNo} />
-                        </div>
-                        <div>
-                            <h2 className="text-2xl text-center mt-6 font-extrabold underline text-blue-950 dark:text-slate-300">Details of Leave</h2>
-                        </div>
-                        <div>
-                            <Label value="Leave Type" />
-                            <Select id="leaveType" required onChange={handleChange} value={leaveType}>
-                                <option value="">Select</option>
-                                <option value="Sick">Sick</option>
-                                <option value="Vacation">Vacation</option>
-                                <option value="ShortLeave">Short Leave</option>
-                                <option value="Other">Other</option>
-                            </Select>
-                        </div>
+            <div className="max-w-lg mx-auto p-3 w-full">
+                <h1 className="text-3xl text-center my-7 font-extrabold underline text-blue-950 dark:text-slate-300">Leave Request Form</h1>
+                <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+                    <div>
+                        <Label value="Staff Name" />
+                        <TextInput type="text" id="staffName" placeholder="Staff Name" value={staffName} required onChange={handleChange} />
+                    </div>
+                    <div>
+                        <Label value="Email" />
+                        <TextInput type="email" id="email" placeholder="example@gmail.com" required onChange={handleChange} value={email} />
+                    </div>
+                    <div>
+                        <Label value="Phone No" />
+                        <TextInput type="text" id="phoneNo" placeholder="Phone No" required onChange={handleChange} value={phoneNo} />
+                    </div>
+                    <div>
+                        <h2 className="text-2xl text-center mt-6 font-extrabold underline text-blue-950 dark:text-slate-300">Details of Leave</h2>
+                    </div>
+                    <div>
+                        <Label value="Leave Type" />
+                        <Select id="leaveType" required onChange={handleChange} value={leaveType}>
+                            <option value="">Select</option>
+                            <option value="Sick">Sick</option>
+                            <option value="Vacation">Vacation</option>
+                            <option value="ShortLeave">Short Leave</option>
+                            <option value="Other">Other</option>
+                        </Select>
+                    </div>
 
-                        <div className="flex gap-28">
-                            <div><Label value="Leave Request For" /> </div>
-                            <div>
-                                <Label value="Days" />
-                                <TextInput
-                                    type="radio"
-                                    id="dateOption"
-                                    value="date"
-                                    checked={selectedOption === 'date'}
-                                    onChange={handleOptionChange}
-                                    required />
-                            </div>
-                            <div>
-                                <Label value="Hours" />
-                                <TextInput
-                                    type="radio"
-                                    id="timeOption"
-                                    value="time"
-                                    checked={selectedOption === 'time'}
-                                    onChange={handleOptionChange}
-                                    required />
-                            </div>
+                    <div className="flex gap-28">
+                        <div><Label value="Leave Request For" /> </div>
+                        <div>
+                            <Label value="Days" />
+                            <TextInput
+                                type="radio"
+                                id="dateOption"
+                                value="date"
+                                checked={selectedOption === 'date'}
+                                onChange={handleOptionChange}
+                                required />
                         </div>
-                        {selectedOption === 'date' ? (
-                            <>
-                                <div className="flex gap-32">
-                                    <div>
-                                        <Label value="Start Date" />
-                                        <TextInput type="date" id="startDate" required onChange={handleChange} value={startDate} min={new Date().toISOString().split('T')[0]} />
-                                    </div>
-                                    <div>
-                                        <Label value="End Date" />
-                                        <TextInput type="date" id="endDate" required onChange={handleChange} value={endDate} min={startDate} />
-                                    </div>
+                        <div>
+                            <Label value="Hours" />
+                            <TextInput
+                                type="radio"
+                                id="timeOption"
+                                value="time"
+                                checked={selectedOption === 'time'}
+                                onChange={handleOptionChange}
+                                required />
+                        </div>
+                    </div>
+                    {selectedOption === 'date' ? (
+                        <>
+                            <div className="flex gap-32">
+                                <div>
+                                    <Label value="Start Date" />
+                                    <TextInput type="date" id="startDate" required onChange={handleChange} value={startDate} min={new Date().toISOString().split('T')[0]} />
                                 </div>
-                            </>
-                        ) : (
-                            <>
-                                <div className="flex gap-44">
-                                    <div>
-                                        <Label value="Start Time" />
-                                        <TextInput type="time" id="startTime" required onChange={handleChange} value={startTime} />
-                                    </div>
-                                    <div>
-                                        <Label value="End Time" />
-                                        <TextInput type="time" id="endTime" required onChange={handleChange} value={endTime} />
-                                    </div>
+                                <div>
+                                    <Label value="End Date" />
+                                    <TextInput type="date" id="endDate" required onChange={handleChange} value={endDate} min={startDate} />
                                 </div>
-                            </>
-                        )}
-                        <div>
-                            <Label value="Comments" />
-                            <Textarea id="comments" placeholder='Type here...' rows='3' maxLength='200' onChange={handleChange} value={comments} />
-                        </div>
-
-                        <Button type="submit" gradientDuoTone={editMode ? 'pinkToOrange' : 'purpleToBlue'}>
-                            {editMode ? "Update Request" : "Request Leave"}
-                        </Button>
-                        <Button gradientDuoTone='purpleToBlue' onClick={toggleShowRequests}>
-                            {showRequests ? "Hide Requests" : "View Requests"}
-                        </Button>
-
-                        {ShowRequestError &&
-                            <Alert className="mt-7 py-3 bg-gradient-to-r from-red-100 via-red-300 to-red-400 shadow-shadowOne text-center text-red-600 text-base tracking-wide animate-bounce">{errorMessageText}</Alert>}
-                        {showRequests && LeaveRequestList && LeaveRequestList.length > 0 && LeaveRequestList.map((request) => (
-                            <div key={request._id}>
-                                <RequestDetails_04 request={request} showDetails={showRequests} onEditAction={handleEditAction} onDeleteRequest={handleDeleteRequest} />
                             </div>
-                        ))}
-                    </form>
-                </div>
-            )}
+                        </>
+                    ) : (
+                        <>
+                            <div className="flex gap-44">
+                                <div>
+                                    <Label value="Start Time" />
+                                    <TextInput type="time" id="startTime" required onChange={handleChange} value={startTime} />
+                                </div>
+                                <div>
+                                    <Label value="End Time" />
+                                    <TextInput type="time" id="endTime" required onChange={handleChange} value={endTime} />
+                                </div>
+                            </div>
+                        </>
+                    )}
+                    <div>
+                        <Label value="Comments" />
+                        <Textarea id="comments" placeholder='Type here...' rows='3' maxLength='200' onChange={handleChange} value={comments} />
+                    </div>
+
+                    <Button type="submit" gradientDuoTone={editMode ? 'pinkToOrange' : 'purpleToBlue'}>
+                        {editMode ? "Update Request" : "Request Leave"}
+                    </Button>
+                    <Button gradientDuoTone='purpleToBlue' onClick={toggleShowRequests}>
+                        {showRequests ? `Hide Requests (${requestCount || 0})` : `View Requests (${requestCount || 0})`}
+                    </Button>
+
+                    {ShowRequestError &&
+                        <Alert className="mt-7 py-3 bg-gradient-to-r from-red-100 via-red-300 to-red-400 shadow-shadowOne text-center text-red-600 text-base tracking-wide animate-bounce">{errorMessageText}</Alert>}
+                    {showRequests && LeaveRequestList && LeaveRequestList.length > 0 && LeaveRequestList.map((request) => (
+                        <div key={request._id}>
+                            <RequestDetails_04 request={request} showDetails={showRequests} onEditAction={handleEditAction} onDeleteRequest={handleDeleteRequest} />
+                        </div>
+                    ))}
+                </form>
+            </div>
         </div>
     );
 };
