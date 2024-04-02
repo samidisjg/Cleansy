@@ -1,151 +1,193 @@
-import  { useState } from "react";
-import { useSelector } from "react-redux"
-import { useNavigate } from 'react-router-dom'
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+/*import TaskAssignRoute from "../../routes/IT22607232_Routes/s1_TaskAssignRoute";*/
 import {
   Button,
   Label,
   Select,
   TextInput,
   Textarea,
-  Datepicker,
 } from "flowbite-react";
 
-
-
 const TaskAssign = () => {
-
-  const {currentUser} = useSelector(state => state.user);
-  const [formData, setFormData] = useState({
-
-    taskId: "",
-    category: "",
-    name: "",
-    description: "",
-    workGroupId: "",
-    date: "",
-    location: "",
-    duration: ""
-  });
-  const [setLoading] = useState(false);
-  const [setError] = useState(null);
   const navigate = useNavigate();
+  const { currentUser } = useSelector((state) => state.user);
+  const [formData, setFormData] = useState({
+    TaskID: "",
+    Category: "",
+    Name: "",
+    Description: "",
+    WorkGroupID: "",
+    Location: "",
+    DurationDays: "2",
+  });
 
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  console.log(formData);
+  
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    let boolean = null;
+    if (e.target.value === "true") {
+      boolean = true;
+    }
+    if (e.target.value === "false") {
+      boolean = false;
+    }
+    if (
+      e.target.type === "number" ||
+      e.target.type === "text" ||
+      e.target.type === "textarea"
+    ) {
+      setFormData({
+        ...formData,
+        [e.target.name]: e.target.value,
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [e.target.name]: boolean !== null ? boolean : e.target.value,
+      });
+    }
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
+    try{
+      if(formData.TaskID === currentUser.TaskID) return setError('TaskID already exists');
       setLoading(true);
-      setError(null);
+      setError(false);
 
-      const res = await fetch('/api/taskassign/create', {
+      const res = await fetch('/api/taskAssign/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           ...formData,
-         //currentUser holds task data
-          id: currentUser._id,
-        })
-      })
-      
-      navigate(`/dashboard?tab=maintenance`)
-
+          userRef: currentUser._id,
+      }),
+      });
       const data = await res.json();
-
       setLoading(false);
-      if (!data.success) {
+      if (data.success === false){
         setError(data.message);
-      } else {
-        setFormData({
-          taskId: "",
-          category: "",
-          name: "",
-          description: "",
-          workGroupId: "",
-          date: "",
-          location: "",
-          duration: ""
-        });
-        alert("Task assigned successfully!");
-        // Navigate or handle success appropriately
       }
-    } catch (error) {
-      setLoading(false);
+        //navigate(`/task-assign/${data._id}`);
+        navigate('/dashboard?tab=maintenance');
+    
+
+    }catch(error){
       setError(error.message);
-      console.error("Error:", error);
-      alert("Error assigning task. Please try again later.");
+      setLoading(false);
     }
-  };
+  }
 
   return (
     <div className="min-h-screen mt-20">
-      <h1 className="text-3xl text-center mt-6 font-extrabold underline text-blue-950 dark:text-slate-300">
-        Assign Tasks
-      </h1>
+      <main>
+        <h1 className="text-3xl text-center mt-6 font-extrabold underline text-blue-950 dark:text-slate-300">
+          Assign Tasks
+        </h1>
+      </main>
       <div className="flex p-3 w-[40%] mx-auto flex-col md:flex-row md:items-center gap-20 md:gap-20 mt-10">
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full justify-center">
+        <form  onSubmit = {handleSubmit} className="flex flex-col gap-4 w-full justify-center">
           <div>
             <Label value="TaskID" />
-            <TextInput type="text" name="taskId"  onChange = {handleChange}  value={formData.taskId} placeholder="TaskID" />
+            <TextInput
+              type="text"
+              name="TaskID"
+              placeholder="TaskID"
+              required
+              onChange={handleChange}
+              value={formData.TaskID}
+            />
           </div>
           <div>
-            <Label value="category"/>
-            <Select  onChange = {handleChange} value={formData.category}>
+            <Label value="Category" />
+            <Select 
+             className="" onChange={(e) => setFormData({...formData, Category: e.target.value})}
+            >
               <option value="Select">Select a Category</option>
-              <option value="Male">Elavator</option>
-              <option value="Female">Pest Control</option>
-              <option value="Female">Janitorial</option>
+              <option value="Elavator">Elavator</option>
+              <option value="Pest Control">Pest Control</option>
+              <option value="Janitorial">Janitorial</option>
             </Select>
           </div>
 
           <div>
             <Label value="Name" />
-            <TextInput type="name" name= "name" onChange = {handleChange} value={formData.name}placeholder="Name" />
+            <TextInput
+              type="text"
+              name="Name"
+              placeholder="Name"
+              required
+              onChange={handleChange}
+              value={formData.Name}
+            />
           </div>
           <div>
-            <Label value="Description"/>
-            <Textarea name = "description"  onChange = {handleChange} value={formData.description} 
+            <Label value="Description" />
+            <Textarea
+              type="textarea"
+              name="Description"
               placeholder="Add a Description..."
               rows="3"
               maxLength="200"
+              required
+              onChange={handleChange}
+              value={formData.Description}
             />
           </div>
           <div>
             <div>
               <Label value="WorkGroupID" />
-              <TextInput  ype="WorkGroupID" name ="workGroupId" onChange = {handleChange}  value={formData.workGroupId}  placeholder="WorkGroupID" />
+              <TextInput
+                type="text"
+                name="WorkGroupID"
+                placeholder="WorkGroupID"
+                required
+                onChange={handleChange}
+                value={formData.WorkGroupID}
+              />
             </div>
             <div>
-            <Label value="Date" />
-              <Datepicker name = "date" value={formData.date} onChange = {handleChange} 
-                minDate={new Date(2024, 0, 1)}
-                maxDate={new Date(2024, 3, 30)}
-              />
-                <div>
-            <Label value="Location"   />
-            <TextInput type="location" name = "location" onChange = {handleChange}  placeholder="Location"  value={formData.location} />
-          </div>
-          <div>
-            <Label value="Duration" />
-            <TextInput type="Duration"  name = "duration" onChange = {handleChange}   value={formData.duration}  placeholder="Duration" />
-          </div>
-
+              
+              <div>
+                <Label value="Location" />
+                <TextInput
+                  type="text"
+                  name="Location"
+                  onChange={handleChange}
+                  placeholder="Location"
+                  value={formData.Location}
+                  required
+                />
+              </div>
+              <div>
+                <Label value="Duration" />
+                <TextInput
+                  type="number"
+                  name="DurationDays"
+                  placeholder="Duration"
+                  required
+                  onChange={handleChange}
+                  value={formData.DurationDays}
+                />
+              </div>
             </div>
           </div>
-
-         
-          <Button type="submit" gradientDuoTone="purpleToBlue">
-            Assign
-          </Button>
+          <Button
+            type="submit"
+            gradientDuoTone="purpleToBlue"
+            className="uppercase"
+          >{loading ? 'Assigning...' : 'Assign task'}</Button>
+          {error && <p className="text-red-700 text-sm">{error}</p>}
         </form>
       </div>
     </div>
-  );
-  }
+  )
+}
 
 export default TaskAssign;
