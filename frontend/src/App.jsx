@@ -38,8 +38,8 @@ function App() {
                 <Route path='/update-apartmentListing/:listingId' element={<UpdateApartmentListing_02/>}/>
                 <Route path="/" element={<DashMaintenance/>} />
                 <Route path="/task-assign" element={<TaskAssign/>} />
-                <Route path="/tasks-table" element={<TasksTable_01/>} />
-              
+                <Route path="/tasks-table:taskid" element={<TasksTable_01/>} />
+                <Route path="/update-tasks:taskid" element={<s1_UpdateTasks/>} />
 
             
               </Route>
