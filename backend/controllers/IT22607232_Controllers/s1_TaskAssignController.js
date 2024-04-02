@@ -10,11 +10,12 @@ export const TaskAssigning = async (req, res, next) => {
     }
     return res
       .status(200)
-      .json(newTaskAssign, { msg: "Task Assigned Successfully" });
+      .json({ taskAssign: newTaskAssign, msg: "Task Assigned Successfully" });
   } catch (error) {
     next(error);
   }
 };
+
 
 //Get ALL Task Assiged
 export const allTasks = async (req, res, next) => {
