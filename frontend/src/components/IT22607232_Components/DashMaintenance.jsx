@@ -1,29 +1,31 @@
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-("use client");
-
-import { Button } from "flowbite-react";
-//import { set } from "mongoose";
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Button } from 'flowbite-react';
 
 const DashMaintenance = () => {
-  const { currentUser } = useSelector((state) => state.user);
+  const {currentUser } = useSelector((state) => state.user);
   const [showTasksError, setShowTasksError] = useState(false);
+  const [showTasks, setShowTasks] = useState([]);
+  const navigate = useNavigate(); // Initialize useNavigate hook
 
-
-  setShowTasksError(false);
-  const handleShowAssignments = async() => {
-    try{
+  const handleShowAssignments = async () => {
+    try {
+      setShowTasksError(false);
       const res = await fetch('/api/taskAssign/all');
       const data = await res.json();
-      if (data.success === false){
+      if (data.success === false) {
         setShowTasksError(true);
         return;
       }
-
-    }catch(error){
+      setShowTasks(data);
+      // Navigate to tasks table page
+      navigate('/tasks-table'); // Redirect to tasks table page
+    } catch (error) {
       setShowTasksError(true);
     }
-  }
+  };
+
   return (
     <div>
       {currentUser.isFacilityAdmin && (
@@ -35,9 +37,24 @@ const DashMaintenance = () => {
           <Button pill>
             <Link to="/task-assign">Go to Task Assign</Link>
           </Button>
+          <br/>
+          
+          <Button pill onClick={handleShowAssignments}>Show Task Assignments</Button>
+          <p className='text-red-700 mt-5'>{showTasksError ? 'Error fetching tasks' : ''}</p>
 
-          <button onClick={handleShowAssignments} className='text-green-700 w-full'>Show Task Assignments</button>
-          <p className='text-red-700-mt-5'>{showTasksError ? 'Error fetching tasks' : ''}</p>
+          {showTasks && showTasks.length > 0 && 
+            showTasks.map((tasks) => (
+              <div key={tasks._id} className='border rounded-lg p-3 flex justify-between items-center gap-4'>
+                <Link className='text-slate-700 font-semibold hover:underline truncate flex-1' to={`/tasks-table/${tasks._id}`}>
+                  <p>{tasks.TaskID}</p>
+                </Link>
+
+                <div className='flex flex-row items-center'>
+                  <button className='bg-red-500 text-white px-2 py-0.5 rounded-lg'>Delete</button>
+                  <button className='bg-green-500 text-white px-2 py-0.5 rounded-lg'>Update</button>
+                </div>
+              </div>
+            ))}
         </div>
       )}
     </div>

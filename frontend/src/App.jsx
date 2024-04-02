@@ -17,6 +17,7 @@ import TaskAssign from './pages/IT22607232_Pages/s1_TaskAssignCreation'
 import RequestLeave_04 from './pages/IT22603418_Pages/RequestLeave_04'
 import OnlyPropertyAdminPrivateRoute_02 from './components/IT22577160_Components/OnlyPropertyAdminPrivateRoute_02'
 import CreateSharedResources_02 from './pages/IT22577160_Pages/CreateSharedResources_02'
+import TasksTable_01 from './components/IT22607232_Components/TasksTable_01'
 
 
 
@@ -37,6 +38,7 @@ function App() {
                 <Route path='/update-apartmentListing/:listingId' element={<UpdateApartmentListing_02/>}/>
                 <Route path="/" element={<DashMaintenance/>} />
                 <Route path="/task-assign" element={<TaskAssign/>} />
+                <Route path="/tasks-table" element={<TasksTable_01/>} />
               
 
             
