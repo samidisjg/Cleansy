@@ -1,7 +1,7 @@
 import { Sidebar } from "flowbite-react"
 import { useEffect, useState } from "react";
 import { MdOutlineHomeWork } from "react-icons/md";
-import { HiArrowSmRight, HiDocument, HiOutlineUserCircle, HiOutlineUserGroup, HiShoppingBag, HiUser } from "react-icons/hi";
+import { HiArrowSmRight, HiDocument, HiOutlineUserCircle, HiOutlineUserGroup, HiShoppingBag, HiUser, HiAnnotation } from "react-icons/hi";
 import { Link, useLocation } from "react-router-dom";
 import { signOutSuccess } from "../../redux/user/userSlice";
 import { useDispatch } from 'react-redux'

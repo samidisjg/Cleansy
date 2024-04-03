@@ -13,6 +13,8 @@ import DashUserPayments_03 from './../components/IT22602978_Components/DashUserP
 import AddPaymentProfile from './IT22602978_Pages/AddPaymentProfile';
 import DashMaintenance from "../components/IT22607232_Components/DashMaintenance"
 import { DashAmenity } from "../components/IT22003546_Components/DashAmenity";
+import DashComments_02 from "../components/IT22577160_Components/DashComments_02";
+
 import StaffAdminDash_04 from './IT22603418_Pages/StaffAdminDash_04';
 
 
@@ -57,6 +59,8 @@ const Dashboard = () => {
       {tab === "maintenance" && <DashMaintenance />}
        {/* amenity */}
       {tab == 'amenity' && <DashAmenity/>}
+      {/* Comments */}
+      {tab == 'comments' && <DashComments_02/>}
     </div>
   )
 }

@@ -42,6 +42,8 @@ function App() {
                 <Route path='/update-apartmentListing/:listingId' element={<UpdateApartmentListing_02/>}/>
                 <Route path="/" element={<DashMaintenance/>} />
                 <Route path="/task-assign" element={<TaskAssign/>} />
+              
+
             
               </Route>
               <Route element={<OnlyPropertyAdminPrivateRoute_02/>}>
@@ -49,6 +51,8 @@ function App() {
                 <Route path="/update-sharedResourceListing/:resourceId" element={<UpdateSharedResources_02 />} />
               </Route>
               <Route path='/projects' element={<Projects/>}/>
+              
+              <Route path='/sharedResource/:resourceSlug' element={<SharedResourcesPage_02 />}/>
               {/* <Route path='/create_04' element={<RequestLeave_04/>}/>
               <Route path='/sharedResource/:resourceSlug' element={<SharedResourcesPage_02 />}/>
               <Route path='/delete_04' element={<RequestDetails_04/>}/> */}
