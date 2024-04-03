@@ -1,18 +1,12 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-/*import TaskAssignRoute from "../../routes/IT22607232_Routes/s1_TaskAssignRoute";*/
-import {
-  Button,
-  Label,
-  Select,
-  TextInput,
-  Textarea,
-} from "flowbite-react";
 
-const TaskAssign = () => {
-  const navigate = useNavigate();
-  const { currentUser } = useSelector((state) => state.user);
+import { Alert, Button, FileInput, Select, TextInput, Textarea } from "flowbite-react"
+import { useEffect, useState } from "react"
+import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+
+const s1_UpdateTasks = () => {
   const [formData, setFormData] = useState({
     TaskID: "",
     Category: "",
@@ -22,172 +16,142 @@ const TaskAssign = () => {
     Location: "",
     DurationDays: "2",
   });
+  const [error, setError] = useState(null);
+  const navigate = useNavigate()
+  const { TaskID } = useParams()
+  const { currentUser} = useSelector((state) => state.user);
 
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
-  console.log(formData);
-  
-  const handleChange = (e) => {
-    let boolean = null;
-    if (e.target.value === "true") {
-      boolean = true;
-    }
-    if (e.target.value === "false") {
-      boolean = false;
-    }
-    if (
-      e.target.type === "number" ||
-      e.target.type === "text" ||
-      e.target.type === "textarea"
-    ) {
-      setFormData({
-        ...formData,
-        [e.target.name]: e.target.value,
-      });
-    } else {
-      setFormData({
-        ...formData,
-        [e.target.name]: boolean !== null ? boolean : e.target.value,
-      });
-    }
-  };
-  
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try{
-      if(formData.TaskID === currentUser.TaskID) return setError('TaskID already exists');
-      setLoading(true);
-      setError(false);
 
-      const res = await fetch('/api/taskAssign/create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...formData,
-          userRef: currentUser._id,
-      }),
-      });
-      const data = await res.json();
-      setLoading(false);
-      if (data.success === false){
-        setError(data.message);
+   useEffect(() => {
+      try {
+         const fetchtasks = async () => {
+            const res = await fetch(`/api/update-tasks:taskid=${TaskID}`);
+            const data = await res.json();
+            if(!res.ok) {
+               console.log(data.message);
+               setError(data.message);
+               return;
+            }
+            if(res.ok) {
+               setError(null);
+               setFormData(data.tasks[0]);
+            }
+         }
+         fetchtasks();
+      } catch (error) {
+         console.log(error);
       }
-        //navigate(`/task-assign/${data._id}`);
-        navigate('/dashboard?tab=maintenance');
-    
+   }, [resourceId])
 
-    }catch(error){
-      setError(error.message);
-      setLoading(false);
-    }
-  }
+   const handleChange = (e) => {
+      let boolean = null;
+      if(e.target.value === "true") {
+         boolean = true;
+      }
+      if(e.target.value === "false") {
+         boolean = false;
+      }
+      if(!e.target.files) {
+         setFormData((prevState) => ({
+            ...prevState, [e.target.id]: boolean ?? e.target.value
+         }))
+      }
+   }
+
+   const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+         const res = await fetch(`/api/taskAssign/update/:taskid=/${formData._id}/${currentUser._id}`, {
+            method: 'PUT',
+            headers: {
+               'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+         })
+         const data = await res.json();
+         if(!res.ok) {
+            setError(data.message);
+            return;
+         }
+         if(res.ok) {
+            setError(null);
+            navigate(`/dashboard?tab=maintenance`)
+         }
+      } catch (error) {
+         setError('Failed to assign tasks. Please try again later.');
+         console.log(error);
+      }
+   }
 
   return (
-    <div className="min-h-screen mt-20">
-      <main>
-        <h1 className="text-3xl text-center mt-6 font-extrabold underline text-blue-950 dark:text-slate-300">
-          Assign Tasks
-        </h1>
-      </main>
-      <div className="flex p-3 w-[40%] mx-auto flex-col md:flex-row md:items-center gap-20 md:gap-20 mt-10">
-        <form  onSubmit = {handleSubmit} className="flex flex-col gap-4 w-full justify-center">
-          <div>
-            <Label value="TaskID" />
-            <TextInput
-              type="text"
-              name="TaskID"
-              placeholder="TaskID"
-              required
-              onChange={handleChange}
-              value={formData.TaskID}
-            />
-          </div>
-          <div>
-            <Label value="Category" />
-            <Select 
-             className="" onChange={(e) => setFormData({...formData, Category: e.target.value})}
-            >
-              <option value="Select">Select a Category</option>
+    <div className="p-3 max-w-3xl mx-auto min-h-screen">
+      <h1 className="text-3xl text-center my-7 font-extrabold underline text-blue-950 dark:text-slate-300">Update Assigned Tasks</h1>
+      <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+         <div className="flex flex-col gap-4 sm:flex-row justify-between">
+            <TextInput type="text" onChange={handleChange}  value={formData.title} placeholder="Title" required id="title" className="flex-1"/>
+            <Select className="" onChange={(e) => setFormData({...formData, category: e.target.value})} value={formData.Category}>
+            <option value="Select">Select a Category</option>
               <option value="Elavator">Elavator</option>
               <option value="Pest Control">Pest Control</option>
               <option value="Janitorial">Janitorial</option>
             </Select>
-          </div>
-
-          <div>
-            <Label value="Name" />
-            <TextInput
-              type="text"
-              name="Name"
-              placeholder="Name"
-              required
-              onChange={handleChange}
-              value={formData.Name}
-            />
-          </div>
-          <div>
-            <Label value="Description" />
-            <Textarea
-              type="textarea"
-              name="Description"
-              placeholder="Add a Description..."
-              rows="3"
-              maxLength="200"
-              required
-              onChange={handleChange}
-              value={formData.Description}
-            />
-          </div>
-          <div>
+         </div>
+         
+            
+         <div className="flex flex-col gap-4 sm:flex-row justify-between">
+            <TextInput type="text" onChange={handleChange} value={formData.TaskID} id="TaskID" placeholder="TaskID" className="w-[50%]" required />
+            <TextInput type="number" onChange={handleChange} value={formData.condition} id="condition" placeholder="Condition" min='1' max='100' className="w-[50%]" required />
+         </div>
+         <Textarea type="text" onChange={handleChange} value={formData.description} placeholder='Add a Description...' rows='3' maxLength='500' id="description" required />
+         <p className='text-lg font-semibold'>Sell / Rent</p>
+         <div className="flex">
+            <button type='button' id='type'  onClick={handleChange} value="sale" className={`mr-3 px-7 py-3 font-medium text-sm uppercase shadow-md rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out w-full ${formData.type === "rent" ? "bg-white text-black" : "bg-slate-600 text-white"}`}> 
+               {/* ${type === "rent" ? "bg-white text-black" : "bg-slate-600 text-white"} */}
+               Sell
+            </button>
+            <button type='button' id='type'  onClick={handleChange} value="rent" className={`mr-3 px-7 py-3 font-medium text-sm uppercase shadow-md rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out w-full ${formData.type === "sale" ? "bg-white text-black" : "bg-slate-600 text-white"}`}> 
+               {/* ${type === "rent" ? "bg-white text-black" : "bg-slate-600 text-white"} */}
+               Rent
+            </button>
+         </div>
+         <p className='text-lg font-semibold'>Offer</p>
+         <div className="flex">
+            <button type='button' id='offer'onClick={handleChange} value={true}  className={`mr-3 px-7 py-3 font-medium text-sm uppercase shadow-md rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out w-full ${!formData.offer ? "bg-white text-black" : "bg-slate-600 text-white"} `}> 
+               {/* ${type === "rent" ? "bg-white text-black" : "bg-slate-600 text-white"} */}
+                  Yes
+            </button>
+            <button type='button' id='offer' onClick={handleChange} value={false} className={`mr-3 px-7 py-3 font-medium text-sm uppercase shadow-md rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out w-full ${formData.offer ? "bg-white text-black" : "bg-slate-600 text-white"}`}> 
+               {/* ${type === "rent" ? "bg-white text-black" : "bg-slate-600 text-white"} */}
+                  No
+            </button>
+         </div>
+         <div className="flex items-center gap-2">
+            <TextInput type="number" onChange={handleChange} value={formData.regularPrice} id="regularPrice" min='25' max='10000000' className="w-[50%]" required />
             <div>
-              <Label value="WorkGroupID" />
-              <TextInput
-                type="text"
-                name="WorkGroupID"
-                placeholder="WorkGroupID"
-                required
-                onChange={handleChange}
-                value={formData.WorkGroupID}
-              />
+               <p className="font-semibold">Regular Price</p>
+               <span className="text-xs">($ / month)</span>
             </div>
-            <div>
-              
-              <div>
-                <Label value="Location" />
-                <TextInput
-                  type="text"
-                  name="Location"
-                  onChange={handleChange}
-                  placeholder="Location"
-                  value={formData.Location}
-                  required
-                />
-              </div>
-              <div>
-                <Label value="Duration" />
-                <TextInput
-                  type="number"
-                  name="DurationDays"
-                  placeholder="Duration"
-                  required
-                  onChange={handleChange}
-                  value={formData.DurationDays}
-                />
-              </div>
-            </div>
-          </div>
-          <Button
-            type="submit"
-            gradientDuoTone="purpleToBlue"
-            className="uppercase"
-          >{loading ? 'Assigning...' : 'Assign task'}</Button>
-          {error && <p className="text-red-700 text-sm">{error}</p>}
-        </form>
-      </div>
+         </div>
+         {
+            formData.offer && (
+               <div className="flex items-center gap-2">
+                  <TextInput type="number" onChange={handleChange} value={formData.discountPrice} id="discountPrice" min='0' max='10000000' className="w-[50%]" required />
+                  <div>
+                     <p className="font-semibold">Discount Price</p>
+                     <span className="text-xs">($ / month)</span>
+                  </div>
+               </div>
+            )
+         }
+         <Button type="submit" gradientDuoTone='purpleToBlue' className="uppercase" >Update Shared Resource Listing</Button>
+         {
+            error && (
+               <Alert className='mt-7 py-3 bg-gradient-to-r from-red-100 via-red-300 to-red-400 shadow-shadowOne text-center text-red-600 text-base tracking-wide animate-bounce'>{error}</Alert>
+            )
+         }
+      </form>
     </div>
   )
 }
 
-export default TaskAssign;
+export default s1_UpdateTasks

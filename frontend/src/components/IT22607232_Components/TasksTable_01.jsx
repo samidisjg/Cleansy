@@ -2,11 +2,17 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Table, Button } from "flowbite-react";
 import { Link } from "react-router-dom";
+import jsPDF from 'jspdf';
+import "jspdf-autotable";
 
 const TasksTable_01 = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [showTasksError, setShowTasksError] = useState(false);
   const [showTasks, setShowTasks] = useState([]);
+
+  useEffect(() => {
+    handleShowAssignments(); // Call the function directly when the component mounts
+  }, [currentUser._id]);
 
   const handleShowAssignments = async () => {
     try {
@@ -22,9 +28,35 @@ const TasksTable_01 = () => {
     }
   };
 
-  useEffect(() => {
-    handleShowAssignments(); // Call the function directly when the component mounts
-  }, [currentUser._id]);
+  const handleDownloadPDF = () => {
+    const payDoc = new jsPDF();
+    const tableColumn = ["Date", "Task ID", "Category", "Name", "Description", "WorkGroupID", "Location", "Duration(Days)"];
+    const tableRows = [];
+
+    showTasks.forEach(task => {
+      const rowData = [
+        new Date(task.updatedAt).toLocaleDateString(),
+        task.TaskID,
+        task.Category,
+        task.Name,
+        task.Description,
+        task.WorkGroupID,
+        task.Location,
+        task.DurationDays
+      ];
+      tableRows.push(rowData);
+    });
+
+    const d = new Date();
+    const year = d.getFullYear();
+    const month = d.getMonth() + 1;
+    const date = d.getDate();
+
+    payDoc.autoTable(tableColumn, tableRows, { startY: 20 });
+    payDoc.text("List of Tasks", 14, 15);
+    payDoc.save(`Tasks_Report_${year +" "+ month +" "+date}.pdf`);
+  };
+
   return (
     <div className="w-full table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
       {currentUser.isFacilityAdmin && (
@@ -44,42 +76,39 @@ const TasksTable_01 = () => {
                 <span>Edit</span>
               </Table.HeadCell>
             </Table.Head>
-            {showTasks.map((tasks) => (
-              <>
-                <Table.Body key={tasks._id} className="divide-y">
-                  <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                    <Table.Cell>
-                      {new Date(tasks.updatedAt).toLocaleDateString()}
-                    </Table.Cell>
-
-                    <Table.Cell>{tasks.TaskID}</Table.Cell>
-                    <Table.Cell>{tasks.Category}</Table.Cell>
-                    <Table.Cell>{tasks.Name}</Table.Cell>
-                    <Table.Cell>{tasks.Description}</Table.Cell>
-                    <Table.Cell>{tasks.WorkGroupID}</Table.Cell>
-                    <Table.Cell>{tasks.Location}</Table.Cell>
-                    <Table.Cell>{tasks.DurationDays}</Table.Cell>
-                    <Table.Cell>
-                      <span
-                        onClick={() => {}}
-                        className="font-medium text-red-500 hover:underline cursor-pointer"
-                      >
-                        Delete
-                      </span>
-                    </Table.Cell>
-                    <Table.Cell>
-                      <Link
-                        className="text-teal-500 hover:underline"
-                        to={`/update-tasks:taskid/${tasks._id}`}
-                      >
-                        <span>Edit</span>
-                      </Link>
-                    </Table.Cell>
-                  </Table.Row>
-                </Table.Body>
-              </>
+            {showTasks.map((task) => (
+              <Table.Body key={task._id} className="divide-y">
+                <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                  <Table.Cell>{new Date(task.updatedAt).toLocaleDateString()}</Table.Cell>
+                  <Table.Cell>{task.TaskID}</Table.Cell>
+                  <Table.Cell>{task.Category}</Table.Cell>
+                  <Table.Cell>{task.Name}</Table.Cell>
+                  <Table.Cell>{task.Description}</Table.Cell>
+                  <Table.Cell>{task.WorkGroupID}</Table.Cell>
+                  <Table.Cell>{task.Location}</Table.Cell>
+                  <Table.Cell>{task.DurationDays}</Table.Cell>
+                  <Table.Cell>
+                    <span
+                      onClick={() => {}}
+                      className="font-medium text-red-500 hover:underline cursor-pointer"
+                    >
+                      Delete
+                    </span>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <Link
+                      className="text-teal-500 hover:underline"
+                      to={`/update-tasks:taskid/${task._id}`}
+                    >
+                      <span>Edit</span>
+                    </Link>
+                  </Table.Cell>
+                </Table.Row>
+              </Table.Body>
             ))}
           </Table>
+
+          <Button onClick={handleDownloadPDF}>Download PDF</Button>
 
           <p className="text-red-700 mt-5">
             {showTasksError ? "Error fetching tasks" : ""}
@@ -87,10 +116,11 @@ const TasksTable_01 = () => {
 
           {showTasks &&
             showTasks.length > 0 &&
-            showTasks.map((tasks) => (
+            showTasks.map((task) => (
               <Link
+                key={task._id}
                 className="text-slate-700 font-semibold hover:underline truncate flex-1"
-                to={`/tasks-table/${tasks._id}`}
+                to={`/tasks-table/${task._id}`}
               ></Link>
             ))}
         </>
