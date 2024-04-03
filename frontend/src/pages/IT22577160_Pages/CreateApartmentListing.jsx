@@ -23,6 +23,7 @@ const CreateApartmentListing = () => {
       parking: false,
       furnished: false,
    })
+   
    const {type,ownerName, ownerContactNumber, description, blockNumber, bedrooms, bathrooms, regularPrice, discountPrice, offer, parking, furnished, imageUrls} = formData;
    const [imageUploadError, setImageUploadError] = useState(false);
    const [uploading, setUploading] = useState(false);
