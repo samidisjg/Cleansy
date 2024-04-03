@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import DashSidebar from "../components/DashSidebar";
 import DashProfile from "../components/DashProfile";
 import DashUsers from "../components/DashUsers";
-import DashProperties_02 from "../components/IT22577160_Components/DashProperties_02";
+import DashSharedResourcesList_02 from "../components/IT22577160_Components/DashSharedResourcesList_02";
 import DashStaff_04 from "../components/IT22603418_Components/DashStaff_04";
 import DashServices from "../components/IT22350114_Components/DashServices";
 import DashApartmentList_02 from "../components/IT22577160_Components/DashApartmentList_02";
@@ -12,6 +12,8 @@ import DashUserPayments_03 from './../components/IT22602978_Components/DashUserP
 import AddPaymentProfile from './IT22602978_Pages/AddPaymentProfile';
 import DashMaintenance from "../components/IT22607232_Components/DashMaintenance"
 import { DashAmenity } from "../components/IT22003546_Components/DashAmenity";
+import DashComments_02 from "../components/IT22577160_Components/DashComments_02";
+
 
 
 const Dashboard = () => {
@@ -33,7 +35,7 @@ const Dashboard = () => {
       {/* profile */}
       {tab === 'profile' && <DashProfile/>}
       {/* properties */}
-      {tab === 'properties' && <DashProperties_02 />}
+      {tab === 'properties' && <DashSharedResourcesList_02 />}
       {/* users */}
       {tab === 'users' && <DashUsers/>}
       {/* staffs */}
@@ -52,6 +54,8 @@ const Dashboard = () => {
       {tab === "maintenance" && <DashMaintenance />}
        {/* amenity */}
       {tab == 'amenity' && <DashAmenity/>}
+      {/* Comments */}
+      {tab == 'comments' && <DashComments_02/>}
     </div>
   )
 }

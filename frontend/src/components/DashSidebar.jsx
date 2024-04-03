@@ -1,11 +1,12 @@
 import { Sidebar } from "flowbite-react"
 import { useEffect, useState } from "react";
 import { MdOutlineHomeWork } from "react-icons/md";
-import { HiArrowSmRight, HiDocument, HiOutlineUserCircle, HiOutlineUserGroup, HiShoppingBag, HiUser } from "react-icons/hi";
+import { HiArrowSmRight, HiDocument, HiOutlineUserCircle, HiOutlineUserGroup, HiShoppingBag, HiUser, HiAnnotation } from "react-icons/hi";
 import { Link, useLocation } from "react-router-dom";
 import { signOutSuccess } from "../../redux/user/userSlice";
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
+import { GrResources } from "react-icons/gr";
 
 const DashSidebar = () => {
   const location = useLocation();
@@ -91,8 +92,8 @@ const DashSidebar = () => {
               currentUser.isPropertyAdmin && (
                 <>
                   <Link to='/dashboard?tab=properties'>
-                    <Sidebar.Item active={tab === 'properties'} icon={HiOutlineUserGroup} as='div'>
-                      Properties
+                    <Sidebar.Item active={tab === 'properties'} icon={GrResources} as='div'>
+                      Shared Resources
                     </Sidebar.Item>
                   </Link>
                 </>
@@ -151,6 +152,17 @@ const DashSidebar = () => {
                   <Link to='/dashboard?tab=apartmentList'>
                     <Sidebar.Item active={tab === 'apartmentList'} icon={MdOutlineHomeWork} as='div'>
                       Apartment List
+                    </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
+            {
+              currentUser.isPropertyAdmin && (
+                <>
+                  <Link to='/dashboard?tab=comments'>
+                    <Sidebar.Item active={tab === 'comments'} icon={HiAnnotation} as='div'>
+                      Comments
                     </Sidebar.Item>
                   </Link>
                 </>
