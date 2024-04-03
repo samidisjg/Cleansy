@@ -1,13 +1,10 @@
-import {  Button, Navbar, TextInput } from 'flowbite-react'
-import { BiMenuAltLeft } from "react-icons/bi";
-import { IoIosArrowDown } from "react-icons/io";
 import { AiFillHeart, AiFillStar, AiOutlineEye, AiOutlineHeart, AiOutlineSearch, AiOutlineShoppingCart, AiOutlineStar } from "react-icons/ai";
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import MarketPlaceHeader_02 from '../../components/IT22577160_Components/MarketPlaceHeader_02';
 
 const MarketPlace = () => {
    const [resources, setResources] = useState([]);
-   console.log(resources);
 
    useEffect(() => {
       const fetchPost = async () => {
@@ -17,47 +14,10 @@ const MarketPlace = () => {
       }
       fetchPost();
    }, [])
+
   return (
    <>
-      <Navbar className="border-b-2 sticky top-16 bg-[#3321c8] dark:bg-slate-600 z-40 flex justify-between">
-         <div className='sm:flex items-center   bg-white rounded-md  w-[200px] h-14 sm:w-[270px] hidden '>
-            {/* <div> */}
-               <BiMenuAltLeft size={30} className='text-slate-800' />
-               <button className='h-full w-full flex justify-between items-center pl-10 font-sans text-lg  text-slate-800 font-semibold select-none'>
-                  All Categories 
-               </button>
-               <IoIosArrowDown size={20} className='text-slate-800' />
-            {/* </div> */}
-         </div>
-         {/* <div className='sm:flex items-center  mx-auto hidden '> */}
-            {/* <div> */}
-               {/* <Button className=''>
-                  Let's Play Games
-               </Button> */}
-            {/* </div> */}
-         {/* </div> */}
-      
-         <div className='flex items-center'>
-            <div className='flex items-center relative cursor-pointer mr-[15px]'>
-               <AiOutlineHeart size={30} color='rgb(255 255 255 / 83%)'/>
-               <span className='absolute right-0 top-0 rounded-full bg-[#3bc177] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center'>
-                  0
-               </span>
-            </div>
-            <div className='flex items-center relative cursor-pointer mr-[15px]'>
-               <AiOutlineShoppingCart size={30} color='rgb(255 255 255 / 83%)'/>
-               <span className='absolute right-0 top-0 rounded-full bg-[#3bc177] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center'>
-                  1
-               </span>
-            </div> 
-            <form>
-               <TextInput type="text" placeholder="Search..." rightIcon={AiOutlineSearch} />
-            </form>
-            {/* <Button className="w-12 h-10 lg:hidden" color="gray" pill>
-               <AiOutlineSearch/>
-            </Button> */}
-         </div>
-      </Navbar>
+      <MarketPlaceHeader_02 />
       <div className='max-w-6xl mx-auto p-3 flex flex-col gap-8 py-7'>
         {
            resources && resources.length > 0 && (
