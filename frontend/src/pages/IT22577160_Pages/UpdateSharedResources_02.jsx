@@ -1,12 +1,13 @@
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { Alert, Button, FileInput, Select, TextInput, Textarea } from "flowbite-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { app } from "../../firebase";
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const CreateSharedResources_02 = () => {
+const UpdateSharedResources_02 = () => {
    const [file, setFile] = useState(null);
    const [imageUploadProgress, setImageUploadProgress] = useState(null);
    const [imageUploadError, setImageUploadError] = useState(null);
@@ -24,6 +25,29 @@ const CreateSharedResources_02 = () => {
    })
    const [error, setError] = useState(null);
    const navigate = useNavigate()
+   const { resourceId } = useParams()
+   const { currentUser} = useSelector((state) => state.user);
+
+   useEffect(() => {
+      try {
+         const fetchResources = async () => {
+            const res = await fetch(`/api/sharedResourcesListing/getSharedResources?resourceId=${resourceId}`);
+            const data = await res.json();
+            if(!res.ok) {
+               console.log(data.message);
+               setError(data.message);
+               return;
+            }
+            if(res.ok) {
+               setError(null);
+               setFormData(data.resources[0]);
+            }
+         }
+         fetchResources();
+      } catch (error) {
+         console.log(error);
+      }
+   }, [resourceId])
 
    const handleUploadImage = async () => {
       try {
@@ -77,8 +101,8 @@ const CreateSharedResources_02 = () => {
    const handleSubmit = async (e) => {
       e.preventDefault();
       try {
-         const res = await fetch('/api/sharedResourcesListing/create', {
-            method: 'POST',
+         const res = await fetch(`/api/sharedResourcesListing/updateSharedResource/${formData._id}/${currentUser._id}`, {
+            method: 'PUT',
             headers: {
                'Content-Type': 'application/json'
             },
@@ -91,7 +115,6 @@ const CreateSharedResources_02 = () => {
          }
          if(res.ok) {
             setError(null);
-            // navigate(`/sharedResource/${data.slug}`)
             navigate(`/dashboard?tab=properties`)
          }
       } catch (error) {
@@ -102,11 +125,11 @@ const CreateSharedResources_02 = () => {
 
   return (
     <div className="p-3 max-w-3xl mx-auto min-h-screen">
-      <h1 className="text-3xl text-center my-7 font-extrabold underline text-blue-950 dark:text-slate-300">Create Shared Resources Listing</h1>
+      <h1 className="text-3xl text-center my-7 font-extrabold underline text-blue-950 dark:text-slate-300">Update Shared Resources Listing</h1>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
          <div className="flex flex-col gap-4 sm:flex-row justify-between">
             <TextInput type="text" onChange={handleChange}  value={formData.title} placeholder="Title" required id="title" className="flex-1"/>
-            <Select className="" onChange={(e) => setFormData({...formData, category: e.target.value})}>
+            <Select className="" onChange={(e) => setFormData({...formData, category: e.target.value})} value={formData.category}>
                <option value="Uncategorized">Select a Category</option>
                <option value="Refrigerator">Refrigerator</option>
                <option value="Heaters">Heaters</option>
@@ -198,7 +221,7 @@ const CreateSharedResources_02 = () => {
                </div>
             )
          }
-         <Button type="submit" gradientDuoTone='purpleToBlue' className="uppercase" >Create Shared Resource Listing</Button>
+         <Button type="submit" gradientDuoTone='purpleToBlue' className="uppercase" >Update Shared Resource Listing</Button>
          {
             error && (
                <Alert className='mt-7 py-3 bg-gradient-to-r from-red-100 via-red-300 to-red-400 shadow-shadowOne text-center text-red-600 text-base tracking-wide animate-bounce'>{error}</Alert>
@@ -209,4 +232,4 @@ const CreateSharedResources_02 = () => {
   )
 }
 
-export default CreateSharedResources_02
+export default UpdateSharedResources_02
