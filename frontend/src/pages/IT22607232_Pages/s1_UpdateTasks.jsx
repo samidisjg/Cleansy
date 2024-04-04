@@ -1,8 +1,6 @@
 
 import { Alert, Button, FileInput, Select, TextInput, Textarea } from "flowbite-react"
 import { useEffect, useState } from "react"
-import { CircularProgressbar } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -100,50 +98,13 @@ const s1_UpdateTasks = () => {
             
          <div className="flex flex-col gap-4 sm:flex-row justify-between">
             <TextInput type="text" onChange={handleChange} value={formData.TaskID} id="TaskID" placeholder="TaskID" className="w-[50%]" required />
-            <TextInput type="number" onChange={handleChange} value={formData.condition} id="condition" placeholder="Condition" min='1' max='100' className="w-[50%]" required />
+            
          </div>
-         <Textarea type="text" onChange={handleChange} value={formData.description} placeholder='Add a Description...' rows='3' maxLength='500' id="description" required />
-         <p className='text-lg font-semibold'>Sell / Rent</p>
-         <div className="flex">
-            <button type='button' id='type'  onClick={handleChange} value="sale" className={`mr-3 px-7 py-3 font-medium text-sm uppercase shadow-md rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out w-full ${formData.type === "rent" ? "bg-white text-black" : "bg-slate-600 text-white"}`}> 
-               {/* ${type === "rent" ? "bg-white text-black" : "bg-slate-600 text-white"} */}
-               Sell
-            </button>
-            <button type='button' id='type'  onClick={handleChange} value="rent" className={`mr-3 px-7 py-3 font-medium text-sm uppercase shadow-md rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out w-full ${formData.type === "sale" ? "bg-white text-black" : "bg-slate-600 text-white"}`}> 
-               {/* ${type === "rent" ? "bg-white text-black" : "bg-slate-600 text-white"} */}
-               Rent
-            </button>
-         </div>
-         <p className='text-lg font-semibold'>Offer</p>
-         <div className="flex">
-            <button type='button' id='offer'onClick={handleChange} value={true}  className={`mr-3 px-7 py-3 font-medium text-sm uppercase shadow-md rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out w-full ${!formData.offer ? "bg-white text-black" : "bg-slate-600 text-white"} `}> 
-               {/* ${type === "rent" ? "bg-white text-black" : "bg-slate-600 text-white"} */}
-                  Yes
-            </button>
-            <button type='button' id='offer' onClick={handleChange} value={false} className={`mr-3 px-7 py-3 font-medium text-sm uppercase shadow-md rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out w-full ${formData.offer ? "bg-white text-black" : "bg-slate-600 text-white"}`}> 
-               {/* ${type === "rent" ? "bg-white text-black" : "bg-slate-600 text-white"} */}
-                  No
-            </button>
-         </div>
-         <div className="flex items-center gap-2">
-            <TextInput type="number" onChange={handleChange} value={formData.regularPrice} id="regularPrice" min='25' max='10000000' className="w-[50%]" required />
-            <div>
-               <p className="font-semibold">Regular Price</p>
-               <span className="text-xs">($ / month)</span>
-            </div>
-         </div>
-         {
-            formData.offer && (
-               <div className="flex items-center gap-2">
-                  <TextInput type="number" onChange={handleChange} value={formData.discountPrice} id="discountPrice" min='0' max='10000000' className="w-[50%]" required />
-                  <div>
-                     <p className="font-semibold">Discount Price</p>
-                     <span className="text-xs">($ / month)</span>
-                  </div>
-               </div>
-            )
-         }
-         <Button type="submit" gradientDuoTone='purpleToBlue' className="uppercase" >Update Shared Resource Listing</Button>
+         <Textarea type="text" onChange={handleChange} value={formData.Description} placeholder='Add a Description...' rows='3' maxLength='500' id="description" required />
+         
+        
+        
+         <Button type="submit" gradientDuoTone='purpleToBlue' className="uppercase" >Update Assighned Tasks</Button>
          {
             error && (
                <Alert className='mt-7 py-3 bg-gradient-to-r from-red-100 via-red-300 to-red-400 shadow-shadowOne text-center text-red-600 text-base tracking-wide animate-bounce'>{error}</Alert>

@@ -28,6 +28,17 @@ const TasksTable_01 = () => {
     }
   };
 
+  const handleTasksDelete = async (TaskID) => {
+    try{
+      const res = await fetch(`/api/taskAssign/delete/${TaskID}`, {
+      });
+      const data = await res.json();
+    }catch (error) {
+      console.log(error.message);
+    }
+  }
+
+
   const handleDownloadPDF = () => {
     const payDoc = new jsPDF();
     const tableColumn = ["Date", "Task ID", "Category", "Name", "Description", "WorkGroupID", "Location", "Duration(Days)"];
@@ -71,7 +82,7 @@ const TasksTable_01 = () => {
               <Table.HeadCell>WorkGroupID</Table.HeadCell>
               <Table.HeadCell>Location</Table.HeadCell>
               <Table.HeadCell>Duration(Days)</Table.HeadCell>
-              <Table.HeadCell>Delete</Table.HeadCell>
+              <Table.HeadCell onClick={() =>handleTasksDelete(task_id)}>Delete</Table.HeadCell>
               <Table.HeadCell>
                 <span>Edit</span>
               </Table.HeadCell>
