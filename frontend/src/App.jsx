@@ -20,6 +20,8 @@ import CreateSharedResources_02 from './pages/IT22577160_Pages/CreateSharedResou
 import UpdateSharedResources_02 from './pages/IT22577160_Pages/UpdateSharedResources_02'
 import SharedResourcesPage_02 from './pages/IT22577160_Pages/SharedResourcesPage_02'
 import ScrollToTop_02 from './components/IT22577160_Components/ScrollToTop_02'
+import MarketPlace from './pages/IT22577160_Pages/MarketPlace'
+import SearchResources_02 from './pages/IT22577160_Pages/SearchResources_02'
 
 
 
@@ -52,6 +54,8 @@ function App() {
               <Route path='/projects' element={<Projects/>}/>
               <Route path='/create_04' element={<RequestLeave_04/>}/>
               <Route path='/sharedResource/:resourceSlug' element={<SharedResourcesPage_02 />}/>
+              <Route path='/marketPlace' element={<MarketPlace />}/>
+              <Route path='/searchResource' element={<SearchResources_02 />}/>
             </Routes>
 
           </div>
