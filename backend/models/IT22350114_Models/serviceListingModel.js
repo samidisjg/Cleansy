@@ -45,6 +45,7 @@ const ServiceListingSchema = new mongoose.Schema(
       type: [String],
       required: true,
     },
+    
   },
   { timestamps: true }
 );
