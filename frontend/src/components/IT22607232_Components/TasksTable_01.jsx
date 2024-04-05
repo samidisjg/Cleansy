@@ -116,7 +116,7 @@ const TasksTable_01 = () => {
                   <Table.Cell>
                     <Link
                       className="text-teal-500 hover:underline"
-                      to={`/update-tasks:taskid/${task._id}`}
+                      to={`/update-tasks/${task._id}`}
                     >
                       <span>Edit</span>
                     </Link>
