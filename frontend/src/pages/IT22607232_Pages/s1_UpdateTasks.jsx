@@ -129,6 +129,7 @@ const S1_UpdateTasks = () => {
             <Label value="Category" />
             <Select 
              className="" onChange={(e) => setFormData({...formData, Category: e.target.value})}
+             value={formData.Category}
             >
               <option value="Select">Select a Category</option>
               <option value="Elavator">Elavator</option>
