@@ -69,13 +69,16 @@ const Header = () => {
       </div>
          <Navbar.Collapse>
             <Navbar.Link active={path === '/'} as={'div'}>
-               <Link to='/' className="hover:text-orange-500 active:text-orange-600">Home</Link>
+               <Link to='/' className="hover:text-orange-500 active:text-orange-600 hover:underline">Home</Link>
             </Navbar.Link>
             <Navbar.Link active={path === '/about'} as={'div'}>
-               <Link to='/about' className="hover:text-orange-500 active:text-orange-600">About</Link>
+               <Link to='/about' className="hover:text-orange-500 active:text-orange-600 hover:underline">About</Link>
             </Navbar.Link>
             <Navbar.Link active={path === '/projects'} as={'div'}>
-               <Link to='/projects' className="hover:text-orange-500 active:text-orange-600">Projects</Link>
+               <Link to='/projects' className="hover:text-orange-500 active:text-orange-600 hover:underline">Projects</Link>
+            </Navbar.Link>
+            <Navbar.Link active={path === '/marketPlace'} as={'div'}>
+               <Link to='/marketPlace' className="hover:text-orange-500 active:text-orange-600 hover:underline">Market Place</Link>
             </Navbar.Link>
          </Navbar.Collapse>
     </Navbar>

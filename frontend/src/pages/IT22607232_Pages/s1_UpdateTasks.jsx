@@ -1,61 +1,118 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
-const TaskList = () => {
-  const [tasks, setTasks] = useState([]);
-  const navigate = useNavigate();
+import { Alert, Button, FileInput, Select, TextInput, Textarea } from "flowbite-react"
+import { useEffect, useState } from "react"
+import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-  useEffect(() => {
-    const fetchTasks = async () => {
+const s1_UpdateTasks = () => {
+  const [formData, setFormData] = useState({
+    TaskID: "",
+    Category: "",
+    Name: "",
+    Description: "",
+    WorkGroupID: "",
+    Location: "",
+    DurationDays: "2",
+  });
+  const [error, setError] = useState(null);
+  const navigate = useNavigate()
+  const { TaskID } = useParams()
+  const { currentUser} = useSelector((state) => state.user);
+
+
+   useEffect(() => {
       try {
-        const response = await axios.get('/api/taskAssign/all');
-        setTasks(response.data);
+         const fetchtasks = async () => {
+            const res = await fetch(`/api/update-tasks:taskid=${TaskID}`);
+            const data = await res.json();
+            if(!res.ok) {
+               console.log(data.message);
+               setError(data.message);
+               return;
+            }
+            if(res.ok) {
+               setError(null);
+               setFormData(data.tasks[0]);
+            }
+         }
+         fetchtasks();
       } catch (error) {
-        console.error('Error fetching tasks:', error);
+         console.log(error);
       }
-    };
+   }, [resourceId])
 
-    fetchTasks();
-  }, []);
+   const handleChange = (e) => {
+      let boolean = null;
+      if(e.target.value === "true") {
+         boolean = true;
+      }
+      if(e.target.value === "false") {
+         boolean = false;
+      }
+      if(!e.target.files) {
+         setFormData((prevState) => ({
+            ...prevState, [e.target.id]: boolean ?? e.target.value
+         }))
+      }
+   }
 
-  const handleDelete = async (TaskID) => {
-    try {
-      await axios.delete(`/api/taskAssign/delete/${TaskID}`);
-      setTasks(tasks.filter(task => task.TaskID !== TaskID));
-      navigate('/dashboard?tab=maintenance'); // Redirect to dashboard maintenance tab
-    } catch (error) {
-      console.error('Error deleting task:', error);
-    }
-  };
-
-  const handleUpdate = async (TaskID) => {
-    // Implement the update functionality
-    // You can redirect to a new page or display a modal for updating the task
-    console.log('Update task with ID:', TaskID);
-  };
+   const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+         const res = await fetch(`/api/taskAssign/update/:taskid=/${formData._id}/${currentUser._id}`, {
+            method: 'PUT',
+            headers: {
+               'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+         })
+         const data = await res.json();
+         if(!res.ok) {
+            setError(data.message);
+            return;
+         }
+         if(res.ok) {
+            setError(null);
+            navigate(`/dashboard?tab=maintenance`)
+         }
+      } catch (error) {
+         setError('Failed to assign tasks. Please try again later.');
+         console.log(error);
+      }
+   }
 
   return (
-    <div>
-      <h2>Task List</h2>
-      <ul>
-        {tasks.map(task => (
-          <li key={task._id}>
-            <p>Task ID: {task.TaskID}</p>
-            <p>Category: {task.Category}</p>
-            <p>Name: {task.Name}</p>
-            <p>Description: {task.Description}</p>
-            <p>WorkGroupID: {task.WorkGroupID}</p>
-            <p>Date: {task.Date}</p>
-            <p>Location: {task.Location}</p>
-            <p>Duration: {task.DurationDays}</p>
-            <button onClick={() => handleDelete(task.TaskID)}>Delete</button>
-            <button onClick={() => handleUpdate(task.TaskID)}>Update</button>
-          </li>
-        ))}
-      </ul>
+    <div className="p-3 max-w-3xl mx-auto min-h-screen">
+      <h1 className="text-3xl text-center my-7 font-extrabold underline text-blue-950 dark:text-slate-300">Update Assigned Tasks</h1>
+      <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+         <div className="flex flex-col gap-4 sm:flex-row justify-between">
+            <TextInput type="text" onChange={handleChange}  value={formData.title} placeholder="Title" required id="title" className="flex-1"/>
+            <Select className="" onChange={(e) => setFormData({...formData, category: e.target.value})} value={formData.Category}>
+            <option value="Select">Select a Category</option>
+              <option value="Elavator">Elavator</option>
+              <option value="Pest Control">Pest Control</option>
+              <option value="Janitorial">Janitorial</option>
+            </Select>
+         </div>
+         
+            
+         <div className="flex flex-col gap-4 sm:flex-row justify-between">
+            <TextInput type="text" onChange={handleChange} value={formData.TaskID} id="TaskID" placeholder="TaskID" className="w-[50%]" required />
+            
+         </div>
+         <Textarea type="text" onChange={handleChange} value={formData.Description} placeholder='Add a Description...' rows='3' maxLength='500' id="description" required />
+         
+        
+        
+         <Button type="submit" gradientDuoTone='purpleToBlue' className="uppercase" >Update Assighned Tasks</Button>
+         {
+            error && (
+               <Alert className='mt-7 py-3 bg-gradient-to-r from-red-100 via-red-300 to-red-400 shadow-shadowOne text-center text-red-600 text-base tracking-wide animate-bounce'>{error}</Alert>
+            )
+         }
+      </form>
     </div>
-  );
-};
+  )
+}
 
-export default TaskList;
+export default s1_UpdateTasks
