@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch  } from "react-redux";
 import { Table, Button } from "flowbite-react";
 import { Link } from "react-router-dom";
 import jsPDF from 'jspdf';
@@ -9,6 +9,7 @@ const TasksTable_01 = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [showTasksError, setShowTasksError] = useState(false);
   const [showTasks, setShowTasks] = useState([]);
+  const dispatch = useDispatch ();
 
   useEffect(() => {
     handleShowAssignments(); // Call the function directly when the component mounts
@@ -28,11 +29,17 @@ const TasksTable_01 = () => {
     }
   };
 
-  const handleTasksDelete = async (TaskID) => {
+  const handleTasksDelete = async (_id) => {
     try{
-      const res = await fetch(`/api/taskAssign/delete/${TaskID}`, {
+      const res = await fetch(`/api/taskAssign/delete/${_id}`, {
+        method: 'DELETE',
       });
       const data = await res.json();
+      if (data.success === false) {
+        console.log(data.message);
+        return;
+      }
+      setShowTasks((prev) => prev.filter((task) => task._id !== _id));
     }catch (error) {
       console.log(error.message);
     }
@@ -82,7 +89,7 @@ const TasksTable_01 = () => {
               <Table.HeadCell>WorkGroupID</Table.HeadCell>
               <Table.HeadCell>Location</Table.HeadCell>
               <Table.HeadCell>Duration(Days)</Table.HeadCell>
-              <Table.HeadCell onClick={() =>handleTasksDelete(task_id)}>Delete</Table.HeadCell>
+              <Table.HeadCell onClick={() => handleTasksDelete(task._id)} >Delete</Table.HeadCell>
               <Table.HeadCell>
                 <span>Edit</span>
               </Table.HeadCell>
@@ -100,7 +107,7 @@ const TasksTable_01 = () => {
                   <Table.Cell>{task.DurationDays}</Table.Cell>
                   <Table.Cell>
                     <span
-                      onClick={() => {}}
+                     onClick={() =>handleTasksDelete(task._id)}
                       className="font-medium text-red-500 hover:underline cursor-pointer"
                     >
                       Delete
@@ -109,7 +116,7 @@ const TasksTable_01 = () => {
                   <Table.Cell>
                     <Link
                       className="text-teal-500 hover:underline"
-                      to={`/update-tasks:taskid/${task._id}`}
+                      to={`/update-tasks/${task._id}`}
                     >
                       <span>Edit</span>
                     </Link>
