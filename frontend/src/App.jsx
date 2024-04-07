@@ -25,6 +25,7 @@ import MarketPlace from './pages/IT22577160_Pages/MarketPlace'
 import SearchResources_02 from './pages/IT22577160_Pages/SearchResources_02'
 import TasksTable_01 from './components/IT22607232_Components/TasksTable_01'
 import S1_UpdateTasks from './pages/IT22607232_Pages/s1_UpdateTasks'
+import StarRating from './components/IT22607232_Components/StarRating'
 
 
 
@@ -50,6 +51,7 @@ function App() {
                 <Route path="/task-assign" element={<TaskAssign/>} />
                 <Route path="/tasks-table:taskid" element={<TasksTable_01/>} />
                 <Route path="/update-tasks/:taskid" element={<S1_UpdateTasks/>} />
+                <Route path="/star-ratingWorkers" element={<StarRating/>} />
 
             
               </Route>
