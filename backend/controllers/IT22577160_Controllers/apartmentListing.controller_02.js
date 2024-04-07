@@ -84,15 +84,49 @@ export const getListing = async (req, res, next) => {
    }
 }
 
-// get user details
-export const getUserDetails = async (req, res, next) => {
+// get all apartment listings
+export const getApartmentListings = async (req, res, next) => {
    try {
-      const user = await User.findById(req.params.id);
-      if(!user){
-         return next(errorHandler(404, 'User not found'));
+      const limit = parseInt(req.query.limit) || 9;
+      const startIndex = parseInt(req.query.startIndex) || 0;
+      let offer = req.query.offer;
+
+      if(offer === undefined || offer === 'false') {
+         offer = { $in: [false, true] };
       }
-      const {password: pass, ...rest} = user._doc;
-      res.status(200).json(rest);
+
+      let furnished = req.query.furnished;
+
+      if(furnished === undefined || furnished === 'false') {
+         furnished = { $in: [false, true] };
+      }
+
+      let parking = req.query.parking;
+
+      if(parking === undefined || parking === 'false') {
+         parking = { $in: [false, true] };
+      }
+
+      let type = req.query.type;
+
+      if(type === undefined || type === 'all') {
+         type = { $in: ['sale', 'rent'] };
+      }
+
+      const searchTerm = req.query.searchTerm || '';
+      const sort = req.query.sort || 'createdAt';
+      const order = req.query.order || 'desc';
+
+      const listings = await ApartmentListing.find({
+         ownerName: { $regex: searchTerm, $options: 'i' },
+         description: { $regex: searchTerm, $options: 'i' },
+         offer,
+         furnished,
+         parking,
+         type
+      }).sort({ [sort]: order }).limit(limit).skip(startIndex);
+
+      return res.status(200).json(listings);
    } catch (error) {
       next(error);
    }
