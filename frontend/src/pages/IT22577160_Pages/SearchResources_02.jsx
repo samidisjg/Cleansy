@@ -146,8 +146,8 @@ const SearchResources_02 = () => {
                   <option value="Ladder">Ladder</option>
                   </Select>
                </div>
-               <Button type='submit' outline gradientDuoTone='purpleToBlue'>
-                  Apply Filters
+               <Button type='submit' gradientDuoTone='purpleToBlue'>
+                  SEARCH
                </Button>
             </form>
          </div>

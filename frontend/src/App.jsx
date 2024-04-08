@@ -26,6 +26,7 @@ import SearchResources_02 from './pages/IT22577160_Pages/SearchResources_02'
 import TasksTable_01 from './components/IT22607232_Components/TasksTable_01'
 import S1_UpdateTasks from './pages/IT22607232_Pages/s1_UpdateTasks'
 import ApartmentListingPage_02 from './pages/IT22577160_Pages/ApartmentListingPage_02'
+import SearchApartments_02 from './pages/IT22577160_Pages/SearchApartments_02'
 
 
 
@@ -64,6 +65,7 @@ function App() {
               <Route path='/marketPlace' element={<MarketPlace />}/>
               <Route path='/searchResource' element={<SearchResources_02 />}/>
               <Route path='/apartmentListing/:listingId' element={<ApartmentListingPage_02 />}/>
+              <Route path='/searchApartments' element={<SearchApartments_02 />}/>
             </Routes>
 
           </div>

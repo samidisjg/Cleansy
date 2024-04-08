@@ -9,7 +9,6 @@ router.get('/apartmentListings/:id', verifyToken, getApartmentListing);
 router.delete('/delete/:id', verifyToken, deleteListing);
 router.post('/update/:id', verifyToken, updateListing);
 router.get('/getListing/:id', getListing);
-// router.get('/:id', verifyToken, getUserDetails);
 router.get('/getListings', getApartmentListings);
 
 export default router;
