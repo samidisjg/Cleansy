@@ -1,6 +1,7 @@
 import { Button, Select, TextInput, Checkbox } from 'flowbite-react'
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ApartmentListingCard_02 from '../../components/IT22577160_Components/ApartmentListingCard_02';
 
 const SearchApartments_02 = () => {
    const [sidebardata, setSidebardata] = useState({
@@ -14,6 +15,7 @@ const SearchApartments_02 = () => {
    });
    const [loading, setLoading] = useState(false);
    const [listings, setListings] = useState([]);
+   const [showMore, setShowMore] = useState(false);
    const navigate = useNavigate();
 
    const handleChange = (e) => {
@@ -63,6 +65,11 @@ const SearchApartments_02 = () => {
          const searchQuery = urlParams.toString();
          const res = await fetch(`/api/apartmentListing/getListings?${searchQuery}`);
          const data = await res.json();
+         if (data.length > 8) {
+            setShowMore(true);
+         } else {
+            setShowMore(false);
+         }
          setListings(data);
          setLoading(false);
       }
@@ -82,6 +89,20 @@ const SearchApartments_02 = () => {
       urlParams.set('order', sidebardata.order);
       const searchQuery = urlParams.toString();
       navigate(`/searchApartments?${searchQuery}`);
+   }
+
+   const onShowMoreClick = async () => {
+      const numberOfListings = listings.length;
+      const startIndex = numberOfListings;
+      const urlParams = new URLSearchParams(location.search);
+      urlParams.set('startIndex', startIndex);
+      const searchQuery = urlParams.toString();
+      const res = await fetch(`/api/apartmentListing/getListings?${searchQuery}`);
+      const data = await res.json();
+      if (data.length < 9) {
+         setShowMore(false);
+      }
+      setListings([...listings, ...data]);
    }
 
   return (
@@ -138,6 +159,20 @@ const SearchApartments_02 = () => {
       </div>
       <div className="flex-1">
          <h1 className='text-3xl font-semibold sm:border-b border-gray-500 p-3 mt-5'>Listing Result:</h1>
+         <div className="p-7 flex flex-wrap gap-4">
+            {!loading && listings.length === 0 && (
+               <p className='text-xl text-center w-full font-semibold'>No Listings Found!</p>
+            )}
+            {loading && (
+               <p className='text-xl text-center w-full font-semibold'>Loading...</p>
+            )}
+            {!loading && listings && listings.map((listing) => (
+               <ApartmentListingCard_02 key={listing._id} listing={listing}/>
+            ))}
+            {showMore && (
+               <button onClick={onShowMoreClick} className='text-teal-500 hover:underline p-7 text-center w-full'>Show More</button>
+            )}
+         </div>
       </div>
     </div>
   )

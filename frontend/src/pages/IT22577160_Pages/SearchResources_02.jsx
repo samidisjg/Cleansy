@@ -203,7 +203,7 @@ const SearchResources_02 = () => {
                }
                {
                   showMore && (
-                     <button onClick={handleShowMore} className='text-teal-500 text-lg hover:underline p-7 w-full'>
+                     <button onClick={handleShowMore} className='text-teal-500 hover:underline p-7 text-center w-full'>
                         Show More
                      </button>
                   )
