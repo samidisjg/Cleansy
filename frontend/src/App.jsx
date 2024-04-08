@@ -17,9 +17,18 @@ import TaskAssign from './pages/IT22607232_Pages/s1_TaskAssignCreation'
 import RequestLeave_04 from './pages/IT22603418_Pages/RequestLeave_04'
 import OnlyPropertyAdminPrivateRoute_02 from './components/IT22577160_Components/OnlyPropertyAdminPrivateRoute_02'
 import CreateSharedResources_02 from './pages/IT22577160_Pages/CreateSharedResources_02'
+
 import UpdateSharedResources_02 from './pages/IT22577160_Pages/UpdateSharedResources_02'
 import SharedResourcesPage_02 from './pages/IT22577160_Pages/SharedResourcesPage_02'
 import ScrollToTop_02 from './components/IT22577160_Components/ScrollToTop_02'
+import MarketPlace from './pages/IT22577160_Pages/MarketPlace'
+import SearchResources_02 from './pages/IT22577160_Pages/SearchResources_02'
+import TasksTable_01 from './components/IT22607232_Components/TasksTable_01'
+import S1_UpdateTasks from './pages/IT22607232_Pages/s1_UpdateTasks'
+import ApartmentListingPage_02 from './pages/IT22577160_Pages/ApartmentListingPage_02'
+import SearchApartments_02 from './pages/IT22577160_Pages/SearchApartments_02'
+
+
 
 
 
@@ -41,7 +50,8 @@ function App() {
                 <Route path='/update-apartmentListing/:listingId' element={<UpdateApartmentListing_02/>}/>
                 <Route path="/" element={<DashMaintenance/>} />
                 <Route path="/task-assign" element={<TaskAssign/>} />
-              
+                <Route path="/tasks-table:taskid" element={<TasksTable_01/>} />
+                <Route path="/update-tasks/:taskid" element={<S1_UpdateTasks/>} />
 
             
               </Route>
@@ -52,6 +62,10 @@ function App() {
               <Route path='/projects' element={<Projects/>}/>
               <Route path='/create_04' element={<RequestLeave_04/>}/>
               <Route path='/sharedResource/:resourceSlug' element={<SharedResourcesPage_02 />}/>
+              <Route path='/marketPlace' element={<MarketPlace />}/>
+              <Route path='/searchResource' element={<SearchResources_02 />}/>
+              <Route path='/apartmentListing/:listingId' element={<ApartmentListingPage_02 />}/>
+              <Route path='/searchApartments' element={<SearchApartments_02 />}/>
             </Routes>
 
           </div>
