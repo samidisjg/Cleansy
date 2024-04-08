@@ -4,13 +4,17 @@ import { AiOutlineHeart, AiOutlineSearch, AiOutlineShoppingCart } from 'react-ic
 import { BiMenuAltLeft } from 'react-icons/bi'
 import { IoIosArrowDown } from 'react-icons/io'
 import { useLocation, useNavigate } from 'react-router-dom'
+import CartPopUp from './CartPopUp'
+import { useSelector, useDispatch } from "react-redux";
 
 const MarketPlaceHeader_02 = () => {
+   const { cart } = useSelector((state) => state.cart);
    const [dropDown, setDropDown] = useState(false);
    const [searchTerm, setSearchTerm] = useState('');
    const location = useLocation();
    const navigate = useNavigate();
-   console.log(searchTerm);
+   const [openCart, setOpenCart] = useState(false);
+   const [openWishlist, setOpenWishlist] = useState(false);
 
    useEffect(() => {
       const urlParams = new URLSearchParams(location.search);
@@ -49,24 +53,27 @@ const MarketPlaceHeader_02 = () => {
          {/* </div> */}
       
          <div className='flex items-center'>
-            <div className='flex items-center relative cursor-pointer mr-[15px]'>
+            <div className='flex items-center relative cursor-pointer mr-[15px]' onClick={() => setOpenWishlist(true)}>
                <AiOutlineHeart size={30} color='rgb(255 255 255 / 83%)'/>
                <span className='absolute right-0 top-0 rounded-full bg-[#3bc177] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center'>
                   0
                </span>
             </div>
-            <div className='flex items-center relative cursor-pointer mr-[15px]'>
+            <div className='flex items-center relative cursor-pointer mr-[15px]' onClick={() => setOpenCart(true)}>
                <AiOutlineShoppingCart size={30} color='rgb(255 255 255 / 83%)'/>
                <span className='absolute right-0 top-0 rounded-full bg-[#3bc177] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center'>
-                  1
+                  {cart && cart.length}
                </span>
             </div> 
             <form onSubmit={handleSubmit}>
                <TextInput type="text" placeholder="Search..." rightIcon={AiOutlineSearch} value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
             </form>
-            {/* <Button className="w-12 h-10 lg:hidden" color="gray" pill>
-               <AiOutlineSearch/>
-            </Button> */}
+            {/* cart popup */}
+            {
+               openCart && (
+                  <CartPopUp setOpenCart={setOpenCart} />
+               )
+            }
          </div>
       </Navbar>
   )

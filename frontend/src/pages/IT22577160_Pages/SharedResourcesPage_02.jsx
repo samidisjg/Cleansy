@@ -4,14 +4,20 @@ import { AiFillHeart, AiFillStar, AiOutlineEye, AiOutlineHeart, AiOutlineShoppin
 import { Link, useParams } from 'react-router-dom';
 import { FaRegMessage } from "react-icons/fa6";
 import CommentSection_02 from '../../components/IT22577160_Components/CommentSection_02';
+import { useSelector, useDispatch } from "react-redux";
+import { toast } from 'react-toastify';
+import { addToCart } from '../../../redux/IT22577160_redux/cartSlice.js';
+import MarketPlaceHeader_02 from '../../components/IT22577160_Components/MarketPlaceHeader_02.jsx';
 
 const SharedResourcesPage_02 = () => {
+   const { cart } = useSelector((state) => state.cart);
    const { resourceSlug } = useParams();
    const [loading, setLoading] = useState(true);
    const [error, setError] = useState(false);
    const [resources, setResources] = useState(null);
    const [count, setCount] = useState(1);
    const [click, setClick] = useState(false);
+   const dispatch = useDispatch()
 
    const decrementCount = () => {
       if (count > 1) {
@@ -47,6 +53,21 @@ const SharedResourcesPage_02 = () => {
       fetchResource();
    }, [resourceSlug])
 
+   const addToCartHandler = async (id) => {
+      const existingItem = cart && cart.find((i) => i._id === id);
+      if(existingItem) {
+         toast.error("Item already in the cart");
+      } else {
+         if(resources.quantity < count) {
+            toast.error("Sorry! The quantity is not available in stock");  
+         } else {
+            const cartData = {...resources, quantity: count};
+            dispatch(addToCart(cartData));
+            toast.success("Item added to cart successfully");
+         }
+      }
+   }
+
    if(loading) {
       return (
          <div className='flex justify-center items-center min-h-screen'>
@@ -55,6 +76,8 @@ const SharedResourcesPage_02 = () => {
       )
    }
   return (
+   <>
+   <MarketPlaceHeader_02 />
     <main className='p-3 flex flex-col max-w-6xl mx-auto min-h-screen'>
       <h1 className='text-3xl mt-10 p-3 text-center font-serif max-w-2xl mx-auto lg:text-4xl'>{resources && resources.title}</h1>
       <Link to={`/search?category=${resources && resources.category}`} className='self-center mt-5'>
@@ -111,14 +134,14 @@ const SharedResourcesPage_02 = () => {
          </div>
          {
             click ? (
-               <AiFillHeart size={22}  onClick={() => setClick(!click)} className='cursor-pointer'color={click ? "red" : "#333"} title="Remove from wishlist" />
+               <AiFillHeart size={22}  onClick={() => setClick(!click)} className='cursor-pointer'color={click ? "red" : ""} title="Remove from wishlist" />
             ) : (
-               <AiOutlineHeart size={22}  onClick={() => setClick(!click)}  className='cursor-pointer'color={click ? "red" : "#333"} title="Add to wishlist"  />
+               <AiOutlineHeart size={22}  onClick={() => setClick(!click)}  className='cursor-pointer'color={click ? "red" : ""} title="Add to wishlist"  />
             )
          }
       </div>
       <div className='flex justify-between max-w-2xl mx-auto mt-5 gap-6 w-full'>
-         <Button color='dark' size='md' >Add to Cart <span className='pl-2'><AiOutlineShoppingCart size={15} /></span></Button>
+         <Button color='dark' size='md' onClick={() => addToCartHandler(resources._id)}>Add to Cart <span className='pl-2'><AiOutlineShoppingCart size={15} /></span></Button>
          <div className='text-sm text-teal-500 font-semibold'>
             {resources && resources.quantity + " In Stock" }
          </div>
@@ -140,6 +163,7 @@ const SharedResourcesPage_02 = () => {
       </div>
       <CommentSection_02 resourceId={resources._id}/>
     </main>
+   </>
   )
 }
 
