@@ -69,6 +69,7 @@ const DashApartmentList_02 = () => {
                             </div>
                             <p className="font-semibold text-xl text-slate-700 dark:text-slate-200 truncate">{listing.ownerName}</p>
                             <p className="font-semibold text-sm text-slate-400">{listing.ownerContactNumber}</p>
+                            <p className='text-sm text-gray-600 line-clamp-2'>{listing.description}</p>
                             <p className="text-[#457b9d] mt-2 font-semibold">${listing.offer ? listing.discountPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : listing.regularPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} {listing.type === "rent" && " / month"}</p>
                             <div className="flex items-center mt-[10px] space-x-3">
                               <div className="font-bold text-xs">
