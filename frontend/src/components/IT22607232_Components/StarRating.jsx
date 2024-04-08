@@ -5,3 +5,4 @@ const StarRating = () => {
     return <div><FaStar size={100}/></div>
 };
 export default StarRating;
+
