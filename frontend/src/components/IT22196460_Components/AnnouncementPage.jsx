@@ -81,6 +81,7 @@ const AnnouncementPage = () => {
                 </div>
                 {/* Announcement List */}
                 <div className="flex-grow p-6 overflow-auto bg-gray-200">
+                    
                     {/* Display filtered announcements here */}
                 </div>
             </div>
