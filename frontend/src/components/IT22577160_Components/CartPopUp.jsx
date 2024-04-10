@@ -7,10 +7,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { addToCart, removeFromCart } from '../../../redux/IT22577160_redux/cartSlice.js';
 import { toast } from 'react-toastify';
 import { Button } from 'flowbite-react';
+import {loadStripe} from '@stripe/stripe-js';
 
 const CartPopUp = ({setOpenCart}) => {
    const { cart } = useSelector((state) => state.cart);
    const dispatch = useDispatch();
+   console.log(cart);
 
    const removeFormCartHandler = (data) => {
       dispatch(removeFromCart(data._id))
@@ -21,6 +23,31 @@ const CartPopUp = ({setOpenCart}) => {
    const quantityChangeHandler = (data) => {
       dispatch(addToCart(data))
    }
+
+   // payment integration
+   const makePayment = async() => {
+      const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
+      const body = {
+         products: cart,
+      }
+      const headers = {
+         "Content-Type": "application/json",
+      }
+      const res = await fetch('/api/checkout/creteCheckout', {
+         method: "POST",
+         headers,
+         body: JSON.stringify(body),
+      })
+
+      const session = await res.json();
+      const result = await stripe.redirectToCheckout({
+         sessionId: session.id,
+      });
+      if(result.error) {
+         toast.error(result.error);
+      }
+   }
+
   return (
     <div className="fixed top-0 left-0 w-full bg-[#0000004b] z-50">
       <div className="fixed top-0 right-0 h-full lg:w-[30%] border-2 border-teal-500 bg-slate-100 rounded-md flex flex-col overflow-y-scroll justify-between shadow-sm">
@@ -57,15 +84,15 @@ const CartPopUp = ({setOpenCart}) => {
                   </div>
                   <div className="px-5 mb-3">
                      {/* checkout buttons */}
-                     <Link to="/checkout">
-                        <Button gradientDuoTone='purpleToBlue' className='w-full'>
+                     {/* <Link to="/checkout"> */}
+                        <Button gradientDuoTone='purpleToBlue' className='w-full' onClick={makePayment}>
                            <h1 className="text-[#fff] text-[18px] font-[600]">
                               Checkout Now (USD${totalPrice})
                            </h1>
                         </Button>
                         {/* <div className={`h-[45px] flex items-center justify-center w-[100%] bg-[#e44343] rounded-[5px]`} >
                         </div> */}
-                     </Link>
+                     {/* </Link> */}
                   </div>
                </>
             )

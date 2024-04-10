@@ -24,11 +24,17 @@ const SharedResourcesPage_02 = () => {
    const decrementCount = () => {
       if (count > 1) {
         setCount(count - 1);
+        setResources(prevState => ({ ...prevState, quantity: prevState.quantity + 1 }));
       }
     }
 
    const incrementCount = () => {
-      setCount(count + 1);
+      if (count < resources.quantity) {
+         setCount(count + 1);
+         setResources(prevState => ({ ...prevState, quantity: prevState.quantity - 1 }));
+      } else {
+         toast.error("Sorry! The quantity is not available in stock");
+      }
    }
 
    useEffect(() => {

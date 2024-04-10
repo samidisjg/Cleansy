@@ -12,6 +12,7 @@
   "dependencies": {
     "@react-pdf/renderer": "^3.4.2",
     "@reduxjs/toolkit": "^2.1.0",
+    "@stripe/stripe-js": "^3.3.0",
     "axios": "^1.6.8",
     "firebase": "^10.8.0",
     "flowbite-react": "^0.7.2",
