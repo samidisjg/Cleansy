@@ -17,6 +17,7 @@ const AmenityCreate = () => {
         AmenityID: "",
         AmenityName: "",
         Description: "",
+        Image: "",
         Location: "",
         Capacity: "",
         Availability: "",
@@ -82,6 +83,14 @@ const AmenityCreate = () => {
         }
     };
 
+    const handleImageChange = (e) => {
+        setFormData({
+            ...formData,
+            Image: e.target.files[0],
+        });
+    }
+
+
     return (
         <div className="min-h-screen mt-20">
             <h1 className="text-3xl text-center mt-6 font-extrabold underline text-blue-950 dark:text-slate-300"> Create Amenity</h1>
@@ -117,12 +126,12 @@ const AmenityCreate = () => {
                         />
                     </div>
                     <div>
-                        <Label for="Location">Location</Label>
-                        <TextInput
-                            type="text"
-                            name="Location"
-                            value={formData.Location}
-                            onChange={handleChange}
+                        <Label for="Image">Image</Label>
+                        <input
+                            type="file"
+                            name="Image"
+                            value={formData.Image}
+                            onChange={handleImageChange}
                             required
                         />
                     </div>
@@ -156,6 +165,7 @@ const AmenityCreate = () => {
                             required
                         />
                     </div>
+                    
                     <Button
                         type="submit"
                         gradientDuoTone="purpleToBlue"
