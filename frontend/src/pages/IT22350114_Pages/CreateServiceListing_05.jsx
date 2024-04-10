@@ -1,3 +1,7 @@
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import mongoose from 'mongoose';
 
 
 const CreateServiceListing = () => {
@@ -51,28 +55,32 @@ const CreateServiceListing = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (formData.serviceName === currentUser.serviceName) return setError('Service Name already exists');
+      if (formData.serviceID === currentUser.serviceID) return setError('serviceID already exists');
       setLoading(true);
       setError(false);
-      const res = await axios.post(`${process.env.REACT_APP_API_URL}/serviceListing`, formData, {
+
+      const response = await fetch("/api/amenitiesListing/create", {
+        method: "POST",
         headers: {
-          Authorization: `Bearer ${currentUser.token}`,
+          "Content-Type": "application/json",
         },
+        body: JSON.stringify({
+          ...(formData),
+          userRef: currentUser._id,
+        })
       });
+      const data = await response.json();
       setLoading(false);
-      navigate('/dashboard');
-    } catch (err) {
-      setError(err.response.data.errorMessage);
+      if (data.success === false) {
+        return setError(data.message);
+      }
+      navigate("/dashboard?tab=services");
+    }
+    catch (err) {
+      setError(err.message);
       setLoading(false);
     }
-  }
-
-  const handleImageChange = (e) => {
-    setFormData({
-        ...formData,
-        Image: e.target.files[0],
-    });
-}
+  };
 
 return (
   <div className="min-h-screen mt-20">

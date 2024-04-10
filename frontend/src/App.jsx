@@ -31,7 +31,7 @@ import SearchApartments_02 from './pages/IT22577160_Pages/SearchApartments_02'
 import StarRating from './components/IT22607232_Components/StarRating'
 
 import AmenityCreate from './pages/IT22003546_Pages/AmenityCreate_05'     
-import ServiceListing from '../../backend/models/IT22350114_Models/serviceListingModel'
+import CreateServiceListing from '../../backend/models/IT22350114_Models/serviceListingModel'
 
 
 function App() {
@@ -56,7 +56,7 @@ function App() {
                 <Route path="/update-tasks/:taskid" element={<S1_UpdateTasks/>} />
                 <Route path="/star-ratingWorkers" element={<StarRating/>} />
                 <Route path="/amenity-create" element={<AmenityCreate/>} />
-                <Route path="/service-create" element={<ServiceListing/>} />
+                <Route path="/service-create" element={<CreateServiceListing/>} />
 
             
               </Route>

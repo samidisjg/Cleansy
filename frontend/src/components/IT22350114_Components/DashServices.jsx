@@ -1,4 +1,8 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+
+
 
 const DashServices = () => {
    const { currentUser } = useSelector((state) => state.user)
@@ -6,7 +10,10 @@ const DashServices = () => {
     return (
         <div>
             {currentUser.isFacilityServiceAdmin && (
-                <h1>Services</h1>
+                <Link to="/service-create">
+                    <button>Create Service</button>
+                 </Link>
+                
             )}
         </div>
     );
