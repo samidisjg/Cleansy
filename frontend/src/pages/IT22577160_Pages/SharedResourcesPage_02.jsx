@@ -8,9 +8,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { toast } from 'react-toastify';
 import { addToCart } from '../../../redux/IT22577160_redux/cartSlice.js';
 import MarketPlaceHeader_02 from '../../components/IT22577160_Components/MarketPlaceHeader_02.jsx';
+import { addToWishlist, removeFromWishlist } from '../../../redux/IT22577160_redux/wishList_02.js';
 
 const SharedResourcesPage_02 = () => {
    const { cart } = useSelector((state) => state.cart);
+   const { wishlist } = useSelector((state) => state.wishlist);
    const { resourceSlug } = useParams();
    const [loading, setLoading] = useState(true);
    const [error, setError] = useState(false);
@@ -67,6 +69,24 @@ const SharedResourcesPage_02 = () => {
          }
       }
    }
+
+   const removeFromWishListHandler = (data) => {
+      setClick(!click);
+      dispatch(removeFromWishlist(data._id));
+   }
+
+   const addToWishListHandler = (data) => {
+      setClick(!click);
+      dispatch(addToWishlist(data));
+   }
+
+   useEffect(() => {
+      if(resources && wishlist && wishlist.find((i) => i._id === resources._id)) {
+         setClick(true);
+      } else {
+         setClick(false);
+      }
+   }, [wishlist, resources])
 
    if(loading) {
       return (
@@ -134,9 +154,9 @@ const SharedResourcesPage_02 = () => {
          </div>
          {
             click ? (
-               <AiFillHeart size={22}  onClick={() => setClick(!click)} className='cursor-pointer'color={click ? "red" : ""} title="Remove from wishlist" />
+               <AiFillHeart size={22}  onClick={() => removeFromWishListHandler(resources)} className='cursor-pointer'color={click ? "red" : ""} title="Remove from wishlist" />
             ) : (
-               <AiOutlineHeart size={22}  onClick={() => setClick(!click)}  className='cursor-pointer'color={click ? "red" : ""} title="Add to wishlist"  />
+               <AiOutlineHeart size={22}  onClick={() => addToWishListHandler(resources)}  className='cursor-pointer'color={click ? "red" : ""} title="Add to wishlist"  />
             )
          }
       </div>

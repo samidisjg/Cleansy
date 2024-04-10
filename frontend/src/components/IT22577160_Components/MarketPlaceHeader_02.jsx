@@ -6,9 +6,11 @@ import { IoIosArrowDown } from 'react-icons/io'
 import { useLocation, useNavigate } from 'react-router-dom'
 import CartPopUp from './CartPopUp'
 import { useSelector, useDispatch } from "react-redux";
+import WishListPopUp_02 from './WishListPopUp_02'
 
 const MarketPlaceHeader_02 = () => {
    const { cart } = useSelector((state) => state.cart);
+   const { wishlist } = useSelector((state) => state.wishlist);
    const [dropDown, setDropDown] = useState(false);
    const [searchTerm, setSearchTerm] = useState('');
    const location = useLocation();
@@ -56,7 +58,7 @@ const MarketPlaceHeader_02 = () => {
             <div className='flex items-center relative cursor-pointer mr-[15px]' onClick={() => setOpenWishlist(true)}>
                <AiOutlineHeart size={30} color='rgb(255 255 255 / 83%)'/>
                <span className='absolute right-0 top-0 rounded-full bg-[#3bc177] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center'>
-                  0
+                  {wishlist && wishlist.length}
                </span>
             </div>
             <div className='flex items-center relative cursor-pointer mr-[15px]' onClick={() => setOpenCart(true)}>
@@ -72,6 +74,12 @@ const MarketPlaceHeader_02 = () => {
             {
                openCart && (
                   <CartPopUp setOpenCart={setOpenCart} />
+               )
+            }
+            {/* wishlist popup */}
+            {
+               openWishlist && (
+                  <WishListPopUp_02 setOpenWishlist={setOpenWishlist} />
                )
             }
          </div>
