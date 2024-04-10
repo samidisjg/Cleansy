@@ -13,7 +13,6 @@ const DashServices = () => {
             {currentUser.isFacilityServiceAdmin && (
                <div>
                 <h1>Create Services</h1>
-                    <p>Manage Amenities</p>
 
                     <div className="flex flex-wrap gap-2"></div>
                     <Button pill>
@@ -21,11 +20,7 @@ const DashServices = () => {
                     </Button>
                     <br />
 
-                    <div className="flex flex-wrap gap-2"></div>
-                    <Button pill>
-                        <Link to="/amenity-table:amenityid">Show Amenities</Link>
-                    </Button>
-                    <br />
+                   
                 </div>
                 
             )}
