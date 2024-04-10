@@ -5,15 +5,42 @@ import MarketPlaceHeader_02 from '../../components/IT22577160_Components/MarketP
 
 const MarketPlace = () => {
    const [resources, setResources] = useState([]);
+   const [showMore, setShowMore] = useState(false);
 
    useEffect(() => {
       const fetchPost = async () => {
          const res = await fetch('/api/sharedResourcesListing/getSharedResources')
          const data = await res.json()
          setResources(data.resources)
+         if(data.resources.length === 9) {
+            setShowMore(true);
+         } else {
+            setShowMore(false);
+         }
       }
       fetchPost();
    }, [])
+
+   const handleShowMore = async () => {
+      const numberOfPosts = resources.length;
+      const startIndex = numberOfPosts;
+      const urlParams = new URLSearchParams(location.search);
+      urlParams.set('startIndex', startIndex);
+      const searchQuery = urlParams.toString();
+      const res = await fetch(`/api/sharedResourcesListing/getSharedResources?${searchQuery}`);
+      if(!res.ok) {
+         return;
+      }
+      if(res.ok) {
+         const data = await res.json();
+         setResources([...resources, ...data.resources]);
+         if(data.resources.length === 9) {
+            setShowMore(true);
+         } else {
+            setShowMore(false);
+         }
+      }
+   }
 
   return (
    <>
@@ -66,6 +93,13 @@ const MarketPlace = () => {
             
          )
         }
+        {
+            showMore && (
+               <button onClick={handleShowMore} className='text-teal-500 hover:underline p-7 text-center w-full'>
+                  Show More
+               </button>
+            )
+         }
       </div>
    </>
    
