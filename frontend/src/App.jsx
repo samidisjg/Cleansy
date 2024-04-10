@@ -26,6 +26,11 @@ import SearchResources_02 from './pages/IT22577160_Pages/SearchResources_02'
 import TasksTable_01 from './components/IT22607232_Components/TasksTable_01'
 import S1_UpdateTasks from './pages/IT22607232_Pages/s1_UpdateTasks'
 
+import ApartmentListingPage_02 from './pages/IT22577160_Pages/ApartmentListingPage_02'
+import SearchApartments_02 from './pages/IT22577160_Pages/SearchApartments_02'
+import StarRating from './components/IT22607232_Components/StarRating'
+
+import AmenityCreate from './pages/IT22003546_Pages/AmenityCreate_05'      
 
 
 
@@ -50,6 +55,8 @@ function App() {
                 <Route path="/task-assign" element={<TaskAssign/>} />
                 <Route path="/tasks-table:taskid" element={<TasksTable_01/>} />
                 <Route path="/update-tasks/:taskid" element={<S1_UpdateTasks/>} />
+                <Route path="/star-ratingWorkers" element={<StarRating/>} />
+                <Route path="/amenity-create" element={<AmenityCreate/>} />
 
             
               </Route>
@@ -62,6 +69,8 @@ function App() {
               <Route path='/sharedResource/:resourceSlug' element={<SharedResourcesPage_02 />}/>
               <Route path='/marketPlace' element={<MarketPlace />}/>
               <Route path='/searchResource' element={<SearchResources_02 />}/>
+              <Route path='/apartmentListing/:listingId' element={<ApartmentListingPage_02 />}/>
+              <Route path='/searchApartments' element={<SearchApartments_02 />}/>
             </Routes>
 
           </div>
