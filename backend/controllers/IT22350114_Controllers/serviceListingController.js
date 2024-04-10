@@ -31,6 +31,19 @@ export const getAllServiceListings = async (req, res, next) => {
   }
 };
 
+//Fetch a specific service listing
+export const getServiceListing = async (req, res, next) => {
+  try {
+    const serviceListing = await ServiceListing.findById(req.params.id);
+    if (!serviceListing) {
+      return next(errorHandler(404, "Service listing not found"));
+    }
+    return res.status(200).json(serviceListing);
+  } catch (error) {
+    next(error);
+  }
+};
+
 //Update a service listing
 export const updateServiceListing = async (req, res, next) => {
   try {
