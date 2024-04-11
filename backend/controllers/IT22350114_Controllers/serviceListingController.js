@@ -20,12 +20,11 @@ export const createServiceListing = async (req, res, next) => {
 //Read for all service listings
 export const getAllServiceListings = async (req, res, next) => {
   try {
-    const serviceListings = await ServiceListing.find();
-    return res.status(200).json({
-      success: true,
-      message: "Service listings retrieved successfully",
-      serviceListings,
-    });
+    const allServiceListings = await ServiceListing.find();
+    if (!allServiceListings) {
+      return res.status(404).json({ message: "Service listings not found" });
+    }
+    return res.status(200).json(allServiceListings);
   } catch (error) {
     next(error);
   }
@@ -34,12 +33,14 @@ export const getAllServiceListings = async (req, res, next) => {
 //Fetch a specific service listing
 export const getServiceListing = async (req, res, next) => {
   try {
-    const serviceListing = await ServiceListing.findById(req.params.id);
+    const { Serviceid } = req.params;
+    const serviceListing = await ServiceListing.findById(Serviceid);
     if (!serviceListing) {
-      return next(errorHandler(404, "Service listing not found"));
+      return res.status(404).json({ message: "Service listing not found" });
     }
     return res.status(200).json(serviceListing);
-  } catch (error) {
+  }
+  catch (error) {
     next(error);
   }
 };
@@ -47,9 +48,9 @@ export const getServiceListing = async (req, res, next) => {
 //Update a service listing
 export const updateServiceListing = async (req, res, next) => {
   try {
-    const { id } = req.params;
+    const { Serviceid } = req.params;
     const updatedServiceListing = await ServiceListing.findByIdAndUpdate(
-      id,
+      Serviceid,
       req.body,
       { new: true, upsert: true }
     );
@@ -62,8 +63,8 @@ export const updateServiceListing = async (req, res, next) => {
 //Delete a service listing
 export const deleteServiceListing = async (req, res, next) => {
   try {
-    const { id } = req.params;
-    await ServiceListing.findByIdAndDelete(id);
+    const { Serviceid } = req.params;
+    await ServiceListing.findByIdAndDelete(Serviceid);
     return res.status(200).json({
       success: true,
       message: "Service listing deleted successfully",
