@@ -30,7 +30,7 @@ import SearchApartments_02 from './pages/IT22577160_Pages/SearchApartments_02'
 import CheckOutPage_02 from './pages/IT22577160_Pages/CheckOutPage_02'
 import AmenityCreate from './pages/IT22003546_Pages/AmenityCreate_05'      
 import RatingWorkGroup_01 from './components/IT22607232_Components/RatingWorkGroup_01'
-
+import RateReview_01 from './pages/IT22607232_Pages/RateReview_01'
 
 
 
@@ -56,9 +56,11 @@ function App() {
                 <Route path="/tasks-table:taskid" element={<TasksTable_01/>} />
                 <Route path="/update-tasks/:taskid" element={<S1_UpdateTasks/>} />
 
+
                 <Route path="/checkout" element={<CheckOutPage_02/>} />
                 <Route path="/amenity-create" element={<AmenityCreate/>} />
                  <Route path="/star-ratingWorkers" element={<RatingWorkGroup_01/>} />
+                 <Route path="/rate-tasks/:taskid" element={<RateReview_01/>} />
 
 
 
