@@ -30,8 +30,13 @@ const AmenityList_05 = () => {
     }
 
     const handleAmenitiesDelete = async (_id) => {
+        // Display a confirmation dialog
+        const confirmDelete = window.confirm("Are you sure you want to delete this amenity?");
+        if (!confirmDelete) {
+            return; // If user cancels, exit the function
+        }
         try {
-            const res = await fetch(`/api/amenitiesListing/delete/:${_id}`, {
+            const res = await fetch(`/api/amenitiesListing/delete/${_id}`, {
                 method: 'DELETE',
             });
             const data = await res.json();
@@ -39,34 +44,14 @@ const AmenityList_05 = () => {
                 console.log(data.message);
                 return;
             }
+            // Update the amenities list after successful deletion
             setShowAmenities((prev) => prev.filter((amenity) => amenity._id !== _id));
         } catch (error) {
             console.log(error.message);
         }
     }
+    
 
-    const handleAmenitiesUpdate = async (_id) => {
-        try {
-            const res = await fetch(`/api/amenitiesListing/update/:${_id}`, {
-                method: 'PUT',
-
-                header: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    ...showAmenities,
-                }),
-            });
-            const data = await res.json();
-            if (data.success === false) {
-                console.log(data.message);
-                return;
-            }
-            setShowAmenities((prev) => prev.filter((amenity) => amenity._id !== _id));
-        } catch (error) {
-            console.log(error.message);
-        }
-    }
 
     const handleDownloadPDF = () => {
         const payDoc = new jsPDF();
