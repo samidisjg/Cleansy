@@ -28,7 +28,6 @@ import ApartmentListingPage_02 from './pages/IT22577160_Pages/ApartmentListingPa
 import SearchApartments_02 from './pages/IT22577160_Pages/SearchApartments_02'
 
 import CheckOutPage_02 from './pages/IT22577160_Pages/CheckOutPage_02'
-import StarRating from './components/IT22607232_Components/StarRating'
 import AmenityCreate from './pages/IT22003546_Pages/AmenityCreate_05'      
 import RatingWorkGroup_01 from './components/IT22607232_Components/RatingWorkGroup_01'
 
@@ -58,7 +57,6 @@ function App() {
                 <Route path="/update-tasks/:taskid" element={<S1_UpdateTasks/>} />
 
                 <Route path="/checkout" element={<CheckOutPage_02/>} />
-                <Route path="/star-ratingWorkers" element={<StarRating/>} />
                 <Route path="/amenity-create" element={<AmenityCreate/>} />
                  <Route path="/star-ratingWorkers" element={<RatingWorkGroup_01/>} />
 
