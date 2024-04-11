@@ -104,14 +104,6 @@ const MarketPlace = () => {
       }
    };
 
-   // const handleRatingClick = (postId, value) => {
-   //    const currentRating = rating[postId];
-   //    if (currentRating === value) {
-   //       dispatch(removeFromRating(postId));
-   //    } else {
-   //       dispatch(addToRating({ postId, rating: value }));
-   //    }
-   // };
 
   return (
    <>

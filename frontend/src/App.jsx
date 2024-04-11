@@ -29,6 +29,7 @@ import SearchApartments_02 from './pages/IT22577160_Pages/SearchApartments_02'
 import CheckOutPage_02 from './pages/IT22577160_Pages/CheckOutPage_02'
 import StarRating from './components/IT22607232_Components/StarRating'
 import AmenityCreate from './pages/IT22003546_Pages/AmenityCreate_05'      
+import GamePage_02 from './pages/IT22577160_Pages/GamePage_02'
 
 
 
@@ -72,6 +73,7 @@ function App() {
               <Route path='/apartmentListing/:listingId' element={<ApartmentListingPage_02 />}/>
               <Route path='/searchApartments' element={<SearchApartments_02 />}/>
               <Route path='/success' element={<CheckOutPage_02 />}/>
+              <Route path='/games' element={<GamePage_02 />}/>
             </Routes>
 
           </div>
