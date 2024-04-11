@@ -30,10 +30,6 @@ const wishlistSlice = createSlice({
             wishlist: state.wishlist.filter((i) => i._id !== action.payload)
          }
       },
-      // clearCart: (state) => {
-      //    state.cart = [];
-      //    localStorage.removeItem("cartItems");
-      // }
    }
 });
 
