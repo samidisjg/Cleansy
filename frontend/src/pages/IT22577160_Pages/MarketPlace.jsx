@@ -86,15 +86,32 @@ const MarketPlace = () => {
       }
    }, [wishlist, resources])
 
-   const removeFromRatingHandler = (data) => {
-      setClick(!click);
-      dispatch(removeFromRating(data._id));
-   }
+   // const removeFromRatingHandler = (data) => {
+   //    setClick(!click);
+   //    dispatch(removeFromRating(data._id));
+   // }
 
-   const addToRatingHandler = (data) => {
-      setClick(!click);
-      dispatch(addToRating(data));
-   }
+   // const addToRatingHandler = (data) => {
+   //    setClick(!click);
+   //    dispatch(addToRating(data));
+   // }
+
+   const handleRatingClick = (value) => {
+      if (rating === value) {
+         dispatch(removeFromRating());
+      } else {
+         dispatch(addToRating(value));
+      }
+   };
+
+   // const handleRatingClick = (postId, value) => {
+   //    const currentRating = rating[postId];
+   //    if (currentRating === value) {
+   //       dispatch(removeFromRating(postId));
+   //    } else {
+   //       dispatch(addToRating({ postId, rating: value }));
+   //    }
+   // };
 
   return (
    <>
@@ -116,8 +133,8 @@ const MarketPlace = () => {
                               <div className='flex justify-between'>
                                  <span className='italic text-sm'>{resource.category}</span>
                                  <div className="flex text-xs">
-                                    {
-                                       [1, 2, 3, 4, 5].map((index) => (
+                                    {/* {
+                                       [...Array(5)].map((index) => (
                                           <span key={index}>
                                              {rating && rating.find((i) => i._id === resource._id) ? (
                                                 <AiFillStar size={20} onClick={() => removeFromRatingHandler(resource)} className='cursor-pointer text-yellow-300' />
@@ -126,7 +143,17 @@ const MarketPlace = () => {
                                              )}
                                           </span>
                                        ))
-                                    }
+                                    } */}
+
+                                    {[...Array(5)].map((star, i) => (
+                                       <span key={i} onClick={() => handleRatingClick(i + 1)}>
+                                          {i < rating ? (
+                                             <AiFillStar size={20} className='cursor-pointer text-yellow-300' />
+                                          ) : (
+                                             <AiOutlineStar size={20} className='cursor-pointer text-gray-500' />
+                                          )}
+                                       </span>
+                                    ))}
                                  </div>
                               </div>
                               <div className='flex justify-between items-center'>
