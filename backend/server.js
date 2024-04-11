@@ -8,17 +8,20 @@ import apartmentListingRoutes from "./routes/IT22577160_Routes/apartmentListing.
 import PaymentProfileCreationRoutes from "./routes/IT22602978_Routes/PaymentProfileCreation.route_03.js";
 import TaskAssignRoute from "./routes/IT22607232_Routes/s1_TaskAssignRoute.js";
 import RequestLeaveRoutes from './routes/IT22603418_Routes/RequestLeave.route_04.js';
+import visitorListingRoutes from './routes/IT22561466_Routes/visitorListing.route.js';
 import cookieParser from "cookie-parser";
 import serviceListingRoutes from "./routes/IT22350114_Routes/serviceListingRoute.js";
 import amenitiesListingRoutes from './routes/IT22003546_Routes/amenitiesListing.route.js';
 import sharedResourcesListingRoutes from './routes/IT22577160_Routes/sharedResourcesListing.route_02.js';
 import commentRoutes from './routes/IT22577160_Routes/comment.route_02.js';
+import checkoutRoutes from './routes/IT22577160_Routes/checkout.route_02.js';
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
+
 
 dbConnection();
 
@@ -46,9 +49,13 @@ app.use("/api/taskAssign", TaskAssignRoute);
 app.use('/api/apartmentListing', apartmentListingRoutes);
 app.use('/api/sharedResourcesListing', sharedResourcesListingRoutes);
 app.use('/api/comment', commentRoutes);
+app.use('/api/checkout', checkoutRoutes);
 
 // IT22003546 Routes
 app.use('/api/amenitiesListing', amenitiesListingRoutes);
+
+//IT22561466 Routes
+app.use('/api/visitorListing', visitorListingRoutes);
 
 
 

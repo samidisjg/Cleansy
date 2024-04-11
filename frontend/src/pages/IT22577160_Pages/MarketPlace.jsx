@@ -2,10 +2,20 @@ import { AiFillHeart, AiFillStar, AiOutlineEye, AiOutlineHeart, AiOutlineSearch,
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import MarketPlaceHeader_02 from '../../components/IT22577160_Components/MarketPlaceHeader_02';
+import { useSelector, useDispatch } from "react-redux";
+import { toast } from 'react-toastify';
+import { addToWishlist, removeFromWishlist } from '../../../redux/IT22577160_redux/wishList_02.js';
+import { addToCart } from "../../../redux/IT22577160_redux/cartSlice.js";
+import { addToRating, removeFromRating } from "../../../redux/IT22577160_redux/ratingSlice_02.js";
 
 const MarketPlace = () => {
    const [resources, setResources] = useState([]);
    const [showMore, setShowMore] = useState(false);
+   const [click, setClick] = useState(false);
+   const dispatch = useDispatch()
+   const { wishlist } = useSelector((state) => state.wishlist);
+   const { cart } = useSelector((state) => state.cart);
+   const { rating } = useSelector((state) => state.rating);
 
    useEffect(() => {
       const fetchPost = async () => {
@@ -42,6 +52,50 @@ const MarketPlace = () => {
       }
    }
 
+   const addToCartHandler = async (id) => {
+      const existingItem = cart && cart.find((i) => i._id === id);
+      if(existingItem) {
+         toast.error("Item already in the cart");
+      } else {
+         const clickedResource = resources.find((resource) => resource._id === id);
+         if(clickedResource.quantity < 1) {
+            toast.error("Sorry! The quantity is not available in stock");  
+         } else {
+            const cartData = {...clickedResource, quantity: 1};
+            dispatch(addToCart(cartData));
+            toast.success("Item added to cart successfully");
+         }
+      }
+   }
+
+   const removeFromWishListHandler = (data) => {
+      setClick(!click);
+      dispatch(removeFromWishlist(data._id));
+   }
+
+   const addToWishListHandler = (data) => {
+      setClick(!click);
+      dispatch(addToWishlist(data));
+   }
+
+   useEffect(() => {
+      if(resources && wishlist && wishlist.find((i) => i._id === resources._id)) {
+         setClick(true);
+      } else {
+         setClick(false);
+      }
+   }, [wishlist, resources])
+
+   const removeFromRatingHandler = (data) => {
+      setClick(!click);
+      dispatch(removeFromRating(data._id));
+   }
+
+   const addToRatingHandler = (data) => {
+      setClick(!click);
+      dispatch(addToRating(data));
+   }
+
   return (
    <>
       <MarketPlaceHeader_02 />
@@ -62,11 +116,17 @@ const MarketPlace = () => {
                               <div className='flex justify-between'>
                                  <span className='italic text-sm'>{resource.category}</span>
                                  <div className="flex text-xs">
-                                    <AiFillStar className='mr-2 cursor-pointer' color='#F6BA00' size={20}/>
-                                    <AiFillStar className='mr-2 cursor-pointer' color='#F6BA00' size={20}/>
-                                    <AiFillStar className='mr-2 cursor-pointer' color='#F6BA00' size={20}/>
-                                    <AiFillStar className='mr-2 cursor-pointer' color='#F6BA00' size={20}/>
-                                    <AiOutlineStar className='mr-2 cursor-pointer' color='#F6BA00' size={20}/>
+                                    {
+                                       [1, 2, 3, 4, 5].map((index) => (
+                                          <span key={index}>
+                                             {rating && rating.find((i) => i._id === resource._id) ? (
+                                                <AiFillStar size={20} onClick={() => removeFromRatingHandler(resource)} className='cursor-pointer text-yellow-300' />
+                                             ) : (
+                                                <AiOutlineStar size={20} onClick={() => addToRatingHandler(resource)} className='cursor-pointer text-gray-500' />
+                                             )}
+                                          </span>
+                                       ))
+                                    }
                                  </div>
                               </div>
                               <div className='flex justify-between items-center'>
@@ -79,9 +139,15 @@ const MarketPlace = () => {
                                     </h4>
                                  </div>
                                  <div className='flex items-center gap-4'>
-                                    <AiOutlineHeart size={22}/>
+                                    {
+                                       wishlist && wishlist.find(item => item._id === resource._id) ? (
+                                          <AiFillHeart size={22}  onClick={() => removeFromWishListHandler(resource)} className='cursor-pointer text-red-600' title="Remove from wishlist" />
+                                       ) : (
+                                          <AiOutlineHeart size={22}  onClick={() => addToWishListHandler(resource)}  className='cursor-pointer text-gray-500' title="Add to wishlist"  />
+                                       )
+                                    }
                                     <AiOutlineEye size={22} title="Quick view"/>
-                                    <AiOutlineShoppingCart size={22} title="Add to cart" />
+                                    <AiOutlineShoppingCart size={22} title="Add to cart" onClick={() => addToCartHandler(resource._id)} className='cursor-pointer' />
                                  </div>
                               </div>
                            </div>

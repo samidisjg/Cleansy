@@ -1,10 +1,16 @@
 import { Button, Select, TextInput } from 'flowbite-react'
 import React, { useEffect, useState } from 'react'
-import { AiFillStar, AiOutlineEye, AiOutlineHeart, AiOutlineShoppingCart, AiOutlineStar } from 'react-icons/ai';
+import { AiFillHeart, AiFillStar, AiOutlineEye, AiOutlineHeart, AiOutlineShoppingCart, AiOutlineStar } from 'react-icons/ai';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import MarketPlaceHeader_02 from '../../components/IT22577160_Components/MarketPlaceHeader_02';
+import { useSelector, useDispatch } from "react-redux";
+import { toast } from 'react-toastify';
+import { addToCart } from '../../../redux/IT22577160_redux/cartSlice';
+import { addToWishlist, removeFromWishlist } from '../../../redux/IT22577160_redux/wishList_02';
 
 const SearchResources_02 = () => {
+   const { wishlist } = useSelector((state) => state.wishlist);
+   const { cart } = useSelector((state) => state.cart);
    const [sidebarData, setSidebarData] = useState({
       searchTerm: '',
       sort: 'desc',
@@ -14,8 +20,10 @@ const SearchResources_02 = () => {
    const [sharedResources, setSharedResources] = useState([]);
    const [loading, setLoading] = useState(false);
    const [showMore, setShowMore] = useState(false);
+   const [click, setClick] = useState(false);
    const location = useLocation();
    const navigate = useNavigate();
+   const dispatch = useDispatch()
 
    useEffect(() => {
       const urlParams = new URLSearchParams(location.search);
@@ -101,6 +109,40 @@ const SearchResources_02 = () => {
          }
       }
    }
+
+   const addToCartHandler = async (id) => {
+      const existingItem = cart && cart.find((i) => i._id === id);
+      if(existingItem) {
+         toast.error("Item already in the cart");
+      } else {
+         const clickedResource = sharedResources.find((resource) => resource._id === id);
+         if(clickedResource.quantity < 1) {
+            toast.error("Sorry! The quantity is not available in stock");  
+         } else {
+            const cartData = {...clickedResource, quantity: 1};
+            dispatch(addToCart(cartData));
+            toast.success("Item added to cart successfully");
+         }
+      }
+   }
+
+   const removeFromWishListHandler = (data) => {
+      setClick(!click);
+      dispatch(removeFromWishlist(data._id));
+   }
+
+   const addToWishListHandler = (data) => {
+      setClick(!click);
+      dispatch(addToWishlist(data));
+   }
+
+   useEffect(() => {
+      if(sharedResources && wishlist && wishlist.find((i) => i._id === sharedResources._id)) {
+         setClick(true);
+      } else {
+         setClick(false);
+      }
+   }, [wishlist, sharedResources])
 
   return (
    <>
@@ -191,9 +233,15 @@ const SearchResources_02 = () => {
                                     </h4>
                                  </div>
                                  <div className='flex items-center gap-4'>
-                                    <AiOutlineHeart size={22}/>
+                                    {
+                                       wishlist && wishlist.find(item => item._id === resource._id) ? (
+                                          <AiFillHeart size={22}  onClick={() => removeFromWishListHandler(resource)} className='cursor-pointer text-red-600' title="Remove from wishlist" />
+                                       ) : (
+                                          <AiOutlineHeart size={22}  onClick={() => addToWishListHandler(resource)}  className='cursor-pointer text-gray-500' title="Add to wishlist"  />
+                                       )
+                                    }
                                     <AiOutlineEye size={22} title="Quick view"/>
-                                    <AiOutlineShoppingCart size={22} title="Add to cart" />
+                                    <AiOutlineShoppingCart size={22} title="Add to cart" onClick={() => addToCartHandler(resource._id)} className='cursor-pointer' />
                                  </div>
                               </div>
                            </div>
