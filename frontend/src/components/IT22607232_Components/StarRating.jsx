@@ -23,7 +23,7 @@ const StarRating = () => {
             key={i}
             className="cursor-pointer"
             color={ratingValue <= (hover || rating) ? "#ffc107" : "#e4e5e9"}
-            size={50}
+            size={20}
             onClick={() => handleClick(ratingValue)}
             onMouseEnter={() => setHover(ratingValue)}
             onMouseLeave={() => setHover(null)}
