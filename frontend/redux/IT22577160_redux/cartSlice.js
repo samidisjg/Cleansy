@@ -30,10 +30,6 @@ const cartSlice = createSlice({
             cart: state.cart.filter((i) => i._id !== action.payload)
          }
       },
-      // clearCart: (state) => {
-      //    state.cart = [];
-      //    localStorage.removeItem("cartItems");
-      // }
    }
 });
 
