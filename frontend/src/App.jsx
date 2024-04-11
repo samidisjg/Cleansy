@@ -28,12 +28,14 @@ import ApartmentListingPage_02 from './pages/IT22577160_Pages/ApartmentListingPa
 import SearchApartments_02 from './pages/IT22577160_Pages/SearchApartments_02'
 
 
+
 import AmenityCreate from './pages/IT22003546_Pages/AmenityCreate_05';
 import AmenityList_05 from './components/IT22003546_Components/AmenityList_05';
 import CheckOutPage_02 from './pages/IT22577160_Pages/CheckOutPage_02';
 import StarRating from './components/IT22607232_Components/StarRating';
 import RatingWorkGroup_01 from './components/IT22607232_Components/RatingWorkGroup_01';
 import AmenityUpdate_05 from './pages/IT22003546_Pages/AmenityUpdate_05'
+
 
 
 
@@ -66,8 +68,6 @@ function App() {
                 <Route path="/star-ratingWorkers" element={<RatingWorkGroup_01/>} />
                 <Route path="edit-amenity/:amenityID" element={<AmenityUpdate_05/>} />
 
-
-            
               </Route>
               <Route element={<OnlyPropertyAdminPrivateRoute_02/>}>
                 <Route path="/create-sharedResourceListing" element={<CreateSharedResources_02/>} />
