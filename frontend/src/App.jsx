@@ -27,10 +27,12 @@ import S1_UpdateTasks from './pages/IT22607232_Pages/s1_UpdateTasks'
 import ApartmentListingPage_02 from './pages/IT22577160_Pages/ApartmentListingPage_02'
 import SearchApartments_02 from './pages/IT22577160_Pages/SearchApartments_02'
 
-import CheckOutPage_02 from './pages/IT22577160_Pages/CheckOutPage_02'
-import StarRating from './components/IT22607232_Components/StarRating'
-import AmenityCreate from './pages/IT22003546_Pages/AmenityCreate_05'      
-import RatingWorkGroup_01 from './components/IT22607232_Components/RatingWorkGroup_01'
+
+import AmenityCreate from './pages/IT22003546_Pages/AmenityCreate_05';
+import AmenityList_05 from './components/IT22003546_Components/AmenityList_05';
+import CheckOutPage_02 from './pages/IT22577160_Pages/CheckOutPage_02';
+import StarRating from './components/IT22607232_Components/StarRating';
+import RatingWorkGroup_01 from './components/IT22607232_Components/RatingWorkGroup_01';
 
 
 
@@ -60,8 +62,8 @@ function App() {
                 <Route path="/checkout" element={<CheckOutPage_02/>} />
                 <Route path="/star-ratingWorkers" element={<StarRating/>} />
                 <Route path="/amenity-create" element={<AmenityCreate/>} />
-                 <Route path="/star-ratingWorkers" element={<RatingWorkGroup_01/>} />
-
+                <Route path="/amenity-List" element={<AmenityList_05/>} />
+                <Route path="/star-ratingWorkers" element={<RatingWorkGroup_01/>} />
 
 
             
