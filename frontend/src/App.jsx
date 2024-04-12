@@ -30,6 +30,12 @@ import CheckOutPage_02 from './pages/IT22577160_Pages/CheckOutPage_02'
 import StarRating from './components/IT22607232_Components/StarRating'
 import AmenityCreate from './pages/IT22003546_Pages/AmenityCreate_05'      
 import GamePage_02 from './pages/IT22577160_Pages/GamePage_02'
+import AmenityCreate from './pages/IT22003546_Pages/AmenityCreate_05';
+import AmenityList_05 from './components/IT22003546_Components/AmenityList_05';
+import CheckOutPage_02 from './pages/IT22577160_Pages/CheckOutPage_02';
+import StarRating from './components/IT22607232_Components/StarRating';
+import RatingWorkGroup_01 from './components/IT22607232_Components/RatingWorkGroup_01';
+import AmenityUpdate_05 from './pages/IT22003546_Pages/AmenityUpdate_05'
 
 
 
@@ -54,12 +60,14 @@ function App() {
                 <Route path="/task-assign" element={<TaskAssign/>} />
                 <Route path="/tasks-table:taskid" element={<TasksTable_01/>} />
                 <Route path="/update-tasks/:taskid" element={<S1_UpdateTasks/>} />
+
                 <Route path="/checkout" element={<CheckOutPage_02/>} />
                 <Route path="/star-ratingWorkers" element={<StarRating/>} />
                 <Route path="/amenity-create" element={<AmenityCreate/>} />
+                <Route path="/amenity-List:amenityID" element={<AmenityList_05/>} />
+                <Route path="/star-ratingWorkers" element={<RatingWorkGroup_01/>} />
+                <Route path="edit-amenity/:amenityID" element={<AmenityUpdate_05/>} />
 
-
-            
               </Route>
               <Route element={<OnlyPropertyAdminPrivateRoute_02/>}>
                 <Route path="/create-sharedResourceListing" element={<CreateSharedResources_02/>} />

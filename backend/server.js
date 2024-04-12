@@ -8,6 +8,7 @@ import apartmentListingRoutes from "./routes/IT22577160_Routes/apartmentListing.
 import PaymentProfileCreationRoutes from "./routes/IT22602978_Routes/PaymentProfileCreation.route_03.js";
 import TaskAssignRoute from "./routes/IT22607232_Routes/s1_TaskAssignRoute.js";
 import RequestLeaveRoutes from './routes/IT22603418_Routes/RequestLeave.route_04.js';
+import visitorListingRoutes from './routes/IT22561466_Routes/visitorListing.route.js';
 import cookieParser from "cookie-parser";
 import serviceListingRoutes from "./routes/IT22350114_Routes/serviceListingRoute.js";
 import amenitiesListingRoutes from './routes/IT22003546_Routes/amenitiesListing.route.js';
@@ -52,6 +53,9 @@ app.use('/api/checkout', checkoutRoutes);
 
 // IT22003546 Routes
 app.use('/api/amenitiesListing', amenitiesListingRoutes);
+
+//IT22561466 Routes
+app.use('/api/visitorListing', visitorListingRoutes);
 
 
 
