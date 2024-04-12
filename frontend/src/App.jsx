@@ -27,8 +27,8 @@ import S1_UpdateTasks from './pages/IT22607232_Pages/s1_UpdateTasks'
 import ApartmentListingPage_02 from './pages/IT22577160_Pages/ApartmentListingPage_02'
 import SearchApartments_02 from './pages/IT22577160_Pages/SearchApartments_02'
 import CheckOutPage_02 from './pages/IT22577160_Pages/CheckOutPage_02'
-import StarRating from './components/IT22607232_Components/StarRating'
 import AmenityCreate from './pages/IT22003546_Pages/AmenityCreate_05'      
+
 import GamePage_02 from './pages/IT22577160_Pages/GamePage_02'
 import AmenityCreate from './pages/IT22003546_Pages/AmenityCreate_05';
 import AmenityList_05 from './components/IT22003546_Components/AmenityList_05';
@@ -36,6 +36,8 @@ import CheckOutPage_02 from './pages/IT22577160_Pages/CheckOutPage_02';
 import StarRating from './components/IT22607232_Components/StarRating';
 import RatingWorkGroup_01 from './components/IT22607232_Components/RatingWorkGroup_01';
 import AmenityUpdate_05 from './pages/IT22003546_Pages/AmenityUpdate_05'
+import RateReview_01 from './pages/IT22607232_Pages/RateReview_01'
+
 
 
 
@@ -61,12 +63,20 @@ function App() {
                 <Route path="/tasks-table:taskid" element={<TasksTable_01/>} />
                 <Route path="/update-tasks/:taskid" element={<S1_UpdateTasks/>} />
 
+
                 <Route path="/checkout" element={<CheckOutPage_02/>} />
-                <Route path="/star-ratingWorkers" element={<StarRating/>} />
                 <Route path="/amenity-create" element={<AmenityCreate/>} />
+
+                
+                
+
+
+
                 <Route path="/amenity-List:amenityID" element={<AmenityList_05/>} />
                 <Route path="/star-ratingWorkers" element={<RatingWorkGroup_01/>} />
                 <Route path="edit-amenity/:amenityID" element={<AmenityUpdate_05/>} />
+                   <Route path="/rate-tasks/:taskid" element={<RateReview_01/>} />
+
 
               </Route>
               <Route element={<OnlyPropertyAdminPrivateRoute_02/>}>

@@ -43,5 +43,5 @@ const TaskSchema = new mongoose.Schema({
     }],
 }, { timestamps: true });
 
-const Task = mongoose.model('Task', TaskSchema);
-export default Task;
+const TaskRating = mongoose.model('TaskRating', TaskSchema);
+export default TaskRating;
