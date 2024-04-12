@@ -15,6 +15,7 @@ import amenitiesListingRoutes from './routes/IT22003546_Routes/amenitiesListing.
 import sharedResourcesListingRoutes from './routes/IT22577160_Routes/sharedResourcesListing.route_02.js';
 import commentRoutes from './routes/IT22577160_Routes/comment.route_02.js';
 import checkoutRoutes from './routes/IT22577160_Routes/checkout.route_02.js';
+import RateTasksRoutes from './routes/IT22607232_Routes/RateTasksRoute_01.js';
 
 dotenv.config();
 
@@ -44,6 +45,7 @@ app.use("/api/serviceListing", serviceListingRoutes);
 
 //IT22607232 Routes
 app.use("/api/taskAssign", TaskAssignRoute);
+app.use("/api/taskRating", RateTasksRoutes);
 
 // IT22577160 Routes
 app.use('/api/apartmentListing', apartmentListingRoutes);

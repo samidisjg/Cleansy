@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { FaTasks, FaStar } from "react-icons/fa";
+import { Button } from "flowbite-react";
+
 
 const RatingWorkGroup_01 = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -52,7 +54,15 @@ const RatingWorkGroup_01 = () => {
               <li
                 key={task._id}
                 className="group relative w-full border border-teal-500 overflow-hidden rounded-lg sm:w-[330px] transition-all"
-              >
+              >  <div className="flex flex-wrap gap-2">
+                <Button pill>
+                <Link
+                      className="text-teal-500 hover:underline"
+                      to={`/rate-tasks/${task._id}`}
+                    >  Go to Rate
+                    </Link>
+                    </Button>
+                    </div>
                 <Link
                   className="text-slate-700 font-semibold hover:underline truncate flex-1"
                   to={`/tasks-table/${task._id}`}
@@ -84,23 +94,7 @@ const RatingWorkGroup_01 = () => {
                     </div>
                   </div>
                 </Link>
-                <div className="flex justify-center items-center">
-      {[...Array(5)].map((star, i) => {
-        const ratingValue = i + 1;
-        return (
-          <FaStar
-            key={i}
-            className="cursor-pointer"
-            color={ratingValue <= (hover || rating) ? "#ffc107" : "#e4e5e9"}
-            size={20}
-            onClick={() => handleClick(ratingValue)}
-            onMouseEnter={() => setHover(ratingValue)}
-            onMouseLeave={() => setHover(null)}
-          />
-        );
-      })}
-      <p className="ml-4">The rating is {rating || 'not rated'}.</p>
-    </div>
+                
               </li>
             ))}
         </ul>
