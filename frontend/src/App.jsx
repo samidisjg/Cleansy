@@ -17,7 +17,6 @@ import TaskAssign from './pages/IT22607232_Pages/s1_TaskAssignCreation'
 import RequestLeave_04 from './pages/IT22603418_Pages/RequestLeave_04'
 import OnlyPropertyAdminPrivateRoute_02 from './components/IT22577160_Components/OnlyPropertyAdminPrivateRoute_02'
 import CreateSharedResources_02 from './pages/IT22577160_Pages/CreateSharedResources_02'
-
 import UpdateSharedResources_02 from './pages/IT22577160_Pages/UpdateSharedResources_02'
 import SharedResourcesPage_02 from './pages/IT22577160_Pages/SharedResourcesPage_02'
 import ScrollToTop_02 from './components/IT22577160_Components/ScrollToTop_02'
@@ -25,11 +24,10 @@ import MarketPlace from './pages/IT22577160_Pages/MarketPlace'
 import SearchResources_02 from './pages/IT22577160_Pages/SearchResources_02'
 import TasksTable_01 from './components/IT22607232_Components/TasksTable_01'
 import S1_UpdateTasks from './pages/IT22607232_Pages/s1_UpdateTasks'
-
 import ApartmentListingPage_02 from './pages/IT22577160_Pages/ApartmentListingPage_02'
 import SearchApartments_02 from './pages/IT22577160_Pages/SearchApartments_02'
+import CheckOutPage_02 from './pages/IT22577160_Pages/CheckOutPage_02'
 import StarRating from './components/IT22607232_Components/StarRating'
-
 import AmenityCreate from './pages/IT22003546_Pages/AmenityCreate_05'      
 
 
@@ -55,8 +53,10 @@ function App() {
                 <Route path="/task-assign" element={<TaskAssign/>} />
                 <Route path="/tasks-table:taskid" element={<TasksTable_01/>} />
                 <Route path="/update-tasks/:taskid" element={<S1_UpdateTasks/>} />
+                <Route path="/checkout" element={<CheckOutPage_02/>} />
                 <Route path="/star-ratingWorkers" element={<StarRating/>} />
                 <Route path="/amenity-create" element={<AmenityCreate/>} />
+
 
             
               </Route>
@@ -71,6 +71,7 @@ function App() {
               <Route path='/searchResource' element={<SearchResources_02 />}/>
               <Route path='/apartmentListing/:listingId' element={<ApartmentListingPage_02 />}/>
               <Route path='/searchApartments' element={<SearchApartments_02 />}/>
+              <Route path='/success' element={<CheckOutPage_02 />}/>
             </Routes>
 
           </div>
