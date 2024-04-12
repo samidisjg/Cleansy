@@ -24,6 +24,12 @@ const DashAmenity = () => {
                         <Link to="/amenity-List:amenityID">Show Amenities</Link>
                     </Button>
                     <br />
+
+                    <div className="flex flex-wrap gap-2"></div>
+                    <Button pill>
+                        <Link to="/amenity-User:amenityID">User View</Link>
+                    </Button>
+                    <br />
                 </div>
             )}
         </div>
