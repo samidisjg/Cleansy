@@ -41,7 +41,7 @@ const RateReview_01 = () => {
       }
       setFormData({
         TaskID: data.TaskID,
-        Category: data.Category, // Make sure Category is included in the response data
+        Category: data.Category, 
         Name: data.Name,
         Ratings: data.Ratings,
         WorkGroupID: data.WorkGroupID,
@@ -109,7 +109,7 @@ const RateReview_01 = () => {
       if (data.success === false) {
         setError(data.message);
       }
-      //navigate(`/task-assign/${data._id}`);
+
       navigate("/RatingWorkGroup_01");
     } catch (error) {
       setError(error.message);
