@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const ServiceListingSchema = new mongoose.Schema(
   {
+    serviceID: {
+      type: String,
+      required: true,
+    },
     serviceName: {
       type: String,
       required: true,
