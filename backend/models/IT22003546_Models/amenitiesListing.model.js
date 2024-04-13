@@ -15,8 +15,8 @@ const AmenitiesListingSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    amenityImage: {
-        type: String,
+    imageURLs: {
+        type: Array,
         required: true
     },
     amenityLocation: {

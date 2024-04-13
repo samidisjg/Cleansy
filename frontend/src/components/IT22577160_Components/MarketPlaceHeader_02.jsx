@@ -1,12 +1,13 @@
-import { Navbar, TextInput } from 'flowbite-react'
+import { Button, Navbar, TextInput } from 'flowbite-react'
 import { useEffect, useState } from 'react'
 import { AiOutlineHeart, AiOutlineSearch, AiOutlineShoppingCart } from 'react-icons/ai'
 import { BiMenuAltLeft } from 'react-icons/bi'
 import { IoIosArrowDown } from 'react-icons/io'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import CartPopUp from './CartPopUp'
 import { useSelector, useDispatch } from "react-redux";
 import WishListPopUp_02 from './WishListPopUp_02'
+import { CgGames } from "react-icons/cg";
 
 const MarketPlaceHeader_02 = () => {
    const { cart } = useSelector((state) => state.cart);
@@ -37,7 +38,7 @@ const MarketPlaceHeader_02 = () => {
   return (
 
       <Navbar className="border-b-2 sticky top-16 bg-[#3321c8] dark:bg-slate-600 z-40 flex justify-between">
-         <div className='sm:flex items-center relative w-[200px] h-14 sm:w-[270px] hidden' onClick={() => setDropDown(!dropDown)}>
+         {/* <div className='sm:flex items-center relative w-[200px] h-14 sm:w-[270px] hidden' onClick={() => setDropDown(!dropDown)}> */}
             {/* <div> */}
                {/* <BiMenuAltLeft size={30} className='text-slate-800 absolute top-3 left-2' />
                <button className='h-full w-full flex justify-between items-center pl-10 font-sans text-lg  text-slate-800 font-semibold select-none'>
@@ -45,7 +46,7 @@ const MarketPlaceHeader_02 = () => {
                </button>
                <IoIosArrowDown size={20} className='text-slate-800 absolute right-2 top-4 cursor-pointer' /> */}
             {/* </div> */}
-         </div>
+         {/* </div> */}
          {/* <div className='sm:flex items-center  mx-auto hidden '> */}
             {/* <div> */}
                {/* <Button className=''>
@@ -53,6 +54,11 @@ const MarketPlaceHeader_02 = () => {
                </Button> */}
             {/* </div> */}
          {/* </div> */}
+         <Link to='/games'>
+            <Button color='dark' className='sm:flex items-center relative w-[200px] h-14 sm:w-[270px] hidden'>
+               <span><CgGames className='mr-2' size={25}/></span> Let's Play Games
+            </Button>
+         </Link>
       
          <div className='flex items-center'>
             <div className='flex items-center relative cursor-pointer mr-[15px]' onClick={() => setOpenWishlist(true)}>

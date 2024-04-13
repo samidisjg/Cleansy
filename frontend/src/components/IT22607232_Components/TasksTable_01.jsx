@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch  } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Table, Button } from "flowbite-react";
 import { Link } from "react-router-dom";
-import jsPDF from 'jspdf';
+import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 
 const TasksTable_01 = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [showTasksError, setShowTasksError] = useState(false);
   const [showTasks, setShowTasks] = useState([]);
-  const dispatch = useDispatch ();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     handleShowAssignments(); // Call the function directly when the component mounts
@@ -30,9 +30,9 @@ const TasksTable_01 = () => {
   };
 
   const handleTasksDelete = async (_id) => {
-    try{
+    try {
       const res = await fetch(`/api/taskAssign/delete/${_id}`, {
-        method: 'DELETE',
+        method: "DELETE",
       });
       const data = await res.json();
       if (data.success === false) {
@@ -40,18 +40,27 @@ const TasksTable_01 = () => {
         return;
       }
       setShowTasks((prev) => prev.filter((task) => task._id !== _id));
-    }catch (error) {
+    } catch (error) {
       console.log(error.message);
     }
-  }
-
+  };
 
   const handleDownloadPDF = () => {
-    const payDoc = new jsPDF();
-    const tableColumn = ["Date", "Task ID", "Category", "Name", "Description", "WorkGroupID", "Location", "Duration(Days)"];
+    const TaskAssign = new jsPDF();
+    const tableColumn = [
+      "Date",
+      "Task ID",
+      "Category",
+      "Name",
+      "Description",
+      "WorkGroupID",
+      "Location",
+      "Duration(Days)",
+      "Status",
+    ];
     const tableRows = [];
 
-    showTasks.forEach(task => {
+    showTasks.forEach((task) => {
       const rowData = [
         new Date(task.updatedAt).toLocaleDateString(),
         task.TaskID,
@@ -60,7 +69,8 @@ const TasksTable_01 = () => {
         task.Description,
         task.WorkGroupID,
         task.Location,
-        task.DurationDays
+        task.DurationDays,
+        "Initial",
       ];
       tableRows.push(rowData);
     });
@@ -70,15 +80,24 @@ const TasksTable_01 = () => {
     const month = d.getMonth() + 1;
     const date = d.getDate();
 
-    payDoc.autoTable(tableColumn, tableRows, { startY: 20 });
-    payDoc.text("List of Tasks", 14, 15);
-    payDoc.save(`Tasks_Report_${year +" "+ month +" "+date}.pdf`);
+    TaskAssign.autoTable(tableColumn, tableRows, { startY: 20 });
+    TaskAssign.text(
+      "Cleansy Sustainable Community Management Sytstem Pvt Ltd",
+      14,
+      15
+    );
+    TaskAssign.save(
+      `Assigned_Mainataianace_Tasks_Report_${
+        year + " " + month + " " + date
+      }.pdf`
+    );
   };
 
   return (
     <div className="w-full table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
       {currentUser.isFacilityAdmin && (
         <>
+          Cleansy Tasks
           <Table hoverable className="shadow-md">
             <Table.Head>
               <Table.HeadCell>Date</Table.HeadCell>
@@ -89,15 +108,23 @@ const TasksTable_01 = () => {
               <Table.HeadCell>WorkGroupID</Table.HeadCell>
               <Table.HeadCell>Location</Table.HeadCell>
               <Table.HeadCell>Duration(Days)</Table.HeadCell>
-              <Table.HeadCell onClick={() => handleTasksDelete(task._id)} >Delete</Table.HeadCell>
+              <Table.HeadCell>Status</Table.HeadCell>
+              <Table.HeadCell onClick={() => handleTasksDelete(task._id)}>
+                Delete
+              </Table.HeadCell>
               <Table.HeadCell>
                 <span>Edit</span>
+              </Table.HeadCell>
+              <Table.HeadCell onClick={handleDownloadPDF}>
+                Download PDF
               </Table.HeadCell>
             </Table.Head>
             {showTasks.map((task) => (
               <Table.Body key={task._id} className="divide-y">
                 <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                  <Table.Cell>{new Date(task.updatedAt).toLocaleDateString()}</Table.Cell>
+                  <Table.Cell>
+                    {new Date(task.updatedAt).toLocaleDateString()}
+                  </Table.Cell>
                   <Table.Cell>{task.TaskID}</Table.Cell>
                   <Table.Cell>{task.Category}</Table.Cell>
                   <Table.Cell>{task.Name}</Table.Cell>
@@ -105,9 +132,10 @@ const TasksTable_01 = () => {
                   <Table.Cell>{task.WorkGroupID}</Table.Cell>
                   <Table.Cell>{task.Location}</Table.Cell>
                   <Table.Cell>{task.DurationDays}</Table.Cell>
+                  <Table.Cell>Inital</Table.Cell>
                   <Table.Cell>
                     <span
-                     onClick={() =>handleTasksDelete(task._id)}
+                      onClick={() => handleTasksDelete(task._id)}
                       className="font-medium text-red-500 hover:underline cursor-pointer"
                     >
                       Delete
@@ -125,13 +153,9 @@ const TasksTable_01 = () => {
               </Table.Body>
             ))}
           </Table>
-
-          <Button onClick={handleDownloadPDF}>Download PDF</Button>
-
           <p className="text-red-700 mt-5">
             {showTasksError ? "Error fetching tasks" : ""}
           </p>
-
           {showTasks &&
             showTasks.length > 0 &&
             showTasks.map((task) => (
