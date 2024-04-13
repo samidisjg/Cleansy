@@ -5,7 +5,7 @@ const visitorListingSchema = new mongoose.Schema (
         ownerName:{
             type: String,
             required: true,
-        },
+        },        
         guestName:{
             type: String,
             required: true,

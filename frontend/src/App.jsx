@@ -41,9 +41,6 @@ import AmenityDetails from './components/IT22003546_Components/AmenityDetailsEac
 import BookAmenity from './pages/IT22003546_Pages/BookAmenity_05'
 
 
-
-
-
 function App() {
   return (
     <>
