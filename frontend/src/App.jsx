@@ -27,6 +27,9 @@ import S1_UpdateTasks from './pages/IT22607232_Pages/s1_UpdateTasks'
 import ApartmentListingPage_02 from './pages/IT22577160_Pages/ApartmentListingPage_02'
 import SearchApartments_02 from './pages/IT22577160_Pages/SearchApartments_02'
 import CheckOutPage_02 from './pages/IT22577160_Pages/CheckOutPage_02'
+import StarRating from './components/IT22607232_Components/StarRating'
+import AmenityCreate from './pages/IT22003546_Pages/AmenityCreate_05'      
+import AddVisitors from './pages/IT22561466_Pages/AddVisitors'
 import GamePage_02 from './pages/IT22577160_Pages/GamePage_02'
 import AmenityCreate from './pages/IT22003546_Pages/AmenityCreate_05';
 import AmenityList_05 from './components/IT22003546_Components/AmenityList_05';
@@ -36,7 +39,6 @@ import RateReview_01 from './pages/IT22607232_Pages/RateReview_01'
 import BoxTile from './components/IT22003546_Components/UserAmenityView'
 import AmenityDetails from './components/IT22003546_Components/AmenityDetailsEach_05'
 import BookAmenity from './pages/IT22003546_Pages/BookAmenity_05'
-
 
 
 
@@ -65,6 +67,7 @@ function App() {
 
                 <Route path="/checkout" element={<CheckOutPage_02/>} />
                 <Route path="/amenity-create" element={<AmenityCreate/>} />
+                <Route path="/add-visitors" element={<AddVisitors/>} />
 
                 
                 
