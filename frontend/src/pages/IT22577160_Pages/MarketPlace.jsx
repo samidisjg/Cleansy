@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { toast } from 'react-toastify';
 import { addToWishlist, removeFromWishlist } from '../../../redux/IT22577160_redux/wishList_02.js';
 import { addToCart } from "../../../redux/IT22577160_redux/cartSlice.js";
+import { addToRating, removeFromRating } from "../../../redux/IT22577160_redux/ratingSlice_02.js";
 
 const MarketPlace = () => {
    const [resources, setResources] = useState([]);
@@ -14,6 +15,7 @@ const MarketPlace = () => {
    const dispatch = useDispatch()
    const { wishlist } = useSelector((state) => state.wishlist);
    const { cart } = useSelector((state) => state.cart);
+   const { rating } = useSelector((state) => state.rating);
 
    useEffect(() => {
       const fetchPost = async () => {
@@ -84,6 +86,25 @@ const MarketPlace = () => {
       }
    }, [wishlist, resources])
 
+   // const removeFromRatingHandler = (data) => {
+   //    setClick(!click);
+   //    dispatch(removeFromRating(data._id));
+   // }
+
+   // const addToRatingHandler = (data) => {
+   //    setClick(!click);
+   //    dispatch(addToRating(data));
+   // }
+
+   const handleRatingClick = (value) => {
+      if (rating === value) {
+         dispatch(removeFromRating());
+      } else {
+         dispatch(addToRating(value));
+      }
+   };
+
+
   return (
    <>
       <MarketPlaceHeader_02 />
@@ -104,11 +125,27 @@ const MarketPlace = () => {
                               <div className='flex justify-between'>
                                  <span className='italic text-sm'>{resource.category}</span>
                                  <div className="flex text-xs">
-                                    <AiFillStar className='mr-2 cursor-pointer' color='#F6BA00' size={20}/>
-                                    <AiFillStar className='mr-2 cursor-pointer' color='#F6BA00' size={20}/>
-                                    <AiFillStar className='mr-2 cursor-pointer' color='#F6BA00' size={20}/>
-                                    <AiFillStar className='mr-2 cursor-pointer' color='#F6BA00' size={20}/>
-                                    <AiOutlineStar className='mr-2 cursor-pointer' color='#F6BA00' size={20}/>
+                                    {/* {
+                                       [...Array(5)].map((index) => (
+                                          <span key={index}>
+                                             {rating && rating.find((i) => i._id === resource._id) ? (
+                                                <AiFillStar size={20} onClick={() => removeFromRatingHandler(resource)} className='cursor-pointer text-yellow-300' />
+                                             ) : (
+                                                <AiOutlineStar size={20} onClick={() => addToRatingHandler(resource)} className='cursor-pointer text-gray-500' />
+                                             )}
+                                          </span>
+                                       ))
+                                    } */}
+
+                                    {[...Array(5)].map((star, i) => (
+                                       <span key={i} onClick={() => handleRatingClick(i + 1)}>
+                                          {i < rating ? (
+                                             <AiFillStar size={20} className='cursor-pointer text-yellow-300' />
+                                          ) : (
+                                             <AiOutlineStar size={20} className='cursor-pointer text-gray-500' />
+                                          )}
+                                       </span>
+                                    ))}
                                  </div>
                               </div>
                               <div className='flex justify-between items-center'>

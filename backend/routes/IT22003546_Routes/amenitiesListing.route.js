@@ -1,7 +1,6 @@
 import express from 'express';
 import { createAmenityListing, getAmenityListings, updateAmenityListing, deleteAmenityListing, getAmenityListingById} from '../../controllers/IT22003546_Controllers/amenitiesListing.controller.js';
 import { verifyToken } from '../../utils/verifyUser.js';
-import { get } from 'mongoose';
 
 const router = express.Router();
 
