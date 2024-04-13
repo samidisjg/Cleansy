@@ -27,11 +27,9 @@ import S1_UpdateTasks from './pages/IT22607232_Pages/s1_UpdateTasks'
 import ApartmentListingPage_02 from './pages/IT22577160_Pages/ApartmentListingPage_02'
 import SearchApartments_02 from './pages/IT22577160_Pages/SearchApartments_02'
 import CheckOutPage_02 from './pages/IT22577160_Pages/CheckOutPage_02'
-import StarRating from './components/IT22607232_Components/StarRating'
 import AmenityCreate from './pages/IT22003546_Pages/AmenityCreate_05'      
 import AddVisitors from './pages/IT22561466_Pages/AddVisitors'
 import GamePage_02 from './pages/IT22577160_Pages/GamePage_02'
-import AmenityCreate from './pages/IT22003546_Pages/AmenityCreate_05';
 import AmenityList_05 from './components/IT22003546_Components/AmenityList_05';
 import RatingWorkGroup_01 from './components/IT22607232_Components/RatingWorkGroup_01';
 import AmenityUpdate_05 from './pages/IT22003546_Pages/AmenityUpdate_05'
