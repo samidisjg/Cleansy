@@ -101,6 +101,9 @@ const Header = () => {
             <Navbar.Link active={path === '/marketPlace'} as={'div'}>
                <Link to='/marketPlace' className="hover:text-orange-500 active:text-orange-600 hover:underline">Market Place</Link>
             </Navbar.Link>
+            <Navbar.Link active={path === '/team'} as={'div'}>
+               <Link to='/team' className="hover:text-orange-500 active:text-orange-600 hover:underline hidden sm:flex">Our Team</Link>
+            </Navbar.Link>
          </Navbar.Collapse>
     </Navbar>
   )

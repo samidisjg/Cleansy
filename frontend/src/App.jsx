@@ -33,6 +33,7 @@ import AmenityList_05 from './components/IT22003546_Components/AmenityList_05';
 import RatingWorkGroup_01 from './components/IT22607232_Components/RatingWorkGroup_01';
 import AmenityUpdate_05 from './pages/IT22003546_Pages/AmenityUpdate_05'
 import RateReview_01 from './pages/IT22607232_Pages/RateReview_01'
+import Team from './pages/Team'
 
 
 
@@ -88,6 +89,7 @@ function App() {
               <Route path='/searchApartments' element={<SearchApartments_02 />}/>
               <Route path='/success' element={<CheckOutPage_02 />}/>
               <Route path='/games' element={<GamePage_02 />}/>
+              <Route path='/team' element={<Team />}/>
             </Routes>
 
           </div>
