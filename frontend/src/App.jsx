@@ -37,6 +37,7 @@ import RateReview_01 from './pages/IT22607232_Pages/RateReview_01'
 import BoxTile from './components/IT22003546_Components/UserAmenityView'
 import AmenityDetails from './components/IT22003546_Components/AmenityDetailsEach_05'
 import BookAmenity from './pages/IT22003546_Pages/BookAmenity_05'
+import ServiceListingCreate from './pages/IT22350114_Pages/ServiceCreate_06'
 
 
 
@@ -76,6 +77,8 @@ function App() {
                 <Route path="/star-ratingWorkers" element={<RatingWorkGroup_01/>} />
                 <Route path="edit-amenity/:amenityID" element={<AmenityUpdate_05/>} />
                 <Route path="/rate-tasks/:taskid" element={<RateReview_01/>} />
+
+                <Route path="/service-create" element={<ServiceListingCreate/>} />
 
 
               </Route>
