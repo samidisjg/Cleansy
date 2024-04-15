@@ -6,7 +6,6 @@ import authRoutes from "./routes/auth.route.js";
 import apartmentListingRoutes from "./routes/IT22577160_Routes/apartmentListing.route_02.js";
 import PaymentProfileCreationRoutes from "./routes/IT22602978_Routes/PaymentProfileCreation.route_03.js";
 import TaskAssignRoute from "./routes/IT22607232_Routes/s1_TaskAssignRoute.js";
-import RequestLeaveRoutes from './routes/IT22603418_Routes/RequestLeave.route_04.js';
 import visitorListingRoutes from './routes/IT22561466_Routes/visitorListing.route.js';
 import RequestLeaveRoutes from "./routes/IT22603418_Routes/RequestLeave.route_04.js";
 import StaffAdminRoutes from "./routes/IT22603418_Routes/StaffAdmin.route_04.js";

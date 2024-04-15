@@ -200,7 +200,6 @@ const DashSidebar = () => {
               </Link>
             </>
           )}
-
           {currentUser.isStaffAdmin && (
             <>
               <Link to="/dashboard?tab=staffAdmin">
