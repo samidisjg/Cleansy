@@ -227,6 +227,25 @@ const DashSidebar = () => {
               </Link>
             </>
           )}
+          {currentUser.isPropertyAdmin && (
+            <>
+              <Link to="/dashboard?tab=comments">
+                <Sidebar.Item
+                  active={tab === "comments"}
+                  icon={HiAnnotation}
+                  as="div"
+                >
+                  Comments
+                </Sidebar.Item>
+              </Link>
+            </>
+          )}
+          <Link to="/add-visitors">
+            <Sidebar.Item icon={HiUser} as="div">
+              Add Visitors
+            </Sidebar.Item>
+          </Link>
+
           <Sidebar.Item
             icon={HiArrowSmRight}
             className="cursor-pointer"
