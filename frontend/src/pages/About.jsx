@@ -3,7 +3,7 @@ import aboutUS from '/aboutUS.jpg'
 const About = () => {
   return (
     <div className="p-3 bg-amber-100 dark:bg-slate-700 min-h-screen border border-teal-500 rounded-tl-3xl rounded-br-3xl m-5">
-          <h1 className='text-3xl font-bold mb-4 underline text-center py-2'>About Cleansy</h1>
+          <h1 className='text-3xl text-center mt-6 font-extrabold underline '>About Cleansy</h1>
           <h1 className='text-center my-2 text-xl font-medium'>At Cleansy, we turn care into precision, creating spaces where excellence thrives.</h1>
           <div className="flex flex-col sm:flex-row p-3  justify-center items-center rounded-tl-3xl rounded-br-3xl">
             <div className="flex justify-center flex-col flex-1">
