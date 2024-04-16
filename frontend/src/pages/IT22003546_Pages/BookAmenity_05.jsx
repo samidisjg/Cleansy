@@ -104,7 +104,7 @@ const BookAmenity = () => {
           return setError(data.message);
       }
       // Assuming `navigate` is defined elsewhere
-      navigate('/dashboard?tab=amenity');
+      navigate('/booking-confirmation/:bookingID');
     } catch (err) {
       setError(err.message);
       setLoading(false);

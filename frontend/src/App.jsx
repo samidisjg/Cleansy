@@ -39,6 +39,7 @@ import AmenityDetails from './components/IT22003546_Components/AmenityDetailsEac
 import BookAmenity from './pages/IT22003546_Pages/BookAmenity_05'
 import BookingList_05 from './components/IT22003546_Components/BookingList_05'
 import BookingUpdate_05 from './pages/IT22003546_Pages/BookingUpdate_05'
+import BookingConfirmationPage_05 from './components/IT22003546_Components/BookingConfirmationPage_05'
 
 
 
@@ -70,6 +71,7 @@ function App() {
                 <Route path="/add-visitors" element={<AddVisitors/>} />
                 <Route path="/booking-List:bookingID" element={<BookingList_05/>} />
                 <Route path="/update-booking/:bookingID" element={<BookingUpdate_05/>} />
+                <Route path="/booking-confirmation/:bookingID" element={<BookingConfirmationPage_05/>} />
                 
                 
                 <Route path="/book-amenity/:amenityId" element={<BookAmenity/>} />
