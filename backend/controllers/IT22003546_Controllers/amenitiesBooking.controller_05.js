@@ -52,3 +52,14 @@ export const deleteAmenityBooking = async (req, res, next) => {
     }
 }
 
+//get all bookings
+export const getAllBookings = async (req, res, next) => {
+    try {
+        const allBookings = await AmenitiesBooking.find();
+        return res.status(200).json(allBookings);
+    }
+    catch (error) {
+        next(error);
+    }
+}
+

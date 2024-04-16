@@ -14,6 +14,10 @@ const AmenitiesBookingSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    residentUsername: {
+        type: String,
+        required: true
+    },
     residentName: {
         type: String,
         required: true
@@ -36,7 +40,7 @@ const AmenitiesBookingSchema = new mongoose.Schema({
     },
     specialRequests: { 
         type: String,
-        required: true
+        required: false
     },
     duration: {
         type: Number,
