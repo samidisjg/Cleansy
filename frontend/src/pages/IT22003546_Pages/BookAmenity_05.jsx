@@ -28,11 +28,13 @@ const BookAmenity = () => {
     duration: "",
     amenityId: "",
     amenityTitle: "",
+    residentUsername: "",
     residentName: "",
     residentEmail: "",
     residentContact: "",
     specialRequests: "",
     bookingID: generateBookingId(), // Initial booking ID generated
+    status: "Pending",
   });
 
   // Effect to fetch amenity details
@@ -50,7 +52,8 @@ const BookAmenity = () => {
           ...prevData,
           amenityId: data.amenityID,
           amenityTitle: data.amenityTitle,
-          userId: data.userId,
+          residentUsername: currentUser.username,
+          residentEmail: currentUser.email,
         }));
       } catch (error) {
         console.error("Error fetching amenity details", error);
@@ -72,6 +75,7 @@ const BookAmenity = () => {
     setFormData({
         ...formData,
         [e.target.name]: boolean !== null ? boolean : e.target.value,
+        
     });
   };
 
@@ -91,6 +95,7 @@ const BookAmenity = () => {
           body: JSON.stringify({
               ...formData,
               userRef: currentUser._id,
+              bookingStatus: "Pending",
           })
       });
       const data = await response.json();
@@ -99,7 +104,7 @@ const BookAmenity = () => {
           return setError(data.message);
       }
       // Assuming `navigate` is defined elsewhere
-      navigate('/dashboard?tab=amenity');
+      navigate('/booking-confirmation/:bookingID');
     } catch (err) {
       setError(err.message);
       setLoading(false);
@@ -118,7 +123,7 @@ const BookAmenity = () => {
               id="bookingId"
               name="bookingID"
               value={formData.bookingID}
-              readOnly 
+              disabled 
             />
           </div>
 
@@ -146,26 +151,35 @@ const BookAmenity = () => {
           </div>
 
           <div>
+            <Label htmlFor="residentUsername" >Resident Username</Label>
+            <TextInput
+              type="text"
+              id="residentUsername"
+              name="username"
+              value={formData.residentUsername}
+              readOnly
+            />
+
+          </div>
+          <div>
               <Label htmlFor="name" >Resident Name:</Label>
               <TextInput
                 type="text"
                 id="residentName"
                 name="residentName"
-                value={formData.userId}
                 required
                 onChange={handleChange}
               />
           </div>
 
           <div>
-            <Label htmlFor="email" >Resident Email:</Label>
+            <Label htmlFor="residentEmail" >Resident Email</Label>
             <TextInput
               type="email"
-              id="residentEmail"
               name="residentEmail"
-              required
-              onChange={handleChange}  
-            />
+              value={formData.residentEmail}
+              onChange={handleChange}
+            />  
           </div>
 
           <div>

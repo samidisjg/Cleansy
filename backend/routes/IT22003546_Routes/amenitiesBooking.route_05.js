@@ -1,5 +1,5 @@
 import express from 'express';
-import { bookAmenity, updateAmenityBooking, deleteAmenityBooking, getAmenityBookingById} from '../../controllers/IT22003546_Controllers/amenitiesBooking.controller_05.js';
+import { bookAmenity, updateAmenityBooking, deleteAmenityBooking, getAmenityBookingById, getAllBookings} from '../../controllers/IT22003546_Controllers/amenitiesBooking.controller_05.js';
 import { verifyToken } from '../../utils/verifyUser.js';
 
 const router = express.Router();
@@ -21,5 +21,8 @@ router.put('/update/:bookingId', verifyToken, updateAmenityBooking);
 
 //delete amenity booking
 router.delete('/delete/:bookingId', verifyToken, deleteAmenityBooking);
+
+//get all bookings
+router.get('/getAll', verifyToken, getAllBookings);
 
 export default router;
