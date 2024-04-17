@@ -106,6 +106,8 @@ const Header = () => {
             </Navbar.Link>
             <Navbar.Link active={path === '/contact'} as={'div'}>
                <Link to='/contact' className="hover:text-orange-500 active:text-orange-600 hover:underline">Contact Us</Link>
+            <Navbar.Link active={path === '/amenity-User:amenityID'} as={'div'}>
+               <Link to='/amenity-User:amenityID' className="hover:text-orange-500 active:text-orange-600 hover:underline">Amenity</Link>
             </Navbar.Link>
          </Navbar.Collapse>
     </Navbar>
