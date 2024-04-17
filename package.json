@@ -19,10 +19,9 @@
     "face-api.js": "^0.22.2",
     "flowbite-react": "^0.7.3",
     "jsonwebtoken": "^9.0.2",
+    "jspdf": "^2.5.1",
     "mongoose": "^8.1.1",
     "nodemon": "^3.1.0",
     "stripe": "^14.25.0"
-  
-
   }
 }
