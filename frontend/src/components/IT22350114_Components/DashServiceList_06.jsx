@@ -15,14 +15,7 @@ const DashServiceList_06 = () => {
                <div>
                 <h1>Create Services</h1>
 
-                    <div className="flex flex-wrap gap-2"></div>
-                    <Button pill>
-                        <Link to="/service-create">Create Service</Link>
-                    </Button>
-                    <Button pill>
-                        <Link to="service-list:serviceID">View Service</Link>
-                    </Button>
-                    <br />
+                    
                    
                 </div>
                 
