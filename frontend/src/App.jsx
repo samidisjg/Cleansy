@@ -87,7 +87,6 @@ function App() {
 
                 <Route path="/service-create" element={<ServiceListingCreate/>} />
 
-
               </Route>
               <Route element={<OnlyPropertyAdminPrivateRoute_02/>}>
                 <Route path="/create-sharedResourceListing" element={<CreateSharedResources_02/>} />
