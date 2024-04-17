@@ -55,7 +55,7 @@ const BookingList_05 = () => {
 
     const handleDownloadPDF = () => {
         const payDoc = new jsPDF('l');
-        const tableColumn = ["Booking ID", "Amenity Title", "Resident Name", "Resident Email", "Resident Contact", "Date", "Time", "Duration", "Status"];
+        const tableColumn = ["Booking ID", "Amenity Title", "Resident Name", "Resident Email", "Resident Contact", "Date", "Time", "Duration", "Total Amount", "Status"];
         const tableRows = [];
 
         showBooking.forEach(booking => {
@@ -68,6 +68,7 @@ const BookingList_05 = () => {
                 booking.bookingDate,
                 booking.bookingTime,
                 booking.duration,
+                booking.bookingPrice,
                 booking.bookingStatus,
             ];
             tableRows.push(rowData);
@@ -119,6 +120,7 @@ const BookingList_05 = () => {
                             <Table.HeadCell>Date</Table.HeadCell>
                             <Table.HeadCell>Time</Table.HeadCell>
                             <Table.HeadCell>Duration</Table.HeadCell>
+                            <Table.HeadCell>Total Amount</Table.HeadCell>
                             <Table.HeadCell>Status</Table.HeadCell>
                             <Table.HeadCell>Update Status</Table.HeadCell>
                         </Table.Head>
@@ -133,6 +135,7 @@ const BookingList_05 = () => {
                                     <Table.Cell>{booking.bookingDate}</Table.Cell>
                                     <Table.Cell>{booking.bookingTime}</Table.Cell>
                                     <Table.Cell>{booking.duration}</Table.Cell>
+                                    <Table.Cell>{booking.bookingPrice}</Table.Cell>
                                     <Table.Cell className="py-2">
                                         <div className={`w-20 h-5 rounded-md text-center ${booking.bookingStatus === 'Confirmed' ? 'bg-green-500 text-white' : booking.bookingStatus === 'Pending' ? 'bg-red-700 text-white' : ''}`}>
                                             {booking.bookingStatus}
@@ -195,10 +198,11 @@ const BookingList_05 = () => {
                             <Table.HeadCell>Date</Table.HeadCell>
                             <Table.HeadCell>Time</Table.HeadCell>
                             <Table.HeadCell>Duration</Table.HeadCell>
+                            <Table.HeadCell>Total Amount</Table.HeadCell>
                             <Table.HeadCell>Status</Table.HeadCell>
                             <Table.HeadCell onClick={() => handleAmenitiesDelete(booking._id)}>Delete</Table.HeadCell>
                             <Table.HeadCell>
-                                <span>Edit</span>
+                                <span>Upadte</span>
                             </Table.HeadCell>
                         </Table.Head>
                     {showBooking
@@ -214,6 +218,7 @@ const BookingList_05 = () => {
                                     <Table.Cell>{booking.bookingDate}</Table.Cell>
                                     <Table.Cell>{booking.bookingTime}</Table.Cell>
                                     <Table.Cell>{booking.duration}</Table.Cell>
+                                    <Table.Cell>{booking.bookingPrice}</Table.Cell>
                                     <Table.Cell className="py-2">
                                         <div className={`w-20 h-5 rounded-md text-center ${booking.bookingStatus === 'Confirmed' ? 'bg-green-500 text-white' : booking.bookingStatus === 'Pending' ? 'bg-red-700 text-white' : ''}`}>
                                             {booking.bookingStatus}
@@ -227,7 +232,7 @@ const BookingList_05 = () => {
                                         <Link
                                             className="text-teal-500 hover:underline"
                                             to = {`/update-booking/${booking._id}`}>
-                                                <span>Edit</span>
+                                                <span>Update</span>
                                             </Link>
                                     </Table.Cell>
                                 </Table.Row>
@@ -237,7 +242,7 @@ const BookingList_05 = () => {
                 <p className="text-red-700 mt-5">
                     {showBookingError ? "Error fetching bookings" : ""}
                 </p>
-                {showBooking && showBooking.length === 0 && (
+                {showBooking.length === 0 && (
                     <p>No bookings found</p>
                 )}
             </>

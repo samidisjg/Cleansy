@@ -24,10 +24,16 @@ const BookingUpdate_05 = () => {
         time: "",
         duration: "",
         specialRequests: "",
+        status: "Pending",
+        pricePerHour: 0,
+        bookingPrice: 0,
     });
 
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [calculateDisabled, setCalculateDisabled] = useState(false); // State to track if Calculate button is disabled
+    const [durationDisabled, setDurationDisabled] = useState(false); // State to track if Duration field is disabled
+
 
     useEffect(() => {
         const fetchBooking = async () => {
@@ -52,11 +58,29 @@ const BookingUpdate_05 = () => {
                 time: data.bookingTime,
                 duration: data.duration,
                 specialRequests: data.specialRequests,
+                status: data.bookingStatus,
+                pricePerHour: data.bookingPrice/data.duration,
+                bookingPrice: data.bookingPrice,
             }));
         }
         fetchBooking();
-    }
-        , []);
+    }, []);
+
+    const calculateTotalPrice = () => {
+        if (formData.duration && formData.pricePerHour) {
+            const currentTotalPrice = formData.bookingPrice;
+            const newTotalPrice = formData.duration * formData.pricePerHour;
+            const priceDifference = newTotalPrice - currentTotalPrice;
+            setFormData((prevData) => ({
+                ...prevData,
+                bookingPrice: newTotalPrice,
+                priceDifference: priceDifference, // Add priceDifference to the state
+            }));
+            setCalculateDisabled(true); // Disable the Calculate button after it's clicked
+            setDurationDisabled(true); // Disable the Duration field after Calculate button is clicked
+        }
+    };
+    
 
     const handleChange = (e) => {
         let boolean = null;
@@ -88,9 +112,10 @@ const BookingUpdate_05 = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Form Data:", formData); // Add this line
         setLoading(true);
         setError(false);
+
+        
 
         try {
             const res = await fetch(`/api/amenitiesBooking/update/${params.bookingID}`, {
@@ -98,7 +123,11 @@ const BookingUpdate_05 = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify({
+                    ...formData,
+                    bookingStatus: "Pending",
+                }),
+                
             });
             const data = await res.json();
             if (data.success === false) {
@@ -106,7 +135,10 @@ const BookingUpdate_05 = () => {
                 setLoading(false);
                 return;
             }
-            navigate("dashboard?tab=bookings");
+
+            
+
+            navigate('/dashboard?tab=bookings');
         } catch (error) {
             setError("An error occurred. Please try again.");
             setLoading(false);
@@ -230,6 +262,31 @@ const BookingUpdate_05 = () => {
                             name="duration"
                             value={formData.duration}
                             onChange={handleChange}
+                            disabled={durationDisabled} // Disable the Duration field if durationDisabled is true
+                        />
+                        <Button onClick={calculateTotalPrice} gradientDuoTone={"purpleToBlue"} disabled={calculateDisabled}>
+                            Calculate Total Price
+                        </Button>
+                    </div>
+
+                    <div>
+                        <Label htmlFor="bookingPrice">Total Price:</Label>
+                        <TextInput
+                            type="text"
+                            id="bookingPrice"
+                            name="bookingPrice"
+                            value={formData.bookingPrice}
+                            disabled
+                        />
+                    </div>
+                    <div>
+                        <Label htmlFor="priceDifference">Amount Need to Paid:</Label>
+                        <TextInput
+                            type="text"
+                            id="priceDifference"
+                            name="priceDifference"
+                            value={formData.priceDifference || 0} // Display 0 if priceDifference is not set
+                            readOnly
                         />
                     </div>
 
