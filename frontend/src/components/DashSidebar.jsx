@@ -173,6 +173,12 @@ const DashSidebar = () => {
                   Add Visitors
                 </Sidebar.Item>
             </Link>
+
+            <Link to ='/dashboard?tab=bookings'>
+                <Sidebar.Item active={tab === 'bookings'} icon={HiUser} as='div'>
+                  Bookings
+                </Sidebar.Item>
+            </Link>
             
             <Sidebar.Item icon={HiArrowSmRight} className='cursor-pointer' onClick={handleSignout}>
                Sign Out

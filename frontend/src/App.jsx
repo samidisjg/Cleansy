@@ -34,10 +34,15 @@ import AmenityList_05 from './components/IT22003546_Components/AmenityList_05';
 import RatingWorkGroup_01 from './components/IT22607232_Components/RatingWorkGroup_01';
 import AmenityUpdate_05 from './pages/IT22003546_Pages/AmenityUpdate_05'
 import RateReview_01 from './pages/IT22607232_Pages/RateReview_01'
+import Team from './pages/Team'
+import Contact from './pages/Contact'
 import BoxTile from './components/IT22003546_Components/UserAmenityView'
 import AmenityDetails from './components/IT22003546_Components/AmenityDetailsEach_05'
 import BookAmenity from './pages/IT22003546_Pages/BookAmenity_05'
 import ServiceListingCreate from './pages/IT22350114_Pages/ServiceCreate_06'
+import BookingList_05 from './components/IT22003546_Components/BookingList_05'
+import BookingUpdate_05 from './pages/IT22003546_Pages/BookingUpdate_05'
+import BookingConfirmationPage_05 from './components/IT22003546_Components/BookingConfirmationPage_05'
 
 
 
@@ -67,7 +72,9 @@ function App() {
                 <Route path="/checkout" element={<CheckOutPage_02/>} />
                 <Route path="/amenity-create" element={<AmenityCreate/>} />
                 <Route path="/add-visitors" element={<AddVisitors/>} />
-
+                <Route path="/booking-List:bookingID" element={<BookingList_05/>} />
+                <Route path="/update-booking/:bookingID" element={<BookingUpdate_05/>} />
+                <Route path="/booking-confirmation/:bookingID" element={<BookingConfirmationPage_05/>} />
                 
                 
                 <Route path="/book-amenity/:amenityId" element={<BookAmenity/>} />
@@ -95,6 +102,8 @@ function App() {
               <Route path='/searchApartments' element={<SearchApartments_02 />}/>
               <Route path='/success' element={<CheckOutPage_02 />}/>
               <Route path='/games' element={<GamePage_02 />}/>
+              <Route path='/team' element={<Team />}/>
+              <Route path='/contact' element={<Contact />}/>
             </Routes>
 
           </div>

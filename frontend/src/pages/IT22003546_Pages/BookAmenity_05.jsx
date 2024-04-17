@@ -1,18 +1,43 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useSelector } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+
+import {
+  Button,
+  Label,
+  TextInput,
+  Textarea,
+  Alert,
+} from "flowbite-react";
 
 const BookAmenity = () => {
   const { amenityId } = useParams();
-  const { userId } = useParams();
-  const [bookingDetails, setBookingDetails] = useState({
+  const { currentUser } = useSelector((state) => state.user);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const navigate = useNavigate();
+
+  // Function to generate a unique booking ID
+  const generateBookingId = () => `BID-${Math.floor(10000 + Math.random() * 90000)}`;
+
+  // State for form data
+  const [formData, setFormData] = useState({
     date: "",
     time: "",
     duration: "",
     amenityId: "",
     amenityTitle: "",
-    // Add more booking details if needed
+    residentUsername: "",
+    residentName: "",
+    residentEmail: "",
+    residentContact: "",
+    specialRequests: "",
+    bookingID: generateBookingId(), // Initial booking ID generated
+    status: "Pending",
   });
 
+  // Effect to fetch amenity details
   useEffect(() => {
     const fetchAmenityDetails = async () => {
       try {
@@ -22,12 +47,13 @@ const BookAmenity = () => {
           console.error("Error fetching amenity details");
           return;
         }
-        // Update the booking details state with the fetched amenity details
-        setBookingDetails((prevDetails) => ({
-          ...prevDetails,
+        // Update the form data state with the fetched amenity details
+        setFormData((prevData) => ({
+          ...prevData,
           amenityId: data.amenityID,
           amenityTitle: data.amenityTitle,
-          userId: data.userId,
+          residentUsername: currentUser.username,
+          residentEmail: currentUser.email,
         }));
       } catch (error) {
         console.error("Error fetching amenity details", error);
@@ -37,91 +63,188 @@ const BookAmenity = () => {
     fetchAmenityDetails();
   }, [amenityId]);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setBookingDetails((prevDetails) => ({
-      ...prevDetails,
-      [name]: value,
-    }));
+  // Function to handle form input changes
+  const handleChange = (e) => {
+    let boolean = null;
+    if (e.target.value === "true") {
+        boolean = true;
+    }
+    if (e.target.value === "false") {
+        boolean = false;
+    }
+    setFormData({
+        ...formData,
+        [e.target.name]: boolean !== null ? boolean : e.target.value,
+        
+    });
   };
 
-  const handleSubmit = (e) => {
+  // Function to handle form submission
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission, e.g., send booking details to server
-    console.log("Booking details:", bookingDetails);
-    // Redirect to confirmation page or perform any other action after booking
+    try {
+      if (formData.bookingID === currentUser.bookingID) return setError('BookingID already exists');
+      setLoading(true);
+      setError(false);
+
+      const response = await fetch('/api/amenitiesBooking/create', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              ...formData,
+              userRef: currentUser._id,
+              bookingStatus: "Pending",
+          })
+      });
+      const data = await response.json();
+      setLoading(false);
+      if (data.success === false) {
+          return setError(data.message);
+      }
+      // Assuming `navigate` is defined elsewhere
+      navigate('/booking-confirmation/:bookingID');
+    } catch (err) {
+      setError(err.message);
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="max-w-lg mx-auto mt-8 p-6 bg-white shadow-md rounded-md">
-      <h1 className="text-2xl font-semibold text-gray-800 mb-4">Book Amenity</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="amenityId" className="block text-gray-700">Amenity ID:</label>
-          <input
-            type="text"
-            id="amenityId"
-            name="amenityId"
-            value={bookingDetails.amenityId}
-            readOnly
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-blue-500 focus:ring-opacity-50"
-            
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="amenityTitle" className="block text-gray-700">Amenity Title:</label>
-          <input
-            type="text"
-            id="amenityTitle"
-            name="amenityTitle"
-            value={bookingDetails.amenityTitle}
-            readOnly
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-blue-500 focus:ring-opacity-50"
-          />
-        </div>
-        <div className="mb-4">
-            <label htmlFor="name" className="block text-gray-700">Resident Name:</label>
-            <input
+    <div className="min-h-screen mt-20">
+      <h1 className="text-2xl font-semibold text-gray-800 mb-4 text-center">Book Amenity</h1>
+      <div className="flex p-3 w-[40%] mx-auto flex-col md:flex-row md:items-center gap-20 md:gap-20 mt-10">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full justify-center">
+          <div>
+            <Label htmlFor="bookingId">Booking ID:</Label>
+            <TextInput
               type="text"
-              id="residentName"
-              name="residentName"
-              value={bookingDetails.userId}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-blue-500 focus:ring-opacity-50"
-              required
-              onChange={handleInputChange}
+              id="bookingId"
+              name="bookingID"
+              value={formData.bookingID}
+              disabled 
             />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="date" className="block text-gray-700">Date:</label>
-          <input
-            type="date"
-            id="eventDate"
-            name="eventDate"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-blue-500 focus:ring-opacity-50"
-            required
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="time" className="block text-gray-700">Time:</label>
-          <input
-            type="time"
-            id="eventTime"
-            name="eventTime"
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring focus:ring-blue-500 focus:ring-opacity-50"
-            required
-            onChange={handleInputChange}
-          />   
-        </div>
-        <div className="mt-6">
-          <button
+          </div>
+
+          <div>
+            <Label htmlFor="amenityID">Amenity ID:</Label>
+            <TextInput
+              type="text"
+              id="amenityID"
+              name="amenityNum"
+              value={formData.amenityId}
+              readOnly
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="amenityTitle" >Amenity Title:</Label>
+            <TextInput
+              type="text"
+              id="amenityTitle"
+              name="amenityTitle"
+              value={formData.amenityTitle}
+              readOnly
+              
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="residentUsername" >Resident Username</Label>
+            <TextInput
+              type="text"
+              id="residentUsername"
+              name="username"
+              value={formData.residentUsername}
+              readOnly
+            />
+
+          </div>
+          <div>
+              <Label htmlFor="name" >Resident Name:</Label>
+              <TextInput
+                type="text"
+                id="residentName"
+                name="residentName"
+                required
+                onChange={handleChange}
+              />
+          </div>
+
+          <div>
+            <Label htmlFor="residentEmail" >Resident Email</Label>
+            <TextInput
+              type="email"
+              name="residentEmail"
+              value={formData.residentEmail}
+              onChange={handleChange}
+            />  
+          </div>
+
+          <div>
+            <Label htmlFor="contact" >Resident Contact:</Label>
+            <TextInput
+              type="tel"
+              id="residentContact"
+              name="residentContact"
+              required
+              onChange={handleChange}
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="date" >Date:</Label>
+            <TextInput
+              type="date"
+              id="eventDate"
+              name="bookingDate"
+              required
+              onChange={handleChange}
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="time" >Time:</Label>
+            <TextInput
+              type="time"
+              id="eventTime"
+              name="bookingTime"
+              required
+              onChange={handleChange}
+            />   
+          </div>
+
+          <div>
+            <Label htmlFor="duration" >Duration:</Label>
+            <TextInput
+              type="number"
+              id="duration"
+              name="duration"
+              required
+              onChange={handleChange}
+            />  
+          </div>
+
+          <div>
+            <Label htmlFor="specialRequests" >Special Requests:</Label>
+            <Textarea
+              id="specialRequests"
+              name="specialRequests"
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="flex flex-col gap-4 flex-1">
+            <Button 
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-blue-600 transition duration-300"
-          >
-            Confirm Booking
-          </button>
-        </div>
-      </form>
+            gradientDuoTone="purpleToBlue"
+            className="uppercase"
+            >{loading ? "Booking Amenity" : "Book Amenity"}</Button> 
+              {error && <Alert className='mt-7 py-3 bg-gradient-to-r from-red-100 via-red-300 to-red-400 shadow-shadowOne text-center text-red-600 text-base tracking-wide animate-bounce'>{error}</Alert>}
+          </div>  
+        </form>
+      </div>  
     </div>
   );
 };
