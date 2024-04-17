@@ -86,8 +86,6 @@ function App() {
                 <Route path="/rate-tasks/:taskid" element={<RateReview_01/>} />
 
                 <Route path="/service-create" element={<ServiceListingCreate/>} />
-                <Route path="/service-list:serviceID" element={<DashServiceList_06/>} />
-
 
               </Route>
               <Route element={<OnlyPropertyAdminPrivateRoute_02/>}>

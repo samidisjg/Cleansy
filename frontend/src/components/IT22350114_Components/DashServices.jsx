@@ -20,12 +20,7 @@ const DashServices = () => {
                         <Link to="service-list:serviceID">View Service</Link>
                     </Button>
                     <br />
-                    <Button pill>
-                        <Link to="/create-apartmentListing">kkk</Link>
-                    </Button>
-                    <Button pill>
-                        <Link to="/amenity-create">Create Amenity</Link>
-                    </Button>
+                   
           <br />
         </div>
       )}
