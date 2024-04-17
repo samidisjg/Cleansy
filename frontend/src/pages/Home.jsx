@@ -7,6 +7,7 @@ import { Button } from 'flowbite-react'
 import { useEffect, useState } from 'react'
 import ApartmentListingCard_02 from '../components/IT22577160_Components/ApartmentListingCard_02'
 
+
 const Home = () => {
   const [listings, setListings] = useState([]);
   const [showMore, setShowMore] = useState(false);
