@@ -48,11 +48,11 @@ const AmenitiesBookingSchema = new mongoose.Schema({
     },
     bookingStatus: {
         type: String,
-        required: false
+        required: true
     },
     bookingPrice: {
-        type: Number,
-        required: false
+        type: String,
+        required: true
     },
 
 }, {timestamps: true});
