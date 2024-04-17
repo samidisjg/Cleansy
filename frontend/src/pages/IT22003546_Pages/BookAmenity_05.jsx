@@ -35,6 +35,8 @@ const BookAmenity = () => {
     specialRequests: "",
     bookingID: generateBookingId(), // Initial booking ID generated
     status: "Pending",
+    pricePerHour: 0,
+    bookingPrice: 0,
   });
 
   // Effect to fetch amenity details
@@ -54,6 +56,7 @@ const BookAmenity = () => {
           amenityTitle: data.amenityTitle,
           residentUsername: currentUser.username,
           residentEmail: currentUser.email,
+          pricePerHour: data.amenityPrice,
         }));
       } catch (error) {
         console.error("Error fetching amenity details", error);
@@ -62,6 +65,16 @@ const BookAmenity = () => {
 
     fetchAmenityDetails();
   }, [amenityId]);
+
+  const calculateTotalPrice = () => {
+    if (formData.duration && formData.pricePerHour) {
+      const total = formData.duration * formData.pricePerHour;
+      setFormData((prevData) => ({
+        ...prevData,
+        bookingPrice: total,
+      }));
+    }
+  };
 
   // Function to handle form input changes
   const handleChange = (e) => {
@@ -87,16 +100,20 @@ const BookAmenity = () => {
       setLoading(true);
       setError(false);
 
+      const payload = {
+        ...formData,
+        userRef: currentUser._id,
+        bookingStatus: "Pending",
+      };
+
+      console.log("Submitting the following data to the backend:", payload);
+
       const response = await fetch('/api/amenitiesBooking/create', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-              ...formData,
-              userRef: currentUser._id,
-              bookingStatus: "Pending",
-          })
+          body: JSON.stringify(payload)
       });
       const data = await response.json();
       setLoading(false);
@@ -104,7 +121,7 @@ const BookAmenity = () => {
           return setError(data.message);
       }
       // Assuming `navigate` is defined elsewhere
-      navigate('/booking-confirmation/:bookingID');
+      navigate('/dashboard?tab=bookings');
     } catch (err) {
       setError(err.message);
       setLoading(false);
@@ -216,14 +233,29 @@ const BookAmenity = () => {
           </div>
 
           <div>
-            <Label htmlFor="duration" >Duration:</Label>
+            <Label htmlFor="duration" >Duration (Hours):</Label>
             <TextInput
               type="number"
               id="duration"
               name="duration"
               required
               onChange={handleChange}
-            />  
+            />
+            <Button onClick={calculateTotalPrice} gradientDuoTone={"purpleToBlue"}>
+            Calculate Total Price
+          </Button>  
+          </div>
+
+          <div>
+            <Label htmlFor="totalPrice" >Total Price:</Label>
+            <TextInput
+              type="text"
+              id="totalPrice"
+              name="totalPrice"
+              value={`LKR ${formData.bookingPrice.toFixed(2)}`}
+              onChange={handleChange}
+              disabled
+            />
           </div>
 
           <div>
