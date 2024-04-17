@@ -191,7 +191,7 @@ const MarketPlace = () => {
                                        wishlist && wishlist.find(item => item._id === resource._id) ? (
                                           <AiFillHeart size={22}  onClick={() => removeFromWishListHandler(resource)} className='cursor-pointer text-red-600' title="Remove from wishlist" />
                                        ) : (
-                                          <AiOutlineHeart size={22}  onClick={() => addToWishListHandler(resource)}  className='cursor-pointer text-gray-500' title="Add to wishlist"  />
+                                          <AiOutlineHeart size={22}  onClick={() => addToWishListHandler(resource)}  className='cursor-pointer' title="Add to wishlist"  />
                                        )
                                     }
                                     <AiOutlineEye size={22} title="Quick view"/>
