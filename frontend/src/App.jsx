@@ -38,7 +38,7 @@ import BoxTile from './components/IT22003546_Components/UserAmenityView'
 import AmenityDetails from './components/IT22003546_Components/AmenityDetailsEach_05'
 import BookAmenity from './pages/IT22003546_Pages/BookAmenity_05'
 import ServiceListingCreate from './pages/IT22350114_Pages/ServiceCreate_06'
-
+import DashServiceList_06 from './components/IT22350114_Components/DashServiceList_06'
 
 
 
@@ -79,6 +79,7 @@ function App() {
                 <Route path="/rate-tasks/:taskid" element={<RateReview_01/>} />
 
                 <Route path="/service-create" element={<ServiceListingCreate/>} />
+                <Route path="/service-list:serviceID" element={<DashServiceList_06/>} />
 
 
               </Route>

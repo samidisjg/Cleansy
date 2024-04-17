@@ -13,7 +13,7 @@ import AddPaymentProfile from './IT22602978_Pages/AddPaymentProfile';
 import DashMaintenance from "../components/IT22607232_Components/DashMaintenance"
 import DashAmenity from "../components/IT22003546_Components/DashAmenity";
 import DashComments_02 from "../components/IT22577160_Components/DashComments_02";
-
+import DashServiceList_06 from "../components/IT22350114_Components/DashServiceList_06";
 
 
 const Dashboard = () => {
@@ -56,6 +56,8 @@ const Dashboard = () => {
       {tab == 'amenity' && <DashAmenity/>}
       {/* Comments */}
       {tab == 'comments' && <DashComments_02/>}
+      {/* service list */}
+      {tab == 'servicelist' && <DashServiceList_06/>}
     </div>
   )
 }
