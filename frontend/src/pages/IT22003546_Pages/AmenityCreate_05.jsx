@@ -7,7 +7,6 @@ import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/
 import {
     Button,
     Label,
-    Select,
     TextInput,
     Textarea,
     FileInput,
@@ -22,7 +21,7 @@ const AmenityCreate = () => {
         amenityID: '',
         amenityTitle: '',
         amenityDescription: '',
-        imageUrls: [],
+        imageURLs: [],
         amenityLocation: '',
         amenityCapacity: 500,
         amenityAvailableTimes: '',
@@ -64,7 +63,7 @@ const AmenityCreate = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            if(formData.imageUrls.length < 1) return setError('You must upload at least one image')
+            if(formData.imageURLs.length < 1) return setError('You must upload at least one image')
             if (formData.amenityID === currentUser.AmenityID) return setError('AmenityID already exists');
             setLoading(true);
             setError(false);
@@ -93,7 +92,7 @@ const AmenityCreate = () => {
     };
 
     const handleImageSubmit = () => {
-        if(files.length > 0 && files.length + formData.imageUrls.length < 7) {
+        if(files.length > 0 && files.length + formData.imageURLs.length < 7) {
            setUploading(true);
            setImageUploadError(false);
            const promises = [];
@@ -105,7 +104,7 @@ const AmenityCreate = () => {
            Promise.all(promises).then((urls) => {
               setFormData({
                  ...formData,
-                 imageUrls: formData.imageUrls.concat(urls)
+                 imageURLs: formData.imageURLs.concat(urls)
               })
               setImageUploadError(false);
               setUploading(false);
@@ -146,7 +145,7 @@ const AmenityCreate = () => {
      const handleRemoveImage = (index) => {
         setFormData({
           ...formData,
-          imageUrls: formData.imageUrls.filter((_, i) => i !== index),
+          imageURLs: formData.imageURLs.filter((_, i) => i !== index),
         })
      }
 
@@ -238,13 +237,11 @@ const AmenityCreate = () => {
                         </div>
                         <p className="text-red-700">{imageUploadError && imageUploadError}</p>
                         {
-                            formData.imageUrls.length > 0 && formData.imageUrls.map((url, index) => (
-                                <>
-                                    <div key={url} className="flex justify-between p-3 border items-center">
-                                        <img src={url} alt="listing image" className='w-20 h-20 object-contain rounded-lg' />
-                                        <Button type="button" onClick={() => handleRemoveImage(index)} gradientDuoTone="pinkToOrange">Delete</Button>
-                                    </div>
-                                </>
+                            formData.imageURLs.length > 0 && formData.imageURLs.map((url, index) => (
+                                <div key={`image-${index}`} className="flex justify-between p-3 border items-center">
+                                    <img src={url} alt={`listing image ${index}`} className='w-20 h-20 object-contain rounded-lg' />
+                                    <Button type="button" onClick={() => handleRemoveImage(index)} gradientDuoTone="pinkToOrange">Delete</Button>
+                                </div>
                             ))
                         }
                         <Button
