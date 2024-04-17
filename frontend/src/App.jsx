@@ -22,6 +22,7 @@ import Updatepaymentpage_03 from './pages/IT22602978_Pages/Updatepaymentpage_03'
 
 import SharedResourcesPage_02 from './pages/IT22577160_Pages/SharedResourcesPage_02'
 import ScrollToTop_02 from './components/IT22577160_Components/ScrollToTop_02'
+import FinalAdminPayments_03 from './pages/IT22602978_Pages/FinalAdminPayments_03'
 
 
 
@@ -44,6 +45,9 @@ function App() {
                 <Route path='/update-paymentprofile/:data' element={<Updatepaymentpage_03/>}/>
                 <Route path="/" element={<DashMaintenance/>} />
                 <Route path="/task-assign" element={<TaskAssign/>} />
+                < Route path ='/AdminFinal' element={<FinalAdminPayments_03/>}/>
+
+            
                 
             
               </Route>
@@ -54,11 +58,15 @@ function App() {
               <Route path='/projects' element={<Projects/>}/>
               <Route path='/create_04' element={<RequestLeave_04/>}/>
               <Route path='/sharedResource/:resourceSlug' element={<SharedResourcesPage_02 />}/>
+              
             </Routes>
+            
 
           </div>
         <Footer />
       </Router>
+      
+      
       <ToastContainer
         position="bottom-center"
         autoClose={5000}

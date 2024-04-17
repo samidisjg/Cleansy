@@ -13,7 +13,7 @@ import serviceListingRoutes from "./routes/IT22350114_Routes/serviceListingRoute
 import amenitiesListingRoutes from './routes/IT22003546_Routes/amenitiesListing.route.js';
 import sharedResourcesListingRoutes from './routes/IT22577160_Routes/sharedResourcesListing.route_02.js';
 import commentRoutes from './routes/IT22577160_Routes/comment.route_02.js';
-
+import AdminPaymentHandlingRoutes from './routes/IT22602978_Routes/AdminPaymentHandling.route_03.js'
 dotenv.config();
 
 const app = express();
@@ -33,6 +33,7 @@ app.use("/api/auth", authRoutes);
 
 // IT22602978 Routes
 app.use("/api/PaymentProfileCreation",PaymentProfileCreationRoutes)
+app.use("/api/AdminPaymentHandling",AdminPaymentHandlingRoutes)
 // IT22603418 Routes
 app.use("/api/RequestLeave", RequestLeaveRoutes);
 

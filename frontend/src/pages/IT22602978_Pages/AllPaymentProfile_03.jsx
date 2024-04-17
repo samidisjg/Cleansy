@@ -92,7 +92,7 @@ const AllPaymentProfiles_03 = () => {
                         <h1 className="text-2xl m-2 font-semibold text-white font-courier ">{payment.ownerUsername}</h1>
                         </div>
                         <div className="bg-white py-4 px-6 text-center rounded-md shadow-lg transform -translate-y-20 sm:-translate-y-24 max-w-xs mx-auto">
-                        <h2 className="font-semibold text-2xl mb-6">{payment.PaymentProfileName}</h2>
+                        <h2 className="font-semibold text-2xl mb-6 text-black">{payment.PaymentProfileName}</h2>
                         <button className="rounded-md bg-gradient-to-r from-blue-400 to-indigo-900 text-xl text-white pt-3 pb-4 px-8 inline">Pay Now</button>
                         </div>
                         </div>

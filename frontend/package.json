@@ -25,7 +25,8 @@
     "react-toastify": "^10.0.4",
     "redux-persist": "^6.0.0",
     "slick-carousel": "^1.8.1",
-    "tailwind-scrollbar": "^3.0.5"
+    "tailwind-scrollbar": "^3.0.5",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",
