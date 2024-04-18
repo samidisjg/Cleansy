@@ -1,5 +1,6 @@
 import Announcement from "../../models/IT22196460_Models/AnnouncementModel.js";
 
+
 // create a new announcement 
 export const createAnnouncement = async(req, res, Next) => {
     const {Announcement_ID, Title, Content, Category_ID, Attachment_URL, Create_At} = req.body;
@@ -100,4 +101,22 @@ export const getAnnouncement = async(req, res, next) => {
     }
 };
 
+// Generate report of announcements generated today
+export const generateDailyReport = async (req, res) => {
+    try {
+        // Fetch announcements generated today
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const announcements = await Announcement.find({ Create_At: { $gte: today } });
+
+        // Return the report
+        res.status(200).json({
+            count: announcements.length,
+            announcements: announcements
+        });
+    } catch (error) {
+        console.error("Error generating daily report:", error.message);
+        res.status(500).json({ message: "Failed to generate daily report" });
+    }
+};
 

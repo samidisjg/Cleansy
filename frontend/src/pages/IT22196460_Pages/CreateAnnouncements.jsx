@@ -3,7 +3,7 @@ import { Alert, Button, Label, TextInput, Textarea } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 
 
-const AnnouncementPage = () => {
+const CreateAnnouncements = () => {
 
     const [formData, setFormData] = useState({
         Announcement_ID: generateAnnouncement_ID(),
@@ -133,6 +133,6 @@ const AnnouncementPage = () => {
     );
 };
 
-export default AnnouncementPage;
+export default CreateAnnouncements;
 
 

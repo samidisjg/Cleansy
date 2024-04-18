@@ -43,7 +43,6 @@ import ServiceListingCreate from './pages/IT22350114_Pages/ServiceCreate_06'
 import BookingList_05 from './components/IT22003546_Components/BookingList_05'
 import BookingUpdate_05 from './pages/IT22003546_Pages/BookingUpdate_05'
 import DashServiceList_06 from './components/IT22350114_Components/DashServiceList_06'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AdminDashboard from './pages/IT22196460_Pages/AnnouncementadminDashboard';
 import AnnouncementDetails from './pages/IT22196460_Pages/AnnouncementDetails';
 import AnnouncementList from './pages/IT22196460_Pages/AnnouncementList';
@@ -110,18 +109,18 @@ function App() {
               <Route path='/games' element={<GamePage_02 />}/>
               <Route path='/team' element={<Team />}/>
               <Route path='/contact' element={<Contact />}/>
+
+              <Route path="/admin" element ={<AdminDashboard/>} />
+              <Route path="/admin/update" element ={<UpdateAnnouncementForm/>} />
+              <Route path="/admin/create" element ={<CreateAnnouncementForm/>} />
+              <Route path="/" element ={<AnnouncementList/>} />
+              <Route path="/announcement/:id" element = {<AnnouncementDetails/>} />
             </Routes>
 
           
-          <Router>
-            <Switch>
-                <Route exact path="/admin" component={AdminDashboard} />
-                <Route exact path="/admin/update" component={UpdateAnnouncementForm} />
-                <Route exact path="/admin/create" component={CreateAnnouncementForm} />
-                <Route exact path="/" component={AnnouncementList} />
-                <Route exact path="/announcement/:id" component={AnnouncementDetails} />
-            </Switch>
-          </Router>
+       
+                
+        
 
           </div>
         <Footer/>

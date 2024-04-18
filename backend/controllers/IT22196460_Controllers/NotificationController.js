@@ -1,7 +1,7 @@
 import Notification from '../../models/IT22196460_Models/NotificationModel.js';
 
 // Create a new notification
-exports.createNotification = async (req, res) => {
+export const createNotification = async (req, res) => {
     try {
         const {Notification_title, Notification_content, deliveryChannel, receivedTo} = req.body;
         const notification = new Notification({ Notification_title, Notification_content, deliveryChannel, receivedTo});
@@ -14,7 +14,7 @@ exports.createNotification = async (req, res) => {
 };
 
 // Update an existing notification
-exports.updateNotification = async (req, res) => {
+export const updateNotification = async (req, res) => {
     try {
         const { id } = req.params;
         const {Notification_title, Notification_content, deliveryChannel, receivedTo} = req.body;
@@ -30,7 +30,7 @@ exports.updateNotification = async (req, res) => {
 };
 
 // Delete an existing notification
-exports.deleteNotification = async (req, res) => {
+export const deleteNotification = async (req, res) => {
     try {
         const { id } = req.params;
         const notification = await Notification.findByIdAndDelete(id);
@@ -45,7 +45,7 @@ exports.deleteNotification = async (req, res) => {
 };
 
 // Get all notification 
-exports.getAllNotifications = async (req, res) => {
+export const getAllNotifications = async (req, res) => {
     try {
         const notifications = await Notification.find();
         res.json(notifications);
@@ -56,7 +56,7 @@ exports.getAllNotifications = async (req, res) => {
 };
 
 //Get a single notification by ID
-exports,getNotificationById = async (req, res) => {
+export const getNotificationById = async (req, res) => {
     try {
         const { id } = req.params;
         const notification = await Notification.findById(id);

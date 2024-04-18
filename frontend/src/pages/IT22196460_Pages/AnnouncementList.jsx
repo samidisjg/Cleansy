@@ -1,27 +1,138 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import AnnouncementCard from '../components/AnnouncementCard';
+import { getAnnouncements } from '../api/announcementApi'; // Assume you have an API function to fetch announcements
 
 const AnnouncementList = () => {
-    const announcements = [
-        { id: 1, title: 'Important Announcement', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' },
-        { id: 2, title: 'New Updates', content: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-        { id: 3, title: 'Events Calendar', content: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.' },
-    ];
+  const [announcements, setAnnouncements] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredAnnouncements, setFilteredAnnouncements] = useState([]);
+  const [filterCriteria, setFilterCriteria] = useState({
+    date: '',
+    time: '',
+    announcementType: '',
+    category: '', // Additional filter criteria
+    // Add more filter criteria as needed
+  });
+  const [showFilterModal, setShowFilterModal] = useState(false);
 
-    return (
-        <div className="container mx-auto px-4 py-8">
-            <h1 className="text-3xl font-semibold mb-4">Latest Announcements</h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {announcements.map(announcement => (
-                    <div key={announcement.id} className="bg-white rounded-lg shadow-md p-6 transition duration-300 ease-in-out transform hover:scale-105">
-                        <h2 className="text-xl font-semibold mb-2">{announcement.title}</h2>
-                        <p className="text-gray-700">{announcement.content}</p>
-                        <Link to={`/announcement/${announcement.id}`} className="mt-4 inline-block bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md transition duration-300 ease-in-out">Read More</Link>
-                    </div>
-                ))}
-            </div>
+  useEffect(() => {
+    // Fetch announcements from the API
+    getAnnouncements()
+      .then(data => {
+        setAnnouncements(data);
+        setFilteredAnnouncements(data); // Initially, set filtered announcements to all announcements
+      })
+      .catch(error => console.error('Error fetching announcements:', error));
+  }, []);
+
+  useEffect(() => {
+    // Apply search and filters whenever announcements or filter criteria change
+    applySearchAndFilter();
+  }, [announcements, filterCriteria]);
+
+  const applySearchAndFilter = () => {
+    let filtered = announcements;
+
+    // Apply search filter
+    if (searchTerm !== '') {
+      filtered = filtered.filter(announcement =>
+        announcement.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    // Apply other filters
+    if (filterCriteria.date !== '') {
+      filtered = filtered.filter(announcement =>
+        // Implement logic to filter by date
+        true // Placeholder logic comment
+      );
+    }
+    if (filterCriteria.time !== '') {
+      filtered = filtered.filter(announcement =>
+        // Implement logic to filter by time
+        true // Placeholder logic comment
+      );
+    }
+    if (filterCriteria.announcementType !== '') {
+      filtered = filtered.filter(announcement =>
+        // Implement logic to filter by announcement type
+        true // Placeholder logic comment
+      );
+    }
+    if (filterCriteria.category !== '') {
+      filtered = filtered.filter(announcement =>
+        // Implement logic to filter by category
+        true // Placeholder logic comment
+      );
+    }
+    // Add more filter criteria logic as needed
+
+    setFilteredAnnouncements(filtered);
+  };
+
+  const handleSearch = () => {
+    applySearchAndFilter();
+  };
+
+  const handleFilterChange = (criteria, value) => {
+    setFilterCriteria({ ...filterCriteria, [criteria]: value });
+  };
+
+  const handleFilterModalToggle = () => {
+    setShowFilterModal(!showFilterModal);
+  };
+
+  const handleFilterModalClose = () => {
+    setShowFilterModal(false);
+  };
+
+  return (
+    <div className="container mx-auto px-4 py-8 relative">
+      <input
+        type="text"
+        placeholder="Search by keyword..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        onBlur={handleSearch}
+        className="w-full bg-gray-200 px-4 py-2 rounded-md focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500"
+      />
+      <button
+        onClick={handleFilterModalToggle}
+        className="absolute top-0 right-0 bg-blue-500 text-white px-4 py-2 rounded-md mr-4 mt-2"
+      >
+        Filter Options
+      </button>
+      {/* Filter options modal */}
+      {showFilterModal && (
+        <div className="absolute top-0 right-0 bg-white p-4 rounded-md shadow-lg mt-12 mr-4">
+          {/* Render filter options here */}
+          <select
+            onChange={(e) => handleFilterChange('date', e.target.value)}
+            className="bg-gray-200 px-4 py-2 rounded-md focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">Filter by Date</option>
+            {/* Render date filter options dynamically */}
+          </select>
+          {/* Add more filter options */}
+          <button onClick={handleFilterModalClose} className="bg-blue-500 text-white px-4 py-2 rounded-md mt-4">
+            OK
+          </button>
         </div>
-    );
+      )}
+      {/* Background grid for announcements */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8 opacity-50">
+        {announcements.map(announcement => (
+          <AnnouncementCard key={announcement.id} announcement={announcement} />
+        ))}
+      </div>
+      {/* Render announcement cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-8">
+        {filteredAnnouncements.map(announcement => (
+          <AnnouncementCard key={announcement.id} announcement={announcement} />
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default AnnouncementList;
