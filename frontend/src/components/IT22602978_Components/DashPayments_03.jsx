@@ -1,14 +1,15 @@
 import { useSelector } from "react-redux";
+import AdminPayments_03 from "../../pages/IT22602978_Pages/AdminPayments_03";
 
 
 const DashPayments_03 = () => {
    const { currentUser } = useSelector((state) => state.user);
   return (
-    <div>
+    <div className="flex justify-center w-[100%] ">
       {currentUser.isBillingAdmin && (
-         <div>
-            <h1>Payments</h1>
-            <p>Manage your payments here</p>
+         <div className="">
+            <h1>hey</h1>
+          
          </div>
          
       )}
