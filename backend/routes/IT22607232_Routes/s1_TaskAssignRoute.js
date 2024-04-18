@@ -5,12 +5,6 @@ import { verifyToken } from '../../utils/verifyUser.js'
 
 const router = express.Router();
 
-// Error handling middleware
-router.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Something broke!');
-  });
-
 router.post('/create', verifyToken, TaskAssigning);
 router.get('/all/', verifyToken, allTasks);
 router.get('/one/:taskid', verifyToken, oneTask);

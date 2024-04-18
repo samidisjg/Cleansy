@@ -48,19 +48,19 @@ const DashApartmentList_02 = () => {
   }
 
   return (
-    <div className='max-w-6xl mx-auto p-3 flex flex-col gap-8 py-7'>
-      <h1 className='text-center mt-7 font-extrabold text-3xl underline'>Your Apartment Listing</h1>
+    <div className='max-full px-3 mt-6 mx-auto'>
+      <h1 className='text-center my-7 font-extrabold text-3xl underline'>Your Apartment Listing</h1>
       <p>{showListingError ? "Something Went Wrong About Your Apartment Listing" : ""}</p>
       {
         apartmentListing && apartmentListing.length > 0 ? (
-          <ul className='sm:grid sm:grid-cols-2 lg:grid-cols-3 mb-6 gap-10'>
+          <ul className='sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 mt-6 mb-6'>
             {
               apartmentListing.map((listing) => (
                 <>
                   <div key={listing._id}>
-                      <li className="group relative w-full border border-teal-500 overflow-hidden rounded-lg sm:w-[330px] transition-all">
-                        <Link  to={`/apartmentListing/${listing._id}/`}>
-                          <img src={listing.imageUrls[0]} alt="listing cover" className='h-[230px] w-full object-cover  transition-all duration-300 z-20'/>
+                      <li className="relative bg-white dark:bg-slate-700 flex flex-col justify-between items-center shadow-lg hover:shadow-xl rounded-md overflow-hidden transition-shadow duration-150 m-[10px]">
+                        <Link className="content" to={`/apartmentListing/${listing._id}/`}>
+                          <img src={listing.imageUrls[0]} alt="listing cover" className='h-52 w-full object-cover'/>
                           
                           <div className="w-full p-[10px]">
                             <div className="flex items-center space-x-1">
@@ -69,7 +69,6 @@ const DashApartmentList_02 = () => {
                             </div>
                             <p className="font-semibold text-xl text-slate-700 dark:text-slate-200 truncate">{listing.ownerName}</p>
                             <p className="font-semibold text-sm text-slate-400">{listing.ownerContactNumber}</p>
-                            <p className='text-sm text-gray-600 line-clamp-2'>{listing.description}</p>
                             <p className="text-[#457b9d] mt-2 font-semibold">${listing.offer ? listing.discountPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : listing.regularPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} {listing.type === "rent" && " / month"}</p>
                             <div className="flex items-center mt-[10px] space-x-3">
                               <div className="font-bold text-xs">

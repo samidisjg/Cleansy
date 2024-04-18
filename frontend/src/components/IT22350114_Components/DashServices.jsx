@@ -1,31 +1,14 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { Button } from "flowbite-react";
+import { Button, Checkbox, FileInput, Label, Select, TextInput, Textarea } from "flowbite-react"
+import { Link } from "react-router-dom"
+import React from 'react'
+
 
 const DashServices = () => {
-  const { currentUser } = useSelector((state) => state.user);
-
   return (
     <div>
-      {currentUser.isFacilityServiceAdmin && (
-        <div>
-          <h1>Create Services</h1>
-
-          <div className="flex flex-wrap gap-2"></div>
-          <Button pill>
-                        <Link to="/service-create">Create Service</Link>
-                    </Button>
-                    <Button pill>
-                        <Link to="service-list:serviceID">View Service</Link>
-                    </Button>
-                    <br />
-                   
-          <br />
-        </div>
-      )}
+      <h1>Create Service Listing </h1>
     </div>
-  );
-};
+  )
+}
 
-export default DashServices;
+export default DashServices

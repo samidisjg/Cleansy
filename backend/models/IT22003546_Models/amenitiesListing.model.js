@@ -2,11 +2,6 @@ import mongoose from 'mongoose';
 
 const AmenitiesListingSchema = new mongoose.Schema({
 
-    amenityID: {
-        type: String,
-        required: true
-    },
-
     amenityTitle: {
         type: String,
         required: true
@@ -15,19 +10,7 @@ const AmenitiesListingSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    imageURLs: {
-        type: Array,
-        required: true
-    },
-    amenityLocation: {
-        type: String,
-        required: true
-    },
-    amenityCapacity: {
-        type: Number,
-        required: true
-    },
-    amenityAvailableTimes: {
+    amenityImage: {
         type: String,
         required: true
     },

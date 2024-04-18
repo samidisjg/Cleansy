@@ -3,8 +3,6 @@ import { useSelector } from "react-redux"
 import { Modal, Table, Button } from 'flowbite-react';
 import { Link } from 'react-router-dom';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
-import jsPDF from 'jspdf'
-import "jspdf-autotable";
 
 const DashSharedResourcesList_02 = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -64,33 +62,6 @@ const DashSharedResourcesList_02 = () => {
     }
   }
 
-  const resourceGeneratePDF = async () => {
-    const payDoc = new jsPDF();
-    const tableColumn = ["Date Updated", "Resource Title", "Category", "Quantity", "Sale/Rent", "Price"];
-    const tableRows = [];
-
-    sharedResources.forEach(resource => {
-      const rowData = [
-        new Date(resource.updatedAt).toLocaleDateString(),
-        resource.title,
-        resource.category,
-        resource.quantity,
-        resource.type,
-        resource.regularPrice - resource.discountPrice
-      ];
-      tableRows.push(rowData);
-    })
-
-    const d = new Date();
-    const year = d.getFullYear();
-    const month = d.getMonth() + 1;
-    const date = d.getDate();
-
-    payDoc.autoTable(tableColumn, tableRows, { startY: 20 });
-    payDoc.text(`Shared Resources Report - ${year}/${month}/${date}`, 14, 15);
-    payDoc.save(`sharedResources_Report_${year}_${month}_${date}.pdf`);
-  }
-
   return (
     <div className="w-full table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
       {
@@ -109,11 +80,6 @@ const DashSharedResourcesList_02 = () => {
                   <Table.HeadCell>
                     <span>Edit</span>
                   </Table.HeadCell>
-                  <Table.HeadCell>
-                      <Button gradientDuoTone='purpleToBlue' onClick={resourceGeneratePDF}>
-                        Report
-                      </Button>
-                    </Table.HeadCell>
                 </Table.Head>
                 {sharedResources.map((resources) => (
                   <>

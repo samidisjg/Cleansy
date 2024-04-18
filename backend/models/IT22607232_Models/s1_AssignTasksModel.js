@@ -9,17 +9,20 @@ const TaskAssignSchema = new mongoose.Schema({
       type: String,
       required: true,
    },
-   
    Name: {
       type: String,
       required: true,
    },
    Description: {
       type: String,
-      required: false,
+      required: true,
    },
    WorkGroupID: {
       type: String,
+      required: true,
+   },
+   Date: {
+      type: Date,
       required: true,
    },
    Location: {
@@ -29,8 +32,8 @@ const TaskAssignSchema = new mongoose.Schema({
    DurationDays: {
       type: Number,
       required: true,
-   }
- 
+   },
+  
 }, {timestamps:true});
 
 
