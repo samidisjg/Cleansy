@@ -39,6 +39,9 @@ import RateReview_01 from './pages/IT22607232_Pages/RateReview_01'
 import BoxTile from './components/IT22003546_Components/UserAmenityView'
 import AmenityDetails from './components/IT22003546_Components/AmenityDetailsEach_05'
 import BookAmenity from './pages/IT22003546_Pages/BookAmenity_05'
+import UpdateVisitorListing from './pages/IT22561466_Pages/UpdateVisitorListing'
+import VisitorDetails from './pages/IT22561466_Pages/VisitorDetails'
+
 
 
 function App() {
@@ -53,6 +56,7 @@ function App() {
               <Route path='/about' element={<About/>}/>
               <Route path='/sign-in' element={<SignIn/>}/>
               <Route path='/sign-up' element={<SignUp/>}/>
+              <Route path='/visitorListing/:visitorListingId' element={<VisitorDetails/>}/>
               <Route element={<PrivateRoute/>}>
                 <Route path='/dashboard' element={<Dashboard/>}/>
                 <Route path='/create-apartmentListing' element={<CreateApartmentListing/>}/>
@@ -66,6 +70,8 @@ function App() {
                 <Route path="/checkout" element={<CheckOutPage_02/>} />
                 <Route path="/amenity-create" element={<AmenityCreate/>} />
                 <Route path="/add-visitors" element={<AddVisitors/>} />
+                <Route path="/update-list/:visitorListingId" element={<UpdateVisitorListing/>} />
+                
 
                 
                 
