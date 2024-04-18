@@ -26,19 +26,13 @@ const ServiceListingSchema = new mongoose.Schema(
       type: Boolean,
       required: true,
     },
-    serviceContactInfo: {
-      phone: {
-        type: String,
-        required: true,
-      },
-      email: {
-        type: String,
-        required: true,
-      },
-      address: {
-        type: String,
-        required: true,
-      },
+    servicePhone: {
+      type: String,
+      required: true,
+    },
+    serviceEmail: {
+      type: String,
+      required: true,
     },
     serviceRequirements: {
       type: String,
@@ -47,6 +41,10 @@ const ServiceListingSchema = new mongoose.Schema(
     imageUrls: {
       type: Array,
       required: true,
+    },
+    imageUrls: {
+      type: Array,
+      required: false,
     },
   },
   { timestamps: true }
