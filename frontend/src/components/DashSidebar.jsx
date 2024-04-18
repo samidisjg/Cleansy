@@ -7,7 +7,7 @@ import {
   HiOutlineUserCircle,
   HiOutlineUserGroup,
   HiShoppingBag,
-  HiUser,
+  HiUser, HiAnnotation,
 } from "react-icons/hi";
 import { Link, useLocation } from "react-router-dom";
 import { signOutSuccess } from "../../redux/user/userSlice";
@@ -188,6 +188,56 @@ const DashSidebar = () => {
             </>
           )}
 
+            
+            {
+              currentUser.isStaffAdmin && (
+                <>
+                  <Link to='/dashboard?tab=staffs'>
+                    <Sidebar.Item active={tab === 'staffs'} icon={HiOutlineUserGroup} as='div'>
+                      Staff
+                     </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
+            {
+              !currentUser.isAdmin && (
+                <>
+                  <Link to='/dashboard?tab=apartmentList'>
+                    <Sidebar.Item active={tab === 'apartmentList'} icon={MdOutlineHomeWork} as='div'>
+                      Apartment List
+                    </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
+            {
+              currentUser.isPropertyAdmin && (
+                <>
+                  <Link to='/dashboard?tab=comments'>
+                    <Sidebar.Item active={tab === 'comments'} icon={HiAnnotation} as='div'>
+                      Comments
+                    </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
+            <Link to ='/add-visitors'>
+                <Sidebar.Item icon={HiUser} as='div'>
+                  Add Visitors
+                </Sidebar.Item>
+            </Link>
+
+            <Link to ='/dashboard?tab=bookings'>
+                <Sidebar.Item active={tab === 'bookings'} icon={HiUser} as='div'>
+                  Bookings
+                </Sidebar.Item>
+            </Link>
+            
+            <Sidebar.Item icon={HiArrowSmRight} className='cursor-pointer' onClick={handleSignout}>
+               Sign Out
+            </Sidebar.Item>
+         </Sidebar.ItemGroup>
           {currentUser.isStaffAdmin && (
             <>
               <Link to="/dashboard?tab=staffs">
