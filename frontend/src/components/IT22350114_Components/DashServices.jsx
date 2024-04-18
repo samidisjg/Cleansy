@@ -6,7 +6,22 @@ import React from 'react'
 const DashServices = () => {
   return (
     <div>
-      <h1>Create Service Listing </h1>
+      {currentUser.isFacilityServiceAdmin && (
+        <div>
+          <h1>Create Services</h1>
+
+          <div className="flex flex-wrap gap-2"></div>
+          <Button pill>
+                        <Link to="/service-create">Create Service</Link>
+                    </Button>
+                    <Button pill>
+                        <Link to="service-list/:serviceID">View Service</Link>
+                    </Button>
+                    <br />
+                   
+          <br />
+        </div>
+      )}
     </div>
   )
 }
