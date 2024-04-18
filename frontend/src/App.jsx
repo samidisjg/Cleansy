@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Footer from './components/Footer'
 import Dashboard from './pages/Dashboard'
 import PrivateRoute from './components/PrivateRoute'
+import ServiceUpdate_06 from './pages/IT22350114_Pages/ServiceUpdate_06'
 import CreateApartmentListing from './pages/IT22577160_Pages/CreateApartmentListing'
 import UpdateApartmentListing_02 from './pages/IT22577160_Pages/UpdateApartmentListing_02'
 import DashMaintenance from './components/IT22607232_Components/DashMaintenance'

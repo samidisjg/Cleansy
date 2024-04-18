@@ -136,54 +136,6 @@ const DashSidebar = () => {
                 </div>
               )}
 
-<<<<<<< HEAD
-            {
-              currentUser.isFacilityAdmin && (
-                <>
-                  <Link to='/dashboard?tab=maintenance'>
-                    <Sidebar.Item active={tab === 'maintenance'} icon={HiOutlineUserGroup} as='div'>
-                      Maintenance Tasks
-                    </Sidebar.Item>
-                  </Link>
-                </>
-              )
-            }
-            {
-              currentUser.isAnnouncementAdmin && (
-                <>
-                  <Link to='/dashboard?tab=announsment'>
-                    <Sidebar.Item active={tab === 'announsment'} icon={HiOutlineUserGroup} as='div'>
-                      Announcement Tasks
-                    </Sidebar.Item>
-                  </Link>
-                </>
-              )
-            }
-
-            {
-              currentUser.isAnnouncementAdmin && (
-                <>
-                  <Link to='/dashboard?tab=notification'>
-                    <Sidebar.Item active={tab === 'notification'} icon={HiOutlineUserGroup} as='div'>
-                      Notification
-                    </Sidebar.Item>
-                  </Link>
-                </>
-              )
-            }
-            
-            {
-              currentUser.isStaffAdmin && (
-                <>
-                  <Link to='/dashboard?tab=staffs'>
-                    <Sidebar.Item active={tab === 'staffs'} icon={HiOutlineUserGroup} as='div'>
-                      Staff
-                     </Sidebar.Item>
-                  </Link>
-                </>
-              )
-            }
-=======
               {tab === "staffs" && (
                 <div className="dropdown">
                   <Link to="/dashboard?tab=staffAttendance">
@@ -260,7 +212,6 @@ const DashSidebar = () => {
               </Link>
             </>
           )}
->>>>>>> fa4fa3c91389b08115de597d2b6d1aad46f796e3
             {
               !currentUser.isAdmin && (
                 <>
@@ -313,6 +264,37 @@ const DashSidebar = () => {
               </Link>
             </>
           )}
+
+          {currentUser.isAnnouncementAdmin && (
+            <>
+              <Link to="/dashboard?tab=announsment">
+                <Sidebar.Item
+                  active={tab === "announsment"}
+                  icon={HiOutlineUserGroup}
+                  as="div"
+                >
+                  Announcement Tasks
+                </Sidebar.Item>
+              </Link>
+            </>
+          )}
+
+          {currentUser.isAnnouncementAdmin && (
+            <>
+              <Link to="/dashboard?tab=notification">
+                <Sidebar.Item
+                  active={tab === "notification"}
+                  icon={HiOutlineUserGroup}
+                  as="div"
+                >
+                  Notification
+                </Sidebar.Item>
+              </Link>
+            </>
+          )}
+
+
+
           {currentUser.isStaffAdmin && (
             <>
               <Link to="/dashboard?tab=staffAdmin">
