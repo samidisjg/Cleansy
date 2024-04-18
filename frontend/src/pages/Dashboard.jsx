@@ -67,6 +67,11 @@ const Dashboard = () => {
       
       {/* propertyAdmin Dashboard */}
       {tab == 'propertyAdminDash' && <PropertyAdminDashboard_02/>}
+
+      {/* VisitorAdmin Dashboard */}
+      {tab === 'addVisitors' && <VisitorAdminPage/>}
+
+
     </div>
   )
 }

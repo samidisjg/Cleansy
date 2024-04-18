@@ -7,6 +7,10 @@ import { signOutSuccess } from "../../redux/user/userSlice";
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { GrResources } from "react-icons/gr";
+import { FaPersonCircleCheck } from "react-icons/fa6";
+import { BsPersonPlusFill } from "react-icons/bs";
+
+
 
 const DashSidebar = () => {
   const location = useLocation();
@@ -179,8 +183,19 @@ const DashSidebar = () => {
                 </>
               )
             }
+            {
+              currentUser.isVisitorAdmin && (
+                <>
+                  <Link to='/admin-page'>
+                    <Sidebar.Item active={tab === 'addVisitors'} icon={FaPersonCircleCheck} as='div'>
+                      Visitors
+                    </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
             <Link to ='/add-visitors'>
-                <Sidebar.Item icon={HiUser} as='div'>
+                <Sidebar.Item  icon={BsPersonPlusFill} as='div'>
                   Add Visitors
                 </Sidebar.Item>
             </Link>

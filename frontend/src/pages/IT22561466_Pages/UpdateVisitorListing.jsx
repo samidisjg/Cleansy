@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import visitorListing from '../../../../backend/models/IT22561466_Models/visitorListing.model';
+import { Button, TextInput } from 'flowbite-react';
 
 
 export default function AddVisitors() {
@@ -109,13 +110,13 @@ export default function AddVisitors() {
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl text-center font-semibold my-7">Update Visitors</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <input type="text" placeholder="Owner Name" className="border p-3 rounded-lg" id="ownerName" required onChange={handleChange} value={formData.ownerName}  />
-        <input type="text" placeholder="Guest Name" className="border p-3 rounded-lg" id="guestName" required onChange={handleChange} value={formData.guestName} />
-        <input type="text" placeholder="Tel No" className="border p-3 rounded-lg" id="telNo" required onChange={handleChange} value={formData.telNo} />
-        <input type="text" placeholder="Date of visit" className="border p-3 rounded-lg" id="date" required onChange={handleChange} value={formData.date}  />
-        <input type="text" placeholder="Time of visit(around)" className="border p-3 rounded-lg" id="time" required onChange={handleChange} value={formData.time}  />
-        <input type="text" placeholder="Purpose of visit" className="border p-3 rounded-lg" id="purpose" required onChange={handleChange} value={formData.purpose}  />
-        <button className="bg-slate-700 text-white mb-4 p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">{loading ? 'Updating...' : 'Update'}</button>
+        <TextInput type="text" placeholder="Owner Name" id="ownerName" required onChange={handleChange} value={formData.ownerName}  />
+        <TextInput type="text" placeholder="Guest Name" id="guestName" required onChange={handleChange} value={formData.guestName} />
+        <TextInput type="text" placeholder="Tel No" id="telNo" required onChange={handleChange} value={formData.telNo} />
+        <TextInput type="text" placeholder="Date of visit" id="date" required onChange={handleChange} value={formData.date}  />
+        <TextInput type="text" placeholder="Time of visit(around)" id="time" required onChange={handleChange} value={formData.time}  />
+        <TextInput type="text" placeholder="Purpose of visit" id="purpose" required onChange={handleChange} value={formData.purpose}  />
+        <Button type='submit' gradientDuoTone='purpleToBlue'>{loading ? 'Updating...' : 'Update'}</Button>
         {error && <p className="text-red-700 text-sm">{error}</p>}
       </form>
     </div>

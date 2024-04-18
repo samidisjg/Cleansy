@@ -47,28 +47,28 @@ export default function VisitorDetails() {
                     <div className="bg-white rounded-lg shadow-md p-6">
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                                <p className="text-lg font-semibold mb-2">Owner Name:</p>
-                                <p className="text-lg">{listing.ownerName}</p>
+                                <p className="text-lg font-semibold mb-2 dark:text-slate-700">Owner Name:</p>
+                                <p className="text-lg dark:text-slate-700">{listing.ownerName}</p>
                             </div>
                             <div>
-                                <p className="text-lg font-semibold mb-2">Visitor Name:</p>
-                                <p className="text-lg">{listing.guestName}</p>
+                                <p className="text-lg font-semibold mb-2 dark:text-slate-700 ">Visitor Name:</p>
+                                <p className="text-lg dark:text-slate-700">{listing.guestName}</p>
                             </div>
                             <div>
-                                <p className="text-lg font-semibold mb-2">Tel No:</p>
-                                <p className="text-lg">{listing.telNo}</p>
+                                <p className="text-lg font-semibold mb-2 dark:text-slate-700">Tel No:</p>
+                                <p className="text-lg dark:text-slate-700">{listing.telNo}</p>
                             </div>
                             <div>
-                                <p className="text-lg font-semibold mb-2">Date:</p>
-                                <p className="text-lg">{listing.date}</p>
+                                <p className="text-lg font-semibold mb-2 dark:text-slate-700">Date:</p>
+                                <p className="text-lg dark:text-slate-700">{listing.date}</p>
                             </div>
                             <div>
-                                <p className="text-lg font-semibold mb-2">Time:</p>
-                                <p className="text-lg">{listing.time}</p>
+                                <p className="text-lg font-semibold mb-2 dark:text-slate-700">Time:</p>
+                                <p className="text-lg dark:text-slate-700">{listing.time}</p>
                             </div>
                             <div>
-                                <p className="text-lg font-semibold mb-2">Purpose:</p>
-                                <p className="text-lg">{listing.purpose}</p>
+                                <p className="text-lg font-semibold mb-2 dark:text-slate-700">Purpose:</p>
+                                <p className="text-lg dark:text-slate-700">{listing.purpose}</p>
                             </div>
                         </div>
                     </div>

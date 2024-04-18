@@ -5,6 +5,7 @@ import { BsTrash, BsPencilSquare } from 'react-icons/bs';
 import jsPDF from 'jspdf';
 import cleancy from '/cleansy.png';
 import { ToastContainer, toast } from 'react-toastify';
+import { Button, TextInput } from 'flowbite-react';
 
 
 export default function AddVisitors() {
@@ -66,7 +67,6 @@ export default function AddVisitors() {
           setError(data.message);
         }
         toast.success('Submission successful!');
-        window.location.reload();
         
       } catch (error) {
         setError(error.message);
@@ -162,18 +162,18 @@ export default function AddVisitors() {
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl text-center font-semibold my-7">Add Visitors</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <input type="text" placeholder="Owner Name" className="border p-3 rounded-lg" id="ownerName" required onChange={handleChange} />
-        <input type="text" placeholder="Guest Name" className="border p-3 rounded-lg" id="guestName" required onChange={handleChange} />
-        <input type="text" placeholder="Tel No(07XXXXXXXX)" className="border p-3 rounded-lg" id="telNo" required onChange={handleChange} />
-        <input type="text" placeholder="Date of visit" className="border p-3 rounded-lg" id="date" required onChange={handleChange} />
-        <input type="text" placeholder="Time of visit(around)" className="border p-3 rounded-lg" id="time" required onChange={handleChange} />
-        <input type="text" placeholder="Purpose of visit" className="border p-3 rounded-lg" id="purpose" required onChange={handleChange} />
-        <button className="bg-slate-700 text-white mb-4 p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">{loading ? 'Submitting...' : 'Submit'}</button>
+        <TextInput type="text" placeholder="Owner Name"  id="ownerName" required onChange={handleChange} />
+        <TextInput type="text" placeholder="Guest Name"  id="guestName" required onChange={handleChange} />
+        <TextInput type="text" placeholder="Tel No(07XXXXXXXX)"  id="telNo" required onChange={handleChange} />
+        <TextInput type="text" placeholder="Date of visit"  id="date" required onChange={handleChange} />
+        <TextInput type="text" placeholder="Time of visit(around)"  id="time" required onChange={handleChange} />
+        <TextInput type="text" placeholder="Purpose of visit"  id="purpose" required onChange={handleChange} />
+        <Button type='submit' gradientDuoTone='purpleToBlue'>{loading ? 'Submitting...' : 'Submit'}</Button>
         {error && <p className="text-red-700 text-sm">{error}</p>}
       </form>
-      <button className="bg-red-700 text-white w-full p-3 rounded-lg uppercase text-center hover:opacity-95" onClick={handleShowListings}>
+      <Button  gradientDuoTone="pinkToOrange" className="w-full mt-4" onClick={handleShowListings}>
         Visitor List
-      </button>
+      </Button>
       <p className="text-red-700 mt-5">{error ? 'Error Showing visitor list' : ''}</p>
 
       {userListings && userListings.length > 0 && (
@@ -183,7 +183,7 @@ export default function AddVisitors() {
           {userListings.map((visitorListing) => (
             <div key={visitorListing._id} className="border rounded-lg p-3 flex justify-between items-center gap-4">
               <Link to={`/visitorListing/${visitorListing._id}`}>
-                <p className="flex-1 text-slate-700 font-semibold hover:underline">{visitorListing.guestName}</p>
+                <p className="flex-1 text-slate-700 font-semibold hover:underline dark:text-slate-100">{visitorListing.guestName}</p>
               </Link>
               <p>{visitorListing.date}</p>
 
