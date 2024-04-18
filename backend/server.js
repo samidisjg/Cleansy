@@ -17,7 +17,9 @@ import commentRoutes from './routes/IT22577160_Routes/comment.route_02.js';
 import checkoutRoutes from './routes/IT22577160_Routes/checkout.route_02.js';
 import RateTasksRoutes from './routes/IT22607232_Routes/RateTasksRoute_01.js';
 import amenitiesBookingRoutes from './routes/IT22003546_Routes/amenitiesBooking.route_05.js';
+import AdminPaymentHandlingRoutes from './routes/IT22602978_Routes/AdminPaymentHandling.route_03.js'
 import serviceBookingRoutes from "./routes/IT22350114_Routes/serviceBookingRoutes.js";
+
 
 dotenv.config();
 
@@ -39,6 +41,7 @@ app.use("/api/auth", authRoutes);
 
 // IT22602978 Routes
 app.use("/api/PaymentProfileCreation",PaymentProfileCreationRoutes)
+app.use("/api/AdminPaymentHandling",AdminPaymentHandlingRoutes)
 // IT22603418 Routes
 app.use("/api/RequestLeave", RequestLeaveRoutes);
 
