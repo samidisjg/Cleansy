@@ -77,10 +77,6 @@ const CreateSharedResources_02 = () => {
    const handleSubmit = async (e) => {
       e.preventDefault();
       try {
-         if(!file) {
-            setImageUploadError('Please select an image');
-            return;
-         }
          const res = await fetch('/api/sharedResourcesListing/create', {
             method: 'POST',
             headers: {

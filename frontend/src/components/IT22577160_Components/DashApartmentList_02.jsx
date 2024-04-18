@@ -59,7 +59,7 @@ const DashApartmentList_02 = () => {
                 <>
                   <div key={listing._id}>
                       <li className="group relative w-full border border-teal-500 overflow-hidden rounded-lg sm:w-[330px] transition-all">
-                        <Link  to={`/apartmentListing/${listing._id}/`}>
+                        <Link className="content" to={`/apartmentListing/${listing._id}/`}>
                           <img src={listing.imageUrls[0]} alt="listing cover" className='h-[230px] w-full object-cover  transition-all duration-300 z-20'/>
                           
                           <div className="w-full p-[10px]">

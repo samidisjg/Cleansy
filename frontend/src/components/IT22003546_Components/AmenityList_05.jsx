@@ -78,7 +78,6 @@ const AmenityList_05 = () => {
 
     return (
         <div className="w-full table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
-        <h1 className="text-2xl font-semibold text-gray-800 mb-4 text-center">Amenity List</h1>    
             {currentUser.isBookingAdmin && (
                 <>
                     <Table hoverable className="shadow-md">
@@ -120,7 +119,7 @@ const AmenityList_05 = () => {
                             </Table.Body>
                         ))}
                     </Table>
-                    <br />
+
                     <Button onClick={handleDownloadPDF}>Download PDF</Button>
 
                     <p className="text-red-700 mt-5">

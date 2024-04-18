@@ -7,6 +7,7 @@ import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/
 import {
     Button,
     Label,
+    Select,
     TextInput,
     Textarea,
     FileInput,
@@ -21,7 +22,7 @@ const AmenityCreate = () => {
         amenityID: '',
         amenityTitle: '',
         amenityDescription: '',
-        imageURLs: [],
+        imageUrls: [],
         amenityLocation: '',
         amenityCapacity: 500,
         amenityAvailableTimes: '',
@@ -63,7 +64,7 @@ const AmenityCreate = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            if(formData.imageURLs.length < 1) return setError('You must upload at least one image')
+            if(formData.imageUrls.length < 1) return setError('You must upload at least one image')
             if (formData.amenityID === currentUser.AmenityID) return setError('AmenityID already exists');
             setLoading(true);
             setError(false);
@@ -92,7 +93,7 @@ const AmenityCreate = () => {
     };
 
     const handleImageSubmit = () => {
-        if(files.length > 0 && files.length + formData.imageURLs.length < 7) {
+        if(files.length > 0 && files.length + formData.imageUrls.length < 7) {
            setUploading(true);
            setImageUploadError(false);
            const promises = [];
@@ -104,7 +105,7 @@ const AmenityCreate = () => {
            Promise.all(promises).then((urls) => {
               setFormData({
                  ...formData,
-                 imageURLs: formData.imageURLs.concat(urls)
+                 imageUrls: formData.imageUrls.concat(urls)
               })
               setImageUploadError(false);
               setUploading(false);
@@ -145,14 +146,14 @@ const AmenityCreate = () => {
      const handleRemoveImage = (index) => {
         setFormData({
           ...formData,
-          imageURLs: formData.imageURLs.filter((_, i) => i !== index),
+          imageUrls: formData.imageUrls.filter((_, i) => i !== index),
         })
      }
 
 
     return (
         <div className="min-h-screen mt-20">
-            <h1 className="text-2xl font-semibold text-gray-800 mb-4 text-center">Create Amenity</h1>
+            <h1 className="text-3xl text-center mt-6 font-extrabold underline text-blue-950 dark:text-slate-300"> Create Amenity</h1>
             <div className="flex p-3 w-[40%] mx-auto flex-col md:flex-row md:items-center gap-20 md:gap-20 mt-10">
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full justify-center">
                     <div>
@@ -206,7 +207,6 @@ const AmenityCreate = () => {
                             required
                         />
                     </div>
-
                     <div>
                         <Label for="amenityAvailableTimes Times">Available Times</Label>
                         <TextInput
@@ -217,7 +217,6 @@ const AmenityCreate = () => {
                             required
                         />
                     </div>
-
                     <div>
                         <Label for="amenityPrice">Price</Label>
                         <TextInput
@@ -237,11 +236,13 @@ const AmenityCreate = () => {
                         </div>
                         <p className="text-red-700">{imageUploadError && imageUploadError}</p>
                         {
-                            formData.imageURLs.length > 0 && formData.imageURLs.map((url, index) => (
-                                <div key={`image-${index}`} className="flex justify-between p-3 border items-center">
-                                    <img src={url} alt={`listing image ${index}`} className='w-20 h-20 object-contain rounded-lg' />
-                                    <Button type="button" onClick={() => handleRemoveImage(index)} gradientDuoTone="pinkToOrange">Delete</Button>
-                                </div>
+                            formData.imageUrls.length > 0 && formData.imageUrls.map((url, index) => (
+                                <>
+                                    <div key={url} className="flex justify-between p-3 border items-center">
+                                        <img src={url} alt="listing image" className='w-20 h-20 object-contain rounded-lg' />
+                                        <Button type="button" onClick={() => handleRemoveImage(index)} gradientDuoTone="pinkToOrange">Delete</Button>
+                                    </div>
+                                </>
                             ))
                         }
                         <Button
@@ -255,6 +256,6 @@ const AmenityCreate = () => {
             </div>
         </div>
     );
-};
+}
 
-export default AmenityCreate
+export default AmenityCreate;

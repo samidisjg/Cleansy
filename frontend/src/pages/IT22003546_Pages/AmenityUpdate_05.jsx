@@ -36,8 +36,7 @@ const AmenityUpdate_05 = () => {
                 console.log(data.message);
                 return;
             }
-            setFormData((prevData) => ({
-                ...prevData,
+            setFormData({
                 AmenityID: data.amenityID,
                 AmenityName: data.amenityTitle,
                 Description: data.amenityDescription,
@@ -46,24 +45,36 @@ const AmenityUpdate_05 = () => {
                 AvailableTime: data.amenityAvailableTimes,
                 Price: data.amenityPrice,
                 //imageURLs: data.imageURLs,
-            }));
+            });
         }
         fetchAmenity();
     }
         , []);
 
     const handleChange = (e) => {
-        console.log("Event:", e);
-        const { name, value } = e.target;
-        console.log("Name:", name);
-        console.log("Value:", value);
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
+        let boolean = null;
+        if (e.target.value === "true") {
+            boolean = true;
+        }
+        if (e.target.value === "false") {
+            boolean = false;
+        }
+        if (
+            e.target.type === "number" ||
+            e.target.type === "text" ||
+            e.target.type === "textarea"
+        ) {
+            setFormData({
+                ...formData,
+                [e.target.name]: e.target.value,
+            });
+        } else {
+            setFormData({
+                ...formData,
+                [e.target.name]: boolean !== null ? boolean : e.target.value,
+            });
+        }
     };
-        
-        
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -73,7 +84,6 @@ const AmenityUpdate_05 = () => {
                 return;
             }
             setLoading(true);
-            console.log("Form Data:", formData); // Add this line
             setError(false);
             
             const res = await fetch(`/api/amenitiesListing/update/${params.amenityID}`, {
@@ -81,7 +91,10 @@ const AmenityUpdate_05 = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify({
+                    ...formData,
+                    userRef: currentUser._id,
+                }),
             });
             const data = await res.json();
             setLoading(false);
@@ -110,16 +123,18 @@ const AmenityUpdate_05 = () => {
                         <TextInput
                             type="text"
                             name="AmenityID"
+                            placeholder="AmenityID"
                             required
                             value={formData.AmenityID}
                             onChange={handleChange}
                         />
                     </div>
                     <div>
-                        <Label value="Amenity Name" />
+                        <Label value="AmenityName" />
                         <TextInput
                             type="text"
                             name="AmenityName"
+                            placeholder="AmenityName"
                             required
                             value={formData.AmenityName}
                             onChange={handleChange}
@@ -129,6 +144,7 @@ const AmenityUpdate_05 = () => {
                         <Label value="Description" />
                         <Textarea
                             name="Description"
+                            placeholder="Description"
                             required
                             value={formData.Description}
                             onChange={handleChange}
@@ -139,6 +155,7 @@ const AmenityUpdate_05 = () => {
                         <TextInput
                             type="text"
                             name="Location"
+                            placeholder="Location"
                             required
                             value={formData.Location}
                             onChange={handleChange}
@@ -149,6 +166,7 @@ const AmenityUpdate_05 = () => {
                         <TextInput
                             type="number"
                             name="Capacity"
+                            placeholder="Capacity"
                             required
                             value={formData.Capacity}
                             onChange={handleChange}
@@ -159,6 +177,7 @@ const AmenityUpdate_05 = () => {
                         <TextInput
                             type="number"
                             name="Price"
+                            placeholder="Price"
                             required
                             value={formData.Price}
                             onChange={handleChange}
@@ -169,6 +188,7 @@ const AmenityUpdate_05 = () => {
                         <TextInput
                             type="text"
                             name="AvailableTime"
+                            placeholder="AvailableTime"
                             required
                             value={formData.AvailableTime}
                             onChange={handleChange}
