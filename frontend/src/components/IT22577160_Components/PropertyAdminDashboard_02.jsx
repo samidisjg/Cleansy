@@ -92,6 +92,7 @@ const PropertyAdminDashboard_02 = () => {
                   <Link to={"/dashboard?tab=properties"}>
                      See All
                   </Link>
+                  
                </Button>
             </div>
             <Table hoverable>
