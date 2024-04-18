@@ -85,7 +85,7 @@ const AllPaymentProfiles_03 = () => {
             {paymentProfiles && paymentProfiles.length > 0 ? (
                 paymentProfiles.map((payment) => (
                     <div key={payment._id}>
-                        <Link className="content"  onClick={() => fetchPaymentData(payment._id)}> 
+                        <Link onClick={() => fetchPaymentData(payment._id)}> 
                         <div className="mx-5  grid place-content-center">
                         <div className="bg-gradient-to-r from-orange-400 to-indigo-900 rounded-2xl  text-white p-8 text-center h-60 max-w-sm mx-auto">
                         <h1 className="text-3xl m-2 font-bold">Hi </h1>
