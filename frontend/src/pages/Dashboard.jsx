@@ -13,8 +13,6 @@ import AddPaymentProfile_03 from './IT22602978_Pages/AddPaymentProfile_03';
 import DashMaintenance from "../components/IT22607232_Components/DashMaintenance"
 import DashAmenity from "../components/IT22003546_Components/DashAmenity";
 import DashComments_02 from "../components/IT22577160_Components/DashComments_02";
-import DashBooking_05 from "../components/IT22003546_Components/DashBooking_05";
-import PropertyAdminDashboard_02 from "../components/IT22577160_Components/PropertyAdminDashboard_02";
 import BookingList_05 from "../components/IT22003546_Components/BookingList_05";
 import AdminPayments_03 from "./IT22602978_Pages/AdminPayments_03";
 
@@ -61,16 +59,10 @@ const Dashboard = () => {
       {/* Comments */}
       {tab == 'comments' && <DashComments_02/>}
       {/* Booking */}
-      {tab == 'bookings' && <DashBooking_05/>}
-      
-      
       {tab == 'bookings' && <BookingList_05/>}
       {/*admin add payments */}
       {tab==='Adminaddpayments'&& <AdminPayments_03/>}
       
-      
-      {/* propertyAdmin Dashboard */}
-      {tab == 'propertyAdminDash' && <PropertyAdminDashboard_02/>}
     </div>
   )
 }
