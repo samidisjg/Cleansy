@@ -2,18 +2,16 @@ import { Sidebar } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { MdOutlineHomeWork } from "react-icons/md";
 import {
-  HiArrowSmRight,
-  HiDocument,
-  HiOutlineUserCircle,
+  HiUser,
   HiOutlineUserGroup,
   HiShoppingBag,
-  HiUser,
-  HiAnnotation, HiChartPie,
+  HiArrowSmRight,
+  HiDocument,
+  HiAnnotation,
 } from "react-icons/hi";
 import { Link, useLocation } from "react-router-dom";
 import { signOutSuccess } from "../../redux/user/userSlice";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { GrResources } from "react-icons/gr";
 
 const DashSidebar = () => {
@@ -29,9 +27,6 @@ const DashSidebar = () => {
     const tabFromUrl = urlParams.get("tab");
     if (tabFromUrl) {
       setTab(tabFromUrl);
-    const tabFromUrl = urlParams.get("tab");
-    if (tabFromUrl) {
-      setTab(tabFromUrl);
     }
   }, [location.search]);
 
@@ -42,14 +37,8 @@ const DashSidebar = () => {
       });
       const data = await res.json();
       if (!res.ok) {
-      const res = await fetch("/api/user/signout", {
-        method: "POST",
-      });
-      const data = await res.json();
-      if (!res.ok) {
         console.log(data.message);
       } else {
-        dispatch(signOutSuccess());
         dispatch(signOutSuccess());
       }
     } catch (error) {
@@ -135,92 +124,55 @@ const DashSidebar = () => {
               )
             }
 
-          {currentUser.isFacilityAdmin && (
-            <>
-              <Link to="/dashboard?tab=maintenance">
-                <Sidebar.Item
-                  active={tab === "maintenance"}
-                  icon={HiOutlineUserGroup}
-                  as="div"
-                >
-                  Maintenance Tasks
-                </Sidebar.Item>
-              </Link>
-            </>
-          )}
-          {currentUser.isStaffAdmin && (
-            <>
-              <Link to="/dashboard?tab=staffAdmin">
-                <Sidebar.Item
-                  active={tab === "staffAdmin"}
-                  icon={HiOutlineUserGroup}
-                  as="div"
-                >
-                  Staff Admin
-                </Sidebar.Item>
-              </Link>
-              {/* STAFF PART */}
-              <div className="dropdown">
-                <Link to="/dashboard?tab=leaveRequest">
-                  <Sidebar.Item active={tab === "leaveRequest"} as="div">
-                    Leave Request
-                  </Sidebar.Item>
-                </Link>
-              </div>
+             {
+              currentUser.isFacilityAdmin && (
+                <>
+                  <Link to='/dashboard?tab=maintenance'>
+                    <Sidebar.Item active={tab === 'maintenance'} icon={HiOutlineUserGroup} as='div'>
+                      Maintenance Tasks
+                    </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
 
-              <div className="dropdown">
-                <Link to="/dashboard?tab=faceRecognition">
-                  <Sidebar.Item active={tab === "faceRecognition"} as="div">
-                    Face Recognition
-                  </Sidebar.Item>
-                </Link>
-              </div>
-
-              <div className="dropdown">
-                <Link to="/dashboard?tab=staffAttendance">
-                  <Sidebar.Item active={tab === "staffAttendance"} as="div">
-                    Staff Attendance
-                  </Sidebar.Item>
-                </Link>
-              </div>
-              {/* STAFF PART END*/}
-            </>
-          )}
-          {!currentUser.isAdmin && (
-            <>
-              <Link to="/dashboard?tab=apartmentList">
-                <Sidebar.Item
-                  active={tab === "apartmentList"}
-                  icon={MdOutlineHomeWork}
-                  as="div"
-                >
-                  Apartment List
-                </Sidebar.Item>
-              </Link>
-            </>
-          )}
-          {currentUser.isPropertyAdmin && (
-            <>
-              <Link to="/dashboard?tab=comments">
-                <Sidebar.Item
-                  active={tab === "comments"}
-                  icon={HiAnnotation}
-                  as="div"
-                >
-                  Comments
-                </Sidebar.Item>
-              </Link>
-            </>
-          )}
-          <Link to="/add-visitors">
-            <Sidebar.Item icon={HiUser} as="div">
-              Add Visitors
-            </Sidebar.Item>
-          </Link>
-
-            <Link to ='/dashboard?tab=bookings'>
-                <Sidebar.Item active={tab === 'bookings'} icon={HiUser} as='div'>
-                  Bookings
+            
+            {
+              currentUser.isStaffAdmin && (
+                <>
+                  <Link to='/dashboard?tab=staffs'>
+                    <Sidebar.Item active={tab === 'staffs'} icon={HiOutlineUserGroup} as='div'>
+                      Staff
+                     </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
+            {
+              !currentUser.isAdmin && (
+                <>
+                  <Link to='/dashboard?tab=apartmentList'>
+                    <Sidebar.Item active={tab === 'apartmentList'} icon={MdOutlineHomeWork} as='div'>
+                      Apartment List
+                    </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
+            {
+              currentUser.isPropertyAdmin && (
+                <>
+                  <Link to='/dashboard?tab=comments'>
+                    <Sidebar.Item active={tab === 'comments'} icon={HiAnnotation} as='div'>
+                      Comments
+                    </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
+            <Link to ='/add-visitors'>
+                <Sidebar.Item icon={HiUser} as='div'>
+                  Add Visitors
                 </Sidebar.Item>
             </Link>
 
