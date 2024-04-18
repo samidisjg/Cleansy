@@ -1,0 +1,28 @@
+import React from 'react';
+
+const AdminDashboard = () => {
+    return (
+        <div className="container mx-auto px-4 py-8">
+            <h1 className="text-3xl font-semibold mb-4">Welcome to Admin Dashboard</h1>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="bg-white rounded-lg shadow-md p-6">
+                    <h2 className="text-xl font-semibold mb-4">Update Announcements</h2>
+                    <p className="text-gray-700 mb-4">Manage and update existing announcements.</p>
+                    <Link to="/admin/update" className="block bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md shadow-md transition duration-300 ease-in-out">Go to Update Page</Link>
+                </div>
+                <div className="bg-white rounded-lg shadow-md p-6">
+                    <h2 className="text-xl font-semibold mb-4">Create Announcement</h2>
+                    <p className="text-gray-700 mb-4">Create a new announcement with ease.</p>
+                    <Link to="/admin/create" className="block bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-md shadow-md transition duration-300 ease-in-out">Go to Create Page</Link>
+                </div>
+                <div className="bg-white rounded-lg shadow-md p-6">
+                    <h2 className="text-xl font-semibold mb-4">Manage Users</h2>
+                    <p className="text-gray-700 mb-4">View and manage user accounts and permissions.</p>
+                    <Link to="/admin/manage" className="block bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded-md shadow-md transition duration-300 ease-in-out">Go to Manage Page</Link>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default AdminDashboard;
