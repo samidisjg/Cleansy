@@ -105,7 +105,7 @@ const DashServiceList_06 = () => {
                     </Button>
                   </Table.Cell>
                   <Table.Cell>
-                    <Link to={`/updateService/${service.serviceID}`}>
+                    <Link to={`/service-update/${service.serviceID}`}>
                       <Button>
                         <MdEdit />
                       </Button>
