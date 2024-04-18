@@ -44,7 +44,7 @@ const AmenityDetails = () => {
       <div className="max-w-5xl mx-auto px-1 py-8 flex flex-col items-start justify-center">
         {/* Transparent Image Overlay */}
         <img
-          src={amenity.imageURLs[1]}
+          src={amenity.imageURLs[0]}
           alt="Transparent Image"
           className="absolute inset-0 w-full h-full opacity-10"
           style={{ pointerEvents: "none", zIndex: -1 }}
@@ -59,7 +59,7 @@ const AmenityDetails = () => {
           </div>
 
             <img
-              src={amenity.imageURLs[0]}
+              src={amenity.imageURLs[1]}
               alt={amenity.amenityTitle}
               className="w-full h-80 object-cover rounded-md mb-6"
             />
