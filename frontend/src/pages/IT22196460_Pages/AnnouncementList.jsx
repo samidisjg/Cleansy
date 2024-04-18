@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import AnnouncementCard from '../components/AnnouncementCard';
+import AnnouncementCard from '../../components/IT22196460_Components/AnnouncementCard';
 import { getAnnouncements } from '../api/announcementApi'; // Assume you have an API function to fetch announcements
 
 const AnnouncementList = () => {
