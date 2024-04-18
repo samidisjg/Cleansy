@@ -1,6 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import AnnouncementCard from '../../components/IT22196460_Components/AnnouncementCard';
-import { getAnnouncements } from '../api/announcementApi'; // Assume you have an API function to fetch announcements
+
+// Function to fetch announcements from the backend
+async function getAnnouncements() {
+  try {
+      const response = await fetch('/api/announcements');
+      if (!response.ok) {
+          throw new Error('Failed to fetch announcements');
+      }
+      const data = await response.json();
+      return data;
+  } catch (error) {
+      console.error('Error fetching announcements:', error.message);
+      throw error;
+  }
+}
 
 const AnnouncementList = () => {
   const [announcements, setAnnouncements] = useState([]);

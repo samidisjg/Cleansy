@@ -46,7 +46,6 @@ import BookingList_05 from './components/IT22003546_Components/BookingList_05'
 import BookingUpdate_05 from './pages/IT22003546_Pages/BookingUpdate_05'
 import ResidentServiceView from './components/IT22350114_Components/ServiceResidentView_06'
 import DashServiceList_06 from './components/IT22350114_Components/DashServiceList_06'
-<<<<<<< HEAD
 import AdminDashboard from './pages/IT22196460_Pages/AnnouncementadminDashboard';
 import AnnouncementDetails from './pages/IT22196460_Pages/AnnouncementDetails';
 import AnnouncementList from './pages/IT22196460_Pages/AnnouncementList';
@@ -54,11 +53,6 @@ import UpdateAnnouncementForm from './pages/IT22196460_Pages/UpdateAnnouncementF
 import CreateAnnouncementForm from './pages/IT22196460_Pages/CreateAnnouncementForm';
 
 
-=======
-import ServiceUpdate_06 from './pages/IT22350114_Pages/ServiceUpdate_06'
-import Updatepaymentpage_03 from "./pages/IT22602978_Pages/Updatepaymentpage_03";
-import FinalAdminPayments_03 from "./pages/IT22602978_Pages/FinalAdminPayments_03";
->>>>>>> fa4fa3c91389b08115de597d2b6d1aad46f796e3
 
 
 function App() {
@@ -102,7 +96,6 @@ function App() {
                 <Route path="/service-User:serviceID" element={<ResidentServiceView/>} />
                 <Route path="/service-update/:serviceID" element={<ServiceUpdate_06/>} />
 
-<<<<<<< HEAD
               </Route>
               <Route element={<OnlyPropertyAdminPrivateRoute_02/>}>
                 <Route path="/create-sharedResourceListing" element={<CreateSharedResources_02/>} />
@@ -134,94 +127,6 @@ function App() {
 
           </div>
         <Footer/>
-=======
-              <Route path="/checkout" element={<CheckOutPage_02 />} />
-              <Route path="/amenity-create" element={<AmenityCreate />} />
-              <Route path="/add-visitors" element={<AddVisitors />} />
-              <Route
-                path="/booking-List:bookingID"
-                element={<BookingList_05 />}
-              />
-              <Route
-                path="/update-booking/:bookingID"
-                element={<BookingUpdate_05 />}
-              />
-
-              <Route
-                path="/book-amenity/:amenityId"
-                element={<BookAmenity />}
-              />
-              <Route
-                path="/each-amenity/:amenityId"
-                element={<AmenityDetails />}
-              />
-              <Route path="/amenity-User:amenityID" element={<BoxTile />} />
-              <Route
-                path="/amenity-List:amenityID"
-                element={<AmenityList_05 />}
-              />
-              <Route
-                path="/star-ratingWorkers"
-                element={<RatingWorkGroup_01 />}
-              />
-              <Route
-                path="edit-amenity/:amenityID"
-                element={<AmenityUpdate_05 />}
-              />
-              <Route path="/rate-tasks/:taskid" element={<RateReview_01 />} />
-
-              <Route
-                path="/service-create"
-                element={<ServiceListingCreate />}
-              />
-              <Route
-                path="/service-list/:serviceID"
-                element={<DashServiceList_06 />}
-              />
-              <Route
-                path="/dashboard/service-list/:serviceID"
-                element={<DashServiceList_06 />}
-              />
-              <Route
-                path="/service-User:serviceID"
-                element={<ResidentServiceView />}
-              />
-                  <Route path='/visitorListing/:visitorListingId' element={<VisitorDetails/>}/>
-                 <Route path="/update-list/:visitorListingId" element={<UpdateVisitorListing/>} />
-            </Route>
-            <Route element={<OnlyPropertyAdminPrivateRoute_02 />}>
-              <Route
-                path="/create-sharedResourceListing"
-                element={<CreateSharedResources_02 />}
-              />
-              <Route
-                path="/update-sharedResourceListing/:resourceId"
-                element={<UpdateSharedResources_02 />}
-              />
-            </Route>
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/create_04" element={<RequestLeave_04 />} />
-            <Route
-              path="/sharedResource/:resourceSlug"
-              element={<SharedResourcesPage_02 />}
-            />
-            <Route path="/marketPlace" element={<MarketPlace />} />
-            <Route path="/searchResource" element={<SearchResources_02 />} />
-            <Route
-              path="/apartmentListing/:listingId"
-              element={<ApartmentListingPage_02 />}
-            />
-            <Route path="/searchApartments" element={<SearchApartments_02 />} />
-            <Route path="/success" element={<CheckOutPage_02 />} />
-            <Route path="/games" element={<GamePage_02 />} />
-            <Route path="/team" element={<Team />} />
-            <Route path="/contact" element={<Contact />} />
-            {/* <Route path='/create_04' element={<RequestLeave_04/>}/>
-              <Route path='/delete_04' element={<RequestDetails_04/>}/> */}
-          </Routes>
-        </div>
-        <Footer />
->>>>>>> fa4fa3c91389b08115de597d2b6d1aad46f796e3
       </Router>
       <ToastContainer
         position="bottom-center"
