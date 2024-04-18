@@ -1,10 +1,10 @@
-import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'
-import Home from './pages/Home'
-import About from './pages/About'
-import SignIn from './pages/SignIn'
-import SignUp from './pages/SignUp'
-import Projects from './pages/Projects'
-import Header from './components/Header'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
+import Projects from "./pages/Projects";
+import Header from "./components/Header";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Footer from './components/Footer'
@@ -43,8 +43,10 @@ import ServiceListingCreate from './pages/IT22350114_Pages/ServiceCreate_06'
 import BookingList_05 from './components/IT22003546_Components/BookingList_05'
 import BookingUpdate_05 from './pages/IT22003546_Pages/BookingUpdate_05'
 import ResidentServiceView from './components/IT22350114_Components/ServiceResidentView_06'
-import DashServiceList_06 from './components/IT22350114_Components/DashServiceList_06'
-
+import DashServiceList_06 from './components/IT22350114_Components/DashServiceList_06
+import ServiceUpdate_06 from './pages/IT22350114_Pages/ServiceUpdate_06'
+import Updatepaymentpage_03 from "./pages/IT22602978_Pages/Updatepaymentpage_03";
+import FinalAdminPayments_03 from "./pages/IT22602978_Pages/FinalAdminPayments_03";
 
 
 function App() {
@@ -53,63 +55,122 @@ function App() {
       <Router>
         <ScrollToTop_02 />
         <Header />
-          <div className='min-h-screen'>
-            <Routes>
-              <Route path='/' element={<Home/>}/>
-              <Route path='/about' element={<About/>}/>
-              <Route path='/sign-in' element={<SignIn/>}/>
-              <Route path='/sign-up' element={<SignUp/>}/>
-              <Route element={<PrivateRoute/>}>
-                <Route path='/dashboard' element={<Dashboard/>}/>
-                <Route path='/create-apartmentListing' element={<CreateApartmentListing/>}/>
-                <Route path='/update-apartmentListing/:listingId' element={<UpdateApartmentListing_02/>}/>
-                <Route path="/" element={<DashMaintenance/>} />
-                <Route path="/task-assign" element={<TaskAssign/>} />
-                <Route path="/tasks-table:taskid" element={<TasksTable_01/>} />
-                <Route path="/update-tasks/:taskid" element={<S1_UpdateTasks/>} />
-                {/* <Route path="/service-User:serviceID" element={<ResidentServiceView/>} /> */}
-
-                <Route path="/checkout" element={<CheckOutPage_02/>} />
-                <Route path="/amenity-create" element={<AmenityCreate/>} />
-                <Route path="/add-visitors" element={<AddVisitors/>} />
-                <Route path="/booking-List:bookingID" element={<BookingList_05/>} />
-                <Route path="/update-booking/:bookingID" element={<BookingUpdate_05/>} />
-                
-                
-                
-                <Route path="/book-amenity/:amenityId" element={<BookAmenity/>} />
-                <Route path="/each-amenity/:amenityId" element={<AmenityDetails/>} />
-                <Route path="/amenity-User:amenityID" element={<BoxTile/>} />
-                <Route path="/amenity-List:amenityID" element={<AmenityList_05/>} />
-                <Route path="/star-ratingWorkers" element={<RatingWorkGroup_01/>} />
-                <Route path="edit-amenity/:amenityID" element={<AmenityUpdate_05/>} />
-                <Route path="/rate-tasks/:taskid" element={<RateReview_01/>} />
-
+        <div className="min-h-screen">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/sign-in" element={<SignIn />} />
+            <Route path="/sign-up" element={<SignUp />} />
+            <Route element={<PrivateRoute />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route
+                path="/create-apartmentListing"
+                element={<CreateApartmentListing />}
+              />
+              <Route
+                path="/update-apartmentListing/:listingId"
+                element={<UpdateApartmentListing_02 />}
+              />
+              <Route path="/" element={<DashMaintenance />} />
+              <Route path="/task-assign" element={<TaskAssign />} />
+              <Route path="/tasks-table:taskid" element={<TasksTable_01 />} />
+              <Route
+                path="/update-tasks/:taskid"
+                element={<S1_UpdateTasks />}
+              />
+              <Route
+                path="/service-User:serviceID"
+                element={<ResidentServiceView />}
+              />
                 <Route path="/service-create" element={<ServiceListingCreate/>} />
                 <Route path="/service-list/:serviceID" element={<DashServiceList_06/>} />
                 <Route path="/dashboard/service-list/:serviceID" element={<DashServiceList_06 />} />
                 <Route path="/service-User:serviceID" element={<ResidentServiceView/>} />
+                <Route path="/service-update/:serviceID" element={<ServiceUpdate_06/>} />
 
+              <Route path="/checkout" element={<CheckOutPage_02 />} />
+              <Route path="/amenity-create" element={<AmenityCreate />} />
+              <Route path="/add-visitors" element={<AddVisitors />} />
+              <Route
+                path="/booking-List:bookingID"
+                element={<BookingList_05 />}
+              />
+              <Route
+                path="/update-booking/:bookingID"
+                element={<BookingUpdate_05 />}
+              />
 
-              </Route>
-              <Route element={<OnlyPropertyAdminPrivateRoute_02/>}>
-                <Route path="/create-sharedResourceListing" element={<CreateSharedResources_02/>} />
-                <Route path="/update-sharedResourceListing/:resourceId" element={<UpdateSharedResources_02 />} />
-              </Route>
-              <Route path='/projects' element={<Projects/>}/>
-              <Route path='/create_04' element={<RequestLeave_04/>}/>
-              <Route path='/sharedResource/:resourceSlug' element={<SharedResourcesPage_02 />}/>
-              <Route path='/marketPlace' element={<MarketPlace />}/>
-              <Route path='/searchResource' element={<SearchResources_02 />}/>
-              <Route path='/apartmentListing/:listingId' element={<ApartmentListingPage_02 />}/>
-              <Route path='/searchApartments' element={<SearchApartments_02 />}/>
-              <Route path='/success' element={<CheckOutPage_02 />}/>
-              <Route path='/games' element={<GamePage_02 />}/>
-              <Route path='/team' element={<Team />}/>
-              <Route path='/contact' element={<Contact />}/>
-            </Routes>
+              <Route
+                path="/book-amenity/:amenityId"
+                element={<BookAmenity />}
+              />
+              <Route
+                path="/each-amenity/:amenityId"
+                element={<AmenityDetails />}
+              />
+              <Route path="/amenity-User:amenityID" element={<BoxTile />} />
+              <Route
+                path="/amenity-List:amenityID"
+                element={<AmenityList_05 />}
+              />
+              <Route
+                path="/star-ratingWorkers"
+                element={<RatingWorkGroup_01 />}
+              />
+              <Route
+                path="edit-amenity/:amenityID"
+                element={<AmenityUpdate_05 />}
+              />
+              <Route path="/rate-tasks/:taskid" element={<RateReview_01 />} />
 
-          </div>
+              <Route
+                path="/service-create"
+                element={<ServiceListingCreate />}
+              />
+              <Route
+                path="/service-list/:serviceID"
+                element={<DashServiceList_06 />}
+              />
+              <Route
+                path="/dashboard/service-list/:serviceID"
+                element={<DashServiceList_06 />}
+              />
+              <Route
+                path="/service-User:serviceID"
+                element={<ResidentServiceView />}
+              />
+            </Route>
+            <Route element={<OnlyPropertyAdminPrivateRoute_02 />}>
+              <Route
+                path="/create-sharedResourceListing"
+                element={<CreateSharedResources_02 />}
+              />
+              <Route
+                path="/update-sharedResourceListing/:resourceId"
+                element={<UpdateSharedResources_02 />}
+              />
+            </Route>
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/create_04" element={<RequestLeave_04 />} />
+            <Route
+              path="/sharedResource/:resourceSlug"
+              element={<SharedResourcesPage_02 />}
+            />
+            <Route path="/marketPlace" element={<MarketPlace />} />
+            <Route path="/searchResource" element={<SearchResources_02 />} />
+            <Route
+              path="/apartmentListing/:listingId"
+              element={<ApartmentListingPage_02 />}
+            />
+            <Route path="/searchApartments" element={<SearchApartments_02 />} />
+            <Route path="/success" element={<CheckOutPage_02 />} />
+            <Route path="/games" element={<GamePage_02 />} />
+            <Route path="/team" element={<Team />} />
+            <Route path="/contact" element={<Contact />} />
+            {/* <Route path='/create_04' element={<RequestLeave_04/>}/>
+              <Route path='/delete_04' element={<RequestDetails_04/>}/> */}
+          </Routes>
+        </div>
         <Footer />
       </Router>
       <ToastContainer
@@ -125,7 +186,7 @@ function App() {
         theme="dark"
       />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
