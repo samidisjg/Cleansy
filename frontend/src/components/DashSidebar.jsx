@@ -1,7 +1,16 @@
 import { Sidebar } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { MdOutlineHomeWork } from "react-icons/md";
-import { HiArrowSmRight, HiDocument, HiOutlineUserCircle, HiOutlineUserGroup, HiShoppingBag, HiUser, HiAnnotation, HiChartPie } from "react-icons/hi";
+import {
+  HiArrowSmRight,
+  HiDocument,
+  HiOutlineUserCircle,
+  HiOutlineUserGroup,
+  HiShoppingBag,
+  HiUser,
+  HiAnnotation,
+  HiChartPie,
+} from "react-icons/hi";
 import { Link, useLocation } from "react-router-dom";
 import { signOutSuccess } from "../../redux/user/userSlice";
 import { useDispatch } from "react-redux";
@@ -41,29 +50,46 @@ const DashSidebar = () => {
   return (
     <Sidebar className="w-full md:w-56 shadow-md">
       <Sidebar.Items>
-         <Sidebar.ItemGroup className="flex flex-col gap-1">
-            {
-              currentUser.isPropertyAdmin && (
-                <>
-                  <Link to='/dashboard?tab=propertyAdminDash'>
-                    <Sidebar.Item active={tab === 'propertyAdminDash'} icon={HiChartPie} as='div'>
-                      Dashboard
-                    </Sidebar.Item>
-                  </Link>
-                </>
-              )
-            }
-            <Link to='/dashboard?tab=profile'>
-               <Sidebar.Item active={tab === 'profile'} icon={HiUser} label={currentUser.isAdmin ? 'Admin' : 'User'} labelColor='dark' as='div'>
-                  Profile
-               </Sidebar.Item>
-
-            </Link>
+        <Sidebar.ItemGroup className="flex flex-col gap-1">
+          {currentUser.isPropertyAdmin && (
             <>
-            <Link to ='/dashboard?tab=userpayments'>
-                <Sidebar.Item active={tab === 'userpayments'} icon={HiShoppingBag} as='div'>
-                  User Payments
+              <Link to="/dashboard?tab=propertyAdminDash">
+                <Sidebar.Item
+                  active={tab === "propertyAdminDash"}
+                  icon={HiChartPie}
+                  as="div"
+                >
+                  Dashboard
                 </Sidebar.Item>
+              </Link>
+            </>
+          )}
+          <Link to="/dashboard?tab=profile">
+            <Sidebar.Item
+              active={tab === "profile"}
+              icon={HiUser}
+              label={
+                currentUser.isAdmin
+                  ? "Admin"
+                  : currentUser.isStaff
+                  ? "Staff"
+                  : "User"
+              }
+              labelColor="dark"
+              as="div"
+            >
+              Profile
+            </Sidebar.Item>
+          </Link>
+          <>
+            <Link to="/dashboard?tab=userpayments">
+              <Sidebar.Item
+                active={tab === "userpayments"}
+                icon={HiShoppingBag}
+                as="div"
+              >
+                User Payments
+              </Sidebar.Item>
             </Link>
             {tab === "userpayments" && (
               <div className="dropdown">
@@ -74,47 +100,49 @@ const DashSidebar = () => {
                 </Link>
               </div>
             )}
-
-            <Link to="/dashboard?tab=staffs">
-              <Sidebar.Item
-                active={tab === "staffs"}
-                icon={HiOutlineUserGroup}
-                as="div"
-              >
-                Staff
-              </Sidebar.Item>
-            </Link>
-            {/* {tab === "staffs" && (
-              <div className="dropdown">
-                <Link to="/dashboard?tab=leaveRequest">
-                  <Sidebar.Item active={tab === "leaveRequest"} as="div">
-                    Leave Request
-                  </Sidebar.Item>
-                </Link>
-              </div>
-            )}
-
-            {tab === "staffs" && (
-              <div className="dropdown">
-                <Link to="/dashboard?tab=faceRecognition">
-                  <Sidebar.Item active={tab === "faceRecognition"} as="div">
-                    Face Recognition
-                  </Sidebar.Item>
-                </Link>
-              </div>
-            )}
-
-            {tab === "staffs" && (
-              <div className="dropdown">
-                <Link to="/dashboard?tab=staffAttendance">
-                  <Sidebar.Item active={tab === "staffAttendance"} as="div">
-                    Staff Attendance
-                  </Sidebar.Item>
-                </Link>
-              </div>
-            )} */}
           </>
+          {currentUser.isStaff && (
+            <>
+              <Link to="/dashboard?tab=staffs">
+                <Sidebar.Item
+                  active={tab === "staffs"}
+                  icon={HiOutlineUserGroup}
+                  as="div"
+                >
+                  Staff
+                </Sidebar.Item>
+              </Link>
+              {tab === "staffs" && (
+                <div className="dropdown">
+                  <Link to="/dashboard?tab=leaveRequest">
+                    <Sidebar.Item active={tab === "leaveRequest"} as="div">
+                      Leave Request
+                    </Sidebar.Item>
+                  </Link>
+                </div>
+              )}
 
+              {tab === "staffs" && (
+                <div className="dropdown">
+                  <Link to="/dashboard?tab=faceRecognition">
+                    <Sidebar.Item active={tab === "faceRecognition"} as="div">
+                      Face Recognition
+                    </Sidebar.Item>
+                  </Link>
+                </div>
+              )}
+
+              {tab === "staffs" && (
+                <div className="dropdown">
+                  <Link to="/dashboard?tab=staffAttendance">
+                    <Sidebar.Item active={tab === "staffAttendance"} as="div">
+                      Staff Attendance
+                    </Sidebar.Item>
+                  </Link>
+                </div>
+              )}
+            </>
+          )}
           {currentUser.isBookingAdmin && (
             <>
               <Link to="/dashboard?tab=amenity">
@@ -264,34 +292,20 @@ const DashSidebar = () => {
             </Sidebar.Item>
           </Link>
 
-            <Link to ='/dashboard?tab=bookings'>
-                <Sidebar.Item active={tab === 'bookings'} icon={HiUser} as='div'>
-                  Bookings
-                </Sidebar.Item>
-            </Link>
-
-            <Link to ='/dashboard?tab=bookings'>
-                <Sidebar.Item active={tab === 'bookings'} icon={HiUser} as='div'>
-                  Bookings
-                </Sidebar.Item>
-            </Link>
-
-            <Link to ='/dashboard?tab=bookings'>
-                <Sidebar.Item active={tab === 'bookings'} icon={HiUser} as='div'>
-                  Bookings
-                </Sidebar.Item>
-            </Link>
-
-            <Link to ='/dashboard?tab=bookings'>
-                <Sidebar.Item active={tab === 'bookings'} icon={HiUser} as='div'>
-                  Bookings
-                </Sidebar.Item>
-            </Link>
-            
-            <Sidebar.Item icon={HiArrowSmRight} className='cursor-pointer' onClick={handleSignout}>
-               Sign Out
+          <Link to="/dashboard?tab=bookings">
+            <Sidebar.Item active={tab === "bookings"} icon={HiUser} as="div">
+              Bookings
             </Sidebar.Item>
-         </Sidebar.ItemGroup>
+          </Link>
+
+          <Sidebar.Item
+            icon={HiArrowSmRight}
+            className="cursor-pointer"
+            onClick={handleSignout}
+          >
+            Sign Out
+          </Sidebar.Item>
+        </Sidebar.ItemGroup>
       </Sidebar.Items>
     </Sidebar>
   );
