@@ -9,13 +9,14 @@ const TaskAssignSchema = new mongoose.Schema({
       type: String,
       required: true,
    },
+   
    Name: {
       type: String,
       required: true,
    },
    Description: {
       type: String,
-      required: true,
+      required: false,
    },
    WorkGroupID: {
       type: String,

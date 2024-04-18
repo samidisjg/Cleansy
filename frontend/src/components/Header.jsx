@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { toggleTheme } from "../../redux/theme/themeSlice";
 import { signOutSuccess } from "../../redux/user/userSlice";
 import { useEffect, useState } from "react";
+import cleancy from '/cleansy.png'
 
 const Header = () => {
     const path = useLocation().pathname
@@ -48,9 +49,9 @@ const Header = () => {
    }, [location.search])
 
   return (
-    <Navbar className="border-b-2 sticky top-0 bg-slate-200 shadow-md z-50">
+    <Navbar className="border-b-2 sticky top-0 bg-slate-200 shadow-md z-40">
       <Link to='/' className="self-center">
-         <img src="cleansy.png" alt="logo" width='100' />
+         <img src={cleancy} alt="logo" width='100' />
       </Link>
       <form onSubmit={handleSubmit}>
          <TextInput type="text" placeholder="Search..." rightIcon={AiOutlineSearch} className="hidden lg:inline" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
@@ -91,14 +92,32 @@ const Header = () => {
             <Navbar.Link active={path === '/'} as={'div'}>
                <Link to='/' className="hover:text-orange-500 active:text-orange-600 hover:underline">Home</Link>
             </Navbar.Link>
+            {
+               currentUser && (
+                  <>
+                     <Navbar.Link active={path === '/amenity-User:amenityID'} as={'div'}>
+                        <Link to='/amenity-User:amenityID' className="hover:text-orange-500 active:text-orange-600 hover:underline">Amenity</Link>
+                     </Navbar.Link>
+                     <Navbar.Link active={path === '/service-User:serviceID'} as={'div'}>
+                        <Link to='/service-User:serviceID' className="hover:text-orange-500 active:text-orange-600 hover:underline">Services</Link>
+                     </Navbar.Link>
+                  </>
+               )
+            }
+            {/* <Navbar.Link active={path === '/projects'} as={'div'}>
+               <Link to='/projects' className="hover:text-orange-500 active:text-orange-600 hover:underline">Projects</Link>
+            </Navbar.Link> */}
+            <Navbar.Link active={path === '/marketPlace'} as={'div'}>
+               <Link to='/marketPlace' className="hover:text-orange-500 active:text-orange-600 hover:underline">Market Place</Link>
+            </Navbar.Link>
             <Navbar.Link active={path === '/about'} as={'div'}>
                <Link to='/about' className="hover:text-orange-500 active:text-orange-600 hover:underline">About</Link>
             </Navbar.Link>
-            <Navbar.Link active={path === '/projects'} as={'div'}>
-               <Link to='/projects' className="hover:text-orange-500 active:text-orange-600 hover:underline">Projects</Link>
+            <Navbar.Link active={path === '/team'} as={'div'}>
+               <Link to='/team' className="hover:text-orange-500 active:text-orange-600 hover:underline hidden sm:flex">Our Team</Link>
             </Navbar.Link>
-            <Navbar.Link active={path === '/marketPlace'} as={'div'}>
-               <Link to='/marketPlace' className="hover:text-orange-500 active:text-orange-600 hover:underline">Market Place</Link>
+            <Navbar.Link active={path === '/contact'} as={'div'}>
+               <Link to='/contact' className="hover:text-orange-500 active:text-orange-600 hover:underline">Contact Us</Link>
             </Navbar.Link>
          </Navbar.Collapse>
     </Navbar>

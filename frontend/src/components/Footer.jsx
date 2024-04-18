@@ -1,6 +1,7 @@
 import { Footer } from "flowbite-react"
 import { BsFacebook, BsInstagram, BsLinkedin, BsTwitter, BsWhatsapp } from "react-icons/bs"
 import { Link } from "react-router-dom"
+import cleancy from '/cleansy.png'
 
 const FooterComponent = () => {
   return (
@@ -9,7 +10,7 @@ const FooterComponent = () => {
          <div className="grid w-full justify-between sm:flex md:grid-cols-1">
             <div className="mt-5">
                <Link to='/' className="self-center">
-                  <img src="cleansy.png" alt="logo" width='150' />
+                  <img src={cleancy} alt="logo" width='150' />
                </Link>
             </div>
             <div className="grid grid-cols-2 gap-8 mt-4 sm:grid-cols-3 md:grid-cols-4 sm:gap-6">

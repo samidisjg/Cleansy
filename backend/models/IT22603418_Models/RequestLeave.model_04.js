@@ -38,7 +38,9 @@ const RequestLeaveSchema = new mongoose.Schema({
     },
     comments: {
         type: String,
-        required: true,
+    },
+    status: {
+        type: String,
     },
 }, { timestamps: true });
 
