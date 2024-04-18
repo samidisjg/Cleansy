@@ -302,32 +302,6 @@ const DashSidebar = () => {
               {/* STAFF PART END*/}
             </>
           )}
-          {!currentUser.isAdmin && (
-            <>
-              <Link to="/dashboard?tab=apartmentList">
-                <Sidebar.Item
-                  active={tab === "apartmentList"}
-                  icon={MdOutlineHomeWork}
-                  as="div"
-                >
-                  Apartment List
-                </Sidebar.Item>
-              </Link>
-            </>
-          )}
-          {currentUser.isPropertyAdmin && (
-            <>
-              <Link to="/dashboard?tab=comments">
-                <Sidebar.Item
-                  active={tab === "comments"}
-                  icon={HiAnnotation}
-                  as="div"
-                >
-                  Comments
-                </Sidebar.Item>
-              </Link>
-            </>
-          )}
           <Link to="/add-visitors">
             <Sidebar.Item icon={HiUser} as="div">
               Add Visitors
