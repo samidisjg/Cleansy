@@ -16,6 +16,10 @@ import { signOutSuccess } from "../../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { GrResources } from "react-icons/gr";
+import { FaPersonCircleCheck } from "react-icons/fa6";
+import { BsPersonPlusFill } from "react-icons/bs";
+
+
 
 const DashSidebar = () => {
   const location = useLocation();
@@ -208,6 +212,58 @@ const DashSidebar = () => {
               </Link>
             </>
           )}
+
+
+            
+            {
+              currentUser.isStaffAdmin && (
+                <>
+                  <Link to='/dashboard?tab=staffs'>
+                    <Sidebar.Item active={tab === 'staffs'} icon={HiOutlineUserGroup} as='div'>
+                      Staff
+                     </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
+            {
+              !currentUser.isAdmin && (
+                <>
+                  <Link to='/dashboard?tab=apartmentList'>
+                    <Sidebar.Item active={tab === 'apartmentList'} icon={MdOutlineHomeWork} as='div'>
+                      Apartment List
+                    </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
+            {
+              currentUser.isPropertyAdmin && (
+                <>
+                  <Link to='/dashboard?tab=comments'>
+                    <Sidebar.Item active={tab === 'comments'} icon={HiAnnotation} as='div'>
+                      Comments
+                    </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
+            {
+              currentUser.isVisitorAdmin && (
+                <>
+                  <Link to='/admin-page'>
+                    <Sidebar.Item active={tab === 'addVisitors'} icon={FaPersonCircleCheck} as='div'>
+                      Visitors
+                    </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
+            <Link to ='/add-visitors'>
+                <Sidebar.Item  icon={BsPersonPlusFill} as='div'>
+                  Add Visitors
+                   </Sidebar.Item>
+                  <\Link>
 
           {currentUser.isFacilityAdmin && (
             <>
