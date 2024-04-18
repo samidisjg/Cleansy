@@ -3,17 +3,18 @@ import { Link } from "react-router-dom";
 
 const BoxTile = ({ amenity }) => {
   return (
-    <div className="bg-white border border-gray-300 p-4 rounded-md shadow-md mt-4">
-      <h3 className="text-xl font-semibold mb-2">{amenity.amenityTitle}</h3>
+    <div className="bg-white border border-gray-300 p-4 rounded-md shadow-md mt-4 relative">
+      <Link to={`/each-amenity/${amenity._id}`}>
+        <img src={amenity.imageURLs[0]} alt={amenity.amenityTitle} className="w-full h-60 object-cover rounded-md mb-2" />
+      </Link>  
+      <div className="absolute bottom-5 left-5 right-0 text-black p-3" style={{ textShadow: "0 0 2px white, 0 0 2px white, 0 0 2px white, 0 0 2px white" }}>
+        <h1 className="text-2xl font-bold">{amenity.amenityTitle}</h1>
+      </div>
+
       
-      <Link
-        to={`/each-amenity/${amenity._id}`}
-        className="mt-2 inline-block text-blue-500 hover:underline"
-      >
-        View Details
-      </Link>
     </div>
   );
+  
 };
 
 const ResidentAmenityView = () => {

@@ -126,7 +126,7 @@ const BookingList_05 = () => {
                         </Table.Head>
                         {showBooking.map((booking) => (
                             <Table.Body key={booking._id} className="divide-y">
-                                <Table.Row className={`bg-white dark:border-gray-700 dark:bg-gray-800 ${booking.bookingStatus === 'Confirmed' ? 'text-green-600' : booking.bookingStatus === 'Pending' ? 'text-red-600' : ''}`}>
+                                <Table.Row className={`bg-white dark:border-gray-700 dark:bg-gray-800 ${booking.bookingStatus === 'Confirmed' ? 'text-green-500' : booking.bookingStatus === 'Pending' ? 'text-red-600' : ''}`}>
                                     <Table.Cell>{booking.bookingID}</Table.Cell>
                                     <Table.Cell>{booking.amenityTitle}</Table.Cell>
                                     <Table.Cell>{booking.residentName}</Table.Cell>
