@@ -263,7 +263,7 @@ const DashSidebar = () => {
                 <Sidebar.Item  icon={BsPersonPlusFill} as='div'>
                   Add Visitors
                    </Sidebar.Item>
-                  <\Link>
+            </Link>
 
           {currentUser.isFacilityAdmin && (
             <>
