@@ -26,63 +26,71 @@ const TaskAssign = () => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   console.log(formData);
-  
+
   const handleChange = (e) => {
-    let boolean = null;
-    if (e.target.value === "true") {
-      boolean = true;
-    }
-    if (e.target.value === "false") {
-      boolean = false;
-    }
-    if (
-      e.target.type === "number" ||
-      e.target.type === "text" ||
-      e.target.type === "textarea"
-    ) {
+    let boolean = null; // Declare boolean variable here
+
+    //handle datepicker change event
+    if (e.target.name === "Date") {
       setFormData({
         ...formData,
-        [e.target.name]: e.target.value,
+        [e.target.name]: e.target.value, // assuming datepicker returns a string
       });
     } else {
-      setFormData({
-        ...formData,
-        [e.target.name]: boolean !== null ? boolean : e.target.value,
-      });
+      if (e.target.value === "true") {
+        boolean = true;
+      }
+      if (e.target.value === "false") {
+        boolean = false;
+      }
+      if (
+        e.target.type === "number" ||
+        e.target.type === "text" ||
+        e.target.type === "textarea"
+      ) {
+        setFormData({
+          ...formData,
+          [e.target.name]: e.target.value,
+        });
+      } else {
+        setFormData({
+          ...formData,
+          [e.target.name]: boolean !== null ? boolean : e.target.value,
+        });
+      }
     }
   };
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
-      if(formData.TaskID === currentUser.TaskID) return setError('TaskID already exists');
+    try {
+      if (formData.TaskID === currentUser.TaskID)
+        return setError("TaskID already exists");
       setLoading(true);
       setError(false);
 
-      const res = await fetch('/api/taskAssign/create', {
-        method: 'POST',
+      const res = await fetch("/api/taskAssign/create", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           ...formData,
           userRef: currentUser._id,
-      }),
+        }),
       });
       const data = await res.json();
       setLoading(false);
-      if (data.success === false){
+      if (data.success === false) {
         setError(data.message);
       }
-        //navigate(`/task-assign/${data._id}`);
-        navigate('/dashboard?tab=maintenance');
-    
-
-    }catch(error){
+      //navigate(`/task-assign/${data._id}`);
+      navigate("/dashboard?tab=maintenance");
+    } catch (error) {
       setError(error.message);
       setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen mt-20">
@@ -92,7 +100,10 @@ const TaskAssign = () => {
         </h1>
       </main>
       <div className="flex p-3 w-[40%] mx-auto flex-col md:flex-row md:items-center gap-20 md:gap-20 mt-10">
-        <form  onSubmit = {handleSubmit} className="flex flex-col gap-4 w-full justify-center">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-4 w-full justify-center"
+        >
           <div>
             <Label value="TaskID" />
             <TextInput
@@ -106,8 +117,11 @@ const TaskAssign = () => {
           </div>
           <div>
             <Label value="Category" />
-            <Select 
-             className="" onChange={(e) => setFormData({...formData, Category: e.target.value})}
+            <Select
+              className=""
+              onChange={(e) =>
+                setFormData({ ...formData, Category: e.target.value })
+              }
             >
               <option value="Select">Select a Category</option>
               <option value="Elavator">Elavator</option>
@@ -115,6 +129,8 @@ const TaskAssign = () => {
               <option value="Janitorial">Janitorial</option>
             </Select>
           </div>
+
+         
 
           <div>
             <Label value="Name" />
@@ -153,7 +169,6 @@ const TaskAssign = () => {
               />
             </div>
             <div>
-              
               <div>
                 <Label value="Location" />
                 <TextInput
@@ -182,12 +197,14 @@ const TaskAssign = () => {
             type="submit"
             gradientDuoTone="purpleToBlue"
             className="uppercase"
-          >{loading ? 'Assigning...' : 'Assign task'}</Button>
+          >
+            {loading ? "Assigning..." : "Assign task"}
+          </Button>
           {error && <p className="text-red-700 text-sm">{error}</p>}
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default TaskAssign;

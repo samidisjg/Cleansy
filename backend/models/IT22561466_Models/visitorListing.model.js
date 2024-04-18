@@ -2,11 +2,11 @@ import mongoose from 'mongoose';
 
 const visitorListingSchema = new mongoose.Schema (
     {
-        guestName:{
+        ownerName:{
             type: String,
             required: true,
-        },
-        ownerName:{
+        },        
+        guestName:{
             type: String,
             required: true,
         },

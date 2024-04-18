@@ -16,7 +16,8 @@ import AnnouncementsRoutes from './routes/IT22196460_Routes/AnnouncementsRoutes.
 import sharedResourcesListingRoutes from './routes/IT22577160_Routes/sharedResourcesListing.route_02.js';
 import commentRoutes from './routes/IT22577160_Routes/comment.route_02.js';
 import checkoutRoutes from './routes/IT22577160_Routes/checkout.route_02.js';
-
+import RateTasksRoutes from './routes/IT22607232_Routes/RateTasksRoute_01.js';
+import amenitiesBookingRoutes from './routes/IT22003546_Routes/amenitiesBooking.route_05.js';
 dotenv.config();
 
 const app = express();
@@ -45,6 +46,7 @@ app.use("/api/serviceListing", serviceListingRoutes);
 
 //IT22607232 Routes
 app.use("/api/taskAssign", TaskAssignRoute);
+app.use("/api/taskRating", RateTasksRoutes);
 
 // IT22577160 Routes
 app.use('/api/apartmentListing', apartmentListingRoutes);
@@ -54,10 +56,18 @@ app.use('/api/checkout', checkoutRoutes);
 
 // IT22003546 Routes
 app.use('/api/amenitiesListing', amenitiesListingRoutes);
+<<<<<<< HEAD
 
 // IT22196460 Routes
 app.use('/api/Announcement', AnnouncementsRoutes);
 app.use('/api/Notification', NotificationRoutes);
+=======
+app.use('/api/amenitiesBooking', amenitiesBookingRoutes);
+//IT22561466 Routes
+app.use('/api/visitorListing', visitorListingRoutes);
+
+
+>>>>>>> 90687bb1d254b4dfaf7597c57269b850538d6590
 
 
 
