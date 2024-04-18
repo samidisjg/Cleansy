@@ -42,7 +42,7 @@ import BookAmenity from './pages/IT22003546_Pages/BookAmenity_05'
 import ServiceListingCreate from './pages/IT22350114_Pages/ServiceCreate_06'
 import BookingList_05 from './components/IT22003546_Components/BookingList_05'
 import BookingUpdate_05 from './pages/IT22003546_Pages/BookingUpdate_05'
-import ResidentServiceView from './components/IT22350114_Components/ServiceResidentView_06'
+//import ResidentServiceView from './components/IT22350114_Components/ServiceResidentView_06'
 
 
 
@@ -68,7 +68,7 @@ function App() {
                 <Route path="/task-assign" element={<TaskAssign/>} />
                 <Route path="/tasks-table:taskid" element={<TasksTable_01/>} />
                 <Route path="/update-tasks/:taskid" element={<S1_UpdateTasks/>} />
-                <Route path="/service-User:serviceID" element={<ResidentServiceView/>} />
+                {/* <Route path="/service-User:serviceID" element={<ResidentServiceView/>} /> */}
 
                 <Route path="/checkout" element={<CheckOutPage_02/>} />
                 <Route path="/amenity-create" element={<AmenityCreate/>} />
@@ -87,7 +87,7 @@ function App() {
                 <Route path="/rate-tasks/:taskid" element={<RateReview_01/>} />
 
                 <Route path="/service-create" element={<ServiceListingCreate/>} />
-                <Route path="/service-list:serviceID" element={<DashServiceList_06/>} />
+                {/* <Route path="/service-list:serviceID" element={<DashServiceList_06/>} /> */}
 
               </Route>
               <Route element={<OnlyPropertyAdminPrivateRoute_02/>}>
