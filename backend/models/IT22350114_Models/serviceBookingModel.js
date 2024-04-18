@@ -1,7 +1,11 @@
 import mongoose from "mongoose";
 
-const ServiceListingSchema = new mongoose.Schema(
+const ServiceBookingSchema = new mongoose.Schema(
   {
+    bookingID: {
+      type: String,
+      required: true,
+    },
     serviceID: {
       type: String,
       required: true,
@@ -10,33 +14,29 @@ const ServiceListingSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    serviceDescription: {
+    bookingDate: {
+      type: Date,
+      required: true,
+    },
+    bookingTime: {
+        type: String,
+        required: true,
+    },
+    residentName: {
       type: String,
       required: true,
     },
-    servicePrice: {
-      type: Number,
-      required: true,
-    },
-    serviceType: {
+    residentPhone: {
       type: String,
       required: true,
     },
-    serviceAvailability: {
-      type: Boolean,
-      required: true,
-    },
-    servicePhone: {
+    residentEmail: {
       type: String,
       required: true,
     },
-    serviceEmail: {
+    bookingStatus: {
       type: String,
-      required: true,
-    },
-    serviceRequirements: {
-      type: String,
-      required: true,
+        required: true,
     },
     imageUrls: {
       type: Array,
@@ -46,5 +46,5 @@ const ServiceListingSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const ServiceListing = mongoose.model("ServiceListing", ServiceListingSchema);
-export default ServiceListing;
+const ServiceBooking = mongoose.model("ServiceBooking", ServiceBookingSchema);
+export default ServiceBooking;
