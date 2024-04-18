@@ -46,7 +46,7 @@ const DashMaintenance = () => {
               <HiArrowNarrowUp />
               {}
             </span>
-            <div className="text-gray-500">Last Month</div>
+            <div className="text-gray-500">Last Week</div>
           </div>
         </div>
 
