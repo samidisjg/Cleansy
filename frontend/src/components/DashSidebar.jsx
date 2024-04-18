@@ -2,16 +2,17 @@ import { Sidebar } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { MdOutlineHomeWork } from "react-icons/md";
 import {
-  HiUser,
-  HiOutlineUserGroup,
-  HiShoppingBag,
   HiArrowSmRight,
   HiDocument,
-  HiAnnotation,
+  HiOutlineUserCircle,
+  HiOutlineUserGroup,
+  HiShoppingBag,
+  HiUser, HiAnnotation,
 } from "react-icons/hi";
 import { Link, useLocation } from "react-router-dom";
 import { signOutSuccess } from "../../redux/user/userSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { GrResources } from "react-icons/gr";
 
 const DashSidebar = () => {
@@ -49,7 +50,6 @@ const DashSidebar = () => {
   const toggleDropdown1 = () => {
     setShowDropdown1(!showDropdown1);
   };
-
   const toggleDropdown2 = () => {
     setShowDropdown2(!showDropdown2);
   };
@@ -69,120 +69,200 @@ const DashSidebar = () => {
               Profile
             </Sidebar.Item>
           </Link>
-          <Link to="/dashboard?tab=userpayments" onClick={toggleDropdown1}>
-            <Sidebar.Item
-              active={tab === "userpayments"}
-              icon={HiShoppingBag}
-              as="div"
+          <>
+            <Link
+              to="/dashboard?tab=userpayments"
+              onClick={toggleDropdown1}
             >
-              User Payments
-            </Sidebar.Item>
-          </Link>
-          {showDropdown1 && (
-            <div className="dropdown">
-              <Link to="/dashboard?tab=addpayments">
-                <Sidebar.Item active={tab === "addpayments"} as="div">
-                  Add Payment Profile
-                </Sidebar.Item>
-              </Link>
-            </div>
-          )}
-          {currentUser.isBookingAdmin && (
-            <Link to="/dashboard?tab=amenity">
               <Sidebar.Item
-                active={tab === "amenity"}
-                icon={HiOutlineUserGroup}
+                active={tab === "userpayments"}
+                icon={HiShoppingBag}
                 as="div"
               >
-                Amenity
+                User Payments 
               </Sidebar.Item>
+              
             </Link>
+            
+            {showDropdown1 && (
+              <div className="dropdown">
+                <Link to="/dashboard?tab=addpayments">
+                  <Sidebar.Item active={tab === "addpayments"} as="div">
+                    Add Payment Profile
+                  </Sidebar.Item>
+                </Link>
+              
+              </div>
+            )}
+          </>
+
+          {currentUser.isBookingAdmin && (
+            <>
+              <Link to="/dashboard?tab=amenity">
+                <Sidebar.Item
+                  active={tab == "amenity"}
+                  icon={HiOutlineUserGroup}
+                  as="div"
+                >
+                  Amenity
+                </Sidebar.Item>
+              </Link>
+            </>
           )}
           {currentUser.isUserAdmin && (
-            <Link to="/dashboard?tab=users">
-              <Sidebar.Item
-                active={tab === "users"}
-                icon={HiOutlineUserGroup}
-                as="div"
-              >
-                Users
-              </Sidebar.Item>
-            </Link>
-          )}
-          {currentUser.isPropertyAdmin && (
-            <Link to="/dashboard?tab=properties">
-              <Sidebar.Item
-                active={tab === "properties"}
-                icon={GrResources}
-                as="div"
-              >
-                Shared Resources
-              </Sidebar.Item>
-            </Link>
-          )}
-          {currentUser.isBillingAdmin && (
-            <Link to="/dashboard?tab=payments" onClick={toggleDropdown2}>
-              <Sidebar.Item
-                active={tab === "payments"}
-                icon={HiDocument}
-                as="div"
-              >
-                Payments
-              </Sidebar.Item>
-            </Link>
-          )}
-          {showDropdown2 && (
-            <div className="dropdown">
-              <Link to="/dashboard?tab=Adminaddpayments">
-                <Sidebar.Item active={tab === "Adminaddpayments"} as="div">
-                  Admin Payments Handling
+            <>
+              <Link to="/dashboard?tab=users">
+                <Sidebar.Item
+                  active={tab === "users"}
+                  icon={HiOutlineUserGroup}
+                  as="div"
+                >
+                  Users
                 </Sidebar.Item>
               </Link>
-            </div>
+            </>
+          )}
+          {currentUser.isPropertyAdmin && (
+            <>
+              <Link to="/dashboard?tab=properties">
+                <Sidebar.Item
+                  active={tab === "properties"}
+                  icon={GrResources}
+                  as="div"
+                >
+                  Shared Resources
+                </Sidebar.Item>
+              </Link>
+            </>
+          )}
+          {currentUser.isBillingAdmin && (
+            <>
+              <Link to="/dashboard?tab=payments"
+              onClick={toggleDropdown2}
+              >
+                <Sidebar.Item
+                  active={tab === "payments"}
+                  icon={HiDocument}
+                  as="div"
+                >
+                  Payments
+                </Sidebar.Item>
+              </Link>
+              {showDropdown2 && (
+                  
+                  <div className="dropdown">
+                    <Link to="/dashboard?tab=Adminaddpayments">
+                      <Sidebar.Item active={tab === "Adminaddpayments"} as="div">
+                        Admin Payments Handling
+                      </Sidebar.Item>
+                      
+                      </Link>
+                      </div>)}
+            </>
           )}
           {currentUser.isFacilityServiceAdmin && (
-            <Link to="/dashboard?tab=services">
-              <Sidebar.Item
-                active={tab === "services"}
-                icon={HiOutlineUserGroup}
-                as="div"
-              >
-                Services
-              </Sidebar.Item>
-            </Link>
+            <>
+              <Link to="/dashboard?tab=services">
+                <Sidebar.Item
+                  active={tab === "services"}
+                  icon={HiOutlineUserGroup}
+                  as="div"
+                >
+                  Services
+                </Sidebar.Item>
+              </Link>
+            </>
           )}
+
           {currentUser.isFacilityAdmin && (
-            <Link to="/dashboard?tab=maintenance">
-              <Sidebar.Item
-                active={tab === "maintenance"}
-                icon={HiOutlineUserGroup}
-                as="div"
-              >
-                Maintenance Tasks
-              </Sidebar.Item>
-            </Link>
+            <>
+              <Link to="/dashboard?tab=maintenance">
+                <Sidebar.Item
+                  active={tab === "maintenance"}
+                  icon={HiOutlineUserGroup}
+                  as="div"
+                >
+                  Maintenance Tasks
+                </Sidebar.Item>
+              </Link>
+            </>
           )}
-          {currentUser.isStaffAdmin && (
-            <Link to="/dashboard?tab=staffs">
-              <Sidebar.Item
-                active={tab === "staffs"}
-                icon={HiOutlineUserGroup}
-                as="div"
-              >
-                Staff
-              </Sidebar.Item>
+
+            
+            {
+              currentUser.isStaffAdmin && (
+                <>
+                  <Link to='/dashboard?tab=staffs'>
+                    <Sidebar.Item active={tab === 'staffs'} icon={HiOutlineUserGroup} as='div'>
+                      Staff
+                     </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
+            {
+              !currentUser.isAdmin && (
+                <>
+                  <Link to='/dashboard?tab=apartmentList'>
+                    <Sidebar.Item active={tab === 'apartmentList'} icon={MdOutlineHomeWork} as='div'>
+                      Apartment List
+                    </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
+            {
+              currentUser.isPropertyAdmin && (
+                <>
+                  <Link to='/dashboard?tab=comments'>
+                    <Sidebar.Item active={tab === 'comments'} icon={HiAnnotation} as='div'>
+                      Comments
+                    </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
+            <Link to ='/add-visitors'>
+                <Sidebar.Item icon={HiUser} as='div'>
+                  Add Visitors
+                </Sidebar.Item>
             </Link>
+
+            <Link to ='/dashboard?tab=bookings'>
+                <Sidebar.Item active={tab === 'bookings'} icon={HiUser} as='div'>
+                  Bookings
+                </Sidebar.Item>
+            </Link>
+            
+            <Sidebar.Item icon={HiArrowSmRight} className='cursor-pointer' onClick={handleSignout}>
+               Sign Out
+            </Sidebar.Item>
+         </Sidebar.ItemGroup>
+          {currentUser.isStaffAdmin && (
+            <>
+              <Link to="/dashboard?tab=staffs">
+                <Sidebar.Item
+                  active={tab === "staffs"}
+                  icon={HiOutlineUserGroup}
+                  as="div"
+                >
+                  Staff
+                </Sidebar.Item>
+              </Link>
+            </>
           )}
           {!currentUser.isAdmin && (
-            <Link to="/dashboard?tab=apartmentList">
-              <Sidebar.Item
-                active={tab === "apartmentList"}
-                icon={MdOutlineHomeWork}
-                as="div"
-              >
-                Apartment List
-              </Sidebar.Item>
-            </Link>
+            <>
+              <Link to="/dashboard?tab=apartmentList">
+                <Sidebar.Item
+                  active={tab === "apartmentList"}
+                  icon={MdOutlineHomeWork}
+                  as="div"
+                >
+                  Apartment List
+                </Sidebar.Item>
+              </Link>
+            </>
           )}
           <Sidebar.Item
             icon={HiArrowSmRight}

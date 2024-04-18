@@ -28,7 +28,7 @@ const Home = () => {
       } else {
          setShowMore(false);
       }
-      setListings([data]);
+      setListings(data);
    }
 
    fetchListings();

@@ -14,6 +14,7 @@ import DashMaintenance from "../components/IT22607232_Components/DashMaintenance
 import DashAmenity from "../components/IT22003546_Components/DashAmenity";
 import DashComments_02 from "../components/IT22577160_Components/DashComments_02";
 import BookingList_05 from "../components/IT22003546_Components/BookingList_05";
+import { DashAmenity } from "../components/IT22003546_Components/DashAmenity";
 import AdminPayments_03 from "./IT22602978_Pages/AdminPayments_03";
 
 
