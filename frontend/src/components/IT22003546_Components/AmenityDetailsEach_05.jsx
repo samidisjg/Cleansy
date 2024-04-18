@@ -28,11 +28,18 @@ const AmenityDetails = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="max-w-5xl mx-auto px-1 py-8">
+      {/* Transparent Image Overlay */}
+      <img
+        src={amenity.imageURLs[1]}
+        alt="Transparent Image"
+        className="absolute inset-0 w-full h-full opacity-10"
+        style={{ pointerEvents: "none" }} // Prevent interaction with the image
+      />
       <h1 className="text-3xl font-semibold text-gray-800 mb-4">
         {amenity.amenityTitle}
       </h1>
-      <p className="text-lg text-gray-600 mb-6">{amenity.amenityID}</p>
+      <img src={amenity.imageURLs} alt={amenity.amenityTitle} className="w-full h-64 object-cover rounded-md mb-6 opacity-100" />
       <p className="text-lg text-gray-600 mb-6">{amenity.amenityDescription}</p>
       
       <div className="border-t border-gray-200 pt-4">
@@ -44,10 +51,10 @@ const AmenityDetails = () => {
           Capacity: {amenity.amenityCapacity}
         </p>
         <p className="text-gray-600">
-            Available Times: {amenity.amenityAvailableTimes}
+            Available Times: <b>{amenity.amenityAvailableTimes}</b>
         </p>
         <p className="text-gray-600">
-            Price: {amenity.amenityPrice}
+            Price: LKR {amenity.amenityPrice}
         </p>
         
       </div>
