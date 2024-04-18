@@ -5,7 +5,7 @@ import { HiAnnotation, HiArrowNarrowUp } from 'react-icons/hi';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-const PropertyAdminDashboard_02 = () => {
+const PropertyAdminDashboard_002 = () => {
    const [comments, setComments] = useState([])
    const [sharedResources, setSharedResources] = useState([]);
    const [totalResources, setTotalResources] = useState(0);
@@ -149,4 +149,4 @@ const PropertyAdminDashboard_02 = () => {
   )
 }
 
-export default PropertyAdminDashboard_02
+export default PropertyAdminDashboard_002

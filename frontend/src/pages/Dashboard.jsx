@@ -14,8 +14,8 @@ import DashMaintenance from "../components/IT22607232_Components/DashMaintenance
 import DashAmenity from "../components/IT22003546_Components/DashAmenity";
 import DashComments_02 from "../components/IT22577160_Components/DashComments_02";
 import DashBooking_05 from "../components/IT22003546_Components/DashBooking_05";
-import PropertyAdminDashboard_02 from "../components/IT22577160_Components/PropertyAdminDashboard_02";
 import BookingList_05 from "../components/IT22003546_Components/BookingList_05";
+import PropertyAdminDashboard_002 from "../components/IT22577160_Components/PropertyAdminDashboard_002";
 
 
 
@@ -66,7 +66,7 @@ const Dashboard = () => {
       {tab == 'bookings' && <BookingList_05/>}
       
       {/* propertyAdmin Dashboard */}
-      {tab == 'propertyAdminDash' && <PropertyAdminDashboard_02/>}
+      {tab == 'propertyAdminDash' && <PropertyAdminDashboard_002/>}
     </div>
   )
 }
