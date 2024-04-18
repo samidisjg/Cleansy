@@ -34,9 +34,12 @@ const ServiceListingSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-
     serviceRequirements: {
-      type: [String],
+      type: String,
+      required: true,
+    },
+    imageUrls: {
+      type: Array,
       required: true,
     },
     imageUrls: {

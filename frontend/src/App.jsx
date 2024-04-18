@@ -42,7 +42,6 @@ import BookAmenity from './pages/IT22003546_Pages/BookAmenity_05'
 import ServiceListingCreate from './pages/IT22350114_Pages/ServiceCreate_06'
 import BookingList_05 from './components/IT22003546_Components/BookingList_05'
 import BookingUpdate_05 from './pages/IT22003546_Pages/BookingUpdate_05'
-import DashServiceList_06 from './components/IT22350114_Components/DashServiceList_06'
 import ResidentServiceView from './components/IT22350114_Components/ServiceResidentView_06'
 
 
@@ -67,7 +66,7 @@ function App() {
                 <Route path="/task-assign" element={<TaskAssign/>} />
                 <Route path="/tasks-table:taskid" element={<TasksTable_01/>} />
                 <Route path="/update-tasks/:taskid" element={<S1_UpdateTasks/>} />
-
+                <Route path="/service-User:serviceID" element={<ResidentServiceView/>} />
 
                 <Route path="/checkout" element={<CheckOutPage_02/>} />
                 <Route path="/amenity-create" element={<AmenityCreate/>} />
