@@ -7,7 +7,20 @@ const DashBooking = () => {
     const { currentUser } = useSelector((state) => state.user)
 
     return (
-    <div></div>
+        <div>
+            
+                <div>
+                    <h1>Bookings</h1>
+                    <p>Manage Bookings</p>
+
+                    <div className='flex flex-wrap gap-2'></div>
+                    <Button pill>
+                        <Link to="/booking-List:bookingID">Show Booking</Link>
+                    </Button>
+                    <br />
+                </div>
+            
+        </div>
     );
 };
 
