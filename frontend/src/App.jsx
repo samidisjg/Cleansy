@@ -43,7 +43,7 @@ import ServiceListingCreate from './pages/IT22350114_Pages/ServiceCreate_06'
 import BookingList_05 from './components/IT22003546_Components/BookingList_05'
 import BookingUpdate_05 from './pages/IT22003546_Pages/BookingUpdate_05'
 import ResidentServiceView from './components/IT22350114_Components/ServiceResidentView_06'
-
+import DashServiceList_06 from './components/IT22350114_Components/DashServiceList_06'
 
 
 function App() {
