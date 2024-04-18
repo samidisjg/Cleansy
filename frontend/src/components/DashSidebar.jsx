@@ -1,15 +1,7 @@
 import { Sidebar } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { MdOutlineHomeWork } from "react-icons/md";
-import {
-  HiArrowSmRight,
-  HiDocument,
-  HiOutlineUserCircle,
-  HiOutlineUserGroup,
-  HiShoppingBag,
-  HiUser,
-  HiAnnotation, HiChartPie,
-} from "react-icons/hi";
+import { HiArrowSmRight, HiDocument, HiOutlineUserCircle, HiOutlineUserGroup, HiShoppingBag, HiUser, HiAnnotation, HiChartPie } from "react-icons/hi";
 import { Link, useLocation } from "react-router-dom";
 import { signOutSuccess } from "../../redux/user/userSlice";
 import { useDispatch } from "react-redux";
@@ -49,7 +41,7 @@ const DashSidebar = () => {
   return (
     <Sidebar className="w-full md:w-56 shadow-md">
       <Sidebar.Items>
-        <Sidebar.ItemGroup className="flex flex-col gap-1">
+         <Sidebar.ItemGroup className="flex flex-col gap-1">
             {
               currentUser.isPropertyAdmin && (
                 <>
@@ -61,26 +53,17 @@ const DashSidebar = () => {
                 </>
               )
             }
-          <Link to="/dashboard?tab=profile">
-            <Sidebar.Item
-              active={tab === "profile"}
-              icon={HiUser}
-              label={currentUser.isAdmin ? "Admin" : "User"}
-              labelColor="dark"
-              as="div"
-            >
-              Profile
-            </Sidebar.Item>
-          </Link>
-          <>
-            <Link to="/dashboard?tab=userpayments">
-              <Sidebar.Item
-                active={tab === "userpayments"}
-                icon={HiShoppingBag}
-                as="div"
-              >
-                User Payments
-              </Sidebar.Item>
+            <Link to='/dashboard?tab=profile'>
+               <Sidebar.Item active={tab === 'profile'} icon={HiUser} label={currentUser.isAdmin ? 'Admin' : 'User'} labelColor='dark' as='div'>
+                  Profile
+               </Sidebar.Item>
+
+            </Link>
+            <>
+            <Link to ='/dashboard?tab=userpayments'>
+                <Sidebar.Item active={tab === 'userpayments'} icon={HiShoppingBag} as='div'>
+                  User Payments
+                </Sidebar.Item>
             </Link>
             {tab === "userpayments" && (
               <div className="dropdown">
@@ -286,15 +269,11 @@ const DashSidebar = () => {
                   Bookings
                 </Sidebar.Item>
             </Link>
-
-          <Sidebar.Item
-            icon={HiArrowSmRight}
-            className="cursor-pointer"
-            onClick={handleSignout}
-          >
-            Sign Out
-          </Sidebar.Item>
-        </Sidebar.ItemGroup>
+            
+            <Sidebar.Item icon={HiArrowSmRight} className='cursor-pointer' onClick={handleSignout}>
+               Sign Out
+            </Sidebar.Item>
+         </Sidebar.ItemGroup>
       </Sidebar.Items>
     </Sidebar>
   );
