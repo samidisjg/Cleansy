@@ -16,16 +16,12 @@ import { signOutSuccess } from "../../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { GrResources } from "react-icons/gr";
-import { FaPersonSwimming } from "react-icons/fa6";
-import { MdAddHomeWork } from "react-icons/md";
 
 const DashSidebar = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
   const [tab, setTab] = useState("");
-  const [showDropdown1, setShowDropdown1] = useState(false);
-  const [showDropdown2, setShowDropdown2] = useState(false);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -49,13 +45,6 @@ const DashSidebar = () => {
     } catch (error) {
       console.log(error.message);
     }
-  };
-
-  const toggleDropdown1 = () => {
-    setShowDropdown1(!showDropdown1);
-  };
-  const toggleDropdown2 = () => {
-    setShowDropdown2(!showDropdown2);
   };
 
   return (
@@ -109,7 +98,6 @@ const DashSidebar = () => {
                     Add Payment Profile
                   </Sidebar.Item>
                 </Link>
-              
               </div>
             )}
           </>
@@ -196,9 +184,7 @@ const DashSidebar = () => {
           )}
           {currentUser.isBillingAdmin && (
             <>
-              <Link to="/dashboard?tab=payments"
-              onClick={toggleDropdown2}
-              >
+              <Link to="/dashboard?tab=payments">
                 <Sidebar.Item
                   active={tab === "payments"}
                   icon={HiDocument}
@@ -207,16 +193,6 @@ const DashSidebar = () => {
                   Payments
                 </Sidebar.Item>
               </Link>
-              {showDropdown2 && (
-                  
-                  <div className="dropdown">
-                    <Link to="/dashboard?tab=Adminaddpayments">
-                      <Sidebar.Item active={tab === "Adminaddpayments"} as="div">
-                        Admin Payments Handling
-                      </Sidebar.Item>
-                      
-                      </Link>
-                      </div>)}
             </>
           )}
           {currentUser.isFacilityServiceAdmin && (
@@ -246,8 +222,7 @@ const DashSidebar = () => {
               </Link>
             </>
           )}
-
-              {currentUser.isStaffAdmin && (
+          {currentUser.isStaffAdmin && (
             <>
               <Link to="/dashboard?tab=staffAdmin">
                 <Sidebar.Item
