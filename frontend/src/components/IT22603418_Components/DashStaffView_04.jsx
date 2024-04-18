@@ -1,13 +1,12 @@
 import { useSelector } from "react-redux";
-import RequestLeave_04 from "../../pages/IT22603418_Pages/RequestLeave_04";
 
-const DashStaff_04 = () => {
+const DashStaffView_04 = () => {
    const { currentUser } = useSelector((state) => state.user);
   return (
     <div>
       {currentUser.isStaffAdmin && (
          <div >
-            <RequestLeave_04/>
+            <H1>Insert Success</H1>
          </div>
          
       )}
@@ -15,4 +14,4 @@ const DashStaff_04 = () => {
   )
 }
 
-export default DashStaff_04
+export default DashStaffView_04
