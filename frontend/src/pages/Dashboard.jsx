@@ -14,6 +14,7 @@ import DashMaintenance from "../components/IT22607232_Components/DashMaintenance
 import AnnouncementPage from "../components/IT22196460_Components/AnnouncementPage";
 			  
 import { DashAmenity } from "../components/IT22003546_Components/DashAmenity";
+import DashAmenity from "../components/IT22003546_Components/DashAmenity";
 import DashComments_02 from "../components/IT22577160_Components/DashComments_02";
 
 

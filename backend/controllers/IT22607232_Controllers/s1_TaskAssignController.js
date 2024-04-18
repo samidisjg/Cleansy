@@ -36,7 +36,7 @@ export const allTasks = async (req, res, next) => {
 export const oneTask = async (req, res,next) => {
   try {
     let taskid = req.params.taskid;
-    const taskOne = await TaskAssign.findOne({TaskID: taskid});
+    const taskOne = await TaskAssign.findOne({_id: taskid});
 
     if (!taskOne) {
       return res.status(404).json({ message: "Task not found" });
@@ -94,6 +94,7 @@ export const deleteTask = async(req,res,next)=>{
   }
   catch (error){
     return res.status(500).json({msg: error.message})
+  
   }
 }
  
