@@ -12,14 +12,16 @@ const AddPaymentProfile = () => {
   const {currentUser} = useSelector((state) => state.user);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
+    PaymentProfileName: '', 
     ownerUsername: '',
     ownerhousenumber: '',
     password: '',
   })
-  const { ownerUsername, ownerhousenumber, password } = formData;
+  const { PaymentProfileName,ownerUsername, ownerhousenumber, password } = formData;
   
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [profileCounter, setProfileCounter] = useState(1);
 
   const handleChange = (e) => {
     const { id, value, type, checked } = e.target;
@@ -31,10 +33,16 @@ const AddPaymentProfile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!formData.PaymentProfileName) {
+      formData.PaymentProfileName = `Profile ${profileCounter}`;
+      setProfileCounter(profileCounter +1);
+    }
+    
     if (!formData.ownerUsername || !formData.ownerhousenumber || !formData.password) {
       return setErrorMessage('Please fill out all the fields');
     }
-    if(formData.ownerUsername!==currentUser.username){
+   
+    if(formData.ownerUsername !== currentUser.username){
       return setErrorMessage('Username does not match with your username');
     }
 
@@ -47,25 +55,25 @@ const AddPaymentProfile = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-        
-        OwnerId: `${currentUser._id}`,
-        ...formData,
-     })
-    })
-     const data = await res.json();
-     setLoading(false);
-     if(data.success === false) {
-      setErrorMessage(data.message);
-     }
-     if(res.status === 201  ) {
-      navigate('/dashboard?tab=userpayments')
+          OwnerId: `${currentUser._id}`,
+          ...formData,
+        })
+      })
+      const data = await res.json();
+      setLoading(false);
+      if(data.success === false) {
+        setErrorMessage(data.message);
+      }
+      if(res.status === 201) {
+        navigate('/dashboard?tab=userpayments');
+        toast.success("Payment Profile Created successfully");
+      }
+    } catch (error) {
+      setErrorMessage(error.message);
+      setLoading(false);
     }
-    toast.success("Payment Profile Created successfully");
-  } catch (error) {
-    setErrorMessage(error.message);
-     setLoading(false);
-  }
-}
+};
+
 
 
   return (
@@ -74,6 +82,10 @@ const AddPaymentProfile = () => {
         <h1 className="flex justify-center text-3xl text-center mt-6 font-extrabold underline text-blue-950 dark:text-slate-300">Add Payment Profile</h1>
         <div className="flex p-3 w-[100%] mx-auto flex-col md:flex-row md:items-center gap-20 md:gap-20 mt-10">
           <form className="flex flex-col gap-4 w-full justify-center" onSubmit={handleSubmit}>
+          <div>
+              <Label value="ProfileName"/>
+              <TextInput type="text" placeholder="PaymentProfileName" id="PaymentProfileName" value={PaymentProfileName} onChange={(e) => setFormData({ ...formData, PaymentProfileName: e.target.value })} />
+            </div>
             <div>
               <Label value="Username"/>
               <TextInput type="text" placeholder="Username" id="ownerUsername" value={ownerUsername} onChange={handleChange} />
