@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const ServiceListingSchema = new mongoose.Schema(
   {
+    serviceID: {
+      type: String,
+      required: true,
+    },
     serviceName: {
       type: String,
       required: true,
@@ -16,10 +20,6 @@ const ServiceListingSchema = new mongoose.Schema(
     },
     serviceType: {
       type: String,
-      required: true,
-    },
-    serviceImageUrls: {
-      type: Array,
       required: true,
     },
     serviceAvailability: {
@@ -42,10 +42,7 @@ const ServiceListingSchema = new mongoose.Schema(
       type: Array,
       required: true,
     },
-    imageUrls: {
-      type: Array,
-      required: false,
-    },
+   
   },
   { timestamps: true }
 );

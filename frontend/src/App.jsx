@@ -219,7 +219,14 @@ function App() {
               <Route path='/projects' element={<Projects/>}/>
               <Route path='/create_04' element={<RequestLeave_04/>}/>
               <Route path='/sharedResource/:resourceSlug' element={<SharedResourcesPage_02 />}/>
-              
+              <Route path='/marketPlace' element={<MarketPlace />}/>
+              <Route path='/searchResource' element={<SearchResources_02 />}/>
+              <Route path='/apartmentListing/:listingId' element={<ApartmentListingPage_02 />}/>
+              <Route path='/searchApartments' element={<SearchApartments_02 />}/>
+              <Route path='/success' element={<CheckOutPage_02 />}/>
+              <Route path='/games' element={<GamePage_02 />}/>
+              <Route path='/team' element={<Team />}/>
+              <Route path='/contact' element={<Contact />}/>
             </Routes>
             
 
