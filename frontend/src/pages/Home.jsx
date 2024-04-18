@@ -7,6 +7,7 @@ import { Button } from 'flowbite-react'
 import { useEffect, useState } from 'react'
 import ApartmentListingCard_02 from '../components/IT22577160_Components/ApartmentListingCard_02'
 
+
 const Home = () => {
   const [listings, setListings] = useState([]);
   const [showMore, setShowMore] = useState(false);
@@ -55,8 +56,8 @@ const Home = () => {
         {/* <h1 className='text-slate-700 dark:text-teal-500 font-bold text-3xl lg:text-6xl text-center [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)]'>Cleansy Facility Management Services (Pvt) Ltd.</h1> */}
         <img src={Cleansy_Full} alt="" className='h-auto' />
         {/* <h3 className="text-orange-500 font-bold text-3xl text-center font-mono [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)]">"Nothing Is Impossible"</h3> */}
-        <h2 className='text-center text-blue-950 dark:text-slate-300 text-3xl lg:text-4xl font-bold [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)]'>WHERE EXCELLENCE MEETS EVERY NEED</h2>
-        <h3 className='text-xl md:text-3xl font-bold text-center [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)] text-blue-950 dark:text-slate-300'>We Create <span className='text-orange-500 font-mono [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)]'>{text}</span>
+        <h2 className='text-center text-slate-400 text-3xl lg:text-4xl font-bold [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)] homeText'>WHERE EXCELLENCE MEETS EVERY NEED</h2>
+        <h3 className='text-xl md:text-3xl font-bold text-center [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)] text-slate-500 homeText'>We Create <span className='text-orange-500 font-mono [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)] homeText'>{text}</span>
           <Cursor
             cursorBlinking="false"
             cursorStyle="|"
