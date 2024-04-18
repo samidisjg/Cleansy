@@ -46,8 +46,6 @@ import ResidentServiceView from './components/IT22350114_Components/ServiceResid
 
 
 
-
-
 function App() {
   return (
     <>
@@ -87,7 +85,10 @@ function App() {
                 <Route path="/rate-tasks/:taskid" element={<RateReview_01/>} />
 
                 <Route path="/service-create" element={<ServiceListingCreate/>} />
-                <Route path="/service-list:serviceID" element={<DashServiceList_06/>} />
+                <Route path="/service-list/:serviceID" element={<DashServiceList_06/>} />
+                <Route path="/dashboard/service-list/:serviceID" element={<DashServiceList_06 />} />
+                <Route path="/service-User:serviceID" element={<ResidentServiceView/>} />
+
 
               </Route>
               <Route element={<OnlyPropertyAdminPrivateRoute_02/>}>
