@@ -326,7 +326,7 @@ function StaffAttendance_04() {
   return (
     <div className="max-w-lg mx-auto p-3 w-full">
       <h1 className="text-3xl text-center my-7 font-extrabold underline text-blue-950 dark:text-slate-300">
-        Staff Attendance New
+        Staff Attendance
       </h1>
       {!loggedIn && (
         <Button onClick={handleLogin} gradientDuoTone="pinkToOrange">
