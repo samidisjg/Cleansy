@@ -98,16 +98,4 @@ export const deleteTask = async(req,res,next)=>{
   }
 }
  
-
-//count all the tasks
-export const countAllTasks = async (req, res, next) => {
-  try {
-      const taskCount = await TaskAssign.countDocuments();
-      res.status(200).json({ count: taskCount });
-  } catch (error) {
-      next(error);
-      res.status(500).json({ error: error.message });
-  }
-};
-
  
