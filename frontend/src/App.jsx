@@ -46,6 +46,7 @@ import ResidentServiceView from './components/IT22350114_Components/ServiceResid
 import DashServiceList_06 from './components/IT22350114_Components/DashServiceList_06'
 
 
+
 function App() {
   return (
     <>
@@ -66,7 +67,7 @@ function App() {
                 <Route path="/task-assign" element={<TaskAssign/>} />
                 <Route path="/tasks-table:taskid" element={<TasksTable_01/>} />
                 <Route path="/update-tasks/:taskid" element={<S1_UpdateTasks/>} />
-                <Route path="/service-User:serviceID" element={<ResidentServiceView/>} />
+                {/* <Route path="/service-User:serviceID" element={<ResidentServiceView/>} /> */}
 
                 <Route path="/checkout" element={<CheckOutPage_02/>} />
                 <Route path="/amenity-create" element={<AmenityCreate/>} />
