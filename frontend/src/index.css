@@ -131,11 +131,11 @@ body {
    background-color: var(--color-purple);
 }
 
-.chart.title{
+.title-container {
    position: absolute;
-   left: 0;
-   right: 0;
-   top:40%;
-   margin-left: auto;
-   margin-right: auto;
-}
+   left: 50%;
+   top: 50%;
+   transform: translate(-50%, -50%);
+   text-align: center;
+ }
+ 

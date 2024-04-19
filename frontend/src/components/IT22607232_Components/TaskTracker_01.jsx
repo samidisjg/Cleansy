@@ -1,5 +1,6 @@
 import React from 'react'
 import Graph from './Graph'
+import Form_01 from './Form_01'
 
 function TaskTracker_01() {
   return (
@@ -12,6 +13,7 @@ function TaskTracker_01() {
             {/*chart*/}
             <Graph></Graph>
             {/*Form*/}
+            <Form_01></Form_01>
         </div>
     </div>
   )

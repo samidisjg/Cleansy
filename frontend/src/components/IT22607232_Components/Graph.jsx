@@ -44,11 +44,12 @@ export default function Graph() {
       <div className="item">
         <div className="chart-relative">
           <Doughnut {...config}></Doughnut>
-
+          <div className="title-container">
           <h3 className="mb-4 font-bold title">
             Total Tasks
             <span className="block text-3xl text-emerald-400">#(0)</span>
           </h3>
+          </div>
           <div className="flex flex-col py-10 gap-4">
             {/*Labels*/}
             <Labels></Labels>
