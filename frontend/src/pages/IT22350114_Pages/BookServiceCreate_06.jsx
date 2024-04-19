@@ -143,7 +143,7 @@ const BookServiceCreate = () => {
 
 
 
-  
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -184,7 +184,7 @@ const BookServiceCreate = () => {
             onChange={handleChange}
             placeholder="Service ID"
             className="w-full p-2 border rounded-md focus:outline-none focus:border-blue-500"
-            required
+            readOnly
           />
         </div>
         <div>
@@ -198,7 +198,7 @@ const BookServiceCreate = () => {
             onChange={handleChange}
             placeholder="Service Name"
             className="w-full p-2 border rounded-md focus:outline-none focus:border-blue-500"
-            required
+            readOnly
           />
         </div>
         <div>
