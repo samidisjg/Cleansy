@@ -18,6 +18,10 @@ import { useSelector } from "react-redux";
 import { GrResources } from "react-icons/gr";
 import { FaPersonCircleCheck } from "react-icons/fa6";
 import { BsPersonPlusFill } from "react-icons/bs";
+import { FaPersonSwimming } from "react-icons/fa6";
+import { MdAddHomeWork } from "react-icons/md";
+
+
 
 const DashSidebar = () => {
   const location = useLocation();
@@ -148,11 +152,7 @@ const DashSidebar = () => {
           {currentUser.isBookingAdmin && (
             <>
               <Link to="/dashboard?tab=amenity">
-                <Sidebar.Item
-                  active={tab == "amenity"}
-                  icon={HiOutlineUserGroup}
-                  as="div"
-                >
+              <Sidebar.Item active={tab == "amenity"} icon={MdAddHomeWork } as='div'>
                   Amenity
                 </Sidebar.Item>
               </Link>
@@ -210,51 +210,40 @@ const DashSidebar = () => {
               </Link>
             </>
           )}
-          {!currentUser.isAdmin && (
-            <>
-              <Link to="/dashboard?tab=apartmentList">
-                <Sidebar.Item
-                  active={tab === "apartmentList"}
-                  icon={MdOutlineHomeWork}
-                  as="div"
-                >
-                  Apartment List
-                </Sidebar.Item>
-              </Link>
-            </>
-          )}
-          {currentUser.isPropertyAdmin && (
-            <>
-              <Link to="/dashboard?tab=comments">
-                <Sidebar.Item
-                  active={tab === "comments"}
-                  icon={HiAnnotation}
-                  as="div"
-                >
-                  Comments
-                </Sidebar.Item>
-              </Link>
-            </>
-          )}
-          {currentUser.isVisitorAdmin && (
-            <>
-              <Link to="/admin-page">
-                <Sidebar.Item
-                  active={tab === "addVisitors"}
-                  icon={FaPersonCircleCheck}
-                  as="div"
-                >
-                  Visitors
-                </Sidebar.Item>
-              </Link>
-            </>
-          )}
-          <Link to="/add-visitors">
-            <Sidebar.Item icon={BsPersonPlusFill} as="div">
-              Add Visitors
-            </Sidebar.Item>
-          </Link>
-
+            {
+              !currentUser.isAdmin && (
+                <>
+                  <Link to='/dashboard?tab=apartmentList'>
+                    <Sidebar.Item active={tab === 'apartmentList'} icon={MdOutlineHomeWork} as='div'>
+                      Apartment List
+                    </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
+            {
+              currentUser.isPropertyAdmin && (
+                <>
+                  <Link to='/dashboard?tab=comments'>
+                    <Sidebar.Item active={tab === 'comments'} icon={HiAnnotation} as='div'>
+                      Comments
+                    </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
+            {
+              currentUser.isVisitorAdmin && (
+                <>
+                  <Link to='/admin-page'>
+                    <Sidebar.Item active={tab === 'addVisitors'} icon={FaPersonCircleCheck} as='div'>
+                      Visitors
+                    </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
+            
           {currentUser.isFacilityAdmin && (
             <>
               <Link to="/dashboard?tab=maintenance">
@@ -281,32 +270,6 @@ const DashSidebar = () => {
               </Link>
             </>
           )}
-          {!currentUser.isAdmin && (
-            <>
-              <Link to="/dashboard?tab=apartmentList">
-                <Sidebar.Item
-                  active={tab === "apartmentList"}
-                  icon={MdOutlineHomeWork}
-                  as="div"
-                >
-                  Apartment List
-                </Sidebar.Item>
-              </Link>
-            </>
-          )}
-          {currentUser.isPropertyAdmin && (
-            <>
-              <Link to="/dashboard?tab=comments">
-                <Sidebar.Item
-                  active={tab === "comments"}
-                  icon={HiAnnotation}
-                  as="div"
-                >
-                  Comments
-                </Sidebar.Item>
-              </Link>
-            </>
-          )}
           <Link to="/add-visitors">
             <Sidebar.Item icon={HiUser} as="div">
               Add Visitors
@@ -314,7 +277,7 @@ const DashSidebar = () => {
           </Link>
 
           <Link to="/dashboard?tab=bookings">
-            <Sidebar.Item active={tab === "bookings"} icon={HiUser} as="div">
+            <Sidebar.Item active={tab === "bookings"} icon={FaPersonSwimming} as="div">
               Bookings
             </Sidebar.Item>
           </Link>
