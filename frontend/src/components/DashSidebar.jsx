@@ -7,8 +7,12 @@ import { signOutSuccess } from "../../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { GrResources } from "react-icons/gr";
+import { FaPersonCircleCheck } from "react-icons/fa6";
+import { BsPersonPlusFill } from "react-icons/bs";
 import { FaPersonSwimming } from "react-icons/fa6";
 import { MdAddHomeWork } from "react-icons/md";
+
+
 
 const DashSidebar = () => {
   const location = useLocation();
@@ -218,9 +222,27 @@ const DashSidebar = () => {
                 </>
               )
             }
-            <Link to ='/add-visitors'>
-                <Sidebar.Item icon={HiUser} as='div'>
-                  Add Visitors
+            {
+              currentUser.isVisitorAdmin && (
+                <>
+                  <Link to='/admin-page'>
+                    <Sidebar.Item active={tab === 'addVisitors'} icon={FaPersonCircleCheck} as='div'>
+                      Visitors
+                    </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
+            
+          {currentUser.isFacilityAdmin && (
+            <>
+              <Link to="/dashboard?tab=maintenance">
+                <Sidebar.Item
+                  active={tab === "maintenance"}
+                  icon={HiOutlineUserGroup}
+                  as="div"
+                >
+                  Maintenance Tasks
                 </Sidebar.Item>
             </Link>
             {

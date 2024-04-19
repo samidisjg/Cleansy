@@ -95,15 +95,18 @@ const Header = () => {
             {
                currentUser && (
                   <>
-                     <Navbar.Link active={path === '/service-User:serviceID'} as={'div'}>
-                        <Link to='/service-User:serviceID' className="hover:text-orange-500 active:text-orange-600 hover:underline">Services</Link>
-                     </Navbar.Link>
                      <Navbar.Link active={path === '/amenity-User:amenityID'} as={'div'}>
                         <Link to='/amenity-User:amenityID' className="hover:text-orange-500 active:text-orange-600 hover:underline">Amenity</Link>
+                     </Navbar.Link>
+                     <Navbar.Link active={path === '/service-User:serviceID'} as={'div'}>
+                        <Link to='/service-User:serviceID' className="hover:text-orange-500 active:text-orange-600 hover:underline">Services</Link>
                      </Navbar.Link>
                   </>
                )
             }
+            {/* <Navbar.Link active={path === '/projects'} as={'div'}>
+               <Link to='/projects' className="hover:text-orange-500 active:text-orange-600 hover:underline">Projects</Link>
+            </Navbar.Link> */}
             <Navbar.Link active={path === '/marketPlace'} as={'div'}>
                <Link to='/marketPlace' className="hover:text-orange-500 active:text-orange-600 hover:underline">Market Place</Link>
             </Navbar.Link>
