@@ -1,10 +1,6 @@
 import mongoose from "mongoose";
 
 const PaymentProfileCreationSchema = new mongoose.Schema({
-    PaymentProfileName: {
-        type: String,
-        required: true,
-    },
     OwnerId: {
         type: String,
         required: true,
