@@ -268,31 +268,6 @@ const DashSidebar = () => {
                   Staff Admin
                 </Sidebar.Item>
               </Link>
-              {/* STAFF PART */}
-              <div className="dropdown">
-                <Link to="/dashboard?tab=leaveRequest">
-                  <Sidebar.Item active={tab === "leaveRequest"} as="div">
-                    Leave Request
-                  </Sidebar.Item>
-                </Link>
-              </div>
-
-              <div className="dropdown">
-                <Link to="/dashboard?tab=faceRecognition">
-                  <Sidebar.Item active={tab === "faceRecognition"} as="div">
-                    Face Recognition
-                  </Sidebar.Item>
-                </Link>
-              </div>
-
-              <div className="dropdown">
-                <Link to="/dashboard?tab=staffAttendance">
-                  <Sidebar.Item active={tab === "staffAttendance"} as="div">
-                    Staff Attendance
-                  </Sidebar.Item>
-                </Link>
-              </div>
-              {/* STAFF PART END*/}
             </>
           )}
           <Link to="/add-visitors">
