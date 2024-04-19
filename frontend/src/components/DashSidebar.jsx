@@ -360,9 +360,9 @@ const DashSidebar = () => {
             </Sidebar.Item>
           </Link>
 
-          <Link to="/dashboard?tab=announsment">
-            <Sidebar.Item active={tab === "announcementList"} icon={HiUser} as="div">
-            announcementList
+          <Link to="/dashboard?tab=announcement">
+            <Sidebar.Item active={tab === "announcement"} icon={HiUser} as="div">
+              Announcement
             </Sidebar.Item>
           </Link>
 
