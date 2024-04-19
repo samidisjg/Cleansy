@@ -5,6 +5,7 @@ import { MdLocationOn, MdEdit } from "react-icons/md";
 import { FaTrash } from "react-icons/fa";
 import { Table, Button } from "flowbite-react";
 
+
 const DashServiceList_06 = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [serviceListing, setServiceListing] = useState([]);
@@ -29,9 +30,17 @@ const DashServiceList_06 = () => {
     }
   };
 
-  const handleServiceListingDelete = async (serviceID) => {
+
+  const handleServiceListingDelete = async (_id) => {
     try {
-      const response = await fetch(`/api/serviceListing/delete/${serviceID}`, {
+      // Display confirmation dialog
+      const confirmed = window.confirm("Are you sure you want to delete this service listing?");
+      if (!confirmed) {
+        return;
+      }
+
+      // Send DELETE request to delete endpoint
+      const response = await fetch(`/api/serviceListing/delete/${_id}`, {
         method: "DELETE",
       });
       const data = await response.json();
@@ -39,14 +48,21 @@ const DashServiceList_06 = () => {
         console.log(data.message);
         return;
       }
+      // Update state to remove deleted service listing
       setServiceListing((prev) =>
-        prev.filter((service) => service._id !== serviceID)
+        prev.filter((service) => service._id !== _id)
       );
+      // show success message
+      alert("Service listing deleted successfully");
+
+      // Hide modal (if applicable)
       setShowModal(false);
     } catch (error) {
       console.log(error.message);
     }
   };
+
+  
 
   return (
     <div className="w-full table-auto">
@@ -98,7 +114,7 @@ const DashServiceList_06 = () => {
                   <Table.Cell>
                     <Button
                       onClick={() =>
-                        handleServiceListingDelete(service.serviceID)
+                        handleServiceListingDelete(service._id)
                       }
                     >
                       <FaTrash />
