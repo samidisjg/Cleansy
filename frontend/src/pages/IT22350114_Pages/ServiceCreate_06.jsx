@@ -23,7 +23,7 @@ const ServiceListingCreate = () => {
     serviceDescription: "",
     servicePrice: "",
     serviceType: "",
-    serviceAvailability: true,
+    serviceAvailability: "",
     servicePhone: "",
     serviceEmail: "",
     serviceRequirements: [],
