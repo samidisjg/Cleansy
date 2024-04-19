@@ -13,7 +13,7 @@ const visitorListingSchema = new mongoose.Schema (
         telNo:{
             type: String,
             required: true,
-        },  
+        },
         date:{
             type: String,
             required: true,

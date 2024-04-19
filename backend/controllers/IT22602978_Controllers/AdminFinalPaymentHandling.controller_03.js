@@ -1,5 +1,6 @@
 import FinalPayment from '../../models/IT22602978_Models/AdminFinalPaymentsHandling.model_03.js';
 
+//insert the all payments
 export const AdminFinalPayments = async (req, res, next) => {
     try {
         const data = req.body;
@@ -19,6 +20,18 @@ export const AdminFinalPayments = async (req, res, next) => {
         }
 
         res.status(201).send({ success: true, message: 'Payment profiles added/updated successfully', count: data.length });
+    } catch (error) {
+        next(error);
+    }
+}
+
+
+//get all payments
+export const getAdminFinalPayments = async (req, res, next) => {
+    try {
+        const payments = await FinalPayment.find();
+
+        res.status(200).send(payments);
     } catch (error) {
         next(error);
     }

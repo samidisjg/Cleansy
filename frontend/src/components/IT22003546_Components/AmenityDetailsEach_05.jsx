@@ -42,7 +42,6 @@ const AmenityDetails = () => {
   };
 
   return (
-
     <div className="font-sans">
       <div className="pl-4 pt-0">
         <Link
@@ -61,7 +60,7 @@ const AmenityDetails = () => {
           <img
             src={amenity.imageURLs[0]}
             alt="Transparent Image"
-            className="absolute inset-0 w-full h- opacity-10"
+            className="absolute inset-0 w-full h-full opacity-10"
             style={{ pointerEvents: "none", zIndex: -1 }}
           />
     
@@ -136,6 +135,6 @@ const AmenityDetails = () => {
       </div>
     </div>
   );
-};
+}; 
 
 export default AmenityDetails;

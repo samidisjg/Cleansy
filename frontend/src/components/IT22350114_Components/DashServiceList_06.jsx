@@ -11,25 +11,29 @@ const DashServiceList_06 = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [serviceListing, setServiceListing] = useState([]);
   const [showServiceListingError, setShowServiceListingError] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
+    // Fetch service listings from the database
+    const fetchServiceListings = async () => {
+      try {
+        setShowServiceListingError(false);
+        const response = await fetch(
+          `/api/serviceListing/serviceListings/${currentUser._id}`
+        );
+        const data = await response.json();
+        if (data.success === false) {
+          setShowServiceListingError(true);
+          return;
+        }
+        setServiceListing(data);
+      } catch (error) {
+        setShowServiceListingError(true);
+      }
+    };
+
     fetchServiceListings();
   }, [currentUser._id]);
-
-  // Fetch service listings from the database
-  const fetchServiceListings = async () => {
-    try {
-      const response = await fetch("/api/serviceListing/read");
-      const data = await response.json();
-      if (data.success === false) {
-        setShowServiceListingError(true);
-        return;
-      }
-      setServiceListing(data);
-    } catch (error) {
-      setShowServiceListingError(true);
-    }
-  };
 
 
   const handleServiceListingDelete = async (_id) => {
@@ -74,24 +78,22 @@ const DashServiceList_06 = () => {
         <>
           <Table hoverable className="w-full">
             <Table.Head>
-              <Table.HeadCell>Service ID</Table.HeadCell>
-              <Table.HeadCell>Service Name</Table.HeadCell>
-              <Table.HeadCell>Description</Table.HeadCell>
-              <Table.HeadCell>Price</Table.HeadCell>
-              <Table.HeadCell>Type</Table.HeadCell>
-              <Table.HeadCell>Availability</Table.HeadCell>
-              <Table.HeadCell>Phone</Table.HeadCell>
-              <Table.HeadCell>Email</Table.HeadCell>
-              <Table.HeadCell>Requirements</Table.HeadCell>
-              <Table.HeadCell>imageUrls</Table.HeadCell>
-              <Table.HeadCell onClick={() => handleServiceListingDelete}>
-                Delete
-              </Table.HeadCell>
-              <Table.HeadCell>Update</Table.HeadCell>
+            <Table.HeadCell>Service ID</Table.HeadCell>
+            <Table.HeadCell>Service Name</Table.HeadCell>
+            <Table.HeadCell>Description</Table.HeadCell>
+            <Table.HeadCell>Price</Table.HeadCell>
+            <Table.HeadCell>Type</Table.HeadCell>
+            <Table.HeadCell>Availability</Table.HeadCell>
+            <Table.HeadCell>Phone</Table.HeadCell>
+            <Table.HeadCell>Email</Table.HeadCell>
+            <Table.HeadCell>Requirements</Table.HeadCell>
+            <Table.HeadCell>imageUrls</Table.HeadCell>
+            <Table.HeadCell onClick={() => handleServiceListingDelete}>Delete</Table.HeadCell>
+            <Table.HeadCell>Update</Table.HeadCell>
             </Table.Head>
 
             {serviceListing.map((service) => (
-              <Table.Body key={service._id} className="divide-y-0">
+                <Table.Body key={service._id} className="divide-y-0">
                 <Table.Row>
                   <Table.Cell>{service.serviceID}</Table.Cell>
                   <Table.Cell>{service.serviceName}</Table.Cell>
@@ -102,16 +104,7 @@ const DashServiceList_06 = () => {
                   <Table.Cell>{service.servicePhone}</Table.Cell>
                   <Table.Cell>{service.serviceEmail}</Table.Cell>
                   <Table.Cell>{service.serviceRequirements}</Table.Cell>
-                  <Table.Cell>
-                    {service.imageUrls.map((imageUrl, index) => (
-                      <img
-                        key={index}
-                        src={imageUrl}
-                        alt={`Image ${index}`}
-                        style={{ width: "100px", height: "100px" }}
-                      />
-                    ))}
-                  </Table.Cell>
+                  <Table.Cell>{service.imageUrls}</Table.Cell>
                   <Table.Cell>
                     <Button
                       onClick={() =>
@@ -122,7 +115,7 @@ const DashServiceList_06 = () => {
                     </Button>
                   </Table.Cell>
                   <Table.Cell>
-                    <Link to={`/service-update/${service.serviceID}`}>
+                    <Link to={`/updateService/${service.serviceID}`}>
                       <Button>
                         <MdEdit />
                       </Button>
@@ -136,6 +129,6 @@ const DashServiceList_06 = () => {
       )}
     </div>
   );
-};
+}
 
 export default DashServiceList_06;

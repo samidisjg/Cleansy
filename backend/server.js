@@ -1,3 +1,4 @@
+
 import express from "express";
 import dotenv from "dotenv";
 import dbConnection from "./dbConfig/dbConnection.js";
@@ -6,10 +7,8 @@ import authRoutes from "./routes/auth.route.js";
 import apartmentListingRoutes from "./routes/IT22577160_Routes/apartmentListing.route_02.js";
 import PaymentProfileCreationRoutes from "./routes/IT22602978_Routes/PaymentProfileCreation.route_03.js";
 import TaskAssignRoute from "./routes/IT22607232_Routes/s1_TaskAssignRoute.js";
+import RequestLeaveRoutes from './routes/IT22603418_Routes/RequestLeave.route_04.js';
 import visitorListingRoutes from './routes/IT22561466_Routes/visitorListing.route.js';
-import RequestLeaveRoutes from "./routes/IT22603418_Routes/RequestLeave.route_04.js";
-import StaffAdminRoutes from "./routes/IT22603418_Routes/StaffAdmin.route_04.js";
-import StaffAttendanceRoutes from "./routes/IT22603418_Routes/StaffAttendance.route_04.js";
 import cookieParser from "cookie-parser";
 import serviceListingRoutes from "./routes/IT22350114_Routes/serviceListingRoute.js";
 import amenitiesListingRoutes from './routes/IT22003546_Routes/amenitiesListing.route.js';
@@ -18,7 +17,10 @@ import commentRoutes from './routes/IT22577160_Routes/comment.route_02.js';
 import checkoutRoutes from './routes/IT22577160_Routes/checkout.route_02.js';
 import RateTasksRoutes from './routes/IT22607232_Routes/RateTasksRoute_01.js';
 import amenitiesBookingRoutes from './routes/IT22003546_Routes/amenitiesBooking.route_05.js';
-import serviceBookingRoutes from './routes/IT22350114_Routes/serviceBookingRoutes.js';
+import AdminPaymentHandlingRoutes from './routes/IT22602978_Routes/AdminPaymentHandling.route_03.js'
+import serviceBookingRoutes from "./routes/IT22350114_Routes/serviceBookingRoutes.js";
+
+
 dotenv.config();
 
 const app = express();
@@ -35,13 +37,13 @@ app.listen(3000, () => {
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
 
-// IT22602978 Routes
-app.use("/api/PaymentProfileCreation", PaymentProfileCreationRoutes);
 
+
+// IT22602978 Routes
+app.use("/api/PaymentProfileCreation",PaymentProfileCreationRoutes)
+app.use("/api/AdminPaymentHandling",AdminPaymentHandlingRoutes)
 // IT22603418 Routes
 app.use("/api/RequestLeave", RequestLeaveRoutes);
-app.use("/api/StaffAdmin", StaffAdminRoutes);
-app.use("/api/StaffAttendance", StaffAttendanceRoutes);
 
 // IT22350114 Routes
 app.use("/api/serviceListing", serviceListingRoutes);
@@ -76,3 +78,5 @@ app.use((err, req, res, next) => {
     message,
   });
 });
+
+
