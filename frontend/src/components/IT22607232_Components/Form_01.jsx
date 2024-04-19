@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+
 import {
     Button,
     Label,
@@ -7,6 +8,8 @@ import {
     TextInput,
   } from "flowbite-react";
   import {useForm} from 'react-hook-form';
+  import List_01 from './List_01';
+
 
 export default function Form_01() {
 
@@ -62,11 +65,10 @@ export default function Form_01() {
           >
             {loading ? "Analysing..." : "Annalyse tasks"}
           </Button>
-            
-            
           </div>
             </div>
         </form>
+        <List_01></List_01>
     </div>
   )
 }
