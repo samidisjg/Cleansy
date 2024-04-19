@@ -58,48 +58,50 @@ const AmenityDetails = () => {
             </h1>
           </div>
 
-            <img
-              src={amenity.imageURLs[0]}
-              alt={amenity.amenityTitle}
-              className="w-full h-80 object-cover rounded-md mb-6"
-            />
-            <div>
-              
-            </div>
-            <div className="border border-gray-300 p-5 rounded-md shadow-md mt-5 relative">
-              <p className="text-lg text-gray-600 mb-6 dark:text-white text-center" >{amenity.amenityDescription}</p>
-            </div>  
-        
-            <div className="bg-white border border-gray-200 rounded-md p-5">
-              <h2 className="text-xl font-semibold text-gray-800 mb-2">Other Details</h2>
-              <p className="text-gray-600 flex items-center">
-                <FaLocationDot className="mr-2" size={20} />
-                {amenity.amenityLocation}
-              </p>
-              <p className="text-gray-600 flex item-center">
-                <IoIosPeople className="mr-2" size={23}/>
-                {amenity.amenityCapacity}
-              </p>
-              <p className="text-gray-600">
-                Available Times: <b>{amenity.amenityAvailableTimes}</b>
-              </p>
-              <p className="text-gray-600">
-                Price: LKR {amenity.amenityPrice}
-              </p>
-            </div>
-  
-            <div className="mt-8 flex justify-end">
-              <Link
-                to={`/book-amenity/${amenityId}`}
-                className="bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600 transition duration-300"
-              >
-                Book Now
-              </Link>
+              <img
+                src={amenity.imageURLs[1]}
+                alt={amenity.amenityTitle}
+                className="w-full h-80 object-cover rounded-md mb-6"
+              />
+              <div>
+                
+              </div>
+              <div className="border border-gray-300 p-5 rounded-md shadow-md mt-5 relative">
+                <p className="text-lg text-gray-600 mb-6 dark:text-white text-center" >{amenity.amenityDescription}</p>
+              </div>  
+          
+              <div className="bg-white border border-gray-200 rounded-md p-5">
+                <h2 className="text-xl font-semibold text-gray-800 mb-2">Other Details</h2>
+                <p className="text-gray-600 flex items-center">
+                  <FaLocationDot className="mr-2" size={20} />
+                  {amenity.amenityLocation}
+                </p>
+                <p className="text-gray-600 flex item-center">
+                  <IoIosPeople className="mr-2" size={23}/>
+                  {amenity.amenityCapacity}
+                </p>
+                <p className="text-gray-600">
+                  Available Times: <b>{amenity.amenityAvailableTimes}</b>
+                </p>
+                <p className="text-gray-600">
+                  Price: LKR {amenity.amenityPrice}
+                </p>
+              </div>
+    
+              <div className="mt-8 flex justify-end">
+                <Link
+                  to={`/book-amenity/${amenityId}`}
+                  className="bg-blue-500 text-white px-4 py-2 rounded-md shadow-md hover:bg-blue-600 transition duration-300"
+                >
+                  Book Now
+                </Link>
+              </div>
             </div>
           </div>
+
         </div>
       </div>
-    </div>  
+    </div>
   );
 }; 
 
