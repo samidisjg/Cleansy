@@ -246,8 +246,8 @@ const ServiceListingCreate = () => {
               required
             >
               <option value="">Select availability</option>
-              <option value={true}>Available</option>
-              <option value={false}>Unavailable</option>
+              <option value={"Available"}>Available</option>
+              <option value={"Unavailable"}>Unavailable</option>
             </Select>
           </div>
 
