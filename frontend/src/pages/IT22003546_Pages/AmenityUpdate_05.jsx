@@ -161,49 +161,7 @@ const AmenityUpdate_05 = () => {
         })
      }
 
-    const handleChange = (e) => {
-        console.log("Event:", e);
-        const { name, value } = e.target;
-        console.log("Name:", name);
-        console.log("Value:", value);
-        setFormData({
-            ...formData,
-            [name]: value,
-        });
-    };
-        
-        
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            if (formData.amenityID === currentUser.AmenityID) {
-                setError("AmenityID already exists");
-                return;
-            }
-            setLoading(true);
-            console.log("Form Data:", formData); // Add this line
-            setError(false);
-            
-            const res = await fetch(`/api/amenitiesListing/update/${params.amenityID}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formData),
-            });
-            const data = await res.json();
-            setLoading(false);
-            if (data.success === false) {
-                setError(data.message);
-                return;
-            }
-            navigate("/dashboard?tab=amenity");
-        } catch (error) {
-            setError("An error occurred while updating the amenity.");
-            console.log(error);
-        }
-    };
 
     return (
         <div className="min-h-screen mt-20">
