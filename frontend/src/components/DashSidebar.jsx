@@ -19,8 +19,6 @@ import { GrResources } from "react-icons/gr";
 import { FaPersonCircleCheck } from "react-icons/fa6";
 import { BsPersonPlusFill } from "react-icons/bs";
 
-
-
 const DashSidebar = () => {
   const location = useLocation();
   const dispatch = useDispatch();
@@ -212,44 +210,50 @@ const DashSidebar = () => {
               </Link>
             </>
           )}
-            {
-              !currentUser.isAdmin && (
-                <>
-                  <Link to='/dashboard?tab=apartmentList'>
-                    <Sidebar.Item active={tab === 'apartmentList'} icon={MdOutlineHomeWork} as='div'>
-                      Apartment List
-                    </Sidebar.Item>
-                  </Link>
-                </>
-              )
-            }
-            {
-              currentUser.isPropertyAdmin && (
-                <>
-                  <Link to='/dashboard?tab=comments'>
-                    <Sidebar.Item active={tab === 'comments'} icon={HiAnnotation} as='div'>
-                      Comments
-                    </Sidebar.Item>
-                  </Link>
-                </>
-              )
-            }
-            {
-              currentUser.isVisitorAdmin && (
-                <>
-                  <Link to='/admin-page'>
-                    <Sidebar.Item active={tab === 'addVisitors'} icon={FaPersonCircleCheck} as='div'>
-                      Visitors
-                    </Sidebar.Item>
-                  </Link>
-                </>
-              )
-            }
-            <Link to ='/add-visitors'>
-                <Sidebar.Item  icon={BsPersonPlusFill} as='div'>
-                  Add Visitors
-                   </Sidebar.Item>
-            </Link>
+          {!currentUser.isAdmin && (
+            <>
+              <Link to="/dashboard?tab=apartmentList">
+                <Sidebar.Item
+                  active={tab === "apartmentList"}
+                  icon={MdOutlineHomeWork}
+                  as="div"
+                >
+                  Apartment List
+                </Sidebar.Item>
+              </Link>
+            </>
+          )}
+          {currentUser.isPropertyAdmin && (
+            <>
+              <Link to="/dashboard?tab=comments">
+                <Sidebar.Item
+                  active={tab === "comments"}
+                  icon={HiAnnotation}
+                  as="div"
+                >
+                  Comments
+                </Sidebar.Item>
+              </Link>
+            </>
+          )}
+          {currentUser.isVisitorAdmin && (
+            <>
+              <Link to="/admin-page">
+                <Sidebar.Item
+                  active={tab === "addVisitors"}
+                  icon={FaPersonCircleCheck}
+                  as="div"
+                >
+                  Visitors
+                </Sidebar.Item>
+              </Link>
+            </>
+          )}
+          <Link to="/add-visitors">
+            <Sidebar.Item icon={BsPersonPlusFill} as="div">
+              Add Visitors
+            </Sidebar.Item>
+          </Link>
 
           {currentUser.isFacilityAdmin && (
             <>
@@ -275,31 +279,6 @@ const DashSidebar = () => {
                   Staff Admin
                 </Sidebar.Item>
               </Link>
-              {/* STAFF PART */}
-              <div className="dropdown">
-                <Link to="/dashboard?tab=leaveRequest">
-                  <Sidebar.Item active={tab === "leaveRequest"} as="div">
-                    Leave Request
-                  </Sidebar.Item>
-                </Link>
-              </div>
-
-              <div className="dropdown">
-                <Link to="/dashboard?tab=faceRecognition">
-                  <Sidebar.Item active={tab === "faceRecognition"} as="div">
-                    Face Recognition
-                  </Sidebar.Item>
-                </Link>
-              </div>
-
-              <div className="dropdown">
-                <Link to="/dashboard?tab=staffAttendance">
-                  <Sidebar.Item active={tab === "staffAttendance"} as="div">
-                    Staff Attendance
-                  </Sidebar.Item>
-                </Link>
-              </div>
-              {/* STAFF PART END*/}
             </>
           )}
           {!currentUser.isAdmin && (
