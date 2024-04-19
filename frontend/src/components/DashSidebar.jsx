@@ -295,9 +295,9 @@ const DashSidebar = () => {
 
           {currentUser.isAnnouncementAdmin && (
             <>
-              <Link to="/dashboard?tab=announsment">
+              <Link to="/dashboard?tab=announsmentList">
                 <Sidebar.Item
-                  active={tab === "announsment"}
+                  active={tab === "announsmentList"}
                   icon={HiOutlineUserGroup}
                   as="div"
                 >
