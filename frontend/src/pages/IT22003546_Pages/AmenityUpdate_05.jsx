@@ -138,7 +138,7 @@ const AmenityUpdate_05 = () => {
                 return;
             }
             setLoading(true);
-            console.log("Form Data:", formData); // Add this line
+            console.log("Form Data:", formData);
             setError(false);
             
             const res = await fetch(`/api/amenitiesListing/update/${params.amenityID}`, {

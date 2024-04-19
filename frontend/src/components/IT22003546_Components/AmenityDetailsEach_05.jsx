@@ -61,7 +61,7 @@ const AmenityDetails = () => {
           <img
             src={amenity.imageURLs[0]}
             alt="Transparent Image"
-            className="absolute inset-0 w-full h- opacity-10"
+            className="absolute inset-0 w-full opacity-10"
             style={{ pointerEvents: "none", zIndex: -1 }}
           />
     
