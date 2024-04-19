@@ -293,7 +293,20 @@ const DashSidebar = () => {
             </>
           )}
 
+          {currentUser.isAnnouncementAdmin && (
+            <>
+              <Link to="/dashboard?tab=announsment">
+                <Sidebar.Item
+                  active={tab === "announsment"}
+                  icon={HiOutlineUserGroup}
+                  as="div"
+                >
+                  AnnouncementList
 
+                </Sidebar.Item>
+              </Link>
+            </>
+          )}
 
           {currentUser.isStaffAdmin && (
             <>

@@ -20,7 +20,6 @@ import checkoutRoutes from './routes/IT22577160_Routes/checkout.route_02.js';
 import RateTasksRoutes from './routes/IT22607232_Routes/RateTasksRoute_01.js';
 import amenitiesBookingRoutes from './routes/IT22003546_Routes/amenitiesBooking.route_05.js';
 import NotificationRoutes from './routes/IT22196460_Routes/notificationRoutes.js';
-import AnnounceRoutes from './routes/IT22196460_Routes/AnnounceRoutes.js';
 dotenv.config();
 
 const app = express();
@@ -64,7 +63,6 @@ app.use('/api/amenitiesListing', amenitiesListingRoutes);
 // IT22196460 Routes
 app.use('/api/announcements', AnnouncementsRoutes);
 app.use('/api/Notification', NotificationRoutes);
-app.use('/api/Announcements', AnnounceRoutes);
 
 
 
