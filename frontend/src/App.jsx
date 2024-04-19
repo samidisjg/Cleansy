@@ -49,7 +49,7 @@ import DashServiceList_06 from './components/IT22350114_Components/DashServiceLi
 import ServiceUpdate_06 from './pages/IT22350114_Pages/ServiceUpdate_06'
 import Updatepaymentpage_03 from "./pages/IT22602978_Pages/Updatepaymentpage_03";
 import FinalAdminPayments_03 from "./pages/IT22602978_Pages/FinalAdminPayments_03";
-
+import BookServiceCreate from "./pages/IT22350114_Pages/BookServiceCreate_06";
 
 function App() {
   return (
@@ -146,6 +146,9 @@ function App() {
                   <Route path='/visitorListing/:visitorListingId' element={<VisitorDetails/>}/>
                  <Route path="/update-list/:visitorListingId" element={<UpdateVisitorListing/>} />
             </Route>
+            <Route path="book-service/:serviceID" element={<BookServiceCreate />} />
+
+
             <Route element={<OnlyPropertyAdminPrivateRoute_02 />}>
               <Route
                 path="/create-sharedResourceListing"
@@ -158,6 +161,7 @@ function App() {
             </Route>
             <Route path="/projects" element={<Projects />} />
             <Route path="/create_04" element={<RequestLeave_04 />} />
+
             <Route
               path="/sharedResource/:resourceSlug"
               element={<SharedResourcesPage_02 />}
