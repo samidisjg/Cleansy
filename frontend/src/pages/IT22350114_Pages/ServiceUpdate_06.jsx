@@ -22,7 +22,7 @@ const ServiceUpdate_06 = () => {
     serviceDescription: "",
     servicePrice: "",
     serviceType: "",
-    serviceAvailability: true,
+    serviceAvailability: "",
     servicePhone: "",
     serviceEmail: "",
     serviceRequirements: [],
