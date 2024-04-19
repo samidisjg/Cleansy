@@ -113,11 +113,24 @@ const Header = () => {
             <Navbar.Link active={path === '/about'} as={'div'}>
                <Link to='/about' className="hover:text-orange-500 active:text-orange-600 hover:underline">About</Link>
             </Navbar.Link>
+            <Navbar.Link active={path === '/projects'} as={'div'}>
+               <Link to='/projects' className="hover:text-orange-500 active:text-orange-600 hover:underline">Projects</Link>
+            </Navbar.Link>
+            <Navbar.Link active={path === '/marketPlace'} as={'div'}>
+               <Link to='/marketPlace' className="hover:text-orange-500 active:text-orange-600 hover:underline">Market Place</Link>
+            </Navbar.Link>
             <Navbar.Link active={path === '/team'} as={'div'}>
                <Link to='/team' className="hover:text-orange-500 active:text-orange-600 hover:underline hidden sm:flex">Our Team</Link>
             </Navbar.Link>
+            <Navbar.Link active={path === '/amenity-User:amenityID'} as={'div'}>
+               <Link to='/amenity-User:amenityID' className="hover:text-orange-500 active:text-orange-600 hover:underline">Amenity</Link>
+            </Navbar.Link>
+            <Navbar.Link active={path === '/service-User:serviceID'} as={'div'}>
+               <Link to='/service-User:serviceID' className="hover:text-orange-500 active:text-orange-600 hover:underline">Services</Link>
+            </Navbar.Link>
             <Navbar.Link active={path === '/contact'} as={'div'}>
                <Link to='/contact' className="hover:text-orange-500 active:text-orange-600 hover:underline">Contact Us</Link>
+               <Link to='/projects' className="hover:text-orange-500 active:text-orange-600">Projects</Link>
             </Navbar.Link>
          </Navbar.Collapse>
     </Navbar>

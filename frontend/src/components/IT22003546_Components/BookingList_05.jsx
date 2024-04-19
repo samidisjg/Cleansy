@@ -125,7 +125,7 @@ const BookingList_05 = () => {
                             <Table.HeadCell>Amenity Title</Table.HeadCell>
                             <Table.HeadCell>Resident Name</Table.HeadCell>
                             <Table.HeadCell>Resident Email</Table.HeadCell>
-                            {/* <Table.HeadCell>Resident Contact</Table.HeadCell> */}
+                            <Table.HeadCell>Resident Contact</Table.HeadCell>
                             <Table.HeadCell>Date</Table.HeadCell>
                             <Table.HeadCell>Time</Table.HeadCell>
                             <Table.HeadCell>Duration</Table.HeadCell>
@@ -140,8 +140,8 @@ const BookingList_05 = () => {
                                     <Table.Cell>{booking.amenityTitle}</Table.Cell>
                                     <Table.Cell>{booking.residentName}</Table.Cell>
                                     <Table.Cell>{booking.residentEmail}</Table.Cell>
-                                    {/* <Table.Cell>{booking.residentContact}</Table.Cell> */}
-                                    <Table.Cell style={{ whiteSpace: 'nowrap' }}>{formatDate(booking.bookingDate)}</Table.Cell>
+                                    <Table.Cell>{booking.residentContact}</Table.Cell>
+                                    <Table.Cell>{booking.bookingDate}</Table.Cell>
                                     <Table.Cell>{booking.bookingTime}</Table.Cell>
                                     <Table.Cell>{booking.duration}</Table.Cell>
                                     <Table.Cell>{booking.bookingPrice}</Table.Cell>

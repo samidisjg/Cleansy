@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { FaLocationDot } from "react-icons/fa6";
-import { IoIosPeople } from "react-icons/io";
 
 const AmenityDetails = () => {
   const { amenityId } = useParams();
@@ -104,6 +102,7 @@ const AmenityDetails = () => {
 
         </div>
       </div>
+    </div>
     </div>
   );
 };

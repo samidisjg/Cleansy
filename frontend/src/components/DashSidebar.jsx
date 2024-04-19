@@ -97,7 +97,8 @@ const DashSidebar = () => {
                 User Payments
               </Sidebar.Item>
             </Link>
-            {tab === "userpayments" && (
+            
+            {showDropdown1 && (
               <div className="dropdown">
                 <Link to="/dashboard?tab=addpayments">
                   <Sidebar.Item active={tab === "addpayments"} as="div">
