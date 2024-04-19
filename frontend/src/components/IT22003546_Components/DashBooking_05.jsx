@@ -7,8 +7,7 @@ const DashBooking = () => {
     const { currentUser } = useSelector((state) => state.user)
 
     return (
-        <div>
-        </div>
+    <div></div>
     );
 };
 
