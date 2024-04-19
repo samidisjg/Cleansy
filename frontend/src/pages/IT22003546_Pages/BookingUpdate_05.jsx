@@ -20,8 +20,8 @@ const BookingUpdate_05 = () => {
         residentName: "",
         residentEmail: "",
         residentContact: "",
-        date: "",
-        time: "",
+        date:"",
+        time:"",
         duration: "",
         specialRequests: "",
         status: "Pending",
@@ -107,6 +107,15 @@ const BookingUpdate_05 = () => {
                 [e.target.name]: boolean !== null ? boolean : e.target.value,
             });
         }
+
+        console.log("Event:", e);
+        const { name, value } = e.target;
+        console.log("Name:", name);
+        console.log("Value:", value);
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
     };
         
 
@@ -114,6 +123,7 @@ const BookingUpdate_05 = () => {
         e.preventDefault();
         setLoading(true);
         setError(false);
+        console.log("Form Data:", formData); // Add this line
 
         
 
