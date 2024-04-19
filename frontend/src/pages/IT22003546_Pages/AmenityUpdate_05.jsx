@@ -9,7 +9,8 @@ import {
     Label,
     TextInput,
     Textarea,
-    FileInput
+    FileInput,
+    Alert
 } from "flowbite-react";
 
 const AmenityUpdate_05 = () => {
@@ -18,13 +19,13 @@ const AmenityUpdate_05 = () => {
     const [files, setFiles] = useState([]);
     const { currentUser } = useSelector((state) => state.user);
     const [formData, setFormData] = useState({
-        AmenityID: "",
-        AmenityName: "",
-        Description: "",
-        Location: "",
-        Capacity: "",
-        AvailableTime: "",
-        Price: "",
+        amenityID: "",
+        amenityTitle: "",
+        amenityDescription: "",
+        amenityLocation: "",
+        amenityCapacity: "",
+        amenityAvailableTimes: "",
+        amenityPrice: "",
         imageURLs: [],
     });
 
@@ -44,14 +45,14 @@ const AmenityUpdate_05 = () => {
             }
             setFormData((prevData) => ({
                 ...prevData,
-                AmenityID: data.amenityID,
-                AmenityName: data.amenityTitle,
-                Description: data.amenityDescription,
-                Location: data.amenityLocation,
-                Capacity: data.amenityCapacity,
-                AvailableTime: data.amenityAvailableTimes,
-                Price: data.amenityPrice,
-                //imageURLs: data.imageURLs,
+                amenityID: data.amenityID,
+                amenityTitle: data.amenityTitle,
+                amenityDescription: data.amenityDescription,
+                amenityLocation: data.amenityLocation,
+                amenityCapacity: data.amenityCapacity,
+                amenityAvailableTimes: data.amenityAvailableTimes,
+                amenityPrice: data.amenityPrice,
+                imageURLs: data.imageURLs,
             }));
         }
         fetchAmenity();
@@ -160,6 +161,50 @@ const AmenityUpdate_05 = () => {
         })
      }
 
+    const handleChange = (e) => {
+        console.log("Event:", e);
+        const { name, value } = e.target;
+        console.log("Name:", name);
+        console.log("Value:", value);
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    };
+        
+        
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            if (formData.amenityID === currentUser.AmenityID) {
+                setError("AmenityID already exists");
+                return;
+            }
+            setLoading(true);
+            console.log("Form Data:", formData); // Add this line
+            setError(false);
+            
+            const res = await fetch(`/api/amenitiesListing/update/${params.amenityID}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
+            const data = await res.json();
+            setLoading(false);
+            if (data.success === false) {
+                setError(data.message);
+                return;
+            }
+            navigate("/dashboard?tab=amenity");
+        } catch (error) {
+            setError("An error occurred while updating the amenity.");
+            console.log(error);
+        }
+    };
+
     return (
         <div className="min-h-screen mt-20">
             <main>
@@ -170,12 +215,12 @@ const AmenityUpdate_05 = () => {
             <div className="flex p-3 w-[40%] mx-auto flex-col md:flex-row md:items-center gap-20 md:gap-20 mt-10">
                 <form onSubmit = {handleSubmit} className="flex flex-col gap-4 w-full justify-center">
                     <div>
-                        <Label value="AmenityID" />
+                        <Label value="amenityID" />
                         <TextInput
                             type="text"
-                            name="AmenityID"
+                            name="amenityID"
                             required
-                            value={formData.AmenityID}
+                            value={formData.amenityID}
                             onChange={handleChange}
                         />
                     </div>
@@ -183,18 +228,18 @@ const AmenityUpdate_05 = () => {
                         <Label value="Amenity Name" />
                         <TextInput
                             type="text"
-                            name="AmenityName"
+                            name="amenityTitle"
                             required
-                            value={formData.AmenityName}
+                            value={formData.amenityTitle}
                             onChange={handleChange}
                         />
                     </div>   
                     <div>
                         <Label value="Description" />
                         <Textarea
-                            name="Description"
+                            name="amenityDescription"
                             required
-                            value={formData.Description}
+                            value={formData.amenityDescription}
                             onChange={handleChange}
                         />
                     </div>
@@ -202,9 +247,9 @@ const AmenityUpdate_05 = () => {
                         <Label value="Location" />
                         <TextInput
                             type="text"
-                            name="Location"
+                            name="amenityLocation"
                             required
-                            value={formData.Location}
+                            value={formData.amenityLocation}
                             onChange={handleChange}
                         />
                     </div>
@@ -212,9 +257,9 @@ const AmenityUpdate_05 = () => {
                         <Label value="Capacity" />
                         <TextInput
                             type="number"
-                            name="Capacity"
+                            name="amenityCapacity"
                             required
-                            value={formData.Capacity}
+                            value={formData.amenityCapacity}
                             onChange={handleChange}
                         />
                     </div>
@@ -222,9 +267,9 @@ const AmenityUpdate_05 = () => {
                         <Label value="Price" />
                         <TextInput
                             type="number"
-                            name="Price"
+                            name="amenityPrice"
                             required
-                            value={formData.Price}
+                            value={formData.amenityPrice}
                             onChange={handleChange}
                         />
                     </div>
@@ -232,9 +277,9 @@ const AmenityUpdate_05 = () => {
                         <Label value="AvailableTime" />
                         <TextInput
                             type="text"
-                            name="AvailableTime"
+                            name="amenityAvailableTimes"
                             required
-                            value={formData.AvailableTime}
+                            value={formData.amenityAvailableTimes}
                             onChange={handleChange}
                         />
                     </div>

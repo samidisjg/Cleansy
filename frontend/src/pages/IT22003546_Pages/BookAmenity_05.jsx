@@ -14,6 +14,12 @@ import {
   FileInput,
 } from "flowbite-react";
 
+const convertTimeRangeToArray = (timeRange) => {
+  const [startTime, endTime] = timeRange.split('to').map(time => time.trim());
+  const adjustedEndTime = endTime === '24:00' ? '24:00' : `${parseInt(endTime.split(':')[0]) + 1}:00`;
+  return [startTime, adjustedEndTime];
+};
+
 const BookAmenity = () => {
   const { amenityId } = useParams();
   const { currentUser } = useSelector((state) => state.user);
@@ -23,6 +29,8 @@ const BookAmenity = () => {
   const [imageUploadError, setImageUploadError] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [files, setFiles] = useState([])
+  const [availableTimes, setAvailableTimes] = useState([]); // State for available times
+  
 
   // Function to generate a unique booking ID
   const generateBookingId = () => `BID-${Math.floor(10000 + Math.random() * 90000)}`;
@@ -122,7 +130,14 @@ const BookAmenity = () => {
           residentUsername: currentUser.username,
           residentEmail: currentUser.email,
           pricePerHour: data.amenityPrice,
+          amenityAvailableTimes: data.amenityAvailableTimes,
         }));
+
+        const availableTimes = convertTimeRangeToArray(data.amenityAvailableTimes);
+        setAvailableTimes(availableTimes);
+
+        console.log(availableTimes)
+
       } catch (error) {
         console.error("Error fetching amenity details", error);
       }
@@ -150,11 +165,23 @@ const BookAmenity = () => {
     if (e.target.value === "false") {
         boolean = false;
     }
+
+    // Check if the entered time is within the available time range
+    if (e.target.name === "bookingTime" && availableTimes.length === 2) {
+      const [startTime, endTime] = availableTimes;
+      const selectedTime = e.target.value;
+      if (selectedTime < startTime || selectedTime > endTime) {
+        alert("Please select a time within the available range.");
+        return;
+      }
+    }
+    
     setFormData({
         ...formData,
         [e.target.name]: boolean !== null ? boolean : e.target.value,
         
     });
+
   };
 
   // Function to handle form submission
@@ -280,6 +307,7 @@ const BookAmenity = () => {
             <TextInput
               type="date"
               id="eventDate"
+              min={new Date().toISOString().split('T')[0]}
               name="bookingDate"
               required
               onChange={handleChange}
@@ -292,6 +320,8 @@ const BookAmenity = () => {
               type="time"
               id="eventTime"
               name="bookingTime"
+              min={availableTimes[0]}
+              max={availableTimes[1]}
               required
               onChange={handleChange}
             />   
