@@ -1,4 +1,5 @@
 import visitorListing from "../../models/IT22561466_Models/visitorListing.model.js";
+import { errorHandler } from "../../utils/error.js";
 
 export const createvisitorListing = async ( req, res, next) => {
     
@@ -8,6 +9,71 @@ export const createvisitorListing = async ( req, res, next) => {
             success: true,
             message: "Visitor listing created successfully",
         });
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const getVisitorListings = async (req, res, next) => {
+    if(req.user.id === req.params.id) {
+        try {
+            const visitorListings = await visitorListing.find({ userRef: req.params.id });
+            res.status(200).json(visitorListings);
+        } catch (error) {
+            next(error);
+        }
+    }
+    else{
+        return next(errorHandler(401, 'You can only view your own lists!'));
+    }
+};
+
+export const deletevisitorListing = async (req, res, next) => {
+    const listing = await visitorListing.findById(req.params.id);
+
+    if(!listing) {
+        return next(errorHandler(404, 'Guest not found!'));
+    }
+    if(req.user.id !== listing.userRef) {
+        return next(errorHandler(401,'You can only update your own listings!'));
+    }
+
+    try {
+        await visitorListing.findByIdAndDelete(req.params.id);
+        res.status(200).json('Guest has been deleted!');
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const updatevisitorListing = async (req, res, next) => {
+    const listing = await visitorListing.findById(req.params.id);
+
+    if(!listing) {
+        return next(errorHandler(404, 'Guest not found!'));
+    }
+    if(req.user.id !== listing.userRef) {
+        return next(errorHandler(401,'You can only update your own listings!'));
+    }
+    try {
+    const updatedListing = await visitorListing.findByIdAndUpdate (
+        req.params.id,
+        req.body,
+        { new: true }
+    );
+    res.status(200).json(updatedListing);
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const getvisitorListing = async(req, res, next) => {
+    try {
+        const listing = await visitorListing.findById(req.params.id);
+        if(!listing) {
+            return next(errorHandler(404, 'Guest not found!'));
+        }
+        res.status(200).json(listing);
     } catch (error) {
         next(error);
     }

@@ -12,7 +12,6 @@ const BookingList_05 = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        
         handleShowBooking();
     }, []);
     
@@ -51,14 +50,6 @@ const BookingList_05 = () => {
             console.log(error.message);
         }
     }
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        return date.toLocaleDateString('en-US', {
-          year: 'numeric', 
-          month: 'short',
-          day: 'numeric',
-        });
-      };
     
 
 
@@ -112,6 +103,15 @@ const BookingList_05 = () => {
             console.log(error.message);
         }
     };
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', {
+          year: 'numeric', 
+          month: 'short',
+          day: 'numeric',
+        });
+      };
     
 
     return (

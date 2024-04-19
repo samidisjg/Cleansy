@@ -14,14 +14,6 @@ const ServiceBookingSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    bookingDate: {
-      type: Date,
-      required: true,
-    },
-    bookingTime: {
-        type: String,
-        required: true,
-    },
     residentName: {
       type: String,
       required: true,
@@ -34,9 +26,17 @@ const ServiceBookingSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    bookingDate: {
+      type: Date,
+      required: true,
+    },
+    bookingTime: {
+      type: String,
+      required: true,
+    },
     bookingStatus: {
       type: String,
-        required: true,
+      required: true,
     },
     imageUrls: {
       type: Array,

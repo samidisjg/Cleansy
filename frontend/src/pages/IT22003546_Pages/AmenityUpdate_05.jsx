@@ -51,12 +51,70 @@ const AmenityUpdate_05 = () => {
                 Capacity: data.amenityCapacity,
                 AvailableTime: data.amenityAvailableTimes,
                 Price: data.amenityPrice,
-                //imageURLs: data.imageURLs,
+                imageURLs: data.imageURLs,
             }));
         }
         fetchAmenity();
     }
         , []);
+    
+    const handleImageSubmit = () => {
+        if(files.length > 0 && files.length + formData.imageURLs.length < 7) {
+            setUploading(true);
+            setImageUploadError(false);
+            const promises = [];
+
+            for (let i = 0; i < files.length; i++) {
+                promises.push(storeImage(files[i]));
+            }
+
+            Promise.all(promises).then((urls) => {
+                setFormData({
+                    ...formData,
+                    imageURLs: formData.imageURLs.concat(urls)
+                })
+                setImageUploadError(false);
+                setUploading(false);
+            }).catch((err) => {
+                setImageUploadError('Image Upload failed (2mb max per Image)');
+                setUploading(false);
+            })
+        } else {
+            setImageUploadError('You can only upload 6 Images per listing')
+            setUploading(false);
+        }
+        }
+
+        const storeImage = async (file) => {
+        return new Promise((resolve, reject) => {
+            const storage = getStorage(app);
+            const fileName = new Date().getTime() + file.name;
+            const storageRef = ref(storage, fileName);
+            const uploadTask = uploadBytesResumable(storageRef, file);
+            uploadTask.on(
+                "state_changed",
+                (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log(`Upload is ${progress}% done`);
+                },
+                (error) => {
+                reject(error);
+                },
+                () => {
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                    resolve(downloadURL);
+                })
+                }
+            )
+        })
+        }
+
+        const handleRemoveImage = (index) => {
+        setFormData({
+            ...formData,
+            imageURLs: formData.imageURLs.filter((_, i) => i !== index),
+        })
+        }  
 
     const handleChange = (e) => {
         console.log("Event:", e);
@@ -101,64 +159,6 @@ const AmenityUpdate_05 = () => {
             console.log(error);
         }
     };
-
-    const handleImageSubmit = () => {
-        if(files.length > 0 && files.length + formData.imageURLs.length < 7) {
-           setUploading(true);
-           setImageUploadError(false);
-           const promises = [];
-  
-           for (let i = 0; i < files.length; i++) {
-              promises.push(storeImage(files[i]));
-           }
-  
-           Promise.all(promises).then((urls) => {
-              setFormData({
-                 ...formData,
-                 imageURLs: formData.imageURLs.concat(urls)
-              })
-              setImageUploadError(false);
-              setUploading(false);
-           }).catch((err) => {
-              setImageUploadError('Image Upload failed (2mb max per Image)');
-              setUploading(false);
-           })
-        } else {
-           setImageUploadError('You can only upload 6 Images per listing')
-           setUploading(false);
-        }
-     }
-  
-     const storeImage = async (file) => {
-        return new Promise((resolve, reject) => {
-           const storage = getStorage(app);
-           const fileName = new Date().getTime() + file.name;
-           const storageRef = ref(storage, fileName);
-           const uploadTask = uploadBytesResumable(storageRef, file);
-           uploadTask.on(
-              "state_changed",
-              (snapshot) => {
-                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log(`Upload is ${progress}% done`);
-              },
-              (error) => {
-                reject(error);
-              },
-              () => {
-                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                  resolve(downloadURL);
-                })
-              }
-            )
-        })
-     }
-  
-     const handleRemoveImage = (index) => {
-        setFormData({
-          ...formData,
-          imageURLs: formData.imageURLs.filter((_, i) => i !== index),
-        })
-     }
 
     return (
         <div className="min-h-screen mt-20">
@@ -238,6 +238,7 @@ const AmenityUpdate_05 = () => {
                             onChange={handleChange}
                         />
                     </div>
+                    
                     <div className="flex flex-col gap-4 flex-1">
                         <p className="font-semibold">Images: <span className="font-normal text-gray-600 ml-2">6 Photos Max</span></p>
                         <div className="flex gap-4">
@@ -257,10 +258,10 @@ const AmenityUpdate_05 = () => {
                         type="submit"
                         gradientDuoTone="purpleToBlue"
                         className="uppercase"
-                    >{loading ? "Updating Amenity..." : "Update Amenity"}</Button>
+                    >{loading ? "Creating Amenity..." : "Create Amenity"}</Button>
                         {error && <Alert className='mt-7 py-3 bg-gradient-to-r from-red-100 via-red-300 to-red-400 shadow-shadowOne text-center text-red-600 text-base tracking-wide animate-bounce'>{error}</Alert>}
                     </div>
-                </form>   
+            </form>   
         </div>
     </div>
     );
