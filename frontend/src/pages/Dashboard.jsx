@@ -17,6 +17,9 @@ import DashComments_02 from "../components/IT22577160_Components/DashComments_02
 import DashBooking_05 from "../components/IT22003546_Components/DashBooking_05";
 import PropertyAdminDashboard_02 from "../components/IT22577160_Components/PropertyAdminDashboard_02";
 import BookingList_05 from "../components/IT22003546_Components/BookingList_05";
+import AdminPayments_03 from "./IT22602978_Pages/AdminPayments_03";
+
+
 
 import StaffAdminDash_04 from "./IT22603418_Pages/StaffAdminDash_04";
 import StaffAttendance_04 from "./IT22603418_Pages/StaffAttendance_04";

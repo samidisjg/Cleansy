@@ -49,7 +49,7 @@ export const getServiceListing = async (req, res, next) => {
 export const updateServiceListing = async (req, res, next) => {
   try {
     const { Serviceid } = req.params;
-    const updateServiceListing = await ServiceListing.findByIdAndUpdate(
+    const updatedServiceListing = await ServiceListing.findByIdAndUpdate(
       Serviceid,
       req.body,
       { new: true, upsert: true }

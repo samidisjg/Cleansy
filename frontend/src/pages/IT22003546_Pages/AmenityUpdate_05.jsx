@@ -1,21 +1,17 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { app } from "../../firebase";
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 import {
     Button,
     Label,
     TextInput,
     Textarea,
-    FileInput
 } from "flowbite-react";
 
 const AmenityUpdate_05 = () => {
     const navigate = useNavigate();
     const params = useParams();
-    const [files, setFiles] = useState([]);
     const { currentUser } = useSelector((state) => state.user);
     const [formData, setFormData] = useState({
         AmenityID: "",
@@ -25,13 +21,11 @@ const AmenityUpdate_05 = () => {
         Capacity: "",
         AvailableTime: "",
         Price: "",
-        imageURLs: [],
+        //imageURLs: [],
     });
 
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [imageUploadError, setImageUploadError] = useState(false);
-    const [uploading, setUploading] = useState(false);
 
     useEffect(() => {
         const fetchAmenity = async () => {

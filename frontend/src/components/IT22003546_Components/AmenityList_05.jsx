@@ -121,13 +121,6 @@ const AmenityList_05 = () => {
                         ))}
                     </Table>
                     <br />
-                    <div className="flex gap-2 items-center">
-                    <Button> 
-                        <Link to="/amenity-create">Create Amenity</Link>
-                    </Button>
-                    {/* <Button> 
-                        <Link to="/amenity-List:amenityID">Show Amenities</Link>
-                    </Button> */}
                     <Button onClick={handleDownloadPDF}>Download PDF</Button>
                     </div>
 
