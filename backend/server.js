@@ -45,7 +45,7 @@ app.use("/api/StaffAttendance", StaffAttendanceRoutes);
 
 // IT22350114 Routes
 app.use("/api/serviceListing", serviceListingRoutes);
-app.use("api/serviceBooking", serviceBookingRoutes);
+app.use("/api/serviceBooking", serviceBookingRoutes);
 
 //IT22607232 Routes
 app.use("/api/taskAssign", TaskAssignRoute);

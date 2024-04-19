@@ -2,12 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {
-  getDownloadURL,
-  getStorage,
-  ref,
-  uploadBytesResumable,
-} from "firebase/storage";
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 import { app } from "../../firebase";
 
 const BookServiceCreate = () => {
@@ -15,6 +10,7 @@ const BookServiceCreate = () => {
   const { currentUser } = useSelector((state) => state.user); // Get current user from Redux store
   const navigate = useNavigate(); // Navigation hook
   const [loading, setLoading] = useState(false);
+  const [files, setFiles] = useState([]);
   const [imageUploadError, setImageUploadError] = useState(false);
   const [uploading, serUploading] = useState(false);
   const [formData, setFormData] = useState({
@@ -30,58 +26,55 @@ const BookServiceCreate = () => {
   });
 
   const handleImageSubmit = () => {
-    if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
-      setUploading(true);
-      setImageUploadError(false);
-      const promises = [];
+    if(files.length > 0 && files.length + formData.imageUrls.length < 7) {
+       setUploading(true);
+       setImageUploadError(false);
+       const promises = [];
 
-      for (let i = 0; i < files.length; i++) {
-        promises.push(storeImage(files[i]));
-      }
+       for (let i = 0; i < files.length; i++) {
+          promises.push(storeImage(files[i]));
+       }
 
-      Promise.all(promises)
-        .then((urls) => {
+       Promise.all(promises).then((urls) => {
           setFormData({
-            ...formData,
-            imageUrls: formData.imageUrls.concat(urls),
-          });
+             ...formData,
+             imageUrls: formData.imageUrls.concat(urls)
+          })
           setImageUploadError(false);
           setUploading(false);
-        })
-        .catch((err) => {
-          setImageUploadError("Image Upload failed (2mb max per Image)");
+       }).catch((err) => {
+          setImageUploadError('Image Upload failed (2mb max per Image)');
           setUploading(false);
-        });
+       })
     } else {
-      setImageUploadError("You can only upload 6 Images per listing");
-      setUploading(false);
+       setImageUploadError('You can only upload 6 Images per listing')
+       setUploading(false);
     }
-  };
+ }
 
   const storeImage = async (file) => {
     return new Promise((resolve, reject) => {
-      const storage = getStorage(app);
-      const fileName = new Date().getTime() + file.name;
-      const storageRef = ref(storage, fileName);
-      const uploadTask = uploadBytesResumable(storageRef, file);
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log(`Upload is ${progress}% done`);
-        },
-        (error) => {
-          reject(error);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            resolve(downloadURL);
-          });
-        }
-      );
-    });
-  };
+       const storage = getStorage(app);
+       const fileName = new Date().getTime() + file.name;
+       const storageRef = ref(storage, fileName);
+       const uploadTask = uploadBytesResumable(storageRef, file);
+       uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log(`Upload is ${progress}% done`);
+          },
+          (error) => {
+            reject(error);
+          },
+          () => {
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              resolve(downloadURL);
+            })
+          }
+        )
+    })
+ }
 
   const handleRemoveImage = (index) => {
     setFormData({
@@ -147,25 +140,38 @@ const BookServiceCreate = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      // Submit booking data to backend
-      const response = await fetch("/api/serviceBooking/create", {
+      if (formData.imageUrls.length < 1)
+        return setError("Please upload at least one image");
+      if (formData.servicePrice < 0) {
+        return setError("Price cannot be negative");
+      }
+      if (formData.bookingID === currentUser.bookingID)
+        return setError("Booking ID already exists");
+
+      setLoading(true);
+      setError(false);
+
+      const res = await fetch("/api/serviceBooking/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          userRef: currentUser._id,
+        }),
       });
-      const data = await response.json();
-      if (data.success) {
-        // Booking successful, navigate to dashboard or booking confirmation page
-        navigate("/dashboard?tab=services");
-      } else {
-        // Handle booking failure
-        console.error("Booking failed:", data.message);
+      const data = await res.json();
+      setLoading(false);
+      if (data.success === false) {
+        setError(data.message);
       }
+      navigate("/dashboard?tab=services");
     } catch (error) {
-      console.error("Error booking service:", error);
+      setError(error.message);
+      setLoading(false);
     }
   };
 
