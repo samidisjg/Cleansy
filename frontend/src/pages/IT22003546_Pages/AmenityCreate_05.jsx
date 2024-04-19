@@ -26,6 +26,7 @@ const AmenityCreate = () => {
         amenityCapacity: 500,
         amenityAvailableTimes: '',
         amenityPrice: '',
+        amenityStatus: "Unavailable",
     });
 
     const { AmenityID, AmenityName, Description, Image, Location, Capacity, Availability, Price } = formData;
@@ -68,16 +69,22 @@ const AmenityCreate = () => {
             setLoading(true);
             setError(false);
 
-            const response = await fetch('/api/amenitiesListing/create', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    ...(formData),
-                    userRef: currentUser._id,
-            })
-            })
+            const payload = {
+                ...formData,
+                userRef: currentUser._id,
+                amenityStatus: "Unavailable",
+              };
+        
+              console.log("Submitting the following data to the backend:", payload);
+        
+              const response = await fetch('/api/amenitiesListing/create', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(payload)
+            });
+
             const data = await response.json();
             setLoading(false);
             if (data.success === false) {
