@@ -19,6 +19,7 @@ import checkoutRoutes from './routes/IT22577160_Routes/checkout.route_02.js';
 import RateTasksRoutes from './routes/IT22607232_Routes/RateTasksRoute_01.js';
 import amenitiesBookingRoutes from './routes/IT22003546_Routes/amenitiesBooking.route_05.js';
 import serviceBookingRoutes from './routes/IT22350114_Routes/serviceBookingRoutes.js';
+dotenv.config();
 
 const app = express();
 app.use(express.json());
