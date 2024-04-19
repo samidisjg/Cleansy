@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Table, Button } from "flowbite-react";
+import { Table, Button, TextInput } from "flowbite-react";
 import { Link } from "react-router-dom";
 import jsPDF from 'jspdf';
 import "jspdf-autotable";
@@ -9,7 +9,11 @@ const BookingList_05 = () => {
     const { currentUser } = useSelector((state) => state.user);
     const [showBookingError, setShowBookingError] = useState(false);
     const [showBooking, setShowBooking] = useState([]);
-    const dispatch = useDispatch();
+    const [searchInput, setSearchInput] = useState("");
+    const [showConfirmOnly, setshowConfirmOnly] = useState(false);
+    const [showPendingOnly, setshowPendingOnly] = useState(false);
+    const [startDate, setStartDate] = useState(""); 
+    const [endDate, setEndDate] = useState(""); 
 
     useEffect(() => {
         
@@ -30,11 +34,52 @@ const BookingList_05 = () => {
         }
     }
 
+    const filteredBookings = showBooking.filter((booking) => {
+        const bookingDate = new Date(booking.bookingDate);
+        return (
+            (
+                booking.amenityTitle.toLowerCase().includes(searchInput.toLowerCase()) ||
+                booking.residentName.toLowerCase().includes(searchInput.toLowerCase()) ||
+                booking.residentEmail.toLowerCase().includes(searchInput.toLowerCase())
+            ) &&
+            (
+                !startDate || !endDate || (bookingDate >= new Date(startDate) && bookingDate <= new Date(endDate))
+            ) &&
+            (
+                (!showConfirmOnly || booking.bookingStatus === 'Confirmed') &&
+                (!showPendingOnly || booking.bookingStatus === 'Pending')
+            )    
+        );
+    });
+
+    const handleChange = (e) => {
+        console.log("Search query:", e.target.value);
+        setSearchInput(e.target.value);
+    };
+
+    const handleToggleConfirmOnly = () => {
+        setshowConfirmOnly(!showConfirmOnly);
+    };
+
+    const handleTogglePendingOnly = () => {
+        setshowPendingOnly(!showPendingOnly);
+    };
+
+    const handleStartDateChange = (e) => {
+        setStartDate(e.target.value);
+    };
+
+    const handleEndDateChange = (e) => {
+        setEndDate(e.target.value);
+    };
+
+    console.log("Table bookings:", filteredBookings);
+    console.log("Filtered bookings:", filteredBookings);
+
     const handleBookingDelete = async (_id) => {
-        // Display a confirmation dialog
         const confirmDelete = window.confirm("Are you sure you want to delete this booking?");
         if (!confirmDelete) {
-            return; // If user cancels, exit the function
+            return; 
         }
         try {
             const res = await fetch(`/api/amenitiesBooking/delete/${_id}`, {
@@ -45,7 +90,6 @@ const BookingList_05 = () => {
                 console.log(data.message);
                 return;
             }
-            // Update the booking list after successful deletion
             setShowBooking((prev) => prev.filter((booking) => booking._id !== _id));
         } catch (error) {
             console.log(error.message);
@@ -102,7 +146,6 @@ const BookingList_05 = () => {
                 console.log(data.message);
                 return;
             }
-            // Update the booking list after successful status update
             setShowBooking((prev) =>
                 prev.map((booking) =>
                     booking._id === _id ? { ...booking, bookingStatus: newStatus } : booking
@@ -116,16 +159,49 @@ const BookingList_05 = () => {
 
     return (
         <div className="w-full table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
-        <h1 className="text-2xl font-semibold text-gray-800 mb-4 text-center">Booking List</h1>    
+        <h1 className="text-2xl font-semibold text-gray-800 mb-4 text-center dark:text-white">Booking List</h1>    
             {currentUser.isBookingAdmin ? (
                 <>
+                    <div className="flex gap-4 mb-4">
+                    <TextInput
+                            type="text"
+                            placeholder="Search..."
+                            value={searchInput}
+                            onChange= {handleChange}
+                        />
+                        <Button onClick={handleToggleConfirmOnly} className={showConfirmOnly ? 'bg-green-500 text-white' : 'bg-gray-200'}>
+                            Confirmed Bookings
+                        </Button>
+                        <Button onClick={handleTogglePendingOnly} className={showPendingOnly ? 'bg-red-500 text-white' : 'bg-gray-200'}>
+                            Pending Bookings
+                        </Button>
+
+                        
+                        <label className="block text-sm font-semibold text-gray-700 dark:text-white pt-3">Start Date</label>
+                        <input 
+                        type="date" 
+                        value={startDate} 
+                        onChange={handleStartDateChange}
+                        className="appearance-none block w-56 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        />
+
+                        
+                        <label className="block text-sm font-semibold text-gray-700 dark:text-white pt-3">End Date</label>
+                        <input 
+                        type="date" 
+                        value={endDate} 
+                        onChange={handleEndDateChange} 
+                        className="appearance-none block w-56 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        />
+
+                    </div>
+                    {filteredBookings.length > 0 ? (
                     <Table hoverable className="shadow-md">
                         <Table.Head>
                             <Table.HeadCell>Booking ID</Table.HeadCell>
                             <Table.HeadCell>Amenity Title</Table.HeadCell>
                             <Table.HeadCell>Resident Name</Table.HeadCell>
                             <Table.HeadCell>Resident Email</Table.HeadCell>
-                            {/* <Table.HeadCell>Resident Contact</Table.HeadCell> */}
                             <Table.HeadCell>Date</Table.HeadCell>
                             <Table.HeadCell>Time</Table.HeadCell>
                             <Table.HeadCell>Duration</Table.HeadCell>
@@ -133,14 +209,13 @@ const BookingList_05 = () => {
                             <Table.HeadCell>Status</Table.HeadCell>
                             <Table.HeadCell>Update Status</Table.HeadCell>
                         </Table.Head>
-                        {showBooking.map((booking) => (
+                        {filteredBookings.map((booking) => (
                             <Table.Body key={booking._id} className="divide-y">
                                 <Table.Row className={`bg-white dark:border-gray-700 dark:bg-gray-800 ${booking.bookingStatus === 'Confirmed' ? 'text-green-500' : booking.bookingStatus === 'Pending' ? 'text-red-600' : ''}`}>
                                     <Table.Cell>{booking.bookingID}</Table.Cell>
                                     <Table.Cell>{booking.amenityTitle}</Table.Cell>
                                     <Table.Cell>{booking.residentName}</Table.Cell>
                                     <Table.Cell>{booking.residentEmail}</Table.Cell>
-                                    {/* <Table.Cell>{booking.residentContact}</Table.Cell> */}
                                     <Table.Cell style={{ whiteSpace: 'nowrap' }}>{formatDate(booking.bookingDate)}</Table.Cell>
                                     <Table.Cell>{booking.bookingTime}</Table.Cell>
                                     <Table.Cell>{booking.duration}</Table.Cell>
@@ -176,6 +251,9 @@ const BookingList_05 = () => {
                             </Table.Body>
                         ))}
                     </Table>
+                    ) : (
+                        <p className="text-gray-500 text-center">No matching amenities found.</p>
+                    )}
                     <br />
                     <Button onClick={handleDownloadPDF}>Download PDF</Button>
 
@@ -197,6 +275,37 @@ const BookingList_05 = () => {
             ) : (
                 <>
                 {/* Resident view */}
+                <div className="flex gap-4 mb-4">
+                    <TextInput
+                        type="text"
+                        placeholder="Search..."
+                        value={searchInput}
+                        onChange= {handleChange}
+                    />
+                    <Button onClick={handleToggleConfirmOnly} className={showConfirmOnly ? 'bg-green-500 text-white' : 'bg-gray-200'}>
+                        Confirmed Bookings
+                    </Button>
+                    <Button onClick={handleTogglePendingOnly} className={showPendingOnly ? 'bg-red-500 text-white' : 'bg-gray-200'}>
+                        Pending Bookings
+                    </Button>
+                    
+                    <label className="block text-sm font-semibold text-gray-700 dark:text-white pt-3">Start Date</label>
+                    <input 
+                    type="date" 
+                    value={startDate} 
+                    onChange={handleStartDateChange}
+                    className="appearance-none block w-56 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    />
+
+                    <label className="block text-sm font-semibold text-gray-700 dark:text-white pt-3">End Date</label>
+                    <input 
+                    type="date" 
+                    value={endDate} 
+                    onChange={handleEndDateChange} 
+                    className="appearance-none block w-56 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    />
+                </div>
+                {filteredBookings.length > 0 ? (
                 <Table hoverable className="shadow-md">
                     <Table.Head>
                             <Table.HeadCell>Booking ID</Table.HeadCell>
@@ -214,8 +323,7 @@ const BookingList_05 = () => {
                                 <span>Upadte</span>
                             </Table.HeadCell>
                         </Table.Head>
-                    {showBooking
-                        .filter(booking => booking.residentUsername === currentUser.username)
+                    {filteredBookings.filter(booking => booking.residentUsername === currentUser.username)
                         .map((booking) => (
                             <Table.Body key={booking._id} className="divide-y">
                                 <Table.Row className={`bg-white dark:border-gray-700 dark:bg-gray-800 ${booking.bookingStatus === 'Confirmed' ? 'text-green-600' : booking.bookingStatus === 'Pending' ? 'text-red-600' : ''}`}>
@@ -248,6 +356,9 @@ const BookingList_05 = () => {
                             </Table.Body>
                         ))}
                 </Table>
+                ) : (
+                    <p className="text-gray-500 text-center">No matching amenities found.</p>
+                )}
                 <p className="text-red-700 mt-5">
                     {showBookingError ? "Error fetching bookings" : ""}
                 </p>

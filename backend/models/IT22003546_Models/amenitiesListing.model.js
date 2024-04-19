@@ -35,6 +35,10 @@ const AmenitiesListingSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    amenityStatus: {
+        type: String,
+        required: true
+    },
     
     
 }, {timestamps: true});
