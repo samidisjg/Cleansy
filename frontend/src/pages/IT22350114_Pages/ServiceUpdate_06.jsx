@@ -288,17 +288,32 @@ const ServiceUpdate_06 = () => {
           {/* Update images section */}
           <div>
             <Label>Upload Images</Label>
-          </div>
-          <div>
             <FileInput
               onChange={(e) => setFiles(e.target.files)}
               type="file"
               id="imageUrls"
               multiple
             />
+            <Button onClick={handleImageSubmit} disabled={uploading}>
+              {uploading ? "Uploading..." : "Upload Images"}
+            </Button>
+            {imageUploadError && <p>{imageUploadError}</p>}
+            {files.length > 0 && (
+              <div>
+                {files.map((file, index) => (
+                  <div key={index}>
+                    <p>{file.name}</p>
+                    <Button onClick={() => handleRemoveImage(index)}>
+                      Remove
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
           {error && <p>{error}</p>}
 
+         
           {/* Add other form fields */}
           <button type="submit" disabled={loading}>
             {loading ? "Updating..." : "Update Service"}
