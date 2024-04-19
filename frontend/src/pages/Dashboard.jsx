@@ -11,10 +11,12 @@ import DashPayments_03 from './../components/IT22602978_Components/DashPayments_
 import DashUserPayments_03 from './../components/IT22602978_Components/DashUserPayments_03';
 import AddPaymentProfile_03 from './IT22602978_Pages/AddPaymentProfile_03';
 import DashMaintenance from "../components/IT22607232_Components/DashMaintenance"
-import DashAmenity from "../components/IT22003546_Components/DashAmenity";
+
 import DashComments_02 from "../components/IT22577160_Components/DashComments_02";
 import BookingList_05 from "../components/IT22003546_Components/BookingList_05";
 import AdminPayments_03 from "./IT22602978_Pages/AdminPayments_03";
+import AmenityList_05 from "../components/IT22003546_Components/AmenityList_05";
+
 
 
 
@@ -55,7 +57,7 @@ const Dashboard = () => {
       {/* maintenance */}
       {tab === "maintenance" && <DashMaintenance />}
        {/* amenity */}
-      {tab == 'amenity' && <DashAmenity/>}
+      {tab == 'amenity' && <AmenityList_05/>}
       {/* Comments */}
       {tab == 'comments' && <DashComments_02/>}
       {/* Booking */}

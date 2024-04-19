@@ -7,6 +7,8 @@ import { signOutSuccess } from "../../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { GrResources } from "react-icons/gr";
+import { FaPersonSwimming } from "react-icons/fa6";
+import { MdAddHomeWork } from "react-icons/md";
 
 const DashSidebar = () => {
   const location = useLocation();
@@ -74,18 +76,21 @@ const DashSidebar = () => {
                   User Payments
                 </Sidebar.Item>
             </Link>
+
             
             {showDropdown1 && (
               <div className="dropdown">
                 <Link to="/dashboard?tab=addpayments">
                   <Sidebar.Item active={tab === "addpayments"} as="div">
                     Add Payment Profile
-                  </Sidebar.Item>
+                          </Sidebar.Item>
                 </Link>
               
               </div>
             )}
           </>
+
+            
 
           {currentUser.isBookingAdmin && (
             <>
@@ -218,12 +223,19 @@ const DashSidebar = () => {
                   Add Visitors
                 </Sidebar.Item>
             </Link>
-
-            <Link to ='/dashboard?tab=bookings'>
-                <Sidebar.Item active={tab === 'bookings'} icon={HiUser} as='div'>
-                  Bookings
-                </Sidebar.Item>
-            </Link>
+            {
+              // !(currentUser.isAdmin) || currentUser.isBookingAdmin && (
+                (
+                <>
+                  <Link to ='/dashboard?tab=bookings'>
+                    <Sidebar.Item active={tab === 'bookings'} icon={FaPersonSwimming} as='div'>
+                      Bookings
+                    </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
+            
             
             <Sidebar.Item icon={HiArrowSmRight} className='cursor-pointer' onClick={handleSignout}>
                Sign Out

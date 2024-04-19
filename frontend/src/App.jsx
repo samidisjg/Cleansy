@@ -48,12 +48,14 @@ import ResidentServiceView from "./components/IT22350114_Components/ServiceResid
 import DashServiceList_06 from "./components/IT22350114_Components/DashServiceList_06";
 import FinalAdminPayments_03 from "./pages/IT22602978_Pages/FinalAdminPayments_03";
 
+
 function App() {
   return (
     <>
       <Router>
         <ScrollToTop_02 />
         <Header />
+
         <div className="min-h-screen">
           <Routes>
             <Route path="/" element={<Home />} />
@@ -81,6 +83,7 @@ function App() {
                 path="/service-User:serviceID"
                 element={<ResidentServiceView />}
               />
+
 
               <Route path="/checkout" element={<CheckOutPage_02 />} />
               <Route path="/amenity-create" element={<AmenityCreate />} />
