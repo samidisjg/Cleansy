@@ -8,17 +8,16 @@ import DashStaff_04 from "../components/IT22603418_Components/DashStaff_04";
 import RequestLeave_04 from "./IT22603418_Pages/RequestLeave_04";
 import DashServices from "../components/IT22350114_Components/DashServices";
 import DashApartmentList_02 from "../components/IT22577160_Components/DashApartmentList_02";
-import DashPayments_03 from "./../components/IT22602978_Components/DashPayments_03";
-import DashUserPayments_03 from "./../components/IT22602978_Components/DashUserPayments_03";
-import AddPaymentProfile from "./IT22602978_Pages/AddPaymentProfile";
-import DashMaintenance from "../components/IT22607232_Components/DashMaintenance";
-import AmenityList_05 from "../components/IT22003546_Components/AmenityList_05";
+import DashPayments_03 from './../components/IT22602978_Components/DashPayments_03';
+import DashUserPayments_03 from './../components/IT22602978_Components/DashUserPayments_03';
+import AddPaymentProfile_03 from './IT22602978_Pages/AddPaymentProfile_03';
+import DashMaintenance from "../components/IT22607232_Components/DashMaintenance"
+import DashAmenity from "../components/IT22003546_Components/DashAmenity";
 import DashComments_02 from "../components/IT22577160_Components/DashComments_02";
 import DashBooking_05 from "../components/IT22003546_Components/DashBooking_05";
 import PropertyAdminDashboard_02 from "../components/IT22577160_Components/PropertyAdminDashboard_02";
 import BookingList_05 from "../components/IT22003546_Components/BookingList_05";
 import AdminPayments_03 from "./IT22602978_Pages/AdminPayments_03";
-
 
 
 import StaffAdminDash_04 from "./IT22603418_Pages/StaffAdminDash_04";
@@ -65,8 +64,8 @@ const Dashboard = () => {
       {tab === "addpayments" && <AddPaymentProfile />}
       {/* maintenance */}
       {tab === "maintenance" && <DashMaintenance />}
-      {/* amenity */}
-      {tab == "amenity" && <AmenityList_05 />}
+       {/* amenity */}
+      {tab == 'amenity' && <DashAmenity/>}
       {/* Comments */}
       {tab == 'comments' && <DashComments_02/>}
       {/* Booking */}

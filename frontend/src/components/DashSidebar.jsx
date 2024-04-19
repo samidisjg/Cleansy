@@ -16,12 +16,6 @@ import { signOutSuccess } from "../../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { GrResources } from "react-icons/gr";
-import { FaPersonCircleCheck } from "react-icons/fa6";
-import { BsPersonPlusFill } from "react-icons/bs";
-import { FaPersonSwimming } from "react-icons/fa6";
-import { MdAddHomeWork } from "react-icons/md";
-
-
 
 const DashSidebar = () => {
   const location = useLocation();
@@ -108,7 +102,8 @@ const DashSidebar = () => {
               </div>
             )}
           </>
-          {currentUser.isStaff && (
+
+          {currentUser.isBookingAdmin && (
             <>
               <Link to="/dashboard?tab=staffs">
                 <Sidebar.Item
@@ -233,64 +228,22 @@ const DashSidebar = () => {
                 </>
               )
             }
-            {
-              currentUser.isVisitorAdmin && (
-                <>
-                  <Link to='/admin-page'>
-                    <Sidebar.Item active={tab === 'addVisitors'} icon={FaPersonCircleCheck} as='div'>
-                      Visitors
-                    </Sidebar.Item>
-                  </Link>
-                </>
-              )
-            }
+            <Link to ='/add-visitors'>
+                <Sidebar.Item icon={HiUser} as='div'>
+                  Add Visitors
+                </Sidebar.Item>
+            </Link>
+
+            <Link to ='/dashboard?tab=bookings'>
+                <Sidebar.Item active={tab === 'bookings'} icon={HiUser} as='div'>
+                  Bookings
+                </Sidebar.Item>
+            </Link>
             
-          {currentUser.isFacilityAdmin && (
-            <>
-              <Link to="/dashboard?tab=maintenance">
-                <Sidebar.Item
-                  active={tab === "maintenance"}
-                  icon={HiOutlineUserGroup}
-                  as="div"
-                >
-                  Maintenance Tasks
-                </Sidebar.Item>
-              </Link>
-            </>
-          )}
-          {currentUser.isStaffAdmin && (
-            <>
-              <Link to="/dashboard?tab=staffAdmin">
-                <Sidebar.Item
-                  active={tab === "staffAdmin"}
-                  icon={HiOutlineUserGroup}
-                  as="div"
-                >
-                  Staff Admin
-                </Sidebar.Item>
-              </Link>
-            </>
-          )}
-          <Link to="/add-visitors">
-            <Sidebar.Item icon={HiUser} as="div">
-              Add Visitors
+            <Sidebar.Item icon={HiArrowSmRight} className='cursor-pointer' onClick={handleSignout}>
+               Sign Out
             </Sidebar.Item>
-          </Link>
-
-          <Link to="/dashboard?tab=bookings">
-            <Sidebar.Item active={tab === "bookings"} icon={FaPersonSwimming} as="div">
-              Bookings
-            </Sidebar.Item>
-          </Link>
-
-          <Sidebar.Item
-            icon={HiArrowSmRight}
-            className="cursor-pointer"
-            onClick={handleSignout}
-          >
-            Sign Out
-          </Sidebar.Item>
-        </Sidebar.ItemGroup>
+         </Sidebar.ItemGroup>
       </Sidebar.Items>
     </Sidebar>
   );
