@@ -17,8 +17,8 @@ const AdminDashboard = () => {
                     <Link to="/admin/create" className="block bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-md shadow-md transition duration-300 ease-in-out">Go to Create Page</Link>
                 </div>
                 <div className="bg-white rounded-lg shadow-md p-6">
-                    <h2 className="text-xl font-semibold mb-4">Manage Users</h2>
-                    <p className="text-gray-700 mb-4">View and manage user accounts and permissions.</p>
+                    <h2 className="text-xl font-semibold mb-4">Manage Announcement</h2>
+                    <p className="text-gray-700 mb-4">View and manage Announcements.</p>
                     <Link to="/admin/manage" className="block bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded-md shadow-md transition duration-300 ease-in-out">Go to Manage Page</Link>
                 </div>
             </div>

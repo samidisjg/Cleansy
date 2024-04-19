@@ -97,26 +97,26 @@ const CreateAnnouncementForm = () => {
                             />
                         </Label>
                         <Label className="flex flex-col">
-                            <span className="text-sm font-semibold mb-1 text-white">Title:</span>
+                            <span className="text-sm font-semibold mb-1 text-black">Title:</span>
                             <TextInput type="text" name="Title" value={formData.Title} onChange={handleChange} className="px-4 py-2 rounded-lg border-gray-300 bg-transparent focus:outline-none focus:border-blue-500 text-white" />
                         </Label>
                         <Label className="flex flex-col">
-                            <span className="text-sm font-semibold mb-1 text-white">Content:</span>
+                            <span className="text-sm font-semibold mb-1 text-black">Content:</span>
                             <Textarea name="Content" value={formData.Content} onChange={handleChange} className="px-4 py-2 rounded-lg border-gray-300 bg-transparent focus:outline-none focus:border-blue-500 text-white" />
                         </Label>
                         <Label className="flex flex-col">
-                            <span className="text-sm font-semibold mb-1 text-white">Category ID:</span>
+                            <span className="text-sm font-semibold mb-1 text-black">Category ID:</span>
                             <TextInput type="text" name="Category_ID" value={formData.Category_ID} onChange={handleChange} className="px-4 py-2 rounded-lg border-gray-300 bg-transparent focus:outline-none focus:border-blue-500 text-white" />
                         </Label>
                         <Label className="flex flex-col">
-                            <span className="text-sm font-semibold mb-1 text-white">Attachment URL:</span>
+                            <span className="text-sm font-semibold mb-1 text-black">Attachment URL:</span>
                             <TextInput type="text" name="Attachment_URL" value={formData.Attachment_URL} onChange={handleChange} className="px-4 py-2 rounded-lg border-gray-300 bg-transparent focus:outline-none focus:border-blue-500 text-white" />
                         </Label>
                         <div className="flex space-x-4">
                             <Button type="submit" disabled={loading} className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline">
                                 {loading ? 'Submitting...' : 'Submit'}
                             </Button>
-                            <Button type="button" onClick={handleClear} className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline">
+                            <Button type="button" onClick={handleClear} className="bg-gray-500 hover:bg-gray-600 text-black font-semibold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline">
                                 Clear
                             </Button>
                         </div>

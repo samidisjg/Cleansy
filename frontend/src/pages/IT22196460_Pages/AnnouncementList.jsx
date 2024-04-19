@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import AnnouncementCard from '../../components/IT22196460_Components/AnnouncementCard';
 
 // Function to fetch announcements from the backend
 async function getAnnouncements() {

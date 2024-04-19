@@ -119,6 +119,7 @@ function App() {
               <Route path="/admin/create" element ={<CreateAnnouncementForm/>} />
               <Route path="/" element ={<AnnouncementList/>} />
               <Route path="/announcement/:id" element = {<AnnouncementDetails/>} />
+              
             </Routes>
 
           
