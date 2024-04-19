@@ -25,6 +25,7 @@ import BookingList_05 from "../components/IT22003546_Components/BookingList_05";
 import StaffAdminDash_04 from "./IT22603418_Pages/StaffAdminDash_04";
 import StaffAttendance_04 from "./IT22603418_Pages/StaffAttendance_04";
 //import FaceRecognition_04 from "./IT22603418_Pages/faceRecognition_04";
+import announcementList from "../components/IT22196460_Components/announcementList";
 
 const Dashboard = () => {
   const location = useLocation();
