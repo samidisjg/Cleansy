@@ -42,10 +42,7 @@ const ServiceListingSchema = new mongoose.Schema(
       type: Array,
       required: true,
     },
-    imageUrls: {
-      type: Array,
-      required: false,
-    },
+
   },
   { timestamps: true }
 );
