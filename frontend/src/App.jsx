@@ -164,6 +164,10 @@ function App() {
             {/* <Route path='/create_04' element={<RequestLeave_04/>}/>
               <Route path='/delete_04' element={<RequestDetails_04/>}/> */}
             <Route path="/AdminFinal" element={<FinalAdminPayments_03 />} />
+            <Route
+              path="/update-paymentprofile/:data"
+              element={<Updatepaymentpage_03 />}
+            />
           </Routes>
         </div>
 
