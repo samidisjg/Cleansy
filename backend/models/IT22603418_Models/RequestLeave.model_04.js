@@ -1,46 +1,51 @@
 import mongoose from "mongoose";
 
-const RequestLeaveSchema = new mongoose.Schema({
+const RequestLeaveSchema = new mongoose.Schema(
+  {
     staffID: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     staffName: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     email: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     phoneNo: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     leaveType: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     leaveRequestFor: {
-        type: String,
+      type: String,
     },
     startDate: {
-        type: String,
+      type: String,
     },
     endDate: {
-        type: String,
+      type: String,
     },
     startTime: {
-        type: String
+      type: String,
     },
     endTime: {
-        type: String
+      type: String,
     },
     comments: {
-        type: String,
-        required: true,
+      type: String,
     },
-}, { timestamps: true });
+    status: {
+      type: String,
+    },
+  },
+  { timestamps: true }
+);
 
-const RequestLeave = mongoose.model('RequestLeave', RequestLeaveSchema);
+const RequestLeave = mongoose.model("RequestLeave", RequestLeaveSchema);
 export default RequestLeave;
