@@ -1,5 +1,5 @@
 import React from "react";
-
+import {default as api} from '../../../redux/IT22607232_redux/apiSlice';
 
 const obj = [
   {
@@ -19,6 +19,9 @@ const obj = [
   }
 ]
 export default function Labels() {
+
+ console.log(api.useGetCategoriesQuery()) ;
+
   return <>
   {obj.map((v,i) => <LabelComponent key={i} data={v}></LabelComponent>)}
   </>;
