@@ -36,8 +36,8 @@ const BookAmenity = () => {
 
 
   const [formData, setFormData] = useState({
-    date: "",
-    time: "",
+    bookingDate: "",
+    bookingTime: "",
     duration: "",
     amenityId: "",
     amenityTitle: "",
@@ -185,6 +185,8 @@ const BookAmenity = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      if (formData.imageUrls.length < 1)
+        return setError("Please upload at least one image");
       if (formData.bookingID === currentUser.bookingID) return setError('BookingID already exists');
       setLoading(true);
       setError(false);

@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Table, Button, TextInput } from "flowbite-react";
+import { Table, Button, TextInput} from "flowbite-react";
 import { Link } from "react-router-dom";
 import jsPDF from 'jspdf';
 import "jspdf-autotable";
+
+
 
 const BookingList_05 = () => {
     const { currentUser } = useSelector((state) => state.user);
@@ -208,6 +210,7 @@ const BookingList_05 = () => {
                             <Table.HeadCell>Total Amount</Table.HeadCell>
                             <Table.HeadCell>Status</Table.HeadCell>
                             <Table.HeadCell>Update Status</Table.HeadCell>
+                            <Table.HeadCell>Payment Image</Table.HeadCell>
                         </Table.Head>
                         {filteredBookings.map((booking) => (
                             <Table.Body key={booking._id} className="divide-y">
@@ -246,6 +249,17 @@ const BookingList_05 = () => {
                                             to = {`/update-booking/${booking._id}`}>
                                                 <span>Update</span>
                                             </Link>
+                                    </Table.Cell>
+                                    <Table.Cell>
+                                        {booking.imageUrls.map((imageUrl, index) => (
+                                            <a key={index} href={imageUrl} target="_blank" rel="noopener noreferrer">
+                                            <img
+                                                src={imageUrl}
+                                                alt={`Image ${index}`}
+                                                style={{ maxWidth: '100px', maxHeight: '100px' }} // Adjust dimensions as needed
+                                            />
+                                            </a>
+                                        ))}
                                     </Table.Cell>
                                 </Table.Row>
                             </Table.Body>
@@ -322,6 +336,7 @@ const BookingList_05 = () => {
                             <Table.HeadCell>
                                 <span>Upadte</span>
                             </Table.HeadCell>
+                            <Table.HeadCell>Payment Image</Table.HeadCell>
                         </Table.Head>
                     {filteredBookings.filter(booking => booking.residentUsername === currentUser.username)
                         .map((booking) => (
@@ -351,6 +366,17 @@ const BookingList_05 = () => {
                                             to = {`/update-booking/${booking._id}`}>
                                                 <span>Update</span>
                                             </Link>
+                                    </Table.Cell>
+                                    <Table.Cell>
+                                        {booking.imageUrls.map((imageUrl, index) => (
+                                            <a key={index} href={imageUrl} target="_blank" rel="noopener noreferrer">
+                                            <img
+                                                src={imageUrl}
+                                                alt={`Image ${index}`}
+                                                style={{ maxWidth: '100px', maxHeight: '100px' }} // Adjust dimensions as needed
+                                            />
+                                            </a>
+                                        ))}
                                     </Table.Cell>
                                 </Table.Row>
                             </Table.Body>

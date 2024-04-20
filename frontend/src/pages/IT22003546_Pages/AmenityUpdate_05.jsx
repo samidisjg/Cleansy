@@ -133,6 +133,8 @@ const AmenityUpdate_05 = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            if (formData.imageURLs.length < 1)
+                return setError("Please upload at least one image");
             if (formData.amenityID === currentUser.AmenityID) {
                 setError("AmenityID already exists");
                 return;
