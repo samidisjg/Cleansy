@@ -20,9 +20,10 @@ const AnnouncementSchema = new Schema({
         required: true
     },
     Attachment_URL : {
-        type : String,
-        required: true
+    type : String,
+    required: true
     },
+    
     Create_At : {
         type : Date,
         required: true
