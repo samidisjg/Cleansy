@@ -107,6 +107,9 @@ const Header = () => {
             <Navbar.Link active={path === '/marketPlace'} as={'div'}>
                <Link to='/marketPlace' className="hover:text-orange-500 active:text-orange-600 hover:underline">Market Place</Link>
             </Navbar.Link> 
+            <Navbar.Link active={path === '/dashboard?tab=userpayments'} as={'div'}>
+               <Link to='/dashboard?tab=userpayments' className="hover:text-orange-500 active:text-orange-600 hover:underline">User Payments</Link>
+            </Navbar.Link>
             <Navbar.Link active={path === '/about'} as={'div'}>
                <Link to='/about' className="hover:text-orange-500 active:text-orange-600 hover:underline">About</Link>
             </Navbar.Link>
@@ -119,6 +122,8 @@ const Header = () => {
             <Navbar.Link active={path === '/contact'} as={'div'}>
                <Link to='/contact' className="hover:text-orange-500 active:text-orange-600 hover:underline">Contact Us</Link>
             </Navbar.Link>
+            
+
          </Navbar.Collapse>
     </Navbar>
   )
