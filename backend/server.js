@@ -17,7 +17,7 @@ import commentRoutes from './routes/IT22577160_Routes/comment.route_02.js';
 import checkoutRoutes from './routes/IT22577160_Routes/checkout.route_02.js';
 import RateTasksRoutes from './routes/IT22607232_Routes/RateTasksRoute_01.js';
 import amenitiesBookingRoutes from './routes/IT22003546_Routes/amenitiesBooking.route_05.js';
-//import TaskAnalysisRoute from './routes/IT22607232_Routes/TaskAnalysisRoute_01.js';
+import TaskAnalysisRoute from './routes/IT22607232_Routes/TaskAnalysisRoute_01.js';
 dotenv.config();
 
 const app = express();
@@ -47,7 +47,7 @@ app.use("/api/serviceListing", serviceListingRoutes);
 //IT22607232 Routes
 app.use("/api/taskAssign", TaskAssignRoute);
 app.use("/api/taskRating", RateTasksRoutes);
-//app.use("/api/categories", TaskAnalysisRoute);
+app.use("/api/taskAnalysis", TaskAnalysisRoute);
 
 // IT22577160 Routes
 app.use('/api/apartmentListing', apartmentListingRoutes);

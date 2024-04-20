@@ -1,7 +1,9 @@
-/*import express from 'express';
+import express from 'express';
+import { createTaskAnalysis } from '../../controllers/IT22607232_Controllers/TaskAnalysisController_01.js';
+import { verifyToken } from '../../utils/verifyUser.js';
 
 const router = express.Router();
 
-router.get((req, res) => res.json("Get Request from Categories"));
+router.post('/create',verifyToken,createTaskAnalysis);
 
-export default router*/
+export default router;
