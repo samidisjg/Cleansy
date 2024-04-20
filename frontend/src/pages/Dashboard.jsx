@@ -16,6 +16,7 @@ import DashComments_02 from "../components/IT22577160_Components/DashComments_02
 import BookingList_05 from "../components/IT22003546_Components/BookingList_05";
 import AdminPayments_03 from "./IT22602978_Pages/AdminPayments_03";
 import AmenityList_05 from "../components/IT22003546_Components/AmenityList_05";
+import PropertyAdminDashboard_02 from "../components/IT22577160_Components/PropertyAdminDashboard_02";
 
 
 
@@ -64,6 +65,8 @@ const Dashboard = () => {
       {tab == 'bookings' && <BookingList_05/>}
       {/*admin add payments */}
       {tab==='Adminaddpayments'&& <AdminPayments_03/>}
+      {/*property admin dashboard*/}
+      {tab==='propertyAdminDash'&& <PropertyAdminDashboard_02/>}
       
     </div>
   )
