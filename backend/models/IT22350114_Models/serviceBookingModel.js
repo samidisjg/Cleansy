@@ -2,11 +2,11 @@ import mongoose from "mongoose";
 
 const ServiceBookingSchema = new mongoose.Schema(
   {
-    bookingID: {
+    serviceID: {
       type: String,
       required: true,
     },
-    serviceID: {
+    serviceBookingID: {
       type: String,
       required: true,
     },
