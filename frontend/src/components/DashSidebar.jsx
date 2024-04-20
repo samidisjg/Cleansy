@@ -238,13 +238,15 @@ const DashSidebar = () => {
             }
             
             
-            {currentUser.isFacilityServiceAdmin && (
-  <Link to="/dashboard?tab=serviceBookings" className={tab === "serviceBookings" ? "active" : ""}>
-    <Sidebar.Item icon={HiOutlineUserGroup}>
-      Service Bookings
-    </Sidebar.Item>
-  </Link>
-)}
+            {
+            currentUser.isFacilityServiceAdmin && (
+               <Link to="/dashboard?tab=serviceBookings" className={tab === "serviceBookings" ? "active" : ""}>
+                <Sidebar.Item icon={HiOutlineUserGroup}>
+                  Service Bookings
+                </Sidebar.Item>
+              </Link>
+            )
+            }
 
 
             <Sidebar.Item icon={HiArrowSmRight} className='cursor-pointer' onClick={handleSignout}>

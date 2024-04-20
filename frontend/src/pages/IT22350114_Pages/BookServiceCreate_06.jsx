@@ -321,12 +321,12 @@ const BookServiceCreate = () => {
               onClick={handleImageSubmit}
               type="button"
               disabled={uploading}
-              className="p-1 text-red-700 border border-red-700 rounded uppercase hover:shadow-lg disabled:opacity-80"
+              className="p-1 text-orange-700 border border-orange-700 rounded uppercase hover:shadow-lg disabled:opacity-80"
             >
               {uploading ? "Uploading..." : "Upload"}
             </button>
           </div>
-          <p className="text-red-700">{imageUploadError && imageUploadError}</p>
+          <p className="text-blue-700">{imageUploadError && imageUploadError}</p>
           {formData.imageUrls.length > 0 &&
             formData.imageUrls.map((url, index) => (
               <div
@@ -356,7 +356,7 @@ const BookServiceCreate = () => {
           {loading ? "Service Booking..." : "Service Booking"}
         </Button>
         {error && (
-          <Alert className="mt-7 py-3 bg-gradient-to-r from-red-100 via-red-300 to-red-400 shadow-shadowOne text-center text-red-600 text-base tracking-wide animate-bounce">
+          <Alert className="mt-7 py-3 bg-gradient-to-r from-blue-500 via-black to-blue-900 shadow-lg text-center text-white text-lg font-semibold tracking-wide transform -translate-y-2 hover:translate-y-0 transition-transform">
             {error}
           </Alert>
         )}
