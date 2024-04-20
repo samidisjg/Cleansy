@@ -5,14 +5,14 @@ const TaskAnalysisSchema = new mongoose.Schema({
       type: String,
       required: true,
    },
-   Category: {
+   type: {
       type: String,
       required: true,
    },
    NumTasks: {
       type: Number,
       required: true,
-   }
+   },
  
 }, {timestamps:true});
 

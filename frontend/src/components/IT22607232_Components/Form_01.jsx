@@ -10,7 +10,7 @@ export default function Form_01() {
   const { currentUser } = useSelector((state) => state.user);
   const [formData, setFormData] = useState({
     TaskID: "",
-    Category: "",
+    type: "",
     NumTasks: "",
   });
   const [loading, setLoading] = useState(false);
@@ -78,8 +78,8 @@ export default function Form_01() {
             <Select
               className="form-input"
               onChange={handleChange}
-              name="Category"
-              value={formData.Category}
+              name="type"
+              value={formData.type}
             >
               <option value="Select">Select a Category</option>
               <option value="Pending">Pending</option>
