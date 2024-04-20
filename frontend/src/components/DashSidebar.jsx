@@ -365,13 +365,6 @@ const DashSidebar = () => {
               Announcement
             </Sidebar.Item>
           </Link>
-
-          <Link to="/dashboard?tab=AnnouncementList">
-            <Sidebar.Item active={tab === "AnnouncementList"} icon={HiUser} as="div">
-              Announcement1
-            </Sidebar.Item>
-          </Link>
-
           
           
           <Sidebar.Item
