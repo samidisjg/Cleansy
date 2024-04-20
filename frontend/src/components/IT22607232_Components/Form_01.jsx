@@ -2,14 +2,8 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import {
-  Button,
-  Label,
-  Select,
-  TextInput,
-} from "flowbite-react";
-
-import List_01 from './List_01';
+import { Button, Label, Select, TextInput } from "flowbite-react";
+import List_01 from "./List_01";
 
 export default function Form_01() {
   const navigate = useNavigate();
