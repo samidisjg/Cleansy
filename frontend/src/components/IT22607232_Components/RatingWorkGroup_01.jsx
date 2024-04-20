@@ -12,6 +12,7 @@ const RatingWorkGroup_01 = () => {
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
   const [searchInput, setSearchInput] = useState("");
+  const [ratedTasks, setRatedTasks] = useState([]); // Array to store rated task IDs
 
   useEffect(() => {
     handleShowAssignments(); 
@@ -41,8 +42,17 @@ const RatingWorkGroup_01 = () => {
   };
 
   const handleChange = (e) => {
-    console.log("Search query:", e.target.value);
     setSearchInput(e.target.value);
+  };
+
+  const handleRating = async (taskId) => {
+    try {
+      // Perform rating logic here
+      // After successful rating, add the taskId to the ratedTasks state
+      setRatedTasks([...ratedTasks, taskId]);
+    } catch (error) {
+      console.error("Error rating task:", error);
+    }
   };
 
   const filterAssignedTasks = showTasks.filter((task) => {
@@ -74,13 +84,18 @@ const RatingWorkGroup_01 = () => {
                 className="group relative w-full border border-teal-500 overflow-hidden rounded-lg sm:w-[330px] transition-all"
               >
                 <div className="flex flex-wrap gap-2">
-                  <Button pill>
-                    <Link
-                      className="text-teal-500 hover:underline"
-                      to={`/rate-tasks/${task._id}`}
-                    >
-                      Go to Rate
-                    </Link>
+                  <Button pill onClick={() => handleRating(task._id)}>
+                    {/* Check if the task has been rated */}
+                    {ratedTasks.includes(task._id) ? (
+                      <span className="text-green-500">Rated</span>
+                    ) : (
+                      <Link
+                        className="text-teal-500 hover:underline"
+                        to={`/rate-tasks/${task._id}`}
+                      >
+                        Go to Rate
+                      </Link>
+                    )}
                   </Button>
                 </div>
                 <Link

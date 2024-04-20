@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Table, Button } from "flowbite-react";
+import { Table, Button,Modal } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
+import { HiOutlineExclamationCircle } from 'react-icons/hi';
 
 const TasksTable_01 = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [showTasksError, setShowTasksError] = useState(false);
   const [showTasks, setShowTasks] = useState([]);
   const dispatch = useDispatch();
+  const [showModal, setShowModal] = useState(false);
+  const [taskIdToDelete, setTaskIdToDelete] = useState('');
 
   useEffect(() => {
     handleShowAssignments(); // Call the function directly when the component mounts
@@ -29,7 +32,7 @@ const TasksTable_01 = () => {
     }
   };
 
-  const handleTasksDelete = async (_id) => {
+  /*const handleTasksDelete = async (_id) => {
     try {
       const res = await fetch(`/api/taskAssign/delete/${_id}`, {
         method: "DELETE",
@@ -43,7 +46,26 @@ const TasksTable_01 = () => {
     } catch (error) {
       console.log(error.message);
     }
-  };
+  };*/
+
+  const handleTasksDelete = async () => {
+    try {
+      const res = await fetch(`/api/taskAssign/delete/${taskIdToDelete}`, {
+        method: 'DELETE'
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data.message);
+        return;
+      } else {
+        setShowTasks((prev) => prev.filter((task) => task._id !== taskIdToDelete));
+        setShowModal(false);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+  
 
   const handleDownloadPDF = () => {
     const TaskAssign = new jsPDF();
@@ -97,7 +119,7 @@ const TasksTable_01 = () => {
     <div className="w-full table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
       {currentUser.isFacilityAdmin && (
         <>
-          Cleansy Tasks
+          Cleansy Assigned Maintainanace Tasks
           <Table hoverable className="shadow-md">
             <Table.Head>
               <Table.HeadCell>Date</Table.HeadCell>
@@ -134,12 +156,12 @@ const TasksTable_01 = () => {
                   <Table.Cell>{task.DurationDays}</Table.Cell>
                   <Table.Cell>Inital</Table.Cell>
                   <Table.Cell>
-                    <span
-                      onClick={() => handleTasksDelete(task._id)}
-                      className="font-medium text-red-500 hover:underline cursor-pointer"
-                    >
-                      Delete
-                    </span>
+                    <span onClick={() => {
+                            setShowModal(true)
+                            setTaskIdToDelete(task._id)
+                          }} className='font-medium text-red-500 hover:underline cursor-pointer'>
+                            Delete
+                          </span>
                   </Table.Cell>
                   <Table.Cell>
                     <Link
@@ -167,6 +189,30 @@ const TasksTable_01 = () => {
             ))}
         </>
       )}
+      <Modal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        popup
+        size='md'
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className='text-center'>
+            <HiOutlineExclamationCircle className='h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto' />
+            <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>
+              Are you sure you want to delete this task?
+            </h3>
+            <div className='flex justify-center gap-4'>
+              <Button color='failure' onClick={handleTasksDelete}>
+                Yes, I'm sure
+              </Button>
+              <Button color='gray' onClick={() => setShowModal(false)}>
+  No, cancel
+</Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 /*import TaskAssignRoute from "../../routes/IT22607232_Routes/s1_TaskAssignRoute";*/
@@ -10,9 +10,14 @@ import {
   Textarea,
 } from "flowbite-react";
 
+
+const generateTaskID = () => `TID-${Math.floor(10000 + Math.random() * 90000)}`;
+
+
 const TaskAssign = () => {
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
+  const [taskID, setTaskID] = useState("");
   const [formData, setFormData] = useState({
     TaskID: "",
     Category: "",
@@ -91,7 +96,16 @@ const TaskAssign = () => {
       setLoading(false);
     }
   };
-
+  useEffect(() => {
+    const generatedID = generateTaskID();
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      TaskID: generatedID,
+    }));
+  }, []);
+  
+  
+   
   return (
     <div className="min-h-screen mt-20">
       <main>
@@ -113,6 +127,7 @@ const TaskAssign = () => {
               required
               onChange={handleChange}
               value={formData.TaskID}
+              readOnly
             />
           </div>
           <div>
@@ -151,7 +166,6 @@ const TaskAssign = () => {
               placeholder="Add a Description..."
               rows="3"
               maxLength="200"
-              required
               onChange={handleChange}
               value={formData.Description}
             />
