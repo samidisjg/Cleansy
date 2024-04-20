@@ -56,6 +56,7 @@ import CreateAnnouncementForm from './pages/IT22196460_Pages/CreateAnnouncementF
 
 
 
+
 function App() {
   return (
     <>
@@ -116,7 +117,7 @@ function App() {
               
               <Route path="/admin" element ={<AdminDashboard/>} />
               <Route path="/admin/update" element ={<UpdateAnnouncementForm/>} />
-              <Route path="/admin/create" element ={<CreateAnnouncementForm/>} />
+              <Route path="/admin/create" element ={<CreateAnnouncementForm/>} /> 
               <Route path="/" element ={<AnnouncementList/>} />
               <Route path="/announcement/:id" element = {<AnnouncementDetails/>} />
               

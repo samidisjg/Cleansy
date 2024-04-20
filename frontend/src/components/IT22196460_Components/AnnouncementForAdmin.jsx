@@ -1,10 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Table } from 'flowbite-react';
 import { Link } from 'react-router-dom';
+import SearchBar from './SearchBar'; // Import the SearchBar component
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 const AnnouncementForAdmin = () => {
    const [announcements, setAnnouncements] = useState([]);
+   const [searchQuery, setSearchQuery] = useState('');
+   const tableRef = useRef(null);
    //  const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -30,14 +35,37 @@ const AnnouncementForAdmin = () => {
       }
   };
 
+  // Handle search query change
+  const handleSearchChange = (query) => {
+    setSearchQuery(query);
+  };
+
+  // Filter announcements based on search query
+  const filteredAnnouncements = announcements.filter((announcement) =>
+    announcement.Title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleUpdateAnnouncement = (id) => {
-   // Implement update logic here
+    const announcementToUpdate = announcements.find((announcement) => announcement._id === id);
+    history.push(`/announcements/${id}/edit`, { announcement: announcementToUpdate });
 };
 
+const generatePDF = () => {
+    html2canvas(tableRef.current).then(canvas => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF();
+      const imgWidth = 210;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+      pdf.save('announcement_report.pdf');
+    });
+  };
+
   return (
+  <div>
    <div className="w-full table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
    <h1 className='text-center mb-5 font-extrabold text-3xl underline'>Announcements</h1>
+   <SearchBar onChange={handleSearchChange} /> 
    {/* {loading ? (
        <p>Loading...</p>
    ) : ( */}
@@ -74,6 +102,10 @@ const AnnouncementForAdmin = () => {
            </Table.Body>
        </Table>
    {/* )} */}
+</div>
+    <div className="text-center mt-5">
+       <button onClick={generatePDF} className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline">Generate PDF</button>
+    </div>
 </div>
   )
 }

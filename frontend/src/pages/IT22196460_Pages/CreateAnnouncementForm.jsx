@@ -29,7 +29,7 @@ const CreateAnnouncementForm = () => {
                 throw new Error('Title and Content are required.');
             }
 
-            const res = await fetch('/api/create', {
+            const res = await fetch('/api/announcements/create', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
