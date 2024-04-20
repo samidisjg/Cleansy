@@ -100,29 +100,51 @@ const BookingList_05 = () => {
 
 
     const handleDownloadPDF = () => {
-        const payDoc = new jsPDF('l');
+        const bookingPDF = new jsPDF('l');
         const tableColumn = ["Booking ID", "Amenity Title", "Resident Name", "Resident Email", "Resident Contact", "Date", "Time", "Duration", "Total Amount", "Status"];
         const tableRows = [];
 
-        showBooking.forEach(booking => {
-            const rowData = [
-                booking.bookingID,
-                booking.amenityTitle,
-                booking.residentName,
-                booking.residentEmail,
-                booking.residentContact,
-                booking.bookingDate,
-                booking.bookingTime,
-                booking.duration,
-                booking.bookingPrice,
-                booking.bookingStatus,
-            ];
-            tableRows.push(rowData);
+       showBooking.forEach(booking => {
+
+        const bookingDate = new Date(booking.bookingDate);
+    
+        const year = bookingDate.getFullYear();
+        const m = bookingDate.getMonth() + 1; 
+        const date = bookingDate.getDate();
+        
+        const formattedDate = `${year}-${m.toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}`;
+
+        const rowData = [
+            booking.bookingID,
+            booking.amenityTitle,
+            booking.residentName,
+            booking.residentEmail,
+            booking.residentContact,
+            formattedDate,
+            booking.bookingTime,
+            booking.duration,
+            booking.bookingPrice,
+            booking.bookingStatus,
+        ];
+        tableRows.push(rowData);
         });
 
-        payDoc.autoTable(tableColumn, tableRows, { startY: 20 });
-        payDoc.text(`Booking List`, 10, 12);
-        payDoc.save(`Booking_List.pdf`);
+        const d = new Date();
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const month = monthNames[d.getMonth()];
+
+        bookingPDF.autoTable({
+            startY: 30,
+            head: [tableColumn],
+            body: tableRows,
+            theme: 'grid',
+            didDrawCell: (data) => {
+                bookingPDF.rect(data.cell.x, data.cell.y, data.cell.width, data.cell.height);
+            }
+        });
+    
+        bookingPDF.text(`Cleansy Facility Management Services (Pvt) Ltd \nBooking List`, 14, 15);
+        bookingPDF.save(`Booking_List_${month}.pdf`);
     }
 
     const handleStatusChange = async (_id, newStatus) => {
