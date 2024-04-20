@@ -1,74 +1,120 @@
-
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import {
-    Button,
-    Label,
-    Select,
-    TextInput,
-  } from "flowbite-react";
-  import {useForm} from 'react-hook-form';
-  import List_01 from './List_01';
+  Button,
+  Label,
+  Select,
+  TextInput,
+} from "flowbite-react";
 
+import List_01 from './List_01';
 
 export default function Form_01() {
+  const navigate = useNavigate();
+  const { currentUser } = useSelector((state) => state.user);
+  const [formData, setFormData] = useState({
+    TaskID: "",
+    Category: "",
+    noTasks: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-    const onSubmit = async (data) => {
-        console.log(data);
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (formData.TaskID === currentUser.TaskID) {
+        setError("TaskID already exists");
+        return;
+      }
+      setLoading(true);
+      setError(null);
+
+      const res = await fetch("/api/taskAssign/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...formData,
+          userRef: currentUser._id,
+        }),
+      });
+      const responseData = await res.json();
+      setLoading(false);
+      if (responseData.success === false) {
+        setError(responseData.message);
+        return;
+      }
+      //navigate(`/task-assign/${responseData._id}`);
+      navigate("/dashboard?tab=maintenance");
+    } catch (error) {
+      setError(error.message);
+      setLoading(false);
     }
+  };
 
-    const {register,handleSubmit,resetField} = useForm();
-    const [loading, setLoading] = useState(false);
   return (
-    <div className='form max-w-sm mx-auto w-96'>
-
-        <h1 className='font-bold pb-4 text-xl'>Task Analaysis</h1>
-
-        <form id='form' onSubmit={handleSubmit(onSubmit)}>
-            <div className='grid gap-4'>
-            <div>
+    <div className="form max-w-sm mx-auto w-96">
+      <h1 className="font-bold pb-4 text-xl">Task Analysis</h1>
+      <form id="form" onSubmit={handleSubmit}>
+        <div className="grid gap-4">
+          <div>
             <Label value="TaskID" />
             <TextInput
-              type="text" {...register('TaskID')}
+              type="text"
               name="TaskID"
               placeholder="TaskID"
               required
+              onChange={handleChange}
+              value={formData.TaskID}
             />
           </div>
           <div>
             <Label value="Category" />
             <Select
               className="form-input"
-              {...register('type')}
+              onChange={handleChange}
+              name="Category"
+              value={formData.Category}
             >
               <option value="Select">Select a Category</option>
-              <option value="Pending" defaultValue>Pending</option>
+              <option value="Pending">Pending</option>
               <option value="Completed">Completed</option>
               <option value="Inprogress">Inprogress</option>
             </Select>
-
-            <div>
+          </div>
+          <div>
             <Label value="Number of Tasks" />
             <TextInput
               type="number"
-              {...register('noTasks')}
               name="noTasks"
               placeholder="# of Tasks"
               required
+              onChange={handleChange}
+              value={formData.noTasks}
             />
           </div>
-            <br></br>
           <Button
             type="submit"
             gradientDuoTone="purpleToBlue"
             className="uppercase"
           >
-            {loading ? "Analysing..." : "Annalyse tasks"}
+            {loading ? "Analyzing..." : "Analyse tasks"}
           </Button>
-          </div>
-            </div>
-        </form>
-        <List_01></List_01>
+          {error && <p className="text-red-700 text-sm">{error}</p>}
+        </div>
+      </form>
+      <List_01 />
     </div>
-  )
+  );
 }
