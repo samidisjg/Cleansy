@@ -26,6 +26,7 @@ import StaffAdminDash_04 from "./IT22603418_Pages/StaffAdminDash_04";
 import StaffAttendance_04 from "./IT22603418_Pages/StaffAttendance_04";
 //import FaceRecognition_04 from "./IT22603418_Pages/faceRecognition_04";
 import announcementList from "../components/IT22196460_Components/announcementList";
+import AnnouncementForAdmin from "../components/IT22196460_Components/AnnouncementForAdmin";
 
 const Dashboard = () => {
   const location = useLocation();
@@ -86,6 +87,8 @@ const Dashboard = () => {
 
       {/* VisitorAdmin Dashboard */}
       {tab === 'addVisitors' && <VisitorAdminPage/>}
+      {/* VisitorAdmin Dashboard */}
+      {tab === 'announcement' && <AnnouncementForAdmin />}
 
 
     </div>
