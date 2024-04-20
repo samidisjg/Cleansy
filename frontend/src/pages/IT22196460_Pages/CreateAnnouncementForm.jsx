@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Alert, Button, Label, TextInput, Textarea } from 'flowbite-react'; // Assuming these components are available
-import axios from 'axios'; // Import Axios for making API requests
 
 const CreateAnnouncementForm = () => {
     const [formData, setFormData] = useState({
-        Announcement_ID: '',
+        Announcement_ID: generateAnnouncement_ID(),
         Title: '',
         Content: '',
         Category_ID: '',
@@ -20,7 +19,7 @@ const CreateAnnouncementForm = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async e => {
         e.preventDefault();
         setLoading(true);
         setError('');
@@ -30,16 +29,21 @@ const CreateAnnouncementForm = () => {
                 throw new Error('Title and Content are required.');
             }
 
-            const res = await axios.post('/api/create', formData); // Use Axios for making API requests
-            const data = res.data;
+            const res = await fetch('/api/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+            const data = await res.json();
             if (data.success) {
                 setSuccess(true);
                 setError('');
                 setTimeout(() => {
                     setSuccess(false);
                     setFormData({
-                        ...formData,
-                        Announcement_ID: '',
+                        Announcement_ID: generateAnnouncement_ID(),
                         Title: '',
                         Content: '',
                         Category_ID: '',
@@ -52,7 +56,7 @@ const CreateAnnouncementForm = () => {
             }
         } catch (error) {
             console.error('Error creating announcement:', error.message);
-            setError(error.response.data.message || 'An error occurred. Please try again later.'); // Use more specific error messages if available
+            setError('An error occurred. Please try again later.');
         } finally {
             setLoading(false);
         }
@@ -60,8 +64,7 @@ const CreateAnnouncementForm = () => {
 
     const handleClear = () => {
         setFormData({
-            ...formData,
-            Announcement_ID: '',
+            Announcement_ID: generateAnnouncement_ID(),
             Title: '',
             Content: '',
             Category_ID: '',
@@ -69,6 +72,10 @@ const CreateAnnouncementForm = () => {
             Create_At: new Date().toISOString()
         });
     };
+
+    function generateAnnouncement_ID() {
+        return `A${Math.floor(Math.random() * 10000)}`;
+    }
 
     return (
         <div className="min-h-screen flex items-center justify-center w-full dark:bg-gray-950">
