@@ -1,114 +1,48 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { toast } from 'react-toastify';
-import { Alert,Button, Checkbox, Label, TextInput, } from "flowbite-react"
+import { Button, Checkbox, FileInput, Label, Select, TextInput, Textarea } from "flowbite-react"
+import { Link } from "react-router-dom"
 
 const AddPaymentProfile = () => {
-  
-  const [showPassword, setShowPassword] = useState(false);
-  const {currentUser} = useSelector((state) => state.user);
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    ownerUsername: '',
-    ownerhousenumber: '',
-    password: '',
-  })
-  const { ownerUsername, ownerhousenumber, password } = formData;
-  
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [loading, setLoading] = useState(false);
-
-  const handleChange = (e) => {
-    const { id, value, type, checked } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [id]: type === 'checkbox' ? checked : value.trim()
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!formData.ownerUsername || !formData.ownerhousenumber || !formData.password) {
-      return setErrorMessage('Please fill out all the fields');
-    }
-    if(formData.ownerUsername!==currentUser.username){
-      return setErrorMessage('Username does not match with your username');
-    }
-
-    try {
-      setLoading(true);
-      setErrorMessage(null);
-      const res = await fetch('/api/PaymentProfileCreation/CreatePayment', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-        
-        OwnerId: `${currentUser._id}`,
-        ...formData,
-     })
-    })
-     const data = await res.json();
-     setLoading(false);
-     if(data.success === false) {
-      setErrorMessage(data.message);
-     }
-     if(res.status === 201  ) {
-      navigate('/dashboard?tab=userpayments')
-    }
-    toast.success("Payment Profile Created successfully");
-  } catch (error) {
-    setErrorMessage(error.message);
-     setLoading(false);
-  }
-}
-
-
   return (
     <div className="container mx-auto w-[20%]">
-      <div className="flex-col h-screen mt-20 justify-center">
-        <h1 className="flex justify-center text-3xl text-center mt-6 font-extrabold underline text-blue-950 dark:text-slate-300">Add Payment Profile</h1>
+
+        <div className="flex-col h-screen mt-20 justify-center">
+        <h1 className=" flex justify-center text-3xl text-center mt-6 font-extrabold underline text-blue-950 dark:text-slate-300">Add Payment Profile</h1>
         <div className="flex p-3 w-[100%] mx-auto flex-col md:flex-row md:items-center gap-20 md:gap-20 mt-10">
-          <form className="flex flex-col gap-4 w-full justify-center" onSubmit={handleSubmit}>
+          <form className="flex flex-col gap-4 w-full justify-center">
             <div>
-              <Label value="Username"/>
-              <TextInput type="text" placeholder="Username" id="ownerUsername" value={ownerUsername} onChange={handleChange} />
+              <Label  value="Username"/>
+              <TextInput type="text"  placeholder="Username" />
             </div>
             <div>
-              <Label value="HouseNumber"/>
-              <TextInput type="text" placeholder="HouseNumber" id="ownerhousenumber"value={ownerhousenumber} onChange={handleChange} />
+              <Label  value="Email"/>
+              <TextInput type="email"  placeholder="Username" />
             </div>
             <div>
-              <Label value="Password"/>
-              <TextInput type={showPassword ? "text" : "password"} placeholder="*************" id="password"  value ={password} onChange={handleChange} />
-              {showPassword ? (<BsFillEyeSlashFill className='absolute right-3 top-9 text-md cursor-pointer' onClick={() => setShowPassword((prevState) => !prevState)}/>) : (<BsFillEyeFill className='absolute right-3 top-9 text-md cursor-pointer' onClick={() => setShowPassword((prevState) => !prevState)}/>)}
+              <Label  value="Gender"/>
+              <Select>
+                <option value="Select">Select a Category</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </Select>
             </div>
             <div className="flex items-center gap-2">
-              <Checkbox id="agree" onChange={handleChange} />
+              <Checkbox id="agree" />
               <Label htmlFor="agree" className="flex">
                 I agree with the&nbsp;
-                <Link to="#" className="text-cyan-600 hover:underline dark:text-cyan-500">
+                <Link href="#" className="text-cyan-600 hover:underline dark:text-cyan-500">
                   terms and conditions
                 </Link>
               </Label>
             </div>
-            <Button type="submit" gradientDuoTone='purpleToBlue' disabled={loading}>
-              {loading ? 'Submitting...' : 'Submit'}
+            <Button type="submit" gradientDuoTone='purpleToBlue' >
+                Submit
             </Button>
           </form>
-          {
-            errorMessage && (
-              <Alert className="mt-7 py-3 bg-gradient-to-r from-red-100 via-red-300 to-red-400 shadow-shadowOne text-center text-red-600 text-base tracking-wide animate-bounce">{errorMessage}</Alert>
-            )
-          }
         </div>
-      </div>
     </div>
-  );
-};
+    </div>
 
-export default AddPaymentProfile;
+  )
+}
+
+export default AddPaymentProfile

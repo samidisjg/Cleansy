@@ -23,7 +23,7 @@ const ServiceListingSchema = new mongoose.Schema(
       required: true,
     },
     serviceAvailability: {
-      type: Boolean,
+      type: String,
       required: true,
     },
     servicePhone: {

@@ -194,9 +194,7 @@ const MarketPlace = () => {
                                           <AiOutlineHeart size={22}  onClick={() => addToWishListHandler(resource)}  className='cursor-pointer' title="Add to wishlist"  />
                                        )
                                     }
-                                    <Link to={`/sharedResource/${resource.slug}`}>
-                                       <AiOutlineEye size={22} title="Quick view"/>
-                                    </Link>
+                                    <AiOutlineEye size={22} title="Quick view"/>
                                     <AiOutlineShoppingCart size={22} title="Add to cart" onClick={() => addToCartHandler(resource._id)} className='cursor-pointer' />
                                  </div>
                               </div>
