@@ -23,7 +23,7 @@ const AmenityCreate = () => {
         amenityDescription: '',
         imageURLs: [],
         amenityLocation: '',
-        amenityCapacity: 500,
+        amenityCapacity: 0,
         amenityAvailableTimes: '',
         amenityPrice: '',
         amenityStatus: "Unavailable",

@@ -291,7 +291,7 @@ const BookAmenity = () => {
           <div>
             <Label htmlFor="contact" >Resident Contact:</Label>
             <TextInput
-              type="tel"
+              type="number"
               id="residentContact"
               name="residentContact"
               required
