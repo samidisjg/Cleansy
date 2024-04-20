@@ -102,7 +102,7 @@ const CreateAnnouncementForm = () => {
                         </Label>
                         <Label className="flex flex-col">
                             <span className="text-sm font-semibold mb-1 text-black">Content:</span>
-                            <Textarea name="Content" value={formData.Content} onChange={handleChange} className="px-4 py-2 rounded-lg border-gray-300 bg-transparent focus:outline-none focus:border-blue-500 text-white" />
+                            <Textarea name="Content" value={formData.Content} onChange={handleChange} className="px-4 py-2 rounded-lg border-gray-300 bg-transparent focus:outline-none focus:border-blue-500 text-black" />
                         </Label>
                         <Label className="flex flex-col">
                             <span className="text-sm font-semibold mb-1 text-black">Category ID:</span>

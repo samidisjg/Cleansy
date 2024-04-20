@@ -69,6 +69,7 @@ const Dashboard = () => {
       {tab === "maintenance" && <DashMaintenance />}
       {/* Announcement */}
       {tab === "announsmentList" && <AdminDashboard/>}
+      
 
        {/* amenity */}
       {tab == 'amenity' && <DashAmenity/>}
