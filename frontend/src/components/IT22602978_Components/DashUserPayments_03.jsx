@@ -9,11 +9,10 @@ const DashPayments_03 = () => {
   return (
     <div>
       <div>
-        <div>
-          <div>
-          <AllPaymentProfiles />
+        <div > {/* Center content horizontally */}
+          <div className='bg-gray-300 p-3 rounded-lg m-4'>
+            <AllPaymentProfiles />
           </div>
-          
         </div>
       </div>
     </div>
