@@ -13,9 +13,14 @@ function StaffAttendanceView_04({ currentUser }) {
       const response = await fetch(
         `/api/StaffAttendance/getAttendance/${userId}`
       );
-      const data = await response.json();
-      // Set attendance records to the state
-      setAttendanceRecords(data);
+      if (response.ok) {
+        const data = await response.json();
+        // Set attendance records to the state
+        setAttendanceRecords(data);
+      } else {
+        // If response is not OK, set attendance records to an empty array
+        setAttendanceRecords([]);
+      }
     } catch (error) {
       console.error("Error fetching attendance records:", error);
     }

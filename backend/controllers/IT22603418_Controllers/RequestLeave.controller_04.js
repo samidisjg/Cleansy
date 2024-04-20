@@ -38,52 +38,7 @@ export const getRequestLeave = async (req, res, next) => {
    }
 }
 
-//Update Leave Request
-export const updateRequestLeave = async (req, res) => {
-   const requestId = req.body._id;
-   const requestData = req.body; // Updated data sent from the frontend
 
-   try {
-       // Find the leave request by ID and update it in the database
-       const updatedRequest = await RequestLeave.findByIdAndUpdate(requestId, requestData, { new: true });
 
-       if (!updatedRequest) {
-           return res.status(404).json({ success: false, message: 'Leave request not found' });
-       }
 
-       // If the request was successfully updated, send a success response
-       res.status(200).json({ success: true, message: 'Leave request updated successfully', data: updatedRequest });
-   } catch (error) {
-       // If an error occurs during the update process, send an error response
-       console.error('Error updating leave request:', error);
-       res.status(500).json({ success: false, message: 'An error occurred while updating leave request' });
-   }
-};
 
-//Delete Leave Request
-export const deleteRequestLeave = async (req, res, next) => {
-   try {
-     const { _id } = req.params; // Correctly access _id from req.params
-     await RequestLeave.findByIdAndDelete(_id);
-     return res.status(200).json({
-       success: true,
-       message: "Leave Request deleted",
-     });
-   } catch (error) {
-     next(error);
-   }
-};
-
-// Controller function to get the count of requests for a specific user
-export const getRequestCount = async (req, res) => {
-   try {
-       // Fetch the count of requests for the specified user from the database
-       const requestCount = await RequestLeave.countDocuments({ staffID: req.params.staffID });
-
-       // Respond with the request count
-       res.json({ count: requestCount });
-   } catch (error) {
-       console.error("Error fetching request count:", error);
-       res.status(500).json({ error: 'Internal Server Error' });
-   }
-};
