@@ -113,7 +113,7 @@ function App() {
               <Route path='/games' element={<GamePage_02 />}/>
               <Route path='/team' element={<Team />}/>
               <Route path='/contact' element={<Contact />}/>
-
+              
               <Route path="/admin" element ={<AdminDashboard/>} />
               <Route path="/admin/update" element ={<UpdateAnnouncementForm/>} />
               <Route path="/admin/create" element ={<CreateAnnouncementForm/>} />
