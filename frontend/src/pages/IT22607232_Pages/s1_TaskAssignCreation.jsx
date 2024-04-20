@@ -21,6 +21,7 @@ const TaskAssign = () => {
   const [formData, setFormData] = useState({
     TaskID: "",
     Category: "",
+    AssignDate:"",
     Name: "",
     Description: "",
     WorkGroupID: "",
@@ -30,16 +31,19 @@ const TaskAssign = () => {
 
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  
   console.log(formData);
+
+  
 
   const handleChange = (e) => {
     let boolean = null; // Declare boolean variable here
 
-    //handle datepicker change event
+   
     if (e.target.name === "Date") {
       setFormData({
         ...formData,
-        [e.target.name]: e.target.value, // assuming datepicker returns a string
+        date: formattedDate,
       });
     } else {
       if (e.target.value === "true") {
@@ -51,7 +55,8 @@ const TaskAssign = () => {
       if (
         e.target.type === "number" ||
         e.target.type === "text" ||
-        e.target.type === "textarea"
+        e.target.type === "textarea" ||
+        e.target.type === "date"
       ) {
         setFormData({
           ...formData,
@@ -103,8 +108,8 @@ const TaskAssign = () => {
       TaskID: generatedID,
     }));
   }, []);
-  
-  
+
+ 
    
   return (
     <div className="min-h-screen mt-20">
@@ -143,6 +148,18 @@ const TaskAssign = () => {
               <option value="Pest Control">Pest Control</option>
               <option value="Janitorial">Janitorial</option>
             </Select>
+          </div>
+
+          <div>
+            <Label value="Date"/>
+            <TextInput
+              type="date"
+              id="AssignDate"
+              min={new Date().toISOString().split('T')[0]}
+              name="AssignDate"
+              required
+              onChange={handleChange}
+            />
           </div>
 
          

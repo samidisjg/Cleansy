@@ -94,6 +94,10 @@ const DashMaintenance = () => {
             <Button pill>
               <Link to="/task-tracker">Analyse the tasks</Link>
             </Button>
+
+            <Button pill>
+              <Link to="/task-estimate">Work Estimation</Link>
+            </Button>
           </div>
 
           <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-3 mb-6 gap-10">

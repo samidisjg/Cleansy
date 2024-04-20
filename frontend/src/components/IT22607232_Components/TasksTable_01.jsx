@@ -73,6 +73,7 @@ const TasksTable_01 = () => {
       "Date",
       "Task ID",
       "Category",
+      "AssignDate",
       "Name",
       "Description",
       "WorkGroupID",
@@ -87,6 +88,7 @@ const TasksTable_01 = () => {
         new Date(task.updatedAt).toLocaleDateString(),
         task.TaskID,
         task.Category,
+        task.AssignDate,
         task.Name,
         task.Description,
         task.WorkGroupID,
@@ -125,6 +127,7 @@ const TasksTable_01 = () => {
               <Table.HeadCell>Date</Table.HeadCell>
               <Table.HeadCell>Task ID</Table.HeadCell>
               <Table.HeadCell>Category</Table.HeadCell>
+              <Table.HeadCell>AssignDate</Table.HeadCell>
               <Table.HeadCell>Name</Table.HeadCell>
               <Table.HeadCell>Description</Table.HeadCell>
               <Table.HeadCell>WorkGroupID</Table.HeadCell>
@@ -149,6 +152,7 @@ const TasksTable_01 = () => {
                   </Table.Cell>
                   <Table.Cell>{task.TaskID}</Table.Cell>
                   <Table.Cell>{task.Category}</Table.Cell>
+                  <Table.Cell>{task.AssignDate}</Table.Cell>
                   <Table.Cell>{task.Name}</Table.Cell>
                   <Table.Cell>{task.Description}</Table.Cell>
                   <Table.Cell>{task.WorkGroupID}</Table.Cell>

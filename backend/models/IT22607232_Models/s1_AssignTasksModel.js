@@ -9,7 +9,10 @@ const TaskAssignSchema = new mongoose.Schema({
       type: String,
       required: true,
    },
-   
+   AssignDate: {
+      type: Date,
+      required: true
+  },
    Name: {
       type: String,
       required: true,

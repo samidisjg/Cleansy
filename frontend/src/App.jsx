@@ -45,6 +45,7 @@ import BookingUpdate_05 from './pages/IT22003546_Pages/BookingUpdate_05'
 import ResidentServiceView from './components/IT22350114_Components/ServiceResidentView_06'
 import DashServiceList_06 from './components/IT22350114_Components/DashServiceList_06'
 import TaskTracker_01 from './components/IT22607232_Components/TaskTracker_01'
+import  WorkEstimation_01 from './pages/IT22607232_Pages/WorkEstimation_01'
 
 function App() {
   return (
@@ -89,6 +90,7 @@ function App() {
                 <Route path="/dashboard/service-list/:serviceID" element={<DashServiceList_06 />} />
                 <Route path="/service-User:serviceID" element={<ResidentServiceView/>} />
                 <Route path="/task-tracker" element={<TaskTracker_01/>} />
+                <Route path="/task-estimate" element={<WorkEstimation_01/>} />
 
 
               </Route>
