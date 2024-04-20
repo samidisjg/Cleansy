@@ -11,7 +11,7 @@ export default function Form_01() {
   const [formData, setFormData] = useState({
     TaskID: "",
     Category: "",
-    noTasks: "",
+    NumTasks: "",
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -33,7 +33,7 @@ export default function Form_01() {
       setLoading(true);
       setError(null);
 
-      const res = await fetch("/api/taskAssign/create", {
+      const res = await fetch("api/taskAnalysis/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -91,11 +91,11 @@ export default function Form_01() {
             <Label value="Number of Tasks" />
             <TextInput
               type="number"
-              name="noTasks"
+              name="NumTasks"
               placeholder="# of Tasks"
               required
               onChange={handleChange}
-              value={formData.noTasks}
+              value={formData.NumTasks}
             />
           </div>
           <Button

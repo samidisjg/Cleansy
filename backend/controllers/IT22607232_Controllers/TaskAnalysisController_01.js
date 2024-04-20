@@ -14,3 +14,16 @@ export const createTaskAnalysis = async (req, res, next) => {
         next(error);
     }
 };
+// Get ALL Tasks
+export const allTasksAnalysis = async (req, res, next) => {
+    try {
+        const Analysis = await TaskAnalysisModel.find();
+        if (!Analysis || Analysis.length === 0) {
+            return res.status(404).json({ msg: "Tasks not found" });
+        }
+        res.status(200).json(Analysis);
+    } catch (error) {
+        next(error); // Forward the error to the error handling middleware
+    }
+};
+
