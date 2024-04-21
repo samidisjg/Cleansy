@@ -62,7 +62,7 @@ const generatePDF = () => {
   };
 
   return (
-  <div>
+
    <div className="w-full table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
    <h1 className='text-center mb-5 font-extrabold text-3xl underline'>Announcements</h1>
    <SearchBar onChange={handleSearchChange} /> 
@@ -102,11 +102,12 @@ const generatePDF = () => {
            </Table.Body>
        </Table>
    {/* )} */}
-</div>
-    <div className="text-center mt-5">
+   <div className="text-center mt-5">
        <button onClick={generatePDF} className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline">Generate PDF</button>
     </div>
 </div>
+   
+
   )
 }
 

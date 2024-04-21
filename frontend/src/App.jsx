@@ -52,8 +52,7 @@ import AnnouncementDetails from './pages/IT22196460_Pages/AnnouncementDetails';
 import AnnouncementList from './pages/IT22196460_Pages/AnnouncementList';
 import UpdateAnnouncementForm from './pages/IT22196460_Pages/UpdateAnnouncementForm';
 import CreateAnnouncementForm from './pages/IT22196460_Pages/CreateAnnouncementForm';
-
-
+import DeleteAnnouncementform from "./components/IT22196460_Components/DeleteAnnouncementform";
 
 
 
@@ -120,6 +119,8 @@ function App() {
               <Route path="/admin/create" element ={<CreateAnnouncementForm/>} /> 
               <Route path="/" element ={<AnnouncementList/>} />
               <Route path="/announcement/:id" element = {<AnnouncementDetails/>} />
+              <Route path="/delete-announcement/:id" element={<DeleteAnnouncementform/>}/>
+
               
             </Routes>
 
