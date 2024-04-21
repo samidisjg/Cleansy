@@ -84,13 +84,13 @@ const RatingWorkGroup_01 = () => {
                 className="group relative w-full border border-teal-500 overflow-hidden rounded-lg sm:w-[330px] transition-all"
               >
                 <div className="flex flex-wrap gap-2">
-                  <Button pill onClick={() => handleRating(task._id)}>
+                  <Button gradientDuoTone='purpleToBlue'  pill onClick={() => handleRating(task._id)}>
                     {/* Check if the task has been rated */}
                     {ratedTasks.includes(task._id) ? (
                       <span className="text-green-500">Rated</span>
                     ) : (
                       <Link
-                        className="text-teal-500 hover:underline"
+                        // className=" hover:underline"
                         to={`/rate-tasks/${task._id}`}
                       >
                         Go to Rate

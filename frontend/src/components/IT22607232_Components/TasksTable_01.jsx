@@ -140,9 +140,7 @@ const TasksTable_01 = () => {
               <Table.HeadCell>
                 <span>Edit</span>
               </Table.HeadCell>
-              <Table.HeadCell onClick={handleDownloadPDF}>
-                Download PDF
-              </Table.HeadCell>
+              
             </Table.Head>
             {showTasks.map((task) => (
               <Table.Body key={task._id} className="divide-y">
@@ -179,6 +177,11 @@ const TasksTable_01 = () => {
               </Table.Body>
             ))}
           </Table>
+
+          <Button onClick={handleDownloadPDF}
+                >
+Download PDF
+          </Button>
           <p className="text-red-700 mt-5">
             {showTasksError ? "Error fetching tasks" : ""}
           </p>
