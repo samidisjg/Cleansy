@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Alert, Button, Label, TextInput, Textarea } from 'flowbite-react'; // Assuming these components are available
 
+
 const CreateAnnouncementForm = () => {
     const [formData, setFormData] = useState({
         Announcement_ID: generateAnnouncement_ID(),
@@ -29,10 +30,18 @@ const CreateAnnouncementForm = () => {
                 throw new Error('Title and Content are required.');
             }
 
-            const res = await fetch('/api/announcements/create', {
+            const token = localStorage.getItem('access_token'); // Assuming you stored the token in localStorage
+
+            if (!token) {
+                throw new Error('JWT token not found.');
+            }
+            
+            const res = await fetch('http://localhost:5173/api/announcements/create', {
                 method: 'POST',
                 headers: {
+                    ///api/announcements
                     'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ${token}', // Include your API key here
                 },
                 body: JSON.stringify(formData),
             });

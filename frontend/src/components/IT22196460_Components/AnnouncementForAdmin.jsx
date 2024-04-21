@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Table } from 'flowbite-react';
 import { Link } from 'react-router-dom';
-import SearchBar from './SearchBar'; // Import the SearchBar component
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import SearchBar from './SearchBar';
+import PDFAnnouncementForm from './PDFAnnouncementForm';
 
 const AnnouncementForAdmin = () => {
    const [announcements, setAnnouncements] = useState([]);
@@ -50,22 +50,18 @@ const AnnouncementForAdmin = () => {
     history.push(`/announcements/${id}/edit`, { announcement: announcementToUpdate });
 };
 
-const generatePDF = () => {
-    html2canvas(tableRef.current).then(canvas => {
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF();
-      const imgWidth = 210;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-      pdf.save('announcement_report.pdf');
-    });
-  };
 
   return (
-
    <div className="w-full table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
    <h1 className='text-center mb-5 font-extrabold text-3xl underline'>Announcements</h1>
-   <SearchBar onChange={handleSearchChange} /> 
+   <input
+  type="text"
+  placeholder="Search by title"
+  value={searchQuery}
+  onChange={(e) => setSearchQuery(e.target.value)}
+  className="border border-gray-300 rounded px-4 py-2 mb-4 w-full"
+/>
+
    {/* {loading ? (
        <p>Loading...</p>
    ) : ( */}
@@ -102,12 +98,15 @@ const generatePDF = () => {
            </Table.Body>
        </Table>
    {/* )} */}
-   <div className="text-center mt-5">
-       <button onClick={generatePDF} className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline">Generate PDF</button>
-    </div>
-</div>
-   
+   <PDFDownloadLink
+  document={<PDFAnnouncementForm announcements={announcements} />}
+  fileName="announcement_list.pdf"
+  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+>
+  {({ loading }) => (loading ? "Loading document..." : "Download PDF")}
+</PDFDownloadLink>
 
+</div>
   )
 }
 
