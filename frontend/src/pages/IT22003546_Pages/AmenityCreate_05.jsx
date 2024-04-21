@@ -39,42 +39,42 @@ const AmenityCreate = () => {
     const handleChange = (e) => {
         const { name, value, type } = e.target;
     
-        // Initialize variable to hold the processed value
+        
         let processedValue = value;
     
-        // Handle boolean conversion for specific string values
+        
         if (value === "true" || value === "false") {
             processedValue = value === "true";
         }
         
 
-        // Specific validation for the amenityPrice field to ensure no negative values
+        
         if (name === "amenityPrice" && type === "number") {
             if (parseFloat(value) < 0) {
                 console.log("Invalid input for Price: no negative values allowed.");
-                return; // Stop processing if validation fails
+                return; 
             }
         }
 
-        // Specific validation for the duration field to ensure no negative values
+        
         if (name === "amenityCapacity" && type === "number") {
             if (parseFloat(value) < 0) {
                 console.log("Invalid input for Capacity: no negative values allowed.");
-                return; // Stop processing if validation fails
+                return; 
             }
         }
 
-        // Check if the input is 'amenityTitle' and of type 'text'
+        
         if (name === "amenityTitle" && type === "text") {
-            const onlyLetters = /^[A-Za-z]+$/;  // Regular expression to match only letters
+            const onlyLetters = /^[A-Za-z]+$/;  
             if (!(value === "" || onlyLetters.test(value))) {
-                // Optionally, alert the user, show an error, or simply ignore the input
+                
                 console.log("Invalid input for Amenity Name: only letters are allowed.");
-                return; // Stop processing if validation fails
+                return; 
             }
         }
     
-        // Set the state with either the processed value or the original value depending on the type
+        
         setFormData(prevState => ({
             ...prevState,
             [name]: processedValue

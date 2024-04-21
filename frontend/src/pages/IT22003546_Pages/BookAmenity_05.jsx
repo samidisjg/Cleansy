@@ -158,49 +158,48 @@ const BookAmenity = () => {
   const handleChange = (e) => {
     const { name, value, type } = e.target;
 
-    // Initialize variable to hold the processed value
+  
     let processedValue = value;
 
-    // Handle boolean conversion for specific string values
+    
     if (value === "true" || value === "false") {
         processedValue = value === "true";
     }
 
-    // Specific validation for the duration field to ensure no negative values
+   
     if (name === "duration" && type === "number") {
         if (parseFloat(value) < 0) {
             alert("Invalid input for Duration: no negative values allowed.");
-            return; // Stop processing if validation fails
+            return; 
         }
     }
 
-    // Validation for the residentName field: allow only letters and spaces
     if (name === "residentName" && type === "text") {
-        const onlyLettersAndSpaces = /^[A-Za-z\s]+$/;  // Regular expression to match only letters and spaces
+        const onlyLettersAndSpaces = /^[A-Za-z\s]+$/;  
         if (!onlyLettersAndSpaces.test(value)) {
             alert("Invalid input for Resident Name: only letters and spaces are allowed.");
-            return; // Stop processing if validation fails
+            return; 
         }
     }
 
-    // Validation for the residentContact field: allow only positive integers
+    
     if (name === "residentContact" && type === "number") {
         if (parseInt(value) <= 0 || !Number.isInteger(parseFloat(value))) {
             alert("Invalid input for Resident Contact: please enter a positive integer.");
-            return; // Stop processing if validation fails
+            return; 
         }
     }
 
-    // Custom validation for the bookingTime field based on availableTimes
+    
     if (name === "bookingTime" && availableTimes.length === 2) {
         const [startTime, endTime] = availableTimes;
         if (value < startTime || value > endTime) {
             alert("Please select a time within the available range.");
-            return; // Stop processing if validation fails
+            return; 
         }
     }
 
-    // Set the state with the processed value
+    
     setFormData(prevState => ({
         ...prevState,
         [name]: processedValue
