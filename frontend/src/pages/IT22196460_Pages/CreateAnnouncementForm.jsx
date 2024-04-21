@@ -30,18 +30,18 @@ const CreateAnnouncementForm = () => {
                 throw new Error('Title and Content are required.');
             }
 
-            const token = localStorage.getItem('access_token'); // Assuming you stored the token in localStorage
+            // const token = localStorage.getItem('access_token'); // Assuming you stored the token in localStorage
 
-            if (!token) {
-                throw new Error('JWT token not found.');
-            }
+            // if (!token) {
+            //     throw new Error('JWT token not found.');
+            // }
             
-            const res = await fetch('http://localhost:5173/api/announcements/create', {
+            const res = await fetch('/api/announcements/create', {
                 method: 'POST',
                 headers: {
                     ///api/announcements
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ${token}', // Include your API key here
+                    // 'Authorization': 'Bearer ${token}', // Include your API key here
                 },
                 body: JSON.stringify(formData),
             });
