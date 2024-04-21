@@ -20,6 +20,7 @@ import BookingList_05 from "../components/IT22003546_Components/BookingList_05";
 
 import StaffAdminDash_04 from "./IT22603418_Pages/StaffAdminDash_04";
 import StaffAttendance_04 from "./IT22603418_Pages/StaffAttendance_04";
+import VisitorAdminPage from "./IT22561466_Pages/VisitorAdminPage";
 //import FaceRecognition_04 from "./IT22603418_Pages/faceRecognition_04";
 
 const Dashboard = () => {

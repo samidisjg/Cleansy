@@ -18,6 +18,7 @@ import { useSelector } from "react-redux";
 import { GrResources } from "react-icons/gr";
 import { FaPersonCircleCheck } from "react-icons/fa6";
 import { BsPersonPlusFill } from "react-icons/bs";
+import { FaCar } from "react-icons/fa";
 
 
 
@@ -248,7 +249,7 @@ const DashSidebar = () => {
             <Link to ='/add-visitors'>
                 <Sidebar.Item  icon={BsPersonPlusFill} as='div'>
                   Add Visitors
-                   </Sidebar.Item>
+                </Sidebar.Item>
             </Link>
 
           {currentUser.isFacilityAdmin && (
@@ -302,15 +303,16 @@ const DashSidebar = () => {
               {/* STAFF PART END*/}
             </>
           )}
-          <Link to="/add-visitors">
-            <Sidebar.Item icon={HiUser} as="div">
-              Add Visitors
-            </Sidebar.Item>
-          </Link>
 
           <Link to="/dashboard?tab=bookings">
             <Sidebar.Item active={tab === "bookings"} icon={HiUser} as="div">
               Bookings
+            </Sidebar.Item>
+          </Link>
+
+          <Link to="/car-park">
+            <Sidebar.Item  icon={FaCar} as="div">
+            Request Car park
             </Sidebar.Item>
           </Link>
 

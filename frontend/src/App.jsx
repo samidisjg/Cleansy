@@ -49,6 +49,10 @@ import DashServiceList_06 from './components/IT22350114_Components/DashServiceLi
 import ServiceUpdate_06 from './pages/IT22350114_Pages/ServiceUpdate_06'
 import Updatepaymentpage_03 from "./pages/IT22602978_Pages/Updatepaymentpage_03";
 import FinalAdminPayments_03 from "./pages/IT22602978_Pages/FinalAdminPayments_03";
+import VisitorAdminPage from "./pages/IT22561466_Pages/VisitorAdminPage";
+import searchVisitor from './pages/IT22561466_Pages/VisitorAdminPage'
+import SearchVisitors from "./pages/IT22561466_Pages/SearchVisitors";
+import RequestCarPark from "./pages/IT22561466_Pages/RequestCarPark";
 
 
 function App() {
@@ -65,6 +69,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/sign-in" element={<SignIn />} />
             <Route path="/sign-up" element={<SignUp />} />
+            <Route path="/search" element={<SearchVisitors />} />
             <Route element={<PrivateRoute />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route
@@ -145,6 +150,7 @@ function App() {
               />
                   <Route path='/visitorListing/:visitorListingId' element={<VisitorDetails/>}/>
                  <Route path="/update-list/:visitorListingId" element={<UpdateVisitorListing/>} />
+                 <Route path="/car-park" element={<RequestCarPark />} />
             </Route>
             <Route element={<OnlyPropertyAdminPrivateRoute_02 />}>
               <Route
@@ -175,6 +181,9 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             {/* <Route path='/create_04' element={<RequestLeave_04/>}/>
               <Route path='/delete_04' element={<RequestDetails_04/>}/> */}
+
+            <Route path="/admin-page" element={<VisitorAdminPage />} />
+            <Route path="/searchVisitor" element={<VisitorAdminPage />} />
           </Routes>
         </div>
         <Footer />
