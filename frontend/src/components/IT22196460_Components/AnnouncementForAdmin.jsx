@@ -28,7 +28,7 @@ const AnnouncementForAdmin = () => {
 
     const deleteAnnouncement = async (id) => {
       try {
-          await axios.delete(`/api/Announcement/${id}`);
+          await axios.delete(`/api/announcements/delete/${id}`);
           setAnnouncements(announcements.filter(announcement => announcement._id !== id));
       } catch (error) {
           console.error('Error deleting announcement:', error);
@@ -47,7 +47,7 @@ const AnnouncementForAdmin = () => {
 
   const handleUpdateAnnouncement = (id) => {
     const announcementToUpdate = announcements.find((announcement) => announcement._id === id);
-    history.push(`/announcements/${id}/edit`, { announcement: announcementToUpdate });
+    history.push(`api/announcements/update/${id}`, { announcement: announcementToUpdate });
 };
 
 
@@ -90,6 +90,7 @@ const AnnouncementForAdmin = () => {
                        <Table.Cell>{announcement.Category_ID}</Table.Cell>
                        <Table.Cell>{announcement.Attachment_URL}</Table.Cell>
                        {/* <Table.Cell>{announcement.Create_At}</Table.Cell> */}
+                       {console.log(announcement._id)}
                        <Table.Cell>{new Date(announcement.Create_At).toLocaleDateString()}</Table.Cell>
                        <Table.Cell className='flex gap-4'>
                            <button onClick={() => deleteAnnouncement(announcement._id)} className='font-medium text-red-500 hover:underline cursor-pointer'>Delete</button>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Alert, Button, Label, TextInput, Textarea } from 'flowbite-react'; // Assuming these components are available
+import { useNavigate } from 'react-router-dom';
 
 
 const CreateAnnouncementForm = () => {
@@ -15,6 +16,7 @@ const CreateAnnouncementForm = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState(false);
+    const navigate = useNavigate();
 
     const handleChange = e => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -46,23 +48,9 @@ const CreateAnnouncementForm = () => {
                 body: JSON.stringify(formData),
             });
             const data = await res.json();
-            if (data.success) {
-                setSuccess(true);
-                setError('');
-                setTimeout(() => {
-                    setSuccess(false);
-                    setFormData({
-                        Announcement_ID: generateAnnouncement_ID(),
-                        Title: '',
-                        Content: '',
-                        Category_ID: '',
-                        Attachment_URL: '',
-                        Create_At: new Date().toISOString()
-                    });
-                }, 3000);
-            } else {
-                setError('Failed to create announcement');
-            }
+            setFormData(data)
+            navigate('/dashboard?tab=announcement')
+            
         } catch (error) {
             console.error('Error creating announcement:', error.message);
             setError('An error occurred. Please try again later.');
