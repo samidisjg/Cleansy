@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Table, Button,Modal } from "flowbite-react";
+import { Table, Button, Modal } from "flowbite-react";
 import { Link } from "react-router-dom";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
-import { HiOutlineExclamationCircle } from 'react-icons/hi';
+import { HiOutlineExclamationCircle } from "react-icons/hi";
 
 const TasksTable_01 = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -12,7 +12,7 @@ const TasksTable_01 = () => {
   const [showTasks, setShowTasks] = useState([]);
   const dispatch = useDispatch();
   const [showModal, setShowModal] = useState(false);
-  const [taskIdToDelete, setTaskIdToDelete] = useState('');
+  const [taskIdToDelete, setTaskIdToDelete] = useState("");
 
   useEffect(() => {
     handleShowAssignments(); // Call the function directly when the component mounts
@@ -51,21 +51,22 @@ const TasksTable_01 = () => {
   const handleTasksDelete = async () => {
     try {
       const res = await fetch(`/api/taskAssign/delete/${taskIdToDelete}`, {
-        method: 'DELETE'
+        method: "DELETE",
       });
       const data = await res.json();
       if (!res.ok) {
         console.log(data.message);
         return;
       } else {
-        setShowTasks((prev) => prev.filter((task) => task._id !== taskIdToDelete));
+        setShowTasks((prev) =>
+          prev.filter((task) => task._id !== taskIdToDelete)
+        );
         setShowModal(false);
       }
     } catch (error) {
       console.log(error.message);
     }
-  }
-  
+  };
 
   const handleDownloadPDF = () => {
     const TaskAssign = new jsPDF();
@@ -140,7 +141,6 @@ const TasksTable_01 = () => {
               <Table.HeadCell>
                 <span>Edit</span>
               </Table.HeadCell>
-              
             </Table.Head>
             {showTasks.map((task) => (
               <Table.Body key={task._id} className="divide-y">
@@ -158,12 +158,15 @@ const TasksTable_01 = () => {
                   <Table.Cell>{task.DurationDays}</Table.Cell>
                   <Table.Cell>Inital</Table.Cell>
                   <Table.Cell>
-                    <span onClick={() => {
-                            setShowModal(true)
-                            setTaskIdToDelete(task._id)
-                          }} className='font-medium text-red-500 hover:underline cursor-pointer'>
-                            Delete
-                          </span>
+                    <span
+                      onClick={() => {
+                        setShowModal(true);
+                        setTaskIdToDelete(task._id);
+                      }}
+                      className="font-medium text-red-500 hover:underline cursor-pointer"
+                    >
+                      Delete
+                    </span>
                   </Table.Cell>
                   <Table.Cell>
                     <Link
@@ -177,11 +180,7 @@ const TasksTable_01 = () => {
               </Table.Body>
             ))}
           </Table>
-
-          <Button onClick={handleDownloadPDF}
-                >
-Download PDF
-          </Button>
+          <Button onClick={handleDownloadPDF}>Download PDF</Button>
           <p className="text-red-700 mt-5">
             {showTasksError ? "Error fetching tasks" : ""}
           </p>
@@ -200,22 +199,22 @@ Download PDF
         show={showModal}
         onClose={() => setShowModal(false)}
         popup
-        size='md'
+        size="md"
       >
         <Modal.Header />
         <Modal.Body>
-          <div className='text-center'>
-            <HiOutlineExclamationCircle className='h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto' />
-            <h3 className='mb-5 text-lg text-gray-500 dark:text-gray-400'>
+          <div className="text-center">
+            <HiOutlineExclamationCircle className="h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto" />
+            <h3 className="mb-5 text-lg text-gray-500 dark:text-gray-400">
               Are you sure you want to delete this task?
             </h3>
-            <div className='flex justify-center gap-4'>
-              <Button color='failure' onClick={handleTasksDelete}>
+            <div className="flex justify-center gap-4">
+              <Button color="failure" onClick={handleTasksDelete}>
                 Yes, I'm sure
               </Button>
-              <Button color='gray' onClick={() => setShowModal(false)}>
-  No, cancel
-</Button>
+              <Button color="gray" onClick={() => setShowModal(false)}>
+                No, cancel
+              </Button>
             </div>
           </div>
         </Modal.Body>
