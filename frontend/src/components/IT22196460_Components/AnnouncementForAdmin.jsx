@@ -10,6 +10,18 @@ const AnnouncementForAdmin = () => {
    const [announcements, setAnnouncements] = useState([]);
    const [searchQuery, setSearchQuery] = useState('');
    const tableRef = useRef(null);
+
+   const [Formdata, setFormdata] = useState({
+
+        Announcement_ID: '',
+        Title: '',
+        Content: '',
+        Category_ID: '',
+        Attachment_URL: '',
+        Create_At: '',
+    
+   });
+
    //  const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -18,7 +30,7 @@ const AnnouncementForAdmin = () => {
 
     const fetchAnnouncements = async () => {
         try {
-            const response = await axios.get('/api/announcements/read');
+            const response = await axios.get(`/api/announcements/read`);
             setAnnouncements(response.data);
             // setLoading(false);
         } catch (error) {
@@ -45,9 +57,11 @@ const AnnouncementForAdmin = () => {
     announcement.Title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleUpdateAnnouncement = (id) => {
+  const handleUpdateAnnouncement =async (id) => {
     const announcementToUpdate = announcements.find((announcement) => announcement._id === id);
-    history.push(`api/announcements/update/${id}`, { announcement: announcementToUpdate });
+    const res = await fetch(`api/announcements/update/${id}`, { announcement: announcementToUpdate });
+    const data = await res.json();
+    setFormdata(data);
 };
 
 
@@ -80,7 +94,7 @@ const AnnouncementForAdmin = () => {
                    <Table.HeadCell>Actions</Table.HeadCell>
            </Table.Head>
            <Table.Body className='divide-y'>
-               {announcements.map(announcement => (
+               {filteredAnnouncements.map(announcement => (
                 //    <tr key={announcement._id}>
                 <>
                     <Table.Row className='bg-white dark:border-gray-700 dark:bg-gray-800'>
@@ -94,7 +108,9 @@ const AnnouncementForAdmin = () => {
                        <Table.Cell>{new Date(announcement.Create_At).toLocaleDateString()}</Table.Cell>
                        <Table.Cell className='flex gap-4'>
                            <button onClick={() => deleteAnnouncement(announcement._id)} className='font-medium text-red-500 hover:underline cursor-pointer'>Delete</button>
-                           <button onClick={() => handleUpdateAnnouncement(announcement._id)} className="text-teal-500 hover:underline">Update</button>
+                           <Link to={'/admin/update'}>
+                                <button onClick={() => handleUpdateAnnouncement(announcement._id)} className="text-teal-500 hover:underline">Update</button>
+                           </Link>
                        </Table.Cell>
                     </Table.Row>
                 </>
