@@ -20,7 +20,7 @@ const AdminDashboard = () => {
                 <div className="bg-white rounded-lg shadow-md p-6">
                     <h2 className="text-xl font-semibold mb-4">Recent Announcement</h2>
                     <p className="text-gray-700 mb-4">View recent Announcements.</p>
-                    <Link to="/admin/manage" className="block bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md shadow-md transition duration-300 ease-in-out">Go to Recent Announcement page</Link>
+                    <Link to="/admin/manage" className="block bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md shadow-md transition duration-300 ease-in-out">Recent Announcement page</Link>
                 </div>
                 <div className="bg-white rounded-lg shadow-md p-6">
                     <h2 className="text-xl font-semibold mb-4">Update Announcements</h2>
@@ -30,7 +30,7 @@ const AdminDashboard = () => {
                 <div className="bg-white rounded-lg shadow-md p-6">
                     <h2 className="text-xl font-semibold mb-4">Upcoming Announcements</h2>
                     <p className="text-gray-700 mb-4">View Upcoming announcements.</p>
-                    <Link to="/admin/update" className="block bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-md shadow-md transition duration-300 ease-in-out">Go to Upcoming Announcements Page</Link>
+                    <Link to="/admin/update" className="block bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-md shadow-md transition duration-300 ease-in-out">Upcoming Announcements Page</Link>
                 </div>
             </div>
         </div>

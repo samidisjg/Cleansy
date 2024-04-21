@@ -62,6 +62,10 @@ const AnnouncementForAdmin = () => {
   className="border border-gray-300 rounded px-4 py-2 mb-4 w-full"
 />
 
+       <Link to="/create-announcement" className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-4 inline-block">
+           Create Announcement
+       </Link>
+
    {/* {loading ? (
        <p>Loading...</p>
    ) : ( */}
@@ -98,6 +102,7 @@ const AnnouncementForAdmin = () => {
            </Table.Body>
        </Table>
    {/* )} */}
+
    <PDFDownloadLink
   document={<PDFAnnouncementForm announcements={announcements} />}
   fileName="announcement_list.pdf"
@@ -105,8 +110,8 @@ const AnnouncementForAdmin = () => {
 >
   {({ loading }) => (loading ? "Loading document..." : "Download PDF")}
 </PDFDownloadLink>
-
 </div>
+
   )
 }
 

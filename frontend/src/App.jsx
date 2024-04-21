@@ -53,14 +53,14 @@ import AnnouncementList from './pages/IT22196460_Pages/AnnouncementList';
 import UpdateAnnouncementForm from './pages/IT22196460_Pages/UpdateAnnouncementForm';
 import CreateAnnouncementForm from './pages/IT22196460_Pages/CreateAnnouncementForm';
 import DeleteAnnouncementform from "./components/IT22196460_Components/DeleteAnnouncementform";
-
+import AnnouncementForAdmin from "./components/IT22196460_Components/AnnouncementForAdmin";
 
 
 function App() {
   return (
     <>
       <Router>
-        <ScrollToTop_02 />
+        <ScrollToTop_02 /> 
         <Header />
 
               
@@ -120,6 +120,8 @@ function App() {
               <Route path="/" element ={<AnnouncementList/>} />
               <Route path="/announcement/:id" element = {<AnnouncementDetails/>} />
               <Route path="/delete-announcement/:id" element={<DeleteAnnouncementform/>}/>
+              <Route exact path="/announcements" element={<AnnouncementForAdmin/>} />
+              <Route exact path="/create-announcement" element={<CreateAnnouncementForm/>} /> 
 
               
             </Routes>

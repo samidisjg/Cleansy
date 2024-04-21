@@ -281,13 +281,13 @@ const DashSidebar = () => {
 
           {currentUser.isAnnouncementAdmin && (
             <>
-              <Link to="/dashboard?tab=notification">
+              <Link to="/dashboard?tab=announcement">
                 <Sidebar.Item
-                  active={tab === "notification"}
+                  active={tab === "announsment"}
                   icon={HiOutlineUserGroup}
                   as="div"
                 >
-                  Notification
+                  Announcement
                 </Sidebar.Item>
               </Link>
             </>
@@ -360,11 +360,7 @@ const DashSidebar = () => {
             </Sidebar.Item>
           </Link>
 
-          <Link to="/dashboard?tab=announcement">
-            <Sidebar.Item active={tab === "announcement"} icon={HiUser} as="div">
-              Announcement
-            </Sidebar.Item>
-          </Link>
+          
           
           
           <Sidebar.Item
