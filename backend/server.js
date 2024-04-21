@@ -20,11 +20,14 @@ import amenitiesBookingRoutes from './routes/IT22003546_Routes/amenitiesBooking.
 import TaskAnalysisRoute from './routes/IT22607232_Routes/TaskAnalysisRoute_01.js';
 import taskcategoriesRoutes from './routes/IT22607232_Routes/taskcategoriesRoute_01.js';
 import tasklabelsRoutes from './routes/IT22607232_Routes/taskLabels_01.js';
+import cors from "cors";
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
+// Use the cors middleware
+app.use(cors());
 
 
 dbConnection();

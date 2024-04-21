@@ -5,7 +5,10 @@ export const createCategories = async (req, res, next) => {
   try {
     // Define the type and color from the backend
     const type = "Inprogress"; 
+    
     const color = "rgb(255, 205, 86)";   
+
+
 
     // Create a new category with the predefined type and color
     const newCategory = await TaskCategoryModel.create({ type, color });
