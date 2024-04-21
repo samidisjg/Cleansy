@@ -48,7 +48,7 @@ const AmenityDetails = () => {
         <Link
           to={"/amenity-User:amenityID"}
           className="text-black-500 font-semibold hover:underline"
-          style={{ display: "block", paddingTop: "4px" }}
+          style={{ display: "block", paddingTop: "1px" }}
         >
           ← Amenity
         </Link>

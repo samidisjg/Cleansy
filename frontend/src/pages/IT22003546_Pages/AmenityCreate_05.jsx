@@ -37,29 +37,51 @@ const AmenityCreate = () => {
     const navigate = useNavigate();
 
     const handleChange = (e) => {
-        let boolean = null;
-        if (e.target.value === "true") {
-            boolean = true;
+        const { name, value, type } = e.target;
+    
+        // Initialize variable to hold the processed value
+        let processedValue = value;
+    
+        // Handle boolean conversion for specific string values
+        if (value === "true" || value === "false") {
+            processedValue = value === "true";
         }
-        if (e.target.value === "false") {
-            boolean = false;
+        
+
+        // Specific validation for the amenityPrice field to ensure no negative values
+        if (name === "amenityPrice" && type === "number") {
+            if (parseFloat(value) < 0) {
+                console.log("Invalid input for Price: no negative values allowed.");
+                return; // Stop processing if validation fails
+            }
         }
-        if (
-            e.target.type === "number" ||
-            e.target.type === "text" ||
-            e.target.type === "textarea"
-        ) {
-            setFormData({
-                ...formData,
-                [e.target.name]: e.target.value,
-            });
-        } else {
-            setFormData({
-                ...formData,
-                [e.target.name]: boolean !== null ? boolean : e.target.value,
-            });
+
+        // Specific validation for the duration field to ensure no negative values
+        if (name === "amenityCapacity" && type === "number") {
+            if (parseFloat(value) < 0) {
+                console.log("Invalid input for Capacity: no negative values allowed.");
+                return; // Stop processing if validation fails
+            }
         }
+
+        // Check if the input is 'amenityTitle' and of type 'text'
+        if (name === "amenityTitle" && type === "text") {
+            const onlyLetters = /^[A-Za-z]+$/;  // Regular expression to match only letters
+            if (!(value === "" || onlyLetters.test(value))) {
+                // Optionally, alert the user, show an error, or simply ignore the input
+                console.log("Invalid input for Amenity Name: only letters are allowed.");
+                return; // Stop processing if validation fails
+            }
+        }
+    
+        // Set the state with either the processed value or the original value depending on the type
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: processedValue
+        }));
     };
+    
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();

@@ -37,7 +37,7 @@ const BookAmenity = () => {
 
   const [formData, setFormData] = useState({
     bookingDate: "",
-    bookingTime: "",
+    ime: "",
     duration: "",
     amenityId: "",
     amenityTitle: "",
@@ -156,30 +156,60 @@ const BookAmenity = () => {
 
 
   const handleChange = (e) => {
-    let boolean = null;
-    if (e.target.value === "true") {
-        boolean = true;
-    }
-    if (e.target.value === "false") {
-        boolean = false;
+    const { name, value, type } = e.target;
+
+    // Initialize variable to hold the processed value
+    let processedValue = value;
+
+    // Handle boolean conversion for specific string values
+    if (value === "true" || value === "false") {
+        processedValue = value === "true";
     }
 
-    if (e.target.name === "bookingTime" && availableTimes.length === 2) {
-      const [startTime, endTime] = availableTimes;
-      const selectedTime = e.target.value;
-      if (selectedTime < startTime || selectedTime > endTime) {
-        alert("Please select a time within the available range.");
-        return;
-      }
+    // Specific validation for the duration field to ensure no negative values
+    if (name === "duration" && type === "number") {
+        if (parseFloat(value) < 0) {
+            alert("Invalid input for Duration: no negative values allowed.");
+            return; // Stop processing if validation fails
+        }
     }
-    
-    setFormData({
-        ...formData,
-        [e.target.name]: boolean !== null ? boolean : e.target.value,
-        
-    });
 
-  };
+    // Validation for the residentName field: allow only letters and spaces
+    if (name === "residentName" && type === "text") {
+        const onlyLettersAndSpaces = /^[A-Za-z\s]+$/;  // Regular expression to match only letters and spaces
+        if (!onlyLettersAndSpaces.test(value)) {
+            alert("Invalid input for Resident Name: only letters and spaces are allowed.");
+            return; // Stop processing if validation fails
+        }
+    }
+
+    // Validation for the residentContact field: allow only positive integers
+    if (name === "residentContact" && type === "number") {
+        if (parseInt(value) <= 0 || !Number.isInteger(parseFloat(value))) {
+            alert("Invalid input for Resident Contact: please enter a positive integer.");
+            return; // Stop processing if validation fails
+        }
+    }
+
+    // Custom validation for the bookingTime field based on availableTimes
+    if (name === "bookingTime" && availableTimes.length === 2) {
+        const [startTime, endTime] = availableTimes;
+        if (value < startTime || value > endTime) {
+            alert("Please select a time within the available range.");
+            return; // Stop processing if validation fails
+        }
+    }
+
+    // Set the state with the processed value
+    setFormData(prevState => ({
+        ...prevState,
+        [name]: processedValue
+    }));
+};
+
+
+
+
 
 
   const handleSubmit = async (e) => {
