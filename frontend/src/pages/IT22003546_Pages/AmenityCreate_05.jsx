@@ -29,7 +29,7 @@ const AmenityCreate = () => {
         amenityStatus: "Unavailable",
     });
 
-    const { AmenityID, AmenityName, Description, Image, Location, Capacity, Availability, Price } = formData;
+    // const { AmenityID, AmenityName, Description, Image, Location, Capacity, Availability, Price } = formData;
     const [imageUploadError, setImageUploadError] = useState(false);
     const [uploading, setUploading] = useState(false);
     const [error, setError] = useState(false);
@@ -65,9 +65,11 @@ const AmenityCreate = () => {
         e.preventDefault();
         try {
             if(formData.imageURLs.length < 1) return setError('You must upload at least one image')
-            if (formData.amenityID === currentUser.AmenityID) return setError('AmenityID already exists');
+            if (formData.amenityID === currentUser.amenityID) return setError('AmenityID already exists');
             setLoading(true);
             setError(false);
+
+            console.log(formData.amenityID, currentUser.AmenityID);
 
             const payload = {
                 ...formData,

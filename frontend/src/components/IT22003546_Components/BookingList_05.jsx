@@ -261,17 +261,7 @@ const BookingList_05 = () => {
                                             <option value="Confirmed">Confirmed</option>
                                         </select>
                                     </Table.Cell>
-                                    {/* <Table.Cell>
-                                        <span onClick={() => handleBookingDelete(booking._id)} 
-                                        className="font-medium text-red-500 hover:underline cursor-pointer">Delete</span>
-                                    </Table.Cell>
-                                    <Table.Cell>
-                                        <Link
-                                            className="text-teal-500 hover:underline"
-                                            to = {`/update-booking/${booking._id}`}>
-                                                <span>Update</span>
-                                            </Link>
-                                    </Table.Cell> */}
+                                    
                                     <Table.Cell>
                                         {booking.imageUrls.map((imageUrl, index) => (
                                             <a key={index} href={imageUrl} target="_blank" rel="noopener noreferrer">
@@ -282,6 +272,17 @@ const BookingList_05 = () => {
                                             />
                                             </a>
                                         ))}
+                                    </Table.Cell>
+                                    <Table.Cell>
+                                        <span onClick={() => handleBookingDelete(booking._id)} 
+                                        className="font-medium text-red-500 hover:underline cursor-pointer">Delete</span>
+                                    </Table.Cell>
+                                    <Table.Cell>
+                                        <Link
+                                            className="text-teal-500 hover:underline"
+                                            to = {`/update-booking/${booking._id}`}>
+                                                <span>Update</span>
+                                            </Link>
                                     </Table.Cell>
                                 </Table.Row>
                             </Table.Body>
