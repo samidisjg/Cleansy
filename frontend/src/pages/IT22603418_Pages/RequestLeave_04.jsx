@@ -19,6 +19,7 @@ const RequestLeave_04 = () => {
     status: "pending review",
   });
   const {
+    staffID,
     staffName,
     email,
     phoneNo,
@@ -299,6 +300,17 @@ const RequestLeave_04 = () => {
         Leave Request Form
       </h1>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+        <div>
+          <Label value="Staff ID" />
+          <TextInput
+            type="text"
+            id="staffID"
+            placeholder={currentUser._id}
+            value={staffID}
+            onChange={handleChange}
+            disabled
+          />
+        </div>
         <div>
           <Label value="Staff Name" />
           <TextInput

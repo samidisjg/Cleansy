@@ -17,7 +17,7 @@ import AdminPayments_03 from "./IT22602978_Pages/AdminPayments_03";
 import AmenityList_05 from "../components/IT22003546_Components/AmenityList_05";
 import PropertyAdminDashboard_02 from "../components/IT22577160_Components/PropertyAdminDashboard_02";
 import RequestLeave_04 from "./IT22603418_Pages/RequestLeave_04";
-import StaffAdminDash_04 from "./IT22603418_Pages/StaffAdminDash_04";
+import AdminLeaveRequestHandle_04 from "../components/IT22603418_Components/AdminLeaveRequestHandle_04";
 import StaffAttendance_04 from "./IT22603418_Pages/StaffAttendance_04";
 //import FaceRecognition_04 from "./IT22603418_Pages/faceRecognition_04";
 
@@ -48,7 +48,7 @@ const Dashboard = () => {
       {tab === "leaveRequest" && <RequestLeave_04 />}
       {/* {tab === "faceRecognition" && <FaceRecognition_04 />} */}
       {tab === "staffAttendance" && <StaffAttendance_04 />}
-      {tab === "staffAdmin" && <StaffAdminDash_04 />}
+      {tab === "staffAdmin" && <AdminLeaveRequestHandle_04 />}
       {/* services */}
       {tab === "services" && <DashServices />}
       {/* Apartment List */}

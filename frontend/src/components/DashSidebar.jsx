@@ -225,7 +225,7 @@ const DashSidebar = () => {
                 </div>
               )}
 
-              {tab === "staffs" && (
+              {/* {tab === "staffs" && (
                 <div className="dropdown">
                   <Link to="/dashboard?tab=faceRecognition">
                     <Sidebar.Item active={tab === "faceRecognition"} as="div">
@@ -233,7 +233,7 @@ const DashSidebar = () => {
                     </Sidebar.Item>
                   </Link>
                 </div>
-              )}
+              )} */}
 
               {tab === "staffs" && (
                 <div className="dropdown">

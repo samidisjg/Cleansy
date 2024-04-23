@@ -328,26 +328,40 @@ function StaffAttendance_04() {
       <h1 className="text-3xl text-center my-7 font-extrabold underline text-blue-950 dark:text-slate-300">
         Staff Attendance
       </h1>
-      {!loggedIn && (
-        <Button onClick={handleLogin} gradientDuoTone="pinkToOrange">
-          {showLoginForm ? "Cancel" : "Login"}
-        </Button>
-      )}
-      {loggedIn && (
-        <>
-          <div className="flex justify-between">
-            <span>Staff ID: {currentUser._id}</span>
-            <span>Working Hours: {formatTime(timer)}</span>
-          </div>
-          <Button onClick={handleLogout} gradientDuoTone="pinkToOrange">
-            Logout
+      <div className="flex flex-row">
+        {!loggedIn && (
+          <Button
+            onClick={handleLogin}
+            gradientDuoTone="pinkToOrange"
+            className="m-2"
+          >
+            {showLoginForm ? "Cancel" : "Login"}
           </Button>
-        </>
-      )}
+        )}
+        {loggedIn && (
+          <>
+            <div className="flex flex-col justify-between p-3 bg-gray-200 border border-gray-300 rounded-md">
+              <span className="text-gray-700">Staff ID: {currentUser._id}</span>
+              <span className="text-gray-700">
+                Working Hours: {formatTime(timer)}
+              </span>
+            </div>
+            <Button
+              onClick={handleLogout}
+              gradientDuoTone="pinkToOrange"
+              className="m-2"
+            >
+              Logout
+            </Button>
+          </>
+        )}
+      </div>
+
       {/* generate report button */}
       <Button
         onClick={handleGenerateButtonClick}
         gradientDuoTone="pinkToOrange"
+        className="m-2"
       >
         Generate Report
       </Button>
