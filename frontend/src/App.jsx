@@ -19,7 +19,6 @@ import OnlyPropertyAdminPrivateRoute_02 from "./components/IT22577160_Components
 import CreateSharedResources_02 from "./pages/IT22577160_Pages/CreateSharedResources_02";
 import UpdateSharedResources_02 from "./pages/IT22577160_Pages/UpdateSharedResources_02";
 import Updatepaymentpage_03 from "./pages/IT22602978_Pages/Updatepaymentpage_03";
-
 import SharedResourcesPage_02 from "./pages/IT22577160_Pages/SharedResourcesPage_02";
 import ScrollToTop_02 from "./components/IT22577160_Components/ScrollToTop_02";
 import MarketPlace from "./pages/IT22577160_Pages/MarketPlace";
@@ -47,8 +46,9 @@ import BookingUpdate_05 from "./pages/IT22003546_Pages/BookingUpdate_05";
 import ResidentServiceView from "./components/IT22350114_Components/ServiceResidentView_06";
 import DashServiceList_06 from "./components/IT22350114_Components/DashServiceList_06";
 import FinalAdminPayments_03 from "./pages/IT22602978_Pages/FinalAdminPayments_03";
-import BookServiceCreate from './pages/IT22350114_Pages/BookServiceCreate_06';
-
+import BookServiceCreate from "./pages/IT22350114_Pages/BookServiceCreate_06";
+import UpdateVisitorListing from "./pages/IT22561466_Pages/UpdateVisitorListing";
+import VisitorDetails from "./pages/IT22561466_Pages/VisitorDetails";
 
 function App() {
   return (
@@ -84,8 +84,10 @@ function App() {
                 path="/service-User:serviceID"
                 element={<ResidentServiceView />}
               />
-              <Route path="/book-service/:serviceID" element={<BookServiceCreate />} />
-
+              <Route
+                path="/book-service/:serviceID"
+                element={<BookServiceCreate />}
+              />
 
               <Route path="/checkout" element={<CheckOutPage_02 />} />
               <Route path="/amenity-create" element={<AmenityCreate />} />
@@ -137,6 +139,14 @@ function App() {
               <Route
                 path="/service-User:serviceID"
                 element={<ResidentServiceView />}
+              />
+              <Route
+                path="/visitorListing/:visitorListingId"
+                element={<VisitorDetails />}
+              />
+              <Route
+                path="/update-list/:visitorListingId"
+                element={<UpdateVisitorListing />}
               />
             </Route>
             <Route element={<OnlyPropertyAdminPrivateRoute_02 />}>
