@@ -90,6 +90,7 @@ const TasksTable_01 = () => {
         task.TaskID,
         task.Category,
         task.AssignDate,
+        task.type,
         task.Name,
         task.Description,
         task.WorkGroupID,
@@ -129,6 +130,7 @@ const TasksTable_01 = () => {
               <Table.HeadCell>Task ID</Table.HeadCell>
               <Table.HeadCell>Category</Table.HeadCell>
               <Table.HeadCell>AssignDate</Table.HeadCell>
+              <Table.HeadCell>type</Table.HeadCell>
               <Table.HeadCell>Name</Table.HeadCell>
               <Table.HeadCell>Description</Table.HeadCell>
               <Table.HeadCell>WorkGroupID</Table.HeadCell>
@@ -151,6 +153,7 @@ const TasksTable_01 = () => {
                   <Table.Cell>{task.TaskID}</Table.Cell>
                   <Table.Cell>{task.Category}</Table.Cell>
                   <Table.Cell>{task.AssignDate}</Table.Cell>
+                  <Table.Cell>{task.type}</Table.Cell>
                   <Table.Cell>{task.Name}</Table.Cell>
                   <Table.Cell>{task.Description}</Table.Cell>
                   <Table.Cell>{task.WorkGroupID}</Table.Cell>
@@ -180,6 +183,7 @@ const TasksTable_01 = () => {
               </Table.Body>
             ))}
           </Table>
+          <br></br>
           <Button onClick={handleDownloadPDF}>Download PDF</Button>
           <p className="text-red-700 mt-5">
             {showTasksError ? "Error fetching tasks" : ""}

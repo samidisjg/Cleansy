@@ -27,6 +27,7 @@ const TaskAssign = () => {
     WorkGroupID: "",
     Location: "",
     DurationDays: "2",
+    type: ""
   });
 
   const [error, setError] = useState(false);
@@ -162,6 +163,20 @@ const TaskAssign = () => {
             />
           </div>
 
+          <div>
+            <Label value="type" />
+            <Select
+              className=""
+              onChange={(e) =>
+                setFormData({ ...formData, type: e.target.value })
+              }
+            >
+              <option value="Select">Select a Category</option>
+              <option value="Pending">Pending</option>
+              <option value="Inprogress">Inprogress</option>
+              <option value="Completed">Completed</option>
+            </Select>
+          </div>
          
 
           <div>
