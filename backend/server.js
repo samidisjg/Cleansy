@@ -20,6 +20,7 @@ import AdminPaymentHandlingRoutes from "./routes/IT22602978_Routes/AdminPaymentH
 import serviceBookingRoutes from "./routes/IT22350114_Routes/serviceBookingRoutes.js";
 import StaffAdminRoutes from "./routes/IT22603418_Routes/StaffAdmin.route_04.js";
 import StaffAttendanceRoutes from "./routes/IT22603418_Routes/StaffAttendance.route_04.js";
+import conversationRoutes from "./routes/IT22577160_Routes/conversation.route_02.js";
 dotenv.config();
 
 const app = express();
@@ -56,6 +57,7 @@ app.use("/api/apartmentListing", apartmentListingRoutes);
 app.use("/api/sharedResourcesListing", sharedResourcesListingRoutes);
 app.use("/api/comment", commentRoutes);
 app.use("/api/checkout", checkoutRoutes);
+app.use("/api/conversation", conversationRoutes);
 
 // IT22003546 Routes
 app.use("/api/amenitiesListing", amenitiesListingRoutes);
