@@ -23,3 +23,18 @@ export const createNewConversation = async (req, res, next) => {
       next(error);
    }
 };
+
+// get admin conversation
+export const getAdminConversation = async (req, res, next) => {
+   try {
+      const conversation = await Conversation.find({ 
+         members: {
+            $in: [req.params.id]
+         }
+       }).sort({ updatedAt: -1, createdAt: -1 });
+
+      return res.status(201).json(conversation);
+   } catch (error) {
+      next(error);
+   }
+};

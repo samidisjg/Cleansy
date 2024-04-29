@@ -21,6 +21,7 @@ import serviceBookingRoutes from "./routes/IT22350114_Routes/serviceBookingRoute
 import StaffAdminRoutes from "./routes/IT22603418_Routes/StaffAdmin.route_04.js";
 import StaffAttendanceRoutes from "./routes/IT22603418_Routes/StaffAttendance.route_04.js";
 import conversationRoutes from "./routes/IT22577160_Routes/conversation.route_02.js";
+import messageRoutes from "./routes/IT22577160_Routes/messages.route_02.js";
 dotenv.config();
 
 const app = express();
@@ -58,6 +59,7 @@ app.use("/api/sharedResourcesListing", sharedResourcesListingRoutes);
 app.use("/api/comment", commentRoutes);
 app.use("/api/checkout", checkoutRoutes);
 app.use("/api/conversation", conversationRoutes);
+app.use("/api/messages", messageRoutes);
 
 // IT22003546 Routes
 app.use("/api/amenitiesListing", amenitiesListingRoutes);
