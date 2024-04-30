@@ -118,8 +118,14 @@ export const getApartmentListings = async (req, res, next) => {
       const order = req.query.order || 'desc';
 
       const listings = await ApartmentListing.find({
-         ownerName: { $regex: searchTerm, $options: 'i' },
-         description: { $regex: searchTerm, $options: 'i' },
+         ...(req.query.searchTerm && {
+            $or: [
+               { ownerName: { $regex: req.query.searchTerm, $options: 'i' } },
+               { description: { $regex: req.query.searchTerm, $options: 'i' }}
+            ]
+         }),
+         // ownerName: { $regex: req.query.searchTerm, $options: 'i' },
+         // description: { $regex: req.query.searchTerm, $options: 'i' },
          offer,
          furnished,
          parking,

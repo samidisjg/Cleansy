@@ -1,5 +1,7 @@
+
+
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Button } from "flowbite-react";
 import { FaTasks } from "react-icons/fa";
@@ -47,7 +49,7 @@ const DashMaintenance = () => {
               <HiArrowNarrowUp />
               {}
             </span>
-            <div className="text-gray-500">Last Week</div>
+            <div className="text-gray-500">Last Month</div>
           </div>
         </div>
 
@@ -133,8 +135,10 @@ const DashMaintenance = () => {
           </ul>
         </div>
       </div>
+      
     </div>
   );
 };
 
 export default DashMaintenance;
+

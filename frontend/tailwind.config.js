@@ -6,7 +6,11 @@ export default {
     'node_modules/flowbite-react/lib/esm/**/*.js',
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        courier: ['Courier', 'monospace']
+      }
+    },
   },
   plugins: [
     require('flowbite/plugin'),
