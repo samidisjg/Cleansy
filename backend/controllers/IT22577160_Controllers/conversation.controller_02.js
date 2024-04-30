@@ -38,3 +38,20 @@ export const getAdminConversation = async (req, res, next) => {
       next(error);
    }
 };
+
+// update the last message
+export const updateLastMessage = async (req, res, next) => {
+   try {
+      const { lastMessage, lastMessageId } = req.body;
+
+      const conversation = await Conversation.findByIdAndUpdate(req.params.id, {
+         lastMessage,
+         lastMessageId,
+      });
+
+      return res.status(201).json(conversation);
+      
+   } catch (error) {
+      next(error);
+   }
+};

@@ -6,9 +6,11 @@ export const createNewMessage = async (req, res, next) => {
       const messageData = req.body;
       messageData.conversationId = req.body.conversationId;
       messageData.sender = req.body.sender;
+      messageData.text = req.body.text;
 
       const newMessage = new Messages({
          conversationId: messageData.conversationId,
+         text: messageData.text,
          sender: messageData.sender,
       });
       await newMessage.save();
@@ -24,6 +26,7 @@ export const getAllMessages = async (req, res, next) => {
       const messages = await Messages.find({
          conversationId: req.params.id,
       });
+      res.status(201).json(messages);
    } catch (error) {
       next(error);
    }
