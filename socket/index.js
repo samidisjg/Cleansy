@@ -86,10 +86,10 @@ io.on("connection", (socket) => {
    })
 
    // update and get last message
-   socket.on("updateLastMessage", ({ lastMessage, lastMessagesId }) => {
+   socket.on("updateLastMessage", ({ lastMessage, lastMessageId }) => {
       io.emit("getLastMessage", {
          lastMessage,
-         lastMessagesId,
+         lastMessageId,
       });
    })
 

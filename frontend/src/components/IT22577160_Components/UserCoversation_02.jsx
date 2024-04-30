@@ -9,7 +9,7 @@ import socketIO from "socket.io-client";
 const ENDPOINT = 'http://localhost:4000/';
 const socketId = socketIO(ENDPOINT, { transports: ['websocket'] });
 
-const InboxMessageForPropertyAdmin_02 = () => {
+const UserCoversation_02 = () => {
    const { currentUser } = useSelector((state) => state.user);
    const [conversations, setConversations] = useState([]);
    const [arrivalMessage, setArrivalMessage] = useState(null);
@@ -150,7 +150,7 @@ const InboxMessageForPropertyAdmin_02 = () => {
    }
 
   return (
-    <div className="w-[90%] bg-white dark:border-gray-700 dark:bg-gray-800 m-5 h-[85vh] overflow-y-scroll rounded scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500 shadow-md ">
+    <div className='w-full'>
       {
          !open && (
             <>
@@ -166,7 +166,7 @@ const InboxMessageForPropertyAdmin_02 = () => {
       }
       {
          open && (
-            <AdminInbox setOpen={setOpen} newMessage={newMessage} setNewMessage={setNewMessage} sendMessageHandler={sendMessageHandler} messages={messages} adminId={currentUser._id} userData={userData} activeStatus={activeStatus} />
+            <UserInbox setOpen={setOpen} newMessage={newMessage} setNewMessage={setNewMessage} sendMessageHandler={sendMessageHandler} messages={messages} adminId={currentUser._id} userData={userData} activeStatus={activeStatus} />
          )
       }
     </div>
@@ -175,12 +175,12 @@ const InboxMessageForPropertyAdmin_02 = () => {
 
 const MessageList = ({data, index, setOpen, setCurrentChat, me, setUserData, userData, online, setActiveStatus }) => {
    const [active, setActive] = useState(0);
+   const [user, setUser] = useState([]);
    const navigate = useNavigate();
    const handleClick = (id) => {
       navigate(`?${id}`)
       setOpen(true);
    }
-
    useEffect(() => {
       setActiveStatus(online)
       const userId = data.members.find((user) => user != me);
@@ -189,15 +189,15 @@ const MessageList = ({data, index, setOpen, setCurrentChat, me, setUserData, use
          try {
             const res = await fetch(`/api/user/${userId}`);
             const data = await res.json();
-            setUserData(data);
+            setUser(data);
          } catch (error) {
             console.log(error);
          }
       }
       getUser();
    }, [me, data])
-   return (
-      <div className={`w-full flex p-3 px-3 cursor-pointer ${active === index ? 'bg-[#00000010]' : 'bg-transparent'}`} onClick={(e) => setActive(index) || handleClick(data._id) || setCurrentChat(data)}>
+   return(
+      <div className={`w-full flex p-3 px-3 cursor-pointer ${active === index ? 'bg-[#00000010]' : 'bg-transparent'}`} onClick={(e) => setActive(index) || handleClick(data._id) || setCurrentChat(data) || setUserData(user) || setActiveStatus(online)}>
          <div className="relative">
             <img src={userData?.profilePicture} alt="" className='w-[50px] h-[50px] rounded-full'/>
             {
@@ -216,7 +216,7 @@ const MessageList = ({data, index, setOpen, setCurrentChat, me, setUserData, use
    )
 }
 
-const AdminInbox = ({ setOpen, newMessage, setNewMessage, sendMessageHandler, messages, adminId, userData, activeStatus }) => {
+const UserInbox = ({ setOpen, newMessage, setNewMessage, sendMessageHandler, messages, adminId, userData, activeStatus }) => {
    return (
       <div className='w-full min-h-full flex flex-col justify-between'>
          {/* message header */}
@@ -264,4 +264,4 @@ const AdminInbox = ({ setOpen, newMessage, setNewMessage, sendMessageHandler, me
    )
 }
 
-export default InboxMessageForPropertyAdmin_02
+export default UserCoversation_02

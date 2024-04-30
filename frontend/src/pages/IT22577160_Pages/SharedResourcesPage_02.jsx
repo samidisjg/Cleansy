@@ -102,17 +102,25 @@ const SharedResourcesPage_02 = () => {
          const userId = currentUser._id;
          const adminId = resources.userId;
    
-         await fetch('/api/conversation/createNewConversation', {
+         const res = await fetch('/api/conversation/createNewConversation', {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json',
             },
             body: JSON.stringify({ groupTitle, userId, adminId })
-         }).then((res) => {
-            navigate(`/conversation/${groupTitle}`)
-         }).catch((error) => {
-            toast.error(error.response.data.message);
-         });
+         })
+
+         // .then((res) => {
+         //    navigate(`/conversation/${groupTitle}`)
+         // }).catch((error) => {
+         //    toast.error(error.response.data.message);
+         // });
+
+         if(res.ok) {
+            const data = await res.json();
+            const conversationId = data._id;
+            navigate(`/conversation/${conversationId}`);
+         }
       } catch (error) {
          toast.error("Please login to create a conversation");
       }
