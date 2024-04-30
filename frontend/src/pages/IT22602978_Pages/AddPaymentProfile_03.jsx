@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { Alert,Button, Checkbox, Label, TextInput, } from "flowbite-react"
 
-const AddPaymentProfile = () => {
+const AddPaymentProfile_03 = () => {
   
   const [showPassword, setShowPassword] = useState(false);
   const {currentUser} = useSelector((state) => state.user);
@@ -33,6 +33,18 @@ const AddPaymentProfile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+      // Validation for password length and capitalization
+      if (!/^(?=.*[A-Z]).{8,}$/.test(formData.password)) {
+        return setErrorMessage('Password must have at least 8 characters with the first letter capitalized');
+    }
+
+    // Phone number validation
+    if (formData.ownerhousenumber.length !== 3 || isNaN(formData.ownerhousenumber)) {
+      return setErrorMessage("House number should have 10 digits");
+      
+    }
+
     if (!formData.PaymentProfileName) {
       formData.PaymentProfileName = `Profile ${profileCounter}`;
       setProfileCounter(profileCounter +1);
@@ -95,7 +107,7 @@ const AddPaymentProfile = () => {
               <TextInput type="text" placeholder="HouseNumber" id="ownerhousenumber"value={ownerhousenumber} onChange={handleChange} />
             </div>
             <div>
-              <Label value="Password"/>
+              <Label value="Password ()"/>
               <TextInput type={showPassword ? "text" : "password"} placeholder="*************" id="password"  value ={password} onChange={handleChange} />
               {showPassword ? (<BsFillEyeSlashFill className='absolute right-3 top-9 text-md cursor-pointer' onClick={() => setShowPassword((prevState) => !prevState)}/>) : (<BsFillEyeFill className='absolute right-3 top-9 text-md cursor-pointer' onClick={() => setShowPassword((prevState) => !prevState)}/>)}
             </div>
@@ -123,4 +135,4 @@ const AddPaymentProfile = () => {
   );
 };
 
-export default AddPaymentProfile;
+export default AddPaymentProfile_03;

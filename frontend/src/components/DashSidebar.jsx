@@ -70,7 +70,10 @@ const DashSidebar = () => {
                </Sidebar.Item>
 
             </Link>
-            <>
+            
+            {currentUser && (
+
+            <>   
             <Link to ='/dashboard?tab=userpayments' onClick={toggleDropdown1}>
                 <Sidebar.Item active={tab === 'userpayments'} icon={HiShoppingBag} as='div'>
                   User Payments
@@ -88,7 +91,10 @@ const DashSidebar = () => {
               
               </div>
             )}
-          </>
+          </> 
+
+            )}
+            
 
             
 

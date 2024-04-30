@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import Update from "./Update";
 
 
+
 const DashPayments_03 = () => {
   const { currentUser } = useSelector((state) => state.user);
   
@@ -11,7 +12,7 @@ const DashPayments_03 = () => {
        
           <div className=' overflow-auto ' >
             <AllPaymentProfiles />
-            
+          
           </div>
           
         

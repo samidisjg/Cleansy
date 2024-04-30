@@ -74,7 +74,7 @@ const AdminFinalPaymentHandlingSchema = new mongoose.Schema({
         type: String,
         
     },
-    
+   
 
     });
     const AdminFinalPaymentsHandling = mongoose.model('AdminFinalPaymentsHandling', AdminFinalPaymentHandlingSchema);
