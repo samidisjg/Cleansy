@@ -19,12 +19,6 @@ import amenitiesBookingRoutes from './routes/IT22003546_Routes/amenitiesBooking.
 import TaskAnalysisRoute from './routes/IT22607232_Routes/TaskAnalysisRoute_01.js';
 import taskcategoriesRoutes from './routes/IT22607232_Routes/taskcategoriesRoute_01.js';
 import tasklabelsRoutes from './routes/IT22607232_Routes/taskLabels_01.js';
-import amenitiesListingRoutes from "./routes/IT22003546_Routes/amenitiesListing.route.js";
-import sharedResourcesListingRoutes from "./routes/IT22577160_Routes/sharedResourcesListing.route_02.js";
-import commentRoutes from "./routes/IT22577160_Routes/comment.route_02.js";
-import checkoutRoutes from "./routes/IT22577160_Routes/checkout.route_02.js";
-import RateTasksRoutes from "./routes/IT22607232_Routes/RateTasksRoute_01.js";
-import amenitiesBookingRoutes from "./routes/IT22003546_Routes/amenitiesBooking.route_05.js";
 import AdminPaymentHandlingRoutes from "./routes/IT22602978_Routes/AdminPaymentHandling.route_03.js";
 import serviceBookingRoutes from "./routes/IT22350114_Routes/serviceBookingRoutes.js";
 import StaffAdminRoutes from "./routes/IT22603418_Routes/StaffAdmin.route_04.js";
