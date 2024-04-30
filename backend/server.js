@@ -21,6 +21,7 @@ import TaskAnalysisRoute from './routes/IT22607232_Routes/TaskAnalysisRoute_01.j
 import taskcategoriesRoutes from './routes/IT22607232_Routes/taskcategoriesRoute_01.js';
 import tasklabelsRoutes from './routes/IT22607232_Routes/taskLabels_01.js';
 import cors from "cors";
+import workEstimationRoutes from './routes/IT22607232_Routes/WorkEstimationRoute.js';
 dotenv.config();
 
 const app = express();
@@ -55,6 +56,7 @@ app.use("/api/taskRating", RateTasksRoutes);
 app.use("/api/taskAnalysis", TaskAnalysisRoute);
 app.use("/api/categeories",taskcategoriesRoutes);
 app.use("/api/labels",tasklabelsRoutes);
+app.use("api/workEstimation",workEstimationRoutes)
 
 // IT22577160 Routes
 app.use('/api/apartmentListing', apartmentListingRoutes);
