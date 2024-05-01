@@ -7,7 +7,6 @@ import DashSharedResourcesList_02 from "../components/IT22577160_Components/Dash
 import DashStaff_04 from "../components/IT22603418_Components/DashStaff_04";
 import DashServices from "../components/IT22350114_Components/DashServices";
 import DashApartmentList_02 from "../components/IT22577160_Components/DashApartmentList_02";
-<<<<<<< HEAD
 import DashPayments_03 from './../components/IT22602978_Components/DashPayments_03';
 import DashUserPayments_03 from './../components/IT22602978_Components/DashUserPayments_03';
 import AddPaymentProfile_03 from './IT22602978_Pages/AddPaymentProfile_03';
@@ -16,12 +15,10 @@ import AnnouncementPage from "../components/IT22196460_Components/AnnouncementPa
 import AdminDashboard from "./IT22196460_Pages/AnnouncementadminDashboard";
 			  
 //import { DashAmenity } from "../components/IT22003546_Components/DashAmenity";
-=======
 import DashPayments_03 from "./../components/IT22602978_Components/DashPayments_03";
 import DashUserPayments_03 from "./../components/IT22602978_Components/DashUserPayments_03";
 import AddPaymentProfile_03 from "./IT22602978_Pages/AddPaymentProfile_03";
 import DashMaintenance from "../components/IT22607232_Components/DashMaintenance";
->>>>>>> 0a4699b0770f99ba065dcb44563b3aac69275f27
 import DashComments_02 from "../components/IT22577160_Components/DashComments_02";
 import BookingList_05 from "../components/IT22003546_Components/BookingList_05";
 import AdminPayments_03 from "./IT22602978_Pages/AdminPayments_03";
@@ -75,17 +72,14 @@ const Dashboard = () => {
       {tab === "addpayments" && <AddPaymentProfile_03 />}
       {/* maintenance */}
       {tab === "maintenance" && <DashMaintenance />}
-<<<<<<< HEAD
       {/* Announcement */}
       {tab === "announsmentList" && <AdminDashboard/>}
       
 
        {/* amenity */}
       {tab == 'amenity' && <AmenityList_05/>}
-=======
       {/* amenity */}
       {tab == "amenity" && <AmenityList_05 />}
->>>>>>> 0a4699b0770f99ba065dcb44563b3aac69275f27
       {/* Comments */}
       {tab == "comments" && <DashComments_02 />}
       {/* Booking */}
@@ -95,7 +89,6 @@ const Dashboard = () => {
       {/*property admin dashboard*/}
       {tab === "propertyAdminDash" && <PropertyAdminDashboard_02 />}
       {/* VisitorAdmin Dashboard */}
-<<<<<<< HEAD
       {tab === "addVisitors" && <VisitorAdminPage />}
       {/* NotificationAdmin Dashboard */}
       {tab === 'announcement' && <AnnouncementForAdmin />}
@@ -105,11 +98,9 @@ const Dashboard = () => {
 
       {/* inboxMessage for property admin */}
       {tab === "inboxMessage" && <InboxMessageForPropertyAdmin_02 />}
-=======
       {tab === "addVisitors" && <VisitorAdminPage />}
       {/* inboxMessage for property admin */}
       {tab === "inboxMessage" && <InboxMessageForPropertyAdmin_02 />}
->>>>>>> 0a4699b0770f99ba065dcb44563b3aac69275f27
     </div>
   );
 };
