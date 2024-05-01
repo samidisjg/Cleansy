@@ -86,6 +86,7 @@ const ResidentAmenityView = () => {
 
   return (
     <div>
+      <h1 className="text-center mt-7 font-extrabold text-3xl underline">Amenities</h1>
       <div className="flex gap-4 mb-4 pt-4 pl-5">
         <TextInput
             type="text"
