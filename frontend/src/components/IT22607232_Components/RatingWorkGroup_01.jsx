@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { FaTasks, FaStar } from "react-icons/fa";
-import { Button } from "flowbite-react";
-
+import { Button, TextInput } from "flowbite-react";
 
 const RatingWorkGroup_01 = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -12,9 +11,11 @@ const RatingWorkGroup_01 = () => {
   const dispatch = useDispatch();
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
+  const [searchInput, setSearchInput] = useState("");
+  const [ratedTasks, setRatedTasks] = useState([]); // Array to store rated task IDs
 
   useEffect(() => {
-    handleShowAssignments(); // Call the function directly when the component mounts
+    handleShowAssignments(); 
   }, [currentUser._id]);
 
   const handleShowAssignments = async () => {
@@ -40,29 +41,63 @@ const RatingWorkGroup_01 = () => {
     }
   };
 
+  const handleChange = (e) => {
+    setSearchInput(e.target.value);
+  };
+
+  const handleRating = async (taskId) => {
+    try {
+      // Perform rating logic here
+      // After successful rating, add the taskId to the ratedTasks state
+      setRatedTasks([...ratedTasks, taskId]);
+    } catch (error) {
+      console.error("Error rating task:", error);
+    }
+  };
+
+  const filterAssignedTasks = showTasks.filter((task) => {
+    return (
+      task.TaskID.includes(searchInput) ||
+      task.WorkGroupID.includes(searchInput)
+    );
+  });
+
   return (
     <div className="max-w-6xl mx-auto p-3 flex flex-col gap-8 py-7">
       <h1 className="text-center mt-7 font-extrabold text-3xl underline">
-        Completed Mainatainance Tasks
+        Completed Maintenance Tasks
       </h1>
-
+      <div className="flex gap-4 mb-4 pt-4 pl-5">
+        <TextInput
+          type="text"
+          placeholder="Search..."
+          value={searchInput}
+          onChange={handleChange}
+        />
+      </div>
       {currentUser.isFacilityAdmin && (
         <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-3 mb-6 gap-10">
-          {showTasks &&
-            showTasks.length > 0 &&
-            showTasks.map((task) => (
+          {filterAssignedTasks.length > 0 &&
+            filterAssignedTasks.map((task) => (
               <li
                 key={task._id}
                 className="group relative w-full border border-teal-500 overflow-hidden rounded-lg sm:w-[330px] transition-all"
-              >  <div className="flex flex-wrap gap-2">
-                <Button pill>
-                <Link
-                      className="text-teal-500 hover:underline"
-                      to={`/rate-tasks/${task._id}`}
-                    >  Go to Rate
-                    </Link>
-                    </Button>
-                    </div>
+              >
+                <div className="flex flex-wrap gap-2">
+                  <Button gradientDuoTone='purpleToBlue'  pill onClick={() => handleRating(task._id)}>
+                    {/* Check if the task has been rated */}
+                    {ratedTasks.includes(task._id) ? (
+                      <span className="text-green-500">Rated</span>
+                    ) : (
+                      <Link
+                        // className=" hover:underline"
+                        to={`/rate-tasks/${task._id}`}
+                      >
+                        Go to Rate
+                      </Link>
+                    )}
+                  </Button>
+                </div>
                 <Link
                   className="text-slate-700 font-semibold hover:underline truncate flex-1"
                   to={`/tasks-table/${task._id}`}
@@ -94,7 +129,6 @@ const RatingWorkGroup_01 = () => {
                     </div>
                   </div>
                 </Link>
-                
               </li>
             ))}
         </ul>
