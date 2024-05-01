@@ -180,6 +180,7 @@ const AmenityUpdate_05 = () => {
                             required
                             value={formData.amenityID}
                             onChange={handleChange}
+                            readOnly
                         />
                     </div>
                     <div>

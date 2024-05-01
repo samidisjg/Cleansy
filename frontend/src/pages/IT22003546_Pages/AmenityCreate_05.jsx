@@ -15,10 +15,33 @@ import {
 
 const AmenityCreate = () => {
    
+    // const fetchAmenity = async () => {
+    //     const amenityID = params.amenityID;
+    //     const res = await fetch(`/api/amenitiesListing/get/${amenityID}`);
+    //     const data = await res.json();
+    //     if (data.success === false) {
+    //         console.log(data.message);
+    //         return;
+    //     }
+    //     setFormData((prevData) => ({
+    //         ...prevData,
+    //         amenityID: data.amenityID,
+    //         amenityTitle: data.amenityTitle,
+    //         amenityDescription: data.amenityDescription,
+    //         amenityLocation: data.amenityLocation,
+    //         amenityCapacity: data.amenityCapacity,
+    //         amenityAvailableTimes: data.amenityAvailableTimes,
+    //         amenityPrice: data.amenityPrice,
+    //         imageURLs: data.imageURLs,
+    //     }));
+    // }
+    // fetchAmenity();
+
+    const generateAmenityId = () => `AMD-${Math.floor(1000 + Math.random() * 9000)}`;
     const [files, setFiles] = useState([]);
     const { currentUser } = useSelector((state) => state.user);
     const [formData, setFormData] = useState({
-        amenityID: '',
+        amenityID: generateAmenityId(),
         amenityTitle: '',
         amenityDescription: '',
         imageURLs: [],
@@ -187,17 +210,18 @@ const AmenityCreate = () => {
             <div className="flex p-3 w-[40%] mx-auto flex-col md:flex-row md:items-center gap-20 md:gap-20 mt-10">
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full justify-center">
                     <div>
-                        <Label for="amenityID">Amenity ID</Label>
+                        <Label htmlFor="amenityID">Amenity ID</Label>
                         <TextInput
                             type="text"
                             name="amenityID"
                             value={formData.amenityID}
                             onChange={handleChange}
                             required
+                            
                         />
                     </div>
                     <div>
-                        <Label for="amenityTitle">Amenity Name</Label>
+                        <Label htmlFor="amenityTitle">Amenity Name</Label>
                         <TextInput
                             type="text"
                             name="amenityTitle"
@@ -207,7 +231,7 @@ const AmenityCreate = () => {
                         />
                     </div>
                     <div>
-                        <Label for="amenityDescription">Description</Label>
+                        <Label htmlFor="amenityDescription">Description</Label>
                         <Textarea
                             name="amenityDescription"
                             value={formData.amenityDescription}
@@ -217,7 +241,7 @@ const AmenityCreate = () => {
                     </div>
 
                     <div>
-                        <Label for="amenityLocation">Location</Label>
+                        <Label htmlFor="amenityLocation">Location</Label>
                         <TextInput
                             type="text"
                             name="amenityLocation"
@@ -228,7 +252,7 @@ const AmenityCreate = () => {
                     </div>
                     
                     <div>
-                        <Label for="amenityCapacity">Capacity</Label>
+                        <Label htmlFor="amenityCapacity">Capacity</Label>
                         <TextInput
                             type="number"
                             name="amenityCapacity"
@@ -239,7 +263,7 @@ const AmenityCreate = () => {
                     </div>
 
                     <div>
-                        <Label for="amenityAvailableTimes Times">Available Times</Label>
+                        <Label htmlFor="amenityAvailableTimes Times">Available Times</Label>
                         <TextInput
                             type="text"
                             name="amenityAvailableTimes"
@@ -250,7 +274,7 @@ const AmenityCreate = () => {
                     </div>
 
                     <div>
-                        <Label for="amenityPrice">Price</Label>
+                        <Label htmlFor="amenityPrice">Price</Label>
                         <TextInput
                             type="number"
                             name="amenityPrice"
