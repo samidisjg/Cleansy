@@ -326,7 +326,7 @@ const DashSidebar = () => {
                   icon={IoChatbubbleEllipses}
                   as="div"
                 >
-                  Inbox Message
+                  Inbox Messages
                 </Sidebar.Item>
               </Link>
             </>
