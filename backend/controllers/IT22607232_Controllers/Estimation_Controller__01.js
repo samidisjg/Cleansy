@@ -17,20 +17,15 @@ export const InputParameters = async(req,res,next) =>{
 
 
 
-//Get Inputs that entered
-export const allInputs = async (req, res, next) => {
+// Function to get all input data
+export const allInputs = async () => {
     try {
-      const inputFind = await Estimation.find();
-      if (!inputFind) {
-        return res.status(404).json({ msg: "Input details not found" });
-      }
-      return res.status(200).json(inputFind);
+        const inputFind = await Estimation.find();
+        return inputFind;
     } catch (error) {
-        next(error);
-      res.status(500).json({ error: error });
+        throw error;
     }
 };
-
 
 
 
@@ -58,41 +53,28 @@ function getComplexityValue(complexity) {
     return complexityValues[complexity];
 }
 
+// Function to estimate cost
 export const estimateCost = async () => {
     try {
         // Call allInputs function to get input data
         const allInputsData = await allInputs();
 
-        // Assuming size of the task is proportional to duration and complexity
-        const size = allInputsData.DurationDays * getComplexityValue(allInputsData.Complexity);
+        // Perform cost estimation based on input data...
 
-        // Calculate effort using COCOMO equation
-        const effort = calculateEffort(size);
-
-        // Define your cost allocation rules here
-        // For simplicity, let's assume a fixed cost per unit of effort
-        const costPerEffortUnit = 100; // $100 per unit of effort
-
-        // Calculate total cost
-        const totalCost = effort * costPerEffortUnit;
-
-        // Create a new instance of the Estimation model
-        const newEstimation = new Estimation({
-            TaskID: allInputsData.TaskID,
-            DurationDays: allInputsData.DurationDays,
-            Category: allInputsData.Category,
-            Size: allInputsData.Size,
-            Complexity: allInputsData.Complexity,
-            totalCost: totalCost // Assign the total cost directly here
-        });
-
-        // Save the estimation data to the database
-        await newEstimation.save();
-
+        // Return the total cost
         return totalCost;
     } catch (error) {
-        // Handle any errors that occur during estimation or saving to the database
         console.error("Error occurred while estimating cost:", error);
-        throw error; // Rethrow the error to propagate it to the caller
+        throw error;
+    }
+};
+
+// Route handler or controller function for estimating cost
+export const estimateCostController = async (req, res, next) => {
+    try {
+        const totalCost = await estimateCost();
+        return res.status(200).json({ totalCost });
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
     }
 };
