@@ -53,6 +53,7 @@ import VisitorAdminPage from "./pages/IT22561466_Pages/VisitorAdminPage";
 import searchVisitor from './pages/IT22561466_Pages/VisitorAdminPage'
 import SearchVisitors from "./pages/IT22561466_Pages/SearchVisitors";
 import RequestCarPark from "./pages/IT22561466_Pages/RequestCarPark";
+import Parkingslot from "./pages/IT22561466_Pages/Parkingslot";
 
 
 function App() {
@@ -184,6 +185,7 @@ function App() {
 
             <Route path="/admin-page" element={<VisitorAdminPage />} />
             <Route path="/searchVisitor" element={<VisitorAdminPage />} />
+            <Route path="/park-slot" element={<Parkingslot />} />
           </Routes>
         </div>
         <Footer />
