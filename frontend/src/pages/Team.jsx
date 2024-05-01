@@ -162,7 +162,7 @@ const Team = () => {
                         <img src={coder} alt="" className='absolute top-0 left-0 w-full h-full object-cover' />
                      </div>
                      <div className="flex items-center justify-center flex-col mt-4">
-                        <h2 className='relative text-[1.25em] font-semibold text-teal-500 leading-[1em] uppercase text-center'>Ramindu Nimesh<br /><span className='text-[0.65em] font-medium tracking-widest'>IT22577160</span></h2>
+                        <h2 className='relative text-[1.25em] font-semibold text-teal-500 leading-[1em] uppercase text-center'>Thamindu Vimansha<br /><span className='text-[0.65em] font-medium tracking-widest'>IT22003546</span></h2>
                         <ul className="relative flex gap-2 mt-2">
                            <li className='list-none'><a href="#"><FaGithub className='relative w-5 h-5 text-gray-200 text-xl inline-flex items-center justify-center rounded shadow-shadowOne hover:bg-opacity-40 hover:-translate-y-1 transition-all cursor-pointer duration-300 hover:text-[#ff1d50]' /></a></li>
                            <li className='list-none'><a href="#"><FaLinkedinIn className='relative w-5 h-5 text-gray-200 text-xl inline-flex items-center justify-center rounded shadow-shadowOne hover:bg-opacity-40 hover:-translate-y-1 transition-all cursor-pointer duration-300 hover:text-[#2196f3]' /></a></li>

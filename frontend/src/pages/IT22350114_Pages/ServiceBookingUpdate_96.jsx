@@ -17,20 +17,15 @@ const BookingUpdate_05 = () => {
     const [files, setFiles] = useState([]);
     const params = useParams();
     const [formData, setFormData] = useState({
-        bookingID: "",
-        amenityID: "",
-        amenityTitle: "",
-        residentUsername: "",
+        serviceID: serviceID || "",
+        serviceName: "",
+        serviceBookingID: generateBookingId(),
         residentName: "",
+        residentPhone: "",
         residentEmail: "",
-        residentContact: "",
-        bookingDate:"",
-        bookingTime:"",
-        duration: "",
-        specialRequests: "",
-        status: "Pending",
-        pricePerHour: 0,
-        bookingPrice: 0,
+        bookingDate: "",
+        bookingTime: "",
+        bookingStatus: "Pending",
         imageUrls: [],
     });
 
@@ -38,7 +33,6 @@ const BookingUpdate_05 = () => {
     const [loading, setLoading] = useState(false);
     const [imageUploadError, setImageUploadError] = useState(false);
     const [uploading, setUploading] = useState(false);
-    const [calculateDisabled, setCalculateDisabled] = useState(false); 
     const [durationDisabled, setDurationDisabled] = useState(false); 
 
 
@@ -54,40 +48,22 @@ const BookingUpdate_05 = () => {
             const formattedDate = new Date(data.bookingDate).toISOString().split('T')[0];
             setFormData((prevData) => ({
                 ...prevData,
-                bookingID: data.bookingID,
-                amenityID: data.amenityId,
-                amenityTitle: data.amenityTitle,
-                residentUsername: data.residentUsername,
+                serviceBookingID: data.serviceBookingID,
+                serviceID: data.serviceID,
+                serviceName: data.serviceName,
                 residentName: data.residentName,
+                residentPhone: data.residentPhone,
                 residentEmail: data.residentEmail,
-                residentContact: data.residentContact,
                 bookingDate: formattedDate,
                 bookingTime: data.bookingTime,
-                duration: data.duration,
-                specialRequests: data.specialRequests,
                 status: data.bookingStatus,
-                pricePerHour: data.bookingPrice/data.duration,
-                bookingPrice: data.bookingPrice,
                 imageUrls: data.imageUrls,
             }));
         }
         fetchBooking();
     }, []);
 
-    const calculateTotalPrice = () => {
-        if (formData.duration && formData.pricePerHour) {
-            const currentTotalPrice = formData.bookingPrice;
-            const newTotalPrice = formData.duration * formData.pricePerHour;
-            const priceDifference = newTotalPrice - currentTotalPrice;
-            setFormData((prevData) => ({
-                ...prevData,
-                bookingPrice: newTotalPrice,
-                priceDifference: priceDifference, // Add priceDifference to the state
-            }));
-            setCalculateDisabled(true); // Disable the Calculate button after it's clicked
-            setDurationDisabled(true); // Disable the Duration field after Calculate button is clicked
-        }
-    };
+
 
     const handleImageSubmit = () => {
         if(files.length > 0 && files.length + formData.imageUrls.length < 7) {
@@ -166,7 +142,7 @@ const BookingUpdate_05 = () => {
         const updateDatabase = async (fieldName, fieldValue) => {
             try {
                 // Make the API call to update the database with the new date or time
-                const res = await fetch(`/api/amenitiesBooking/update/${params.bookingID}`, {
+                const res = await fetch(`/api/serviceBooking/update/${params.serviceBookingID}`, {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
@@ -199,7 +175,7 @@ const BookingUpdate_05 = () => {
             if (formData.imageUrls.length < 1)
                 return setError("Please upload at least one image");
 
-            const res = await fetch(`/api/amenitiesBooking/update/${params.bookingID}`, {
+            const res = await fetch(`/api/serviceBooking/update/${params.serviceBookingID}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -230,13 +206,13 @@ const BookingUpdate_05 = () => {
         <div className="min-h-screen mt-20">
             <main>
                 <h1 className="text-3xl text-center mt-6 font-extrabold underline text-blue-950 dark:text-slate-300">
-                    Update Booking
+                    Update Service Booking
                 </h1>
             </main>
             <div className="flex p-3 w-[40%] mx-auto flex-col md:flex-row md:items-center gap-20 md:gap-20 mt-10">
                 <form onSubmit = {handleSubmit} className="flex flex-col gap-4 w-full justify-center">
                     <div>
-                        <Label htmlFor="bookingId">Booking ID:</Label>
+                        <Label htmlFor="serviceBookingID">Booking ID:</Label>
                         <TextInput
                             type="text"
                             id="bookingId"
@@ -411,6 +387,3 @@ const BookingUpdate_05 = () => {
 };
 
 export default BookingUpdate_05;
-
-
-
