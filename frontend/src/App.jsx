@@ -49,6 +49,14 @@ import FinalAdminPayments_03 from "./pages/IT22602978_Pages/FinalAdminPayments_0
 import BookServiceCreate from "./pages/IT22350114_Pages/BookServiceCreate_06";
 import UpdateVisitorListing from "./pages/IT22561466_Pages/UpdateVisitorListing";
 import VisitorDetails from "./pages/IT22561466_Pages/VisitorDetails";
+import UpdateAnnouncementForm from "./pages/IT22196460_Pages/UpdateAnnouncementForm";
+import CreateAnnouncementForm from "./pages/IT22196460_Pages/CreateAnnouncementForm";
+import AnnouncementList from "./pages/IT22196460_Pages/AnnouncementList";
+import AnnouncementDetails from "./pages/IT22196460_Pages/AnnouncementDetails";
+import DeleteAnnouncementform from "./components/IT22196460_Components/DeleteAnnouncementform";
+import AnnouncementForAdmin from "./components/IT22196460_Components/AnnouncementForAdmin";
+
+
 
 function App() {
   return (
@@ -183,6 +191,18 @@ function App() {
               path="/update-paymentprofile/:data"
               element={<Updatepaymentpage_03 />}
             />
+
+              <Route path="/admin" element ={<AdminDashboard/>} />
+              <Route path="/admin/update" element ={<UpdateAnnouncementForm/>} />
+              <Route path="/admin/create" element ={<CreateAnnouncementForm/>} /> 
+              <Route path="/" element ={<AnnouncementList/>} />
+              <Route path="/announcement/:id" element = {<AnnouncementDetails/>} />
+              <Route path="/delete-announcement/:id" element={<DeleteAnnouncementform/>}/>
+              <Route exact path="/announcements" element={<AnnouncementForAdmin/>} />
+              <Route exact path="/create-announcement" element={<CreateAnnouncementForm/>} />
+
+     
+              
           </Routes>
         </div>
 
