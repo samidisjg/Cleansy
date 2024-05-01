@@ -27,7 +27,7 @@ const AmenitiesBookingSchema = new mongoose.Schema({
         required: true
     },
     residentContact: {
-        type: String,
+        type: Number,
         required: true
     },
     bookingDate: {
