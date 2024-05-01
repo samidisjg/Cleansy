@@ -7,10 +7,10 @@ import DashSharedResourcesList_02 from "../components/IT22577160_Components/Dash
 import DashStaff_04 from "../components/IT22603418_Components/DashStaff_04";
 import DashServices from "../components/IT22350114_Components/DashServices";
 import DashApartmentList_02 from "../components/IT22577160_Components/DashApartmentList_02";
-import DashPayments_03 from './../components/IT22602978_Components/DashPayments_03';
-import DashUserPayments_03 from './../components/IT22602978_Components/DashUserPayments_03';
-import AddPaymentProfile_03 from './IT22602978_Pages/AddPaymentProfile_03';
-import DashMaintenance from "../components/IT22607232_Components/DashMaintenance"
+// import DashPayments_03 from './../components/IT22602978_Components/DashPayments_03';
+// import DashUserPayments_03 from './../components/IT22602978_Components/DashUserPayments_03';
+// import AddPaymentProfile_03 from './IT22602978_Pages/AddPaymentProfile_03';
+// import DashMaintenance from "../components/IT22607232_Components/DashMaintenance"
 import AnnouncementPage from "../components/IT22196460_Components/AnnouncementPage";
 import AdminDashboard from "./IT22196460_Pages/AnnouncementadminDashboard";
 			  
