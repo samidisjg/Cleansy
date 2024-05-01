@@ -233,6 +233,43 @@ const DashSidebar = () => {
                       Face Recognition
                     </Sidebar.Item>
                   </Link>
+                </>
+              )
+            }
+
+            <Link to ='/add-visitors'>
+                <Sidebar.Item icon={HiUser} as='div'>
+                  Add Visitors
+                </Sidebar.Item>
+            </Link>
+            {
+              // !(currentUser.isAdmin) || currentUser.isBookingAdmin && (
+                (
+                <>
+                  <Link to ='/dashboard?tab=bookings'>
+                    <Sidebar.Item active={tab === 'bookings'} icon={FaPersonSwimming} as='div'>
+                      Bookings
+                    </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
+            
+            
+            {
+            //currentUser.isFacilityServiceAdmin && 
+            (
+               <Link to="/dashboard?tab=serviceBookings" className={tab === "serviceBookings" ? "active" : ""}>
+                <Sidebar.Item icon={HiOutlineUserGroup}>
+                  Service Bookings
+                </Sidebar.Item>
+              </Link>
+            )
+            }
+
+
+            <Sidebar.Item icon={HiArrowSmRight} className='cursor-pointer' onClick={handleSignout}>
+               Sign Out
                 </div>
               )}
 
