@@ -54,7 +54,7 @@ import UpdateAnnouncementForm from './pages/IT22196460_Pages/UpdateAnnouncementF
 import CreateAnnouncementForm from './pages/IT22196460_Pages/CreateAnnouncementForm';
 import DeleteAnnouncementform from "./components/IT22196460_Components/DeleteAnnouncementform";
 import AnnouncementForAdmin from "./components/IT22196460_Components/AnnouncementForAdmin";
-
+import NotificationPage from "./pages/IT22196460_Pages/NotificationPage";
 
 function App() {
   return (
@@ -121,7 +121,16 @@ function App() {
               <Route path="/announcement/:id" element = {<AnnouncementDetails/>} />
               <Route path="/delete-announcement/:id" element={<DeleteAnnouncementform/>}/>
               <Route exact path="/announcements" element={<AnnouncementForAdmin/>} />
-              <Route exact path="/create-announcement" element={<CreateAnnouncementForm/>} /> 
+              <Route exact path="/create-announcement" element={<CreateAnnouncementForm/>} />
+              <Route path="/update-announcement/:id" element={<UpdateAnnouncementForm />} />
+
+              <Route path="/" element={<Home />} />
+              <Route path="/send-notification" element={<NotificationPage />} />
+              <Route path="/create-notification" element={<NotificationForm />} />
+              <Route path="/notifications" element={<NotificationList />} />
+              <Route path="/notifications/:id" element={<DeleteNotification />} />
+              <Route path="/notifications/:id/edit" element={<NotificationForm />} />
+
 
               
             </Routes>

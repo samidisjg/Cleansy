@@ -2,7 +2,7 @@ import Announcement from "../../models/IT22196460_Models/AnnouncementModel.js";
 
 
 // create a new announcement 
-export const createAnnouncement = async(req, res, Next) => {
+export const createAnnouncement = async(req, res) => {
     const {Announcement_ID, Title, Content, Category_ID, Attachment_URL, Create_At} = req.body;
 
     const newAnnouncement = new Announcement({
@@ -35,38 +35,34 @@ export const getAnnouncements = async(req, res, next) => {
 };
 
 // Update announcement
-export const updateAnnouncement = async(req, res, next) => {
+export const updateAnnouncement = async(req, res) => {
+    const { Announcement_ID, Title, Content, Category_ID, Attachment_URL, Create_At } = req.body;
 
-    const {Announcement_ID, Title, Content, Category_ID, Attachment_URL, Create_At} = req.body;
-
-    const updateAnnouncement = {
-        Announcement_ID, 
-        Title, 
-        Content,
-        Category_ID, 
-        Attachment_URL, 
-        Create_At
-        
-    };
-
-    try{
-        const updateAnnouncement = await Announcement.findByIdAndUpdate(
+    try {
+        const updatedAnnouncement = await Announcement.findByIdAndUpdate(
             req.params.id,
-            updatedFields,
-            {new: true}
+            {
+                Announcement_ID,
+                Title,
+                Content,
+                Category_ID,
+                Attachment_URL,
+                Create_At
+            },
+            { new: true } // Return the updated document
         );
-        if(!updateAnnouncement){
-            return res.status(404).json({message: "Announcement not found" });
+
+        if (!updatedAnnouncement) {
+            return res.status(404).json({ message: "Announcement not found" });
         }
 
-        res.status(200).json(updateAnnouncement);
-
-    }catch{
-
+        res.status(200).json(updatedAnnouncement);
+    } catch (error) {
         console.error("Error updating announcement:", error.message);
-        res.status(500).json({message: "Failed to update announcement"});
+        res.status(500).json({ message: "Failed to update announcement" });
     }
-};
+
+}; 
 
 //Delete announcement
 export const deleteAnnouncement = async(req, res, next) => {

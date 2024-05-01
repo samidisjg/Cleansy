@@ -110,7 +110,7 @@ const AnnouncementForAdmin = () => {
                        <Table.Cell>{new Date(announcement.Create_At).toLocaleDateString()}</Table.Cell>
                        <Table.Cell className='flex gap-4'>
                            <button onClick={() => deleteAnnouncement(announcement._id)} className='font-medium text-red-500 hover:underline cursor-pointer'>Delete</button>
-                           <Link to={'/admin/update'}>
+                           <Link to={`/update-announcement/${announcement.id}`}>
                                 <button onClick={() => handleUpdateAnnouncement(announcement._id)} className="text-teal-500 hover:underline">Update</button>
                            </Link>
                        </Table.Cell>

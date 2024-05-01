@@ -87,8 +87,11 @@ const Dashboard = () => {
 
       {/* VisitorAdmin Dashboard */}
       {tab === 'addVisitors' && <VisitorAdminPage/>}
-      {/* VisitorAdmin Dashboard */}
+      {/* NotificationAdmin Dashboard */}
       {tab === 'announcement' && <AnnouncementForAdmin />}
+      {tab === 'notification' && <AnnouncementForAdmin />}
+
+
 
 
 
