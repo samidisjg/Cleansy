@@ -2,13 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 /*import TaskAssignRoute from "../../routes/IT22607232_Routes/s1_TaskAssignRoute";*/
-import {
-  Button,
-  Label,
-  Select,
-  TextInput,
-  Textarea,
-} from "flowbite-react";
+import { Button, Label, Select, TextInput, Textarea } from "flowbite-react";
 
 const S1_UpdateTasks = () => {
   const navigate = useNavigate();
@@ -17,6 +11,7 @@ const S1_UpdateTasks = () => {
   const [formData, setFormData] = useState({
     TaskID: "",
     Category: "",
+    AssignDate: "",
     Name: "",
     Description: "",
     WorkGroupID: "",
@@ -26,27 +21,34 @@ const S1_UpdateTasks = () => {
 
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  
-  useEffect(() => { 
+
+  useEffect(() => {
     const fetchTask = async () => {
       const taskid = params.taskid;
       const res = await fetch(`/api/taskAssign/one/${taskid}`);
       const data = await res.json();
       if (data.success === false) {
         console.log(data.message);
-        return
+        return;
       }
-      setFormData({TaskID: data.TaskID,
-        Category: data.Category, // Make sure Category is included in the response data
+      const formattedDate = new Date(data.AssignDate).toISOString().split('T')[0];
+      setFormData({
+        TaskID: data.TaskID,
+        Category: data.Category,
+        AssignDate: formattedDate,
         Name: data.Name,
         Description: data.Description,
         WorkGroupID: data.WorkGroupID,
         Location: data.Location,
-        DurationDays: data.DurationDays.toString(),});
-
-    }
+        DurationDays: data.DurationDays.toString(),
+      });
+    };
     fetchTask();
   }, []);
+
+ 
+  
+  
 
   const handleChange = (e) => {
     let boolean = null;
@@ -59,7 +61,8 @@ const S1_UpdateTasks = () => {
     if (
       e.target.type === "number" ||
       e.target.type === "text" ||
-      e.target.type === "textarea"
+      e.target.type === "textarea" ||
+      e.target.type === "date"
     ) {
       setFormData({
         ...formData,
@@ -72,38 +75,37 @@ const S1_UpdateTasks = () => {
       });
     }
   };
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
-      if(formData.TaskID === currentUser.TaskID) return setError('TaskID already exists');
+    try {
+      if (formData.TaskID === currentUser.TaskID)
+        return setError("TaskID already exists");
       setLoading(true);
       setError(false);
 
       const res = await fetch(`/api/taskAssign/update/${params.taskid}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           ...formData,
           userRef: currentUser._id,
-      }),
+        }),
       });
       const data = await res.json();
       setLoading(false);
-      if (data.success === false){
+      if (data.success === false) {
         setError(data.message);
       }
-        //navigate(`/task-assign/${data._id}`);
-        navigate('/dashboard?tab=maintenance');
-    
-
-    }catch(error){
+      //navigate(`/task-assign/${data._id}`);
+      navigate("/dashboard?tab=maintenance");
+    } catch (error) {
       setError(error.message);
       setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen mt-20">
@@ -113,7 +115,10 @@ const S1_UpdateTasks = () => {
         </h1>
       </main>
       <div className="flex p-3 w-[40%] mx-auto flex-col md:flex-row md:items-center gap-20 md:gap-20 mt-10">
-        <form  onSubmit = {handleSubmit} className="flex flex-col gap-4 w-full justify-center">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-4 w-full justify-center"
+        >
           <div>
             <Label value="TaskID" />
             <TextInput
@@ -123,19 +128,36 @@ const S1_UpdateTasks = () => {
               required
               onChange={handleChange}
               value={formData.TaskID}
+              readOnly
             />
           </div>
-          <div>
+          
             <Label value="Category" />
-            <Select 
-             className="" onChange={(e) => setFormData({...formData, Category: e.target.value})}
-             value={formData.Category}
-            >
-              <option value="Select">Select a Category</option>
-              <option value="Elavator">Elavator</option>
-              <option value="Pest Control">Pest Control</option>
-              <option value="Janitorial">Janitorial</option>
-            </Select>
+            <Select
+  className=""
+  onChange={(e) =>
+    setFormData({ ...formData, Category: e.target.value })
+  }
+  value={formData.Category || ""}
+>
+  <option value="">Select a Category</option>
+  <option value="Elavator">Elavator</option>
+  <option value="Pest Control">Pest Control</option>
+  <option value="Janitorial">Janitorial</option>
+</Select>
+
+          
+
+<div>
+            <Label htmlFor="date">Date:</Label>
+            <TextInput
+              type="date"
+              id="AssignDate"
+              name="AssignDate"
+              min={new Date().toISOString().split('T')[0]}
+              value={formData.AssignDate || ""}
+              onChange={handleChange}
+            />
           </div>
 
           <div>
@@ -175,7 +197,6 @@ const S1_UpdateTasks = () => {
               />
             </div>
             <div>
-              
               <div>
                 <Label value="Location" />
                 <TextInput
@@ -204,13 +225,14 @@ const S1_UpdateTasks = () => {
             type="submit"
             gradientDuoTone="purpleToBlue"
             className="uppercase"
-          >{loading ? 'updating...' : 'Update task'}</Button>
+          >
+            {loading ? "updating..." : "Update task"}
+          </Button>
           {error && <p className="text-red-700 text-sm">{error}</p>}
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default S1_UpdateTasks;
-
