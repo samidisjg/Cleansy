@@ -239,7 +239,8 @@ const DashSidebar = () => {
             
             
             {
-            currentUser.isFacilityServiceAdmin && (
+            //currentUser.isFacilityServiceAdmin && 
+            (
                <Link to="/dashboard?tab=serviceBookings" className={tab === "serviceBookings" ? "active" : ""}>
                 <Sidebar.Item icon={HiOutlineUserGroup}>
                   Service Bookings

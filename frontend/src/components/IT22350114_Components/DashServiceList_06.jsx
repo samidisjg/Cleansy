@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import { MdLocationOn, MdEdit } from "react-icons/md";
 import { FaTrash } from "react-icons/fa";
 import { Table, Button } from "flowbite-react";
-import { jsPDF } from "jspdf";
-import html2canvas from "html2canvas";
+import jsPDF from 'jspdf'
+import "jspdf-autotable";
 
 
 const DashServiceList_06 = () => {
@@ -62,6 +62,13 @@ const DashServiceList_06 = () => {
     } catch (error) {
       console.log(error.message);
     }
+  };
+
+
+  const generatePDF = () => {
+    const doc = new jsPDF();
+    doc.autoTable({ html: '#service-table' });
+    doc.save('service_listing.pdf');
   };
 
   
@@ -123,7 +130,7 @@ const DashServiceList_06 = () => {
                     </Button>
                   </Table.Cell>
                   <Table.Cell>
-                    <Link to={`/service-update/${service.serviceID}`}>
+                    <Link to={`/service-update/${service._id}`}>
                       <Button>
                         <MdEdit />
                       </Button>
@@ -135,7 +142,12 @@ const DashServiceList_06 = () => {
           </Table>
         </>
       )}
+      <Button onClick={generatePDF}>Download PDF</Button>
+          <Table id="service-table" hoverable className="w-full">
+            {/* Table content */}
+          </Table>
     </div>
+    
   );
 };
 

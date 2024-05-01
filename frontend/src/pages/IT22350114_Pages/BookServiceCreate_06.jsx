@@ -40,9 +40,10 @@ const BookServiceCreate = () => {
     residentName: "",
     residentPhone: "",
     residentEmail: "",
+    residentNIC: "",
     bookingDate: "",
     bookingTime: "",
-    bookingStatus: "Pending",
+    bookingStatus: "Confirmed",
     imageUrls: [],
   });
 
@@ -180,7 +181,7 @@ const BookServiceCreate = () => {
       if (data.success === false) {
         setError(data.message);
       }
-      navigate("/dashboard?tab=services");
+      navigate("/service-User:serviceID");
     } catch (error) {
       setError(error.message);
       setLoading(false);
@@ -271,6 +272,20 @@ const BookServiceCreate = () => {
             value={formData.residentEmail}
             onChange={handleChange}
             placeholder="Resident Email"
+            className="w-full p-2 border rounded-md focus:outline-none focus:border-blue-500"
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="residentNIC" className="block mb-1">
+            Resident NIC
+          </label>
+          <input
+            type="text"
+            name="residentNIC"
+            value={formData.residentNIC}
+            onChange={handleChange}
+            placeholder="Resident NIC"
             className="w-full p-2 border rounded-md focus:outline-none focus:border-blue-500"
             required
           />

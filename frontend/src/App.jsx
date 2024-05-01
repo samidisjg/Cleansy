@@ -49,6 +49,7 @@ import DashServiceList_06 from "./components/IT22350114_Components/DashServiceLi
 import FinalAdminPayments_03 from "./pages/IT22602978_Pages/FinalAdminPayments_03";
 import BookServiceCreate from './pages/IT22350114_Pages/BookServiceCreate_06';
 import DashServiceBookList_06 from './components/IT22350114_Components/DashServiceBookList_06';
+import ServiceUpdate_06 from './pages/IT22350114_Pages/ServiceUpdate_06';
 
 function App() {
   return (
@@ -134,10 +135,9 @@ function App() {
                 path="/service-User:serviceID"
                 element={<ResidentServiceView />}
               />
-              <Route
-                path="/service-booking-List:bookingID"
-                element={<DashServiceBookList_06 />}
-              />
+              <Route path="/service-booking-List:bookingID" element={<DashServiceBookList_06 />}/>
+            
+              <Route path="/service-update/:serviceID" element={<ServiceUpdate_06 />} />
 
             </Route>
             <Route element={<OnlyPropertyAdminPrivateRoute_02 />}>
