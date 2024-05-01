@@ -92,20 +92,6 @@ export default function AddVisitors() {
   }
   };
 
-  const handleShowListings = async () => {
-    try {
-      setError(false);
-      const res = await fetch(`/api/user/visitorListings/${currentUser._id}`);
-      const data = await res.json();
-      if (data.success === false) {
-        setError(true);
-        return;
-      }
-      setUserListings(data);
-    } catch (error) {
-      setError(true);
-    }
-  };
 
   return (
     <div className="p-3 max-w-lg mx-auto">

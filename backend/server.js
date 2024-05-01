@@ -18,6 +18,7 @@ import commentRoutes from './routes/IT22577160_Routes/comment.route_02.js';
 import checkoutRoutes from './routes/IT22577160_Routes/checkout.route_02.js';
 import RateTasksRoutes from './routes/IT22607232_Routes/RateTasksRoute_01.js';
 import amenitiesBookingRoutes from './routes/IT22003546_Routes/amenitiesBooking.route_05.js';
+import carparkListingRoutes from './routes/IT22561466_Routes/carparkListing.route.js';
 dotenv.config();
 
 const app = express();
@@ -60,6 +61,7 @@ app.use('/api/amenitiesListing', amenitiesListingRoutes);
 app.use('/api/amenitiesBooking', amenitiesBookingRoutes);
 //IT22561466 Routes
 app.use('/api/visitorListing', visitorListingRoutes);
+app.use('/api/carparkListing', carparkListingRoutes);
 
 
 
