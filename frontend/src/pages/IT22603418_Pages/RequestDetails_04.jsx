@@ -10,6 +10,7 @@ const RequestDetails_04 = ({
   if (!request || !showDetails) {
     return null; // Return null to hide the component when showDetails is false
   }
+
   // Destructure request details from props
   const {
     _id,
@@ -29,6 +30,17 @@ const RequestDetails_04 = ({
   const handleDeleteRequest = async () => {
     onDeleteRequest(_id); // Invoke onDeleteRequest with the request ID
   };
+
+  // Define CSS classes based on the status
+  const statusClass =
+    status === "accepted"
+      ? "text-green-700 font-bold"
+      : status === "denied"
+      ? "text-red-700 font-bold"
+      : "";
+
+  // Define whether edit and delete buttons should be disabled
+  const isDisabled = status === "accepted" || status === "denied";
 
   return (
     <div className="max-w-md mx-auto border border-white shadow-md rounded-lg overflow-hidden">
@@ -76,7 +88,7 @@ const RequestDetails_04 = ({
           </tr>
           <tr className="border-b">
             <td className="py-2 px-4 font-semibold">Status:</td>
-            <td className="py-2 px-4">{status}</td>
+            <td className={`py-2 px-4 ${statusClass}`}>{status}</td>
           </tr>
           <tr className="border-b">
             <td className="py-2 px-4">
@@ -85,6 +97,7 @@ const RequestDetails_04 = ({
                 className="mr-2"
                 style={{ width: "100px" }}
                 onClick={() => onEditAction(request)}
+                disabled={isDisabled} // Disable the button based on status
               >
                 Edit
               </Button>
@@ -94,6 +107,7 @@ const RequestDetails_04 = ({
                 gradientDuoTone="pinkToOrange"
                 style={{ width: "100px" }}
                 onClick={() => handleDeleteRequest(_id)}
+                disabled={isDisabled} // Disable the button based on status
               >
                 Delete
               </Button>

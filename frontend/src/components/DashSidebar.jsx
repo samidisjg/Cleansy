@@ -16,16 +16,19 @@ import { signOutSuccess } from "../../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { GrResources } from "react-icons/gr";
+import { FaPersonSwimming } from "react-icons/fa6";
+import { MdAddHomeWork } from "react-icons/md";
 import { FaPersonCircleCheck } from "react-icons/fa6";
 import { BsPersonPlusFill } from "react-icons/bs";
-
-
+import { IoChatbubbleEllipses } from "react-icons/io5";
 
 const DashSidebar = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
   const [tab, setTab] = useState("");
+  const [showDropdown1, setShowDropdown1] = useState(false);
+  const [showDropdown2, setShowDropdown2] = useState(false);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -49,6 +52,13 @@ const DashSidebar = () => {
     } catch (error) {
       console.log(error.message);
     }
+  };
+
+  const toggleDropdown1 = () => {
+    setShowDropdown1(!showDropdown1);
+  };
+  const toggleDropdown2 = () => {
+    setShowDropdown2(!showDropdown2);
   };
 
   return (
@@ -86,7 +96,7 @@ const DashSidebar = () => {
             </Sidebar.Item>
           </Link>
           <>
-            <Link to="/dashboard?tab=userpayments">
+            <Link to="/dashboard?tab=userpayments" onClick={toggleDropdown1}>
               <Sidebar.Item
                 active={tab === "userpayments"}
                 icon={HiShoppingBag}
@@ -95,7 +105,8 @@ const DashSidebar = () => {
                 User Payments
               </Sidebar.Item>
             </Link>
-            {tab === "userpayments" && (
+
+            {showDropdown1 && (
               <div className="dropdown">
                 <Link to="/dashboard?tab=addpayments">
                   <Sidebar.Item active={tab === "addpayments"} as="div">
@@ -105,6 +116,95 @@ const DashSidebar = () => {
               </div>
             )}
           </>
+
+          {currentUser.isBookingAdmin && (
+            <>
+              <Link to="/dashboard?tab=amenity">
+                <Sidebar.Item
+                  active={tab == "amenity"}
+                  icon={HiOutlineUserGroup}
+                  as="div"
+                >
+                  Amenity
+                </Sidebar.Item>
+              </Link>
+            </>
+          )}
+          {currentUser.isUserAdmin && (
+            <>
+              <Link to="/dashboard?tab=users">
+                <Sidebar.Item
+                  active={tab === "users"}
+                  icon={HiOutlineUserGroup}
+                  as="div"
+                >
+                  Users
+                </Sidebar.Item>
+              </Link>
+            </>
+          )}
+          {currentUser.isPropertyAdmin && (
+            <>
+              <Link to="/dashboard?tab=properties">
+                <Sidebar.Item
+                  active={tab === "properties"}
+                  icon={GrResources}
+                  as="div"
+                >
+                  Shared Resources
+                </Sidebar.Item>
+              </Link>
+            </>
+          )}
+          {currentUser.isBillingAdmin && (
+            <>
+              <Link to="/dashboard?tab=payments" onClick={toggleDropdown2}>
+                <Sidebar.Item
+                  active={tab === "payments"}
+                  icon={HiDocument}
+                  as="div"
+                >
+                  Payments
+                </Sidebar.Item>
+              </Link>
+              {showDropdown2 && (
+                <div className="dropdown">
+                  <Link to="/dashboard?tab=Adminaddpayments">
+                    <Sidebar.Item active={tab === "Adminaddpayments"} as="div">
+                      Admin Payments Handling
+                    </Sidebar.Item>
+                  </Link>
+                </div>
+              )}
+            </>
+          )}
+          {currentUser.isFacilityServiceAdmin && (
+            <>
+              <Link to="/dashboard?tab=services">
+                <Sidebar.Item
+                  active={tab === "services"}
+                  icon={HiOutlineUserGroup}
+                  as="div"
+                >
+                  Services
+                </Sidebar.Item>
+              </Link>
+            </>
+          )}
+
+          {currentUser.isFacilityAdmin && (
+            <>
+              <Link to="/dashboard?tab=maintenance">
+                <Sidebar.Item
+                  active={tab === "maintenance"}
+                  icon={HiOutlineUserGroup}
+                  as="div"
+                >
+                  Maintenance Tasks
+                </Sidebar.Item>
+              </Link>
+            </>
+          )}
           {currentUser.isStaff && (
             <>
               <Link to="/dashboard?tab=staffs">
@@ -147,6 +247,7 @@ const DashSidebar = () => {
               )}
             </>
           )}
+<<<<<<< HEAD
           {currentUser.isBookingAdmin && (
             <>
               <Link to="/dashboard?tab=amenity">
@@ -308,6 +409,8 @@ const DashSidebar = () => {
             </>
           )}
 
+=======
+>>>>>>> 0a4699b0770f99ba065dcb44563b3aac69275f27
           {currentUser.isStaffAdmin && (
             <>
               <Link to="/dashboard?tab=staffAdmin">
@@ -319,6 +422,7 @@ const DashSidebar = () => {
                   Staff Admin
                 </Sidebar.Item>
               </Link>
+<<<<<<< HEAD
               {/* STAFF PART */}
               <div className="dropdown">
                 <Link to="/dashboard?tab=leaveRequest">
@@ -346,6 +450,47 @@ const DashSidebar = () => {
 
               
               {/* STAFF PART END*/}
+=======
+            </>
+          )}
+          {!currentUser.isAdmin && (
+            <>
+              <Link to="/dashboard?tab=apartmentList">
+                <Sidebar.Item
+                  active={tab === "apartmentList"}
+                  icon={MdOutlineHomeWork}
+                  as="div"
+                >
+                  Apartment List
+                </Sidebar.Item>
+              </Link>
+            </>
+          )}
+          {currentUser.isPropertyAdmin && (
+            <>
+              <Link to="/dashboard?tab=comments">
+                <Sidebar.Item
+                  active={tab === "comments"}
+                  icon={HiAnnotation}
+                  as="div"
+                >
+                  Comments
+                </Sidebar.Item>
+              </Link>
+            </>
+          )}
+          {currentUser.isVisitorAdmin && (
+            <>
+              <Link to="/admin-page">
+                <Sidebar.Item
+                  active={tab === "addVisitors"}
+                  icon={FaPersonCircleCheck}
+                  as="div"
+                >
+                  Visitors
+                </Sidebar.Item>
+              </Link>
+>>>>>>> 0a4699b0770f99ba065dcb44563b3aac69275f27
             </>
           )}
           <Link to="/add-visitors">
@@ -353,12 +498,33 @@ const DashSidebar = () => {
               Add Visitors
             </Sidebar.Item>
           </Link>
-
-          <Link to="/dashboard?tab=bookings">
-            <Sidebar.Item active={tab === "bookings"} icon={HiUser} as="div">
-              Bookings
-            </Sidebar.Item>
-          </Link>
+          {
+            // !(currentUser.isAdmin) || currentUser.isBookingAdmin && (
+            <>
+              <Link to="/dashboard?tab=bookings">
+                <Sidebar.Item
+                  active={tab === "bookings"}
+                  icon={FaPersonSwimming}
+                  as="div"
+                >
+                  Bookings
+                </Sidebar.Item>
+              </Link>
+            </>
+          }
+          {currentUser.isPropertyAdmin && (
+            <>
+              <Link to="/dashboard?tab=inboxMessage">
+                <Sidebar.Item
+                  active={tab === "inboxMessage"}
+                  icon={IoChatbubbleEllipses}
+                  as="div"
+                >
+                  Inbox Messages
+                </Sidebar.Item>
+              </Link>
+            </>
+          )}
 
           
           

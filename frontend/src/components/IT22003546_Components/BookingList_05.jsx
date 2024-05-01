@@ -1,17 +1,24 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Table, Button } from "flowbite-react";
+import { Table, Button, TextInput} from "flowbite-react";
 import { Link } from "react-router-dom";
 import jsPDF from 'jspdf';
 import "jspdf-autotable";
+
+
 
 const BookingList_05 = () => {
     const { currentUser } = useSelector((state) => state.user);
     const [showBookingError, setShowBookingError] = useState(false);
     const [showBooking, setShowBooking] = useState([]);
-    const dispatch = useDispatch();
+    const [searchInput, setSearchInput] = useState("");
+    const [showConfirmOnly, setshowConfirmOnly] = useState(false);
+    const [showPendingOnly, setshowPendingOnly] = useState(false);
+    const [startDate, setStartDate] = useState(""); 
+    const [endDate, setEndDate] = useState(""); 
 
     useEffect(() => {
+        
         handleShowBooking();
     }, []);
     
@@ -29,11 +36,52 @@ const BookingList_05 = () => {
         }
     }
 
+    const filteredBookings = showBooking.filter((booking) => {
+        const bookingDate = new Date(booking.bookingDate);
+        return (
+            (
+                booking.amenityTitle.toLowerCase().includes(searchInput.toLowerCase()) ||
+                booking.residentName.toLowerCase().includes(searchInput.toLowerCase()) ||
+                booking.residentEmail.toLowerCase().includes(searchInput.toLowerCase())
+            ) &&
+            (
+                !startDate || !endDate || (bookingDate >= new Date(startDate) && bookingDate <= new Date(endDate))
+            ) &&
+            (
+                (!showConfirmOnly || booking.bookingStatus === 'Confirmed') &&
+                (!showPendingOnly || booking.bookingStatus === 'Pending')
+            )    
+        );
+    });
+
+    const handleChange = (e) => {
+        console.log("Search query:", e.target.value);
+        setSearchInput(e.target.value);
+    };
+
+    const handleToggleConfirmOnly = () => {
+        setshowConfirmOnly(!showConfirmOnly);
+    };
+
+    const handleTogglePendingOnly = () => {
+        setshowPendingOnly(!showPendingOnly);
+    };
+
+    const handleStartDateChange = (e) => {
+        setStartDate(e.target.value);
+    };
+
+    const handleEndDateChange = (e) => {
+        setEndDate(e.target.value);
+    };
+
+    console.log("Table bookings:", filteredBookings);
+    console.log("Filtered bookings:", filteredBookings);
+
     const handleBookingDelete = async (_id) => {
-        // Display a confirmation dialog
         const confirmDelete = window.confirm("Are you sure you want to delete this booking?");
         if (!confirmDelete) {
-            return; // If user cancels, exit the function
+            return; 
         }
         try {
             const res = await fetch(`/api/amenitiesBooking/delete/${_id}`, {
@@ -44,39 +92,68 @@ const BookingList_05 = () => {
                 console.log(data.message);
                 return;
             }
-            // Update the booking list after successful deletion
             setShowBooking((prev) => prev.filter((booking) => booking._id !== _id));
         } catch (error) {
             console.log(error.message);
         }
     }
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', {
+          year: 'numeric', 
+          month: 'short',
+          day: 'numeric',
+        });
+      };
     
 
 
     const handleDownloadPDF = () => {
-        const payDoc = new jsPDF('l');
+        const bookingPDF = new jsPDF('l');
         const tableColumn = ["Booking ID", "Amenity Title", "Resident Name", "Resident Email", "Resident Contact", "Date", "Time", "Duration", "Total Amount", "Status"];
         const tableRows = [];
 
-        showBooking.forEach(booking => {
-            const rowData = [
-                booking.bookingID,
-                booking.amenityTitle,
-                booking.residentName,
-                booking.residentEmail,
-                booking.residentContact,
-                booking.bookingDate,
-                booking.bookingTime,
-                booking.duration,
-                booking.bookingPrice,
-                booking.bookingStatus,
-            ];
-            tableRows.push(rowData);
+       showBooking.forEach(booking => {
+
+        const bookingDate = new Date(booking.bookingDate);
+    
+        const year = bookingDate.getFullYear();
+        const m = bookingDate.getMonth() + 1; 
+        const date = bookingDate.getDate();
+        
+        const formattedDate = `${year}-${m.toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}`;
+
+        const rowData = [
+            booking.bookingID,
+            booking.amenityTitle,
+            booking.residentName,
+            booking.residentEmail,
+            booking.residentContact,
+            formattedDate,
+            booking.bookingTime,
+            booking.duration,
+            booking.bookingPrice,
+            booking.bookingStatus,
+        ];
+        tableRows.push(rowData);
         });
 
-        payDoc.autoTable(tableColumn, tableRows, { startY: 20 });
-        payDoc.text(`Booking List`, 10, 12);
-        payDoc.save(`Booking_List.pdf`);
+        const d = new Date();
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const month = monthNames[d.getMonth()];
+
+        bookingPDF.autoTable({
+            startY: 30,
+            head: [tableColumn],
+            body: tableRows,
+            theme: 'grid',
+            didDrawCell: (data) => {
+                bookingPDF.rect(data.cell.x, data.cell.y, data.cell.width, data.cell.height);
+            }
+        });
+    
+        bookingPDF.text(`Cleansy Facility Management Services (Pvt) Ltd \nBooking List`, 14, 15);
+        bookingPDF.save(`Booking_List_${month}.pdf`);
     }
 
     const handleStatusChange = async (_id, newStatus) => {
@@ -93,7 +170,6 @@ const BookingList_05 = () => {
                 console.log(data.message);
                 return;
             }
-            // Update the booking list after successful status update
             setShowBooking((prev) =>
                 prev.map((booking) =>
                     booking._id === _id ? { ...booking, bookingStatus: newStatus } : booking
@@ -107,32 +183,65 @@ const BookingList_05 = () => {
 
     return (
         <div className="w-full table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
-        <h1 className="text-2xl font-semibold text-gray-800 mb-4 text-center">Booking List</h1>    
+        <h1 className="text-2xl font-semibold text-gray-800 mb-4 text-center dark:text-white">Booking List</h1>    
             {currentUser.isBookingAdmin ? (
                 <>
+                    <div className="flex gap-4 mb-4">
+                    <TextInput
+                            type="text"
+                            placeholder="Search..."
+                            value={searchInput}
+                            onChange= {handleChange}
+                        />
+                        <Button onClick={handleToggleConfirmOnly} className={showConfirmOnly ? 'bg-green-500 text-white' : 'bg-gray-200'}>
+                            Confirmed Bookings
+                        </Button>
+                        <Button onClick={handleTogglePendingOnly} className={showPendingOnly ? 'bg-red-500 text-white' : 'bg-gray-200'}>
+                            Pending Bookings
+                        </Button>
+
+                        
+                        <label className="block text-sm font-semibold text-gray-700 dark:text-white pt-3">Start Date</label>
+                        <input 
+                        type="date" 
+                        value={startDate} 
+                        onChange={handleStartDateChange}
+                        className="appearance-none block w-56 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        />
+
+                        
+                        <label className="block text-sm font-semibold text-gray-700 dark:text-white pt-3">End Date</label>
+                        <input 
+                        type="date" 
+                        value={endDate} 
+                        onChange={handleEndDateChange} 
+                        className="appearance-none block w-56 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        />
+
+                    </div>
+                    {filteredBookings.length > 0 ? (
                     <Table hoverable className="shadow-md">
                         <Table.Head>
                             <Table.HeadCell>Booking ID</Table.HeadCell>
                             <Table.HeadCell>Amenity Title</Table.HeadCell>
                             <Table.HeadCell>Resident Name</Table.HeadCell>
                             <Table.HeadCell>Resident Email</Table.HeadCell>
-                            <Table.HeadCell>Resident Contact</Table.HeadCell>
                             <Table.HeadCell>Date</Table.HeadCell>
                             <Table.HeadCell>Time</Table.HeadCell>
                             <Table.HeadCell>Duration</Table.HeadCell>
                             <Table.HeadCell>Total Amount</Table.HeadCell>
                             <Table.HeadCell>Status</Table.HeadCell>
                             <Table.HeadCell>Update Status</Table.HeadCell>
+                            <Table.HeadCell>Payment Image</Table.HeadCell>
                         </Table.Head>
-                        {showBooking.map((booking) => (
+                        {filteredBookings.map((booking) => (
                             <Table.Body key={booking._id} className="divide-y">
                                 <Table.Row className={`bg-white dark:border-gray-700 dark:bg-gray-800 ${booking.bookingStatus === 'Confirmed' ? 'text-green-500' : booking.bookingStatus === 'Pending' ? 'text-red-600' : ''}`}>
                                     <Table.Cell>{booking.bookingID}</Table.Cell>
                                     <Table.Cell>{booking.amenityTitle}</Table.Cell>
                                     <Table.Cell>{booking.residentName}</Table.Cell>
                                     <Table.Cell>{booking.residentEmail}</Table.Cell>
-                                    <Table.Cell>{booking.residentContact}</Table.Cell>
-                                    <Table.Cell>{booking.bookingDate}</Table.Cell>
+                                    <Table.Cell style={{ whiteSpace: 'nowrap' }}>{formatDate(booking.bookingDate)}</Table.Cell>
                                     <Table.Cell>{booking.bookingTime}</Table.Cell>
                                     <Table.Cell>{booking.duration}</Table.Cell>
                                     <Table.Cell>{booking.bookingPrice}</Table.Cell>
@@ -152,7 +261,19 @@ const BookingList_05 = () => {
                                             <option value="Confirmed">Confirmed</option>
                                         </select>
                                     </Table.Cell>
-                                    {/* <Table.Cell>
+                                    
+                                    <Table.Cell>
+                                        {booking.imageUrls.map((imageUrl, index) => (
+                                            <a key={index} href={imageUrl} target="_blank" rel="noopener noreferrer">
+                                            <img
+                                                src={imageUrl}
+                                                alt={`Image ${index}`}
+                                                style={{ maxWidth: '100px', maxHeight: '100px' }} // Adjust dimensions as needed
+                                            />
+                                            </a>
+                                        ))}
+                                    </Table.Cell>
+                                    <Table.Cell>
                                         <span onClick={() => handleBookingDelete(booking._id)} 
                                         className="font-medium text-red-500 hover:underline cursor-pointer">Delete</span>
                                     </Table.Cell>
@@ -162,11 +283,14 @@ const BookingList_05 = () => {
                                             to = {`/update-booking/${booking._id}`}>
                                                 <span>Update</span>
                                             </Link>
-                                    </Table.Cell> */}
+                                    </Table.Cell>
                                 </Table.Row>
                             </Table.Body>
                         ))}
                     </Table>
+                    ) : (
+                        <p className="text-gray-500 text-center">No matching amenities found.</p>
+                    )}
                     <br />
                     <Button onClick={handleDownloadPDF}>Download PDF</Button>
 
@@ -188,6 +312,37 @@ const BookingList_05 = () => {
             ) : (
                 <>
                 {/* Resident view */}
+                <div className="flex gap-4 mb-4">
+                    <TextInput
+                        type="text"
+                        placeholder="Search..."
+                        value={searchInput}
+                        onChange= {handleChange}
+                    />
+                    <Button onClick={handleToggleConfirmOnly} className={showConfirmOnly ? 'bg-green-500 text-white' : 'bg-gray-200'}>
+                        Confirmed Bookings
+                    </Button>
+                    <Button onClick={handleTogglePendingOnly} className={showPendingOnly ? 'bg-red-500 text-white' : 'bg-gray-200'}>
+                        Pending Bookings
+                    </Button>
+                    
+                    <label className="block text-sm font-semibold text-gray-700 dark:text-white pt-3">Start Date</label>
+                    <input 
+                    type="date" 
+                    value={startDate} 
+                    onChange={handleStartDateChange}
+                    className="appearance-none block w-56 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    />
+
+                    <label className="block text-sm font-semibold text-gray-700 dark:text-white pt-3">End Date</label>
+                    <input 
+                    type="date" 
+                    value={endDate} 
+                    onChange={handleEndDateChange} 
+                    className="appearance-none block w-56 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    />
+                </div>
+                {filteredBookings.length > 0 ? (
                 <Table hoverable className="shadow-md">
                     <Table.Head>
                             <Table.HeadCell>Booking ID</Table.HeadCell>
@@ -204,9 +359,9 @@ const BookingList_05 = () => {
                             <Table.HeadCell>
                                 <span>Upadte</span>
                             </Table.HeadCell>
+                            <Table.HeadCell>Payment Image</Table.HeadCell>
                         </Table.Head>
-                    {showBooking
-                        .filter(booking => booking.residentUsername === currentUser.username)
+                    {filteredBookings.filter(booking => booking.residentUsername === currentUser.username)
                         .map((booking) => (
                             <Table.Body key={booking._id} className="divide-y">
                                 <Table.Row className={`bg-white dark:border-gray-700 dark:bg-gray-800 ${booking.bookingStatus === 'Confirmed' ? 'text-green-600' : booking.bookingStatus === 'Pending' ? 'text-red-600' : ''}`}>
@@ -215,7 +370,7 @@ const BookingList_05 = () => {
                                     <Table.Cell>{booking.residentName}</Table.Cell>
                                     <Table.Cell>{booking.residentEmail}</Table.Cell>
                                     <Table.Cell>{booking.residentContact}</Table.Cell>
-                                    <Table.Cell>{booking.bookingDate}</Table.Cell>
+                                    <Table.Cell style={{ whiteSpace: 'nowrap' }}>{formatDate(booking.bookingDate)}</Table.Cell>
                                     <Table.Cell>{booking.bookingTime}</Table.Cell>
                                     <Table.Cell>{booking.duration}</Table.Cell>
                                     <Table.Cell>{booking.bookingPrice}</Table.Cell>
@@ -235,10 +390,24 @@ const BookingList_05 = () => {
                                                 <span>Update</span>
                                             </Link>
                                     </Table.Cell>
+                                    <Table.Cell>
+                                        {booking.imageUrls.map((imageUrl, index) => (
+                                            <a key={index} href={imageUrl} target="_blank" rel="noopener noreferrer">
+                                            <img
+                                                src={imageUrl}
+                                                alt={`Image ${index}`}
+                                                style={{ maxWidth: '100px', maxHeight: '100px' }} // Adjust dimensions as needed
+                                            />
+                                            </a>
+                                        ))}
+                                    </Table.Cell>
                                 </Table.Row>
                             </Table.Body>
                         ))}
                 </Table>
+                ) : (
+                    <p className="text-gray-500 text-center">No matching amenities found.</p>
+                )}
                 <p className="text-red-700 mt-5">
                     {showBookingError ? "Error fetching bookings" : ""}
                 </p>
