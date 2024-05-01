@@ -19,6 +19,7 @@ import PropertyAdminDashboard_02 from "../components/IT22577160_Components/Prope
 import RequestLeave_04 from "./IT22603418_Pages/RequestLeave_04";
 import StaffAdminDash_04 from "./IT22603418_Pages/StaffAdminDash_04";
 import StaffAttendance_04 from "./IT22603418_Pages/StaffAttendance_04";
+import InboxMessageForPropertyAdmin_02 from "../components/IT22577160_Components/InboxMessageForPropertyAdmin_02";
 //import FaceRecognition_04 from "./IT22603418_Pages/faceRecognition_04";
 
 const Dashboard = () => {
@@ -73,6 +74,8 @@ const Dashboard = () => {
       {tab === "propertyAdminDash" && <PropertyAdminDashboard_02 />}
       {/* VisitorAdmin Dashboard */}
       {tab === "addVisitors" && <VisitorAdminPage />}
+      {/* inboxMessage for property admin */}
+      {tab === "inboxMessage" && <InboxMessageForPropertyAdmin_02 />}
     </div>
   );
 };

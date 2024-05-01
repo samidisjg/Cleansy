@@ -20,6 +20,7 @@ import { FaPersonSwimming } from "react-icons/fa6";
 import { MdAddHomeWork } from "react-icons/md";
 import { FaPersonCircleCheck } from "react-icons/fa6";
 import { BsPersonPlusFill } from "react-icons/bs";
+import { IoChatbubbleEllipses } from "react-icons/io5";
 
 const DashSidebar = () => {
   const location = useLocation();
@@ -317,6 +318,19 @@ const DashSidebar = () => {
               </Link>
             </>
           }
+          {currentUser.isPropertyAdmin && (
+            <>
+              <Link to="/dashboard?tab=inboxMessage">
+                <Sidebar.Item
+                  active={tab === "inboxMessage"}
+                  icon={IoChatbubbleEllipses}
+                  as="div"
+                >
+                  Inbox Messages
+                </Sidebar.Item>
+              </Link>
+            </>
+          )}
 
           <Sidebar.Item
             icon={HiArrowSmRight}
