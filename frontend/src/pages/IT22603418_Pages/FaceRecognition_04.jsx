@@ -1,38 +1,22 @@
 import { useState, useRef, useEffect } from "react";
 import * as faceapi from "face-api.js";
 import { Button, Label, TextInput } from "flowbite-react";
+import cameraImage from "./cameraImage.jpg"; // Import your camera image
 
 function FaceRecognition_04() {
   const [cameraOn, setCameraOn] = useState(false); // State variable to track camera status
+  const [pictureTaken, setPictureTaken] = useState(false); // State variable to track picture taken status
   const videoRef = useRef();
   const canvasRef = useRef();
-  //const { currentUser } = useSelector((state) => state.user);
   const [formData, setFormData] = useState({
     staffName: "",
     email: "",
     phoneNo: "",
-    leaveType: "",
-    startDate: "",
-    endDate: "",
-    startTime: "",
-    endTime: "",
     nic: "",
     status: "pending review",
   });
-  const {
-    staffName,
-    email,
-    phoneNo,
-    leaveType,
-    startDate,
-    endDate,
-    startTime,
-    endTime,
-    nic,
-    status,
-  } = formData;
+  const { staffName, email, phoneNo, nic, status } = formData;
 
-  // LOAD FROM USEEFFECT
   useEffect(() => {
     if (cameraOn) {
       startVideo();
@@ -40,14 +24,13 @@ function FaceRecognition_04() {
     } else {
       stopVideo();
     }
-  }, [cameraOn]); // Reload when camera status changes
+  }, [cameraOn]);
 
-  // Function to toggle camera status
   const toggleCamera = () => {
     setCameraOn(!cameraOn);
+    setPictureTaken(false); // Reset picture taken status when toggling camera
   };
 
-  // OPEN YOU FACE WEBCAM
   const startVideo = () => {
     navigator.mediaDevices
       .getUserMedia({ video: true })
@@ -59,7 +42,6 @@ function FaceRecognition_04() {
       });
   };
 
-  // Function to stop the video stream
   const stopVideo = () => {
     if (videoRef.current && videoRef.current.srcObject) {
       const stream = videoRef.current.srcObject;
@@ -73,10 +55,8 @@ function FaceRecognition_04() {
     }
   };
 
-  // LOAD MODELS FROM FACE API
   const loadModels = () => {
     Promise.all([
-      // THIS FOR FACE DETECT AND LOAD FROM YOU PUBLIC/MODELS DIRECTORY
       faceapi.nets.tinyFaceDetector.loadFromUri("/models"),
       faceapi.nets.faceLandmark68Net.loadFromUri("/models"),
       faceapi.nets.faceRecognitionNet.loadFromUri("/models"),
@@ -93,7 +73,6 @@ function FaceRecognition_04() {
         .withFaceLandmarks()
         .withFaceExpressions();
 
-      // DRAW YOU FACE IN WEBCAM
       canvasRef.current.innerHtml = faceapi.createCanvasFromMedia(
         videoRef.current
       );
@@ -113,74 +92,122 @@ function FaceRecognition_04() {
     }, 1000);
   };
 
+  const takePicture = () => {
+    const context = canvasRef.current.getContext("2d");
+    context.drawImage(
+      videoRef.current,
+      0,
+      0,
+      canvasRef.current.width,
+      canvasRef.current.height
+    );
+    setPictureTaken(true); // Set picture taken status to true after capturing the picture
+  };
+
+  const retryPicture = () => {
+    const context = canvasRef.current.getContext("2d");
+    context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+    setPictureTaken(false); // Reset picture taken status when retrying
+  };
+
   return (
-    <div className="max-w-lg mx-auto p-3 w-full">
+    <div className="max-w-5xl mx-auto p-3">
       <h1 className="text-3xl text-center my-7 font-extrabold underline text-blue-950 dark:text-slate-300">
         Staff Registration
       </h1>
-      <form className="flex flex-col gap-4">
+      <div className="flex flex-row gap-4">
         <div>
-          <Label value="Staff Name" />
-          <TextInput
-            type="text"
-            id="staffName"
-            placeholder="Staff Name"
-            value={staffName}
-            required
-          />
-        </div>
-        <div>
-          <Label value="Email" />
-          <TextInput
-            type="email"
-            id="email"
-            placeholder="example@gmail.com"
-            required
-            value={email}
-          />
-        </div>
-        <div>
-          <Label value="Phone No" />
-          <TextInput
-            type="text"
-            id="phoneNo"
-            placeholder="Phone No"
-            required
-            value={phoneNo}
-          />
-        </div>
-
-        <div>
-          <Label value="NIC" />
-          <TextInput id="NIC" placeholder="NIC" required value={nic} />
-        </div>
-
-        <div className="flex flex-row gap-4 items-center">
-          <div className="flex flex-col">
-            <Label value="Take picture" />
-            <video
-              className="w-64 h-48"
-              crossOrigin="anonymous"
-              ref={videoRef}
-              autoPlay
-            ></video>
+          <div className="flex flex-row items-center mb-6">
+            <div className="flex flex-col">
+              <Label value="Take picture" />
+              {/* Conditional rendering based on cameraOn and pictureTaken state */}
+              {cameraOn ? (
+                <div className="relative">
+                  <video
+                    className="h-96 ml-3"
+                    crossOrigin="anonymous"
+                    ref={videoRef}
+                    autoPlay
+                  >
+                    {pictureTaken && (
+                      <img
+                        className="absolute bottom-0 left-0 ml-3 mb-3"
+                        src={canvasRef.current.toDataURL()}
+                        alt={"Taken Picture"}
+                      />
+                    )}
+                  </video>
+                </div>
+              ) : (
+                <img className="h-96 ml-3" src={cameraImage} alt={"Camera"} />
+              )}
+            </div>
+            <canvas className="w-64 h-48" ref={canvasRef}></canvas>
           </div>
-          <canvas className="w-64 h-48" ref={canvasRef} />
-        </div>
 
-        <div className="flex flex-row gap-4">
-          <div className="flex-grow flex flex-col">
+          <div className="flex flex-row gap-4">
             <Button onClick={toggleCamera} gradientDuoTone="purpleToBlue">
               {cameraOn ? "Turn Camera Off" : "Turn Camera On"}
             </Button>
+            <Button
+              onClick={takePicture}
+              gradientDuoTone="purpleToBlue"
+              disabled={!cameraOn}
+            >
+              Take Picture
+            </Button>
+            <Button
+              onClick={retryPicture}
+              gradientDuoTone="purpleToBlue"
+              disabled={!cameraOn || !pictureTaken}
+            >
+              Retry
+            </Button>
           </div>
-          <Button gradientDuoTone="purpleToBlue">Take Picture</Button>
         </div>
+        <form className="flex flex-col gap-4">
+          <div>
+            <div>
+              <Label value="Staff Name" />
+              <TextInput
+                type="text"
+                id="staffName"
+                placeholder="Staff Name"
+                value={staffName}
+                required
+              />
+            </div>
+            <div>
+              <Label value="Email" />
+              <TextInput
+                type="email"
+                id="email"
+                placeholder="example@gmail.com"
+                required
+                value={email}
+              />
+            </div>
+            <div>
+              <Label value="Phone No" />
+              <TextInput
+                type="text"
+                id="phoneNo"
+                placeholder="Phone No"
+                required
+                value={phoneNo}
+              />
+            </div>
 
-        <Button type="submit" gradientDuoTone="pinkToOrange">
-          Register
-        </Button>
-      </form>
+            <div>
+              <Label value="NIC" />
+              <TextInput id="NIC" placeholder="NIC" required value={nic} />
+            </div>
+          </div>
+          <Button type="submit" gradientDuoTone="pinkToOrange">
+            Register
+          </Button>
+        </form>
+      </div>
     </div>
   );
 }
