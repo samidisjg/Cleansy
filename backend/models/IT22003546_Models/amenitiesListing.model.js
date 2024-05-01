@@ -4,7 +4,8 @@ const AmenitiesListingSchema = new mongoose.Schema({
 
     amenityID: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
 
     amenityTitle: {
@@ -33,6 +34,10 @@ const AmenitiesListingSchema = new mongoose.Schema({
     },
     amenityPrice: {
         type: Number,
+        required: true
+    },
+    amenityStatus: {
+        type: String,
         required: true
     },
     

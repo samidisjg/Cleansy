@@ -63,7 +63,6 @@ function App() {
         <ScrollToTop_02 /> 
         <Header />
 
-              
         <div className="min-h-screen">
           <Routes>
             <Route path="/" element={<Home />} />
@@ -91,11 +90,10 @@ function App() {
                 path="/service-User:serviceID"
                 element={<ResidentServiceView />}
               />
-                <Route path="/service-create" element={<ServiceListingCreate/>} />
-                <Route path="/service-list/:serviceID" element={<DashServiceList_06/>} />
-                <Route path="/dashboard/service-list/:serviceID" element={<DashServiceList_06 />} />
-                <Route path="/service-User:serviceID" element={<ResidentServiceView/>} />
-                <Route path="/service-update/:serviceID" element={<ServiceUpdate_06/>} />
+              <Route
+                path="/book-service/:serviceID"
+                element={<BookServiceCreate />}
+              />
 
               </Route>
               <Route element={<OnlyPropertyAdminPrivateRoute_02/>}>
@@ -143,6 +141,7 @@ function App() {
           </div>
         <Footer/>
       </Router>
+
       <ToastContainer
         position="bottom-center"
         autoClose={5000}

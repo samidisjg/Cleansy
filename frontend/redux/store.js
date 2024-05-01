@@ -6,6 +6,8 @@ import wishlistReducer from './IT22577160_redux/wishList_02.js'
 import ratingReducer from './IT22577160_redux/ratingSlice_02.js'
 import { persistReducer, persistStore } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
+import TaskchartSlice from './IT22607232_redux/Taskchart_01.js'
+import{apiSlice} from './IT22607232_redux/apiSlice.js'
 
 const rootReducer = combineReducers({
    user: userReducer,
@@ -13,6 +15,8 @@ const rootReducer = combineReducers({
    cart: cartReducer,
    wishlist: wishlistReducer,
    rating: ratingReducer,
+   Taskchart: TaskchartSlice,
+   [apiSlice.reducerPath]: apiSlice.reducer
 })
 
 const persistConfig = {
@@ -28,7 +32,7 @@ export const store = configureStore({
    // prevent errors from redux-persist / using react toolkit
    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
       serializableCheck: false,
-   }),
+   }).concat(apiSlice.middleware),
 })
 
 export const persistor = persistStore(store) 
