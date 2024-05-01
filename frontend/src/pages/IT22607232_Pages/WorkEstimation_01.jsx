@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Button, Checkbox, FileInput, Label, Select, TextInput } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -6,6 +7,7 @@ const generateTaskID = () => `TID-${Math.floor(10000 + Math.random() * 90000)}`;
 
 const WorkEstimation_01 = () => {
   const navigate = useNavigate();
+  const { currentUser } = useSelector((state) => state.user);
   const [formData, setFormData] = useState({
     TaskID: generateTaskID(),
     DurationDays: "2",
@@ -18,21 +20,46 @@ const WorkEstimation_01 = () => {
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    let boolean = null; // Declare boolean variable here
+
+   
+    if (e.target.name === "Date") {
+      setFormData({
+        ...formData,
+        date: formattedDate,
+      });
+    } else {
+      if (e.target.value === "true") {
+        boolean = true;
+      }
+      if (e.target.value === "false") {
+        boolean = false;
+      }
+      if (
+        e.target.type === "number" ||
+        e.target.type === "text"
+      ) {
+        setFormData({
+          ...formData,
+          [e.target.name]: e.target.value,
+        });
+      } else {
+        setFormData({
+          ...formData,
+          [e.target.name]: boolean !== null ? boolean : e.target.value,
+        });
+      }
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      if (formData.TaskID === currentUser.TaskID)
+        return setError("TaskID already exists");
       setLoading(true);
       setError(false);
 
-      // Calculate total cost based on formData
-      const { DurationDays, Complexity } = formData;
-      const size = DurationDays * Complexity; // Adjust this calculation according to your requirement
-      const totalCost = size * 100; // Assuming $100 per unit of size
-
-      // Send the form data along with the generated TaskID and calculated totalCost to the backend
       const res = await fetch("/api/workEstimation/estimate", {
         method: "POST",
         headers: {
@@ -40,7 +67,7 @@ const WorkEstimation_01 = () => {
         },
         body: JSON.stringify({
           ...formData,
-          totalCost,
+          userRef: currentUser._id,
         }),
       });
       const data = await res.json();
@@ -48,13 +75,20 @@ const WorkEstimation_01 = () => {
       if (data.success === false) {
         setError(data.message);
       }
-      // Navigate based on the response from the backend
       navigate("/dashboard?tab=maintenance");
     } catch (error) {
       setError(error.message);
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    const generatedID = generateTaskID();
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      TaskID: generatedID,
+    }));
+  }, []);
 
   return (
     <div className="min-h-screen mt-20">
@@ -111,7 +145,7 @@ const WorkEstimation_01 = () => {
 
           <div>
             <Label value="Complexity" />
-            <Select name="complexity"
+            <Select name="Complexity"
              onChange={(e) =>
               setFormData({ ...formData, Complexity: e.target.value })
             }

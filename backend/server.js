@@ -24,7 +24,7 @@ import serviceBookingRoutes from "./routes/IT22350114_Routes/serviceBookingRoute
 import StaffAdminRoutes from "./routes/IT22603418_Routes/StaffAdmin.route_04.js";
 import StaffAttendanceRoutes from "./routes/IT22603418_Routes/StaffAttendance.route_04.js";
 import cors from "cors";
-import workEstimationRoutes from './routes/IT22607232_Routes/WorkEstimationRoute.js';
+import EstimationRoutes_01 from './routes/IT22607232_Routes/EstimationRoutes_01.js';
 dotenv.config();
 
 const app = express();
@@ -60,7 +60,7 @@ app.use("/api/taskRating", RateTasksRoutes);
 app.use("/api/taskAnalysis", TaskAnalysisRoute);
 app.use("/api/categeories",taskcategoriesRoutes);
 app.use("/api/labels",tasklabelsRoutes);
-app.use("api/workEstimation",workEstimationRoutes)
+app.use("/api/workEstimation",EstimationRoutes_01)
 
 // IT22577160 Routes
 app.use("/api/apartmentListing", apartmentListingRoutes);

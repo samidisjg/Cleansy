@@ -1,28 +1,30 @@
 import mongoose from "mongoose";
 
-const EstimationSchema = new mongoose.Schema({
-  TaskID: {
+const EstimationSchema = new mongoose.Schema(
+  {
+    TaskID: {
       type: String,
-      required: true
-   },
-   DurationDays: {
-    type: Number,
-    required: true
- },
-   Category: {
+      required: true,
+    },
+    DurationDays: {
+      type: Number,
+      required: true,
+    },
+    Category: {
       type: String,
-      required: true
-   },
+      required: true,
+    },
+    Size: {
+      type: Number,
+      required: true,
+    },
+    Complexity: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
 
-   Size:{
-    type: Number
-   },
-   complexity:{
-    type: String,
-    required:true
-   }
-}, {timestamps:true});
-
-
-const Estimation = mongoose.model('Estimation', EstimationSchema);
+const Estimation = mongoose.model("estimations1", EstimationSchema);
 export default Estimation;
