@@ -1,3 +1,4 @@
+//frontend\src\components\IT22196460_Components\PDFAnnouncementForm.jsx
 import React from 'react';
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 
@@ -7,22 +8,25 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   section: {
-    marginBottom: 10,
+    marginBottom: 20,
   },
   heading: {
-    fontSize: 20,
+    fontSize: 10,
     fontWeight: 'bold',
     marginBottom: 10,
   },
+  
   row: {
     flexDirection: 'row',
     marginBottom: 5,
   },
   label: {
+    fontSize: 10,
     width: 120,
     fontWeight: 'bold',
   },
   value: {
+    fontSize: 10,
     flex: 1,
   },
 });

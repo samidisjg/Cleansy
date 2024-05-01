@@ -1,6 +1,7 @@
+//frontend\src\components\IT22196460_Components\AnnouncementForAdmin.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { Table } from 'flowbite-react';
+import { Table, TableHeadCell } from 'flowbite-react';
 import { Link } from 'react-router-dom';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import SearchBar from './SearchBar';
@@ -36,6 +37,7 @@ const AnnouncementForAdmin = () => {
         } catch (error) {
             console.error('Error fetching announcements:', error);
         }
+
     };
 
     const deleteAnnouncement = async (id) => {

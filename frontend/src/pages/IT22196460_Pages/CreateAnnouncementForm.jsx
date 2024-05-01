@@ -74,6 +74,8 @@ const CreateAnnouncementForm = () => {
         return `A${Math.floor(Math.random() * 10000)}`;
     }
 
+
+
     return (
         <div className="min-h-screen flex items-center justify-center w-full dark:bg-gray-950">
             <div className="bg-white dark:bg-gray-900 shadow-md rounded-lg px-8 py-6 max-w-md h-full">

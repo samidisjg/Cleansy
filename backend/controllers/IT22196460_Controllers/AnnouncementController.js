@@ -46,6 +46,7 @@ export const updateAnnouncement = async(req, res, next) => {
         Category_ID, 
         Attachment_URL, 
         Create_At
+        
     };
 
     try{
