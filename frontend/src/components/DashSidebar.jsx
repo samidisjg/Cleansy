@@ -236,46 +236,6 @@ const DashSidebar = () => {
                 </div>
               )}
 
-              <Link to="/add-visitors">
-                <Sidebar.Item icon={HiUser} as="div">
-                  Add Visitors
-                </Sidebar.Item>
-              </Link>
-              {
-                // !(currentUser.isAdmin) || currentUser.isBookingAdmin && (
-                <>
-                  <Link to="/dashboard?tab=bookings">
-                    <Sidebar.Item
-                      active={tab === "bookings"}
-                      icon={FaPersonSwimming}
-                      as="div"
-                    >
-                      Bookings
-                    </Sidebar.Item>
-                  </Link>
-                </>
-              }
-
-              {
-                //currentUser.isFacilityServiceAdmin &&
-                <Link
-                  to="/dashboard?tab=serviceBookings"
-                  className={tab === "serviceBookings" ? "active" : ""}
-                >
-                  <Sidebar.Item icon={HiOutlineUserGroup}>
-                    Service Bookings
-                  </Sidebar.Item>
-                </Link>
-              }
-
-              <Sidebar.Item
-                icon={HiArrowSmRight}
-                className="cursor-pointer"
-                onClick={handleSignout}
-              >
-                Sign Out
-              </Sidebar.Item>
-
               {tab === "staffs" && (
                 <div className="dropdown">
                   <Link to="/dashboard?tab=staffAttendance">
@@ -300,6 +260,34 @@ const DashSidebar = () => {
               </Link>
             </>
           )}
+
+          {
+            // !(currentUser.isAdmin) || currentUser.isBookingAdmin && (
+            <>
+              <Link to="/dashboard?tab=bookings">
+                <Sidebar.Item
+                  active={tab === "bookings"}
+                  icon={FaPersonSwimming}
+                  as="div"
+                >
+                  Bookings
+                </Sidebar.Item>
+              </Link>
+            </>
+          }
+
+          {
+            //currentUser.isFacilityServiceAdmin &&
+            <Link
+              to="/dashboard?tab=serviceBookings"
+              className={tab === "serviceBookings" ? "active" : ""}
+            >
+              <Sidebar.Item icon={HiOutlineUserGroup}>
+                Service Bookings
+              </Sidebar.Item>
+            </Link>
+          }
+
           {!currentUser.isAdmin && (
             <>
               <Link to="/dashboard?tab=apartmentList">
@@ -344,20 +332,7 @@ const DashSidebar = () => {
               Add Visitors
             </Sidebar.Item>
           </Link>
-          {
-            // !(currentUser.isAdmin) || currentUser.isBookingAdmin && (
-            <>
-              <Link to="/dashboard?tab=bookings">
-                <Sidebar.Item
-                  active={tab === "bookings"}
-                  icon={FaPersonSwimming}
-                  as="div"
-                >
-                  Bookings
-                </Sidebar.Item>
-              </Link>
-            </>
-          }
+
           {currentUser.isPropertyAdmin && (
             <>
               <Link to="/dashboard?tab=inboxMessage">
