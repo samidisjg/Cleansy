@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
 const StaffRegisterSchema = new mongoose.Schema({
+  staffID: {
+    type: String,
+    required: true,
+  },
   staffName: {
     type: String,
     required: true,

@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useSelector } from "react-redux";
 import * as faceapi from "face-api.js";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -15,12 +16,14 @@ import {
 const storage = getStorage(app);
 
 function StaffRegister_04() {
+  const { currentUser } = useSelector((state) => state.user);
   const [cameraOn, setCameraOn] = useState(false); // State variable to track camera status
   const [pictureTaken, setPictureTaken] = useState(false); // State variable to track picture taken status
   const videoRef = useRef();
   const canvasRef = useRef();
   const [imageUrl, setImageUrl] = useState("");
   const [formData, setFormData] = useState({
+    staffID: currentUser._id,
     staffName: "",
     email: "",
     phoneNo: "",
@@ -28,7 +31,7 @@ function StaffRegister_04() {
     imageURL: "",
     status: "pending review",
   });
-  const { staffName, email, phoneNo, nic, status } = formData;
+  const { staffID, staffName, email, phoneNo, nic, status } = formData;
 
   useEffect(() => {
     if (cameraOn) {
@@ -86,7 +89,7 @@ function StaffRegister_04() {
         .withFaceLandmarks()
         .withFaceExpressions();
 
-      canvasRef.current.innerHtml = faceapi.createCanvasFromMedia(
+      canvasRef.current.innerHTML = faceapi.createCanvasFromMedia(
         videoRef.current
       );
       faceapi.matchDimensions(canvasRef.current, {
@@ -123,8 +126,8 @@ function StaffRegister_04() {
 
     // Upload the image to Firebase Storage
     const storage = getStorage(app);
-    const storageRef = ref(storage, "images");
-    const imageName = "images/" + Date.now() + ".jpg";
+    const storageRef = ref(storage, "11Staffs");
+    const imageName = Date.now() + ".jpg";
     const imageRef = ref(storageRef, imageName);
 
     await uploadString(imageRef, photoData, "data_url");
@@ -253,11 +256,19 @@ function StaffRegister_04() {
             </Button>
           </div>
         </div>
-        <form
-          className="flex flex-col gap-6 w-80 mt-12"
-          onSubmit={handleSubmit}
-        >
+        <form className="flex flex-col gap-6 w-80 mt-4" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-4">
+            <div>
+              <Label value="Staff ID" />
+              <TextInput
+                type="text"
+                id="staffID"
+                placeholder={currentUser._id}
+                value={staffID}
+                onChange={handleInputChange}
+                disabled
+              />
+            </div>
             <div>
               <Label value="Staff Name" />
               <TextInput

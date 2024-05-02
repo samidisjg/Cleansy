@@ -228,19 +228,9 @@ const DashSidebar = () => {
 
               {tab === "staffs" && (
                 <div className="dropdown">
-                  <Link to="/dashboard?tab=faceRecognition">
-                    <Sidebar.Item active={tab === "faceRecognition"} as="div">
-                      Face Recognition
-                    </Sidebar.Item>
-                  </Link>
-                </div>
-              )}
-
-              {tab === "staffs" && (
-                <div className="dropdown">
-                  <Link to="/dashboard?tab=staffAttendance">
-                    <Sidebar.Item active={tab === "staffAttendance"} as="div">
-                      Staff Attendance
+                  <Link to="/dashboard?tab=StaffRegister">
+                    <Sidebar.Item active={tab === "StaffRegister"} as="div">
+                      Staff Register
                     </Sidebar.Item>
                   </Link>
                 </div>
