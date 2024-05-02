@@ -17,7 +17,7 @@ const StaffRegisterSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  image: {
+  imageURL: {
     type: String,
     required: true,
   },
@@ -30,4 +30,4 @@ const StaffRegisterSchema = new mongoose.Schema({
 
 const StaffRegister = mongoose.model("StaffRegister", StaffRegisterSchema);
 
-module.exports = StaffRegister;
+export default StaffRegister;
