@@ -205,6 +205,19 @@ const DashSidebar = () => {
               </Link>
             </>
           )}
+
+          <>
+            <Link to="/dashboard?tab=StaffRegister">
+              <Sidebar.Item
+                active={tab === "StaffRegister"}
+                icon={HiOutlineUserGroup}
+                as="div"
+              >
+                Staff Register
+              </Sidebar.Item>
+            </Link>
+          </>
+
           {currentUser.isStaff && (
             <>
               <Link to="/dashboard?tab=staffs">
@@ -248,6 +261,16 @@ const DashSidebar = () => {
                   Staff Admin
                 </Sidebar.Item>
               </Link>
+
+              {tab === "staffAdmin" && (
+                <div className="dropdown">
+                  <Link to="/dashboard?tab=staffRegisterView">
+                    <Sidebar.Item active={tab === "staffRegisterView"} as="div">
+                      Staff Register
+                    </Sidebar.Item>
+                  </Link>
+                </div>
+              )}
             </>
           )}
 

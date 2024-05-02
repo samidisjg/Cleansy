@@ -17,8 +17,8 @@ const storage = getStorage(app);
 
 function StaffRegister_04() {
   const { currentUser } = useSelector((state) => state.user);
-  const [cameraOn, setCameraOn] = useState(false); // State variable to track camera status
-  const [pictureTaken, setPictureTaken] = useState(false); // State variable to track picture taken status
+  const [cameraOn, setCameraOn] = useState(false);
+  const [pictureTaken, setPictureTaken] = useState(false);
   const videoRef = useRef();
   const canvasRef = useRef();
   const [imageUrl, setImageUrl] = useState("");
@@ -44,7 +44,7 @@ function StaffRegister_04() {
 
   const toggleCamera = () => {
     setCameraOn(!cameraOn);
-    setPictureTaken(false); // Reset picture taken status when toggling camera
+    setPictureTaken(false);
   };
 
   const startVideo = () => {
@@ -120,11 +120,10 @@ function StaffRegister_04() {
       canvasRef.current.width,
       canvasRef.current.height
     );
-    setPictureTaken(true); // Set picture taken status to true after capturing the picture
-    // Capture photo data from canvas
+    setPictureTaken(true);
+
     const photoData = canvasRef.current.toDataURL("image/jpeg");
 
-    // Upload the image to Firebase Storage
     const storage = getStorage(app);
     const storageRef = ref(storage, "11Staffs");
     const imageName = Date.now() + ".jpg";
@@ -132,17 +131,14 @@ function StaffRegister_04() {
 
     await uploadString(imageRef, photoData, "data_url");
 
-    // Get the image URL from Firebase Storage
     const imageUrl = await getDownloadURL(imageRef);
     setImageUrl(imageUrl);
 
-    //Prepare data to send to backend
     setFormData({ ...formData, imageURL: imageUrl });
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent the default form submission behavior
-    // Form Fields validation
+    e.preventDefault();
     if (
       !formData.staffName ||
       !formData.email ||
@@ -152,51 +148,58 @@ function StaffRegister_04() {
       toast.error("Please fill out all the fields");
       return;
     }
-    // Phone number validation
     if (formData.phoneNo.length !== 10 || isNaN(formData.phoneNo)) {
       toast.error("Phone number should have 10 digits");
       return;
     }
-    // Staff Name validation
     const staffNameRegex = /^[a-zA-Z\s]+$/;
     if (!staffNameRegex.test(formData.staffName)) {
       toast.error("Staff Name should only contain letters and spaces");
       return;
     }
-
-    // NIC validation
     if (formData.nic.length !== 12 || isNaN(formData.nic)) {
       toast.error("NIC should have 12 digits");
       return;
     }
 
     try {
-      // Send data to backend
-      const response = await axios.post(
-        "/api/StaffRegister/register",
-        formData
-      );
-      toast.success("Staff Registered Successfully"); // Assuming backend returns some response
-      // Delay the page refresh to ensure the toast is visible
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000); // Refresh after 2 seconds
+      const response = await fetch("/api/StaffRegister/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      if (response.ok) {
+        toast.success("Staff Registered Successfully");
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      } else {
+        const errorData = await response.json();
+        if (
+          errorData.error ===
+          "Staff with the same staffID or NIC already exists"
+        ) {
+          toast.error("Staff with the same staffID or NIC already exists");
+        } else {
+          toast.error("Please take a picture and submit");
+        }
+      }
     } catch (error) {
       console.error("Error:", error);
-      toast.error("Please take a picture and submit");
     }
   };
 
   const retryPicture = () => {
     const context = canvasRef.current.getContext("2d");
     context.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-    setPictureTaken(false); // Reset picture taken status when retrying
+    setPictureTaken(false);
   };
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
   return (
     <div className="max-w-6xl mx-auto p-3">
       <h1 className="text-3xl text-center mt-7 mb-10 font-extrabold underline text-blue-950 dark:text-slate-300">

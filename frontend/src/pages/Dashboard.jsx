@@ -22,6 +22,7 @@ import AdminLeaveRequestHandle_04 from "../components/IT22603418_Components/Admi
 import StaffAttendance_04 from "./IT22603418_Pages/StaffAttendance_04";
 import InboxMessageForPropertyAdmin_02 from "../components/IT22577160_Components/InboxMessageForPropertyAdmin_02";
 import StaffRegister_04 from "./IT22603418_Pages/StaffRegister_04";
+import AdminStaffRegisterList_04 from "../components/IT22603418_Components/AdminStaffRegisterList_04";
 
 const Dashboard = () => {
   const location = useLocation();
@@ -51,6 +52,8 @@ const Dashboard = () => {
       {tab === "StaffRegister" && <StaffRegister_04 />}
       {tab === "staffAttendance" && <StaffAttendance_04 />}
       {tab === "staffAdmin" && <AdminLeaveRequestHandle_04 />}
+      {tab === "staffRegisterView" && <AdminStaffRegisterList_04 />}
+
       {/* services */}
       {tab === "services" && <DashServices />}
       {/* Apartment List */}
