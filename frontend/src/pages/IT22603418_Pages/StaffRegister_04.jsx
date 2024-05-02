@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import * as faceapi from "face-api.js";
 import axios from "axios";
+import { toast } from "react-toastify";
 import { Button, Label, TextInput } from "flowbite-react";
 import cameraImage from "./cameraImage.jpg"; // Import your camera image
 import { app } from "../../firebase";
@@ -13,7 +14,7 @@ import {
 
 const storage = getStorage(app);
 
-function FaceRecognition_04() {
+function StaffRegister_04() {
   const [cameraOn, setCameraOn] = useState(false); // State variable to track camera status
   const [pictureTaken, setPictureTaken] = useState(false); // State variable to track picture taken status
   const videoRef = useRef();
@@ -138,8 +139,33 @@ function FaceRecognition_04() {
 
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
+    // Form Fields validation
+    if (
+      !formData.staffName ||
+      !formData.email ||
+      !formData.phoneNo ||
+      !formData.nic
+    ) {
+      toast.error("Please fill out all the fields");
+      return;
+    }
+    // Phone number validation
+    if (formData.phoneNo.length !== 10 || isNaN(formData.phoneNo)) {
+      toast.error("Phone number should have 10 digits");
+      return;
+    }
+    // Staff Name validation
+    const staffNameRegex = /^[a-zA-Z\s]+$/;
+    if (!staffNameRegex.test(formData.staffName)) {
+      toast.error("Staff Name should only contain letters and spaces");
+      return;
+    }
 
-    // Prepare data to send to backend
+    // NIC validation
+    if (formData.nic.length !== 12 || isNaN(formData.nic)) {
+      toast.error("NIC should have 12 digits");
+      return;
+    }
 
     try {
       // Send data to backend
@@ -147,9 +173,14 @@ function FaceRecognition_04() {
         "/api/StaffRegister/register",
         formData
       );
-      console.log(response.data); // Assuming backend returns some response
+      toast.success("Staff Registered Successfully"); // Assuming backend returns some response
+      // Delay the page refresh to ensure the toast is visible
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000); // Refresh after 2 seconds
     } catch (error) {
       console.error("Error:", error);
+      toast.error("Please take a picture and submit");
     }
   };
 
@@ -282,4 +313,4 @@ function FaceRecognition_04() {
   );
 }
 
-export default FaceRecognition_04;
+export default StaffRegister_04;

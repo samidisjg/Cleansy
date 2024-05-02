@@ -171,24 +171,13 @@ const RequestLeave_04 = () => {
     e.preventDefault();
 
     // Form Fields validation
-    if (
-      !formData.staffName ||
-      !formData.email ||
-      !formData.phoneNo ||
-      !formData.leaveType
-    ) {
+    if (!formData.phoneNo || !formData.leaveType) {
       toast.error("Please fill out all the fields");
       return;
     }
     // Phone number validation
     if (formData.phoneNo.length !== 10 || isNaN(formData.phoneNo)) {
       toast.error("Phone number should have 10 digits");
-      return;
-    }
-    // Staff Name validation
-    const staffNameRegex = /^[a-zA-Z\s]+$/;
-    if (!staffNameRegex.test(formData.staffName)) {
-      toast.error("Staff Name should only contain letters and spaces");
       return;
     }
 
@@ -316,10 +305,10 @@ const RequestLeave_04 = () => {
           <TextInput
             type="text"
             id="staffName"
-            placeholder="Staff Name"
+            placeholder={currentUser.username}
             value={staffName}
-            required
             onChange={handleChange}
+            disabled
           />
         </div>
         <div>
@@ -327,8 +316,8 @@ const RequestLeave_04 = () => {
           <TextInput
             type="email"
             id="email"
-            placeholder="example@gmail.com"
-            required
+            placeholder={currentUser.email}
+            disabled
             onChange={handleChange}
             value={email}
           />

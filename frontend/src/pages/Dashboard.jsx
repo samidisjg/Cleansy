@@ -21,7 +21,7 @@ import RequestLeave_04 from "./IT22603418_Pages/RequestLeave_04";
 import AdminLeaveRequestHandle_04 from "../components/IT22603418_Components/AdminLeaveRequestHandle_04";
 import StaffAttendance_04 from "./IT22603418_Pages/StaffAttendance_04";
 import InboxMessageForPropertyAdmin_02 from "../components/IT22577160_Components/InboxMessageForPropertyAdmin_02";
-import FaceRecognition_04 from "./IT22603418_Pages/FaceRecognition_04";
+import StaffRegister_04 from "./IT22603418_Pages/StaffRegister_04";
 
 const Dashboard = () => {
   const location = useLocation();
@@ -48,7 +48,7 @@ const Dashboard = () => {
       {/* staffs */}
       {tab === "staffs" && <DashStaff_04 />}
       {tab === "leaveRequest" && <RequestLeave_04 />}
-      {tab === "faceRecognition" && <FaceRecognition_04 />}
+      {tab === "StaffRegister" && <StaffRegister_04 />}
       {tab === "staffAttendance" && <StaffAttendance_04 />}
       {tab === "staffAdmin" && <AdminLeaveRequestHandle_04 />}
       {/* services */}
@@ -70,9 +70,9 @@ const Dashboard = () => {
       {/* Booking */}
       {tab == "bookings" && <BookingList_05 />}
       {/*admin add payments */}
-      {tab==='Adminaddpayments'&& <AdminPayments_03/>}
+      {tab === "Adminaddpayments" && <AdminPayments_03 />}
       {/* service bookings */}
-      {tab === 'serviceBookings' && <DashServiceBookList_06 />}
+      {tab === "serviceBookings" && <DashServiceBookList_06 />}
       {tab === "Adminaddpayments" && <AdminPayments_03 />}
       {/*property admin dashboard*/}
       {tab === "propertyAdminDash" && <PropertyAdminDashboard_02 />}
