@@ -79,11 +79,20 @@ const Header = () => {
                   <Dropdown.Item onClick={handleSignout}>Sign Out</Dropdown.Item>
                </Dropdown>
             ) : (
-               <Link to='/sign-in'>
+               <div className="flex flex-row">
+                   <Link to='/sign-in'>
                   <Button gradientDuoTone='purpleToBlue' outline>
                      Sign In
                   </Button>
+               </Link>,
+               <Button gradientDuoTone='purpleToBlue' outline >
+               <Link to='/sign-in-QR'>
+                    QR payments
                </Link>
+               </Button>
+
+               </div>
+              
             )
          }
          <Navbar.Toggle className="text-sm"/>

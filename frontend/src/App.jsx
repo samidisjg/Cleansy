@@ -48,6 +48,9 @@ import ResidentServiceView from "./components/IT22350114_Components/ServiceResid
 import DashServiceList_06 from "./components/IT22350114_Components/DashServiceList_06";
 import FinalAdminPayments_03 from "./pages/IT22602978_Pages/FinalAdminPayments_03";
 import BookServiceCreate from './pages/IT22350114_Pages/BookServiceCreate_06';
+import SignInQR from "./pages/IT22602978_Pages/SignInQR_03";
+import PayNowpage_03 from './pages/IT22602978_Pages/PayNowpage_03';
+
 
 
 function App() {
@@ -62,6 +65,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/sign-in" element={<SignIn />} />
+            <Route path="/sign-in-QR"element={<SignInQR/>}/>
             <Route path="/sign-up" element={<SignUp />} />
             <Route element={<PrivateRoute />}>
               <Route path="/dashboard" element={<Dashboard />} />
@@ -138,6 +142,14 @@ function App() {
                 path="/service-User:serviceID"
                 element={<ResidentServiceView />}
               />
+              
+              <Route
+                path="/pay-now/:HouseIdQR/:PaymentIdQR"
+                element={<PayNowpage_03/>}
+                />
+
+              
+              
             </Route>
             <Route element={<OnlyPropertyAdminPrivateRoute_02 />}>
               <Route

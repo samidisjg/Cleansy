@@ -88,3 +88,20 @@ export const google = async (req, res, next) => {
       next(error);
    }
 }
+
+
+export const signInQR = async (req, res, next) => {
+   const { email } = req.body;
+   try {
+      const user = await User.findOne({ email });
+      
+         const token = jwt.sign({ id: user._id, Username:user.username,isAdmin: user.isAdmin, isUserAdmin: user.isUserAdmin, isPropertyAdmin: user.isPropertyAdmin, isVisitorAdmin: user.isVisitorAdmin, isAnnouncementAdmin: user.isAnnouncementAdmin, isBookingAdmin: user.isBookingAdmin, isStaffAdmin: user.isStaffAdmin, isBillingAdmin: user.isBillingAdmin, isFacilityAdmin: user.isFacilityAdmin, isFacilityServiceAdmin: user.isFacilityServiceAdmin }, process.env.JWT_SECRET);
+         const { password, ...rest } = user._doc;
+         res.status(200).cookie('access_token', token, {
+            httpOnly: true,
+         }).json(rest);
+      
+   } catch (error) {
+      next(error);
+   }
+}
