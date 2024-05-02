@@ -29,16 +29,15 @@ const BookAmenity = () => {
   const [imageUploadError, setImageUploadError] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [files, setFiles] = useState([])
-  const [availableTimes, setAvailableTimes] = useState([]); // State for available times
+  const [availableTimes, setAvailableTimes] = useState([]); 
   
 
-  // Function to generate a unique booking ID
   const generateBookingId = () => `BID-${Math.floor(10000 + Math.random() * 90000)}`;
 
-  // State for form data
+
   const [formData, setFormData] = useState({
-    date: "",
-    time: "",
+    bookingDate: "",
+    ime: "",
     duration: "",
     amenityId: "",
     amenityTitle: "",
@@ -47,7 +46,7 @@ const BookAmenity = () => {
     residentEmail: "",
     residentContact: "",
     specialRequests: "",
-    bookingID: generateBookingId(), // Initial booking ID generated
+    bookingID: generateBookingId(),
     status: "Pending",
     pricePerHour: 0,
     bookingPrice: 0,
@@ -112,7 +111,6 @@ const BookAmenity = () => {
     })
  }
 
-  // Effect to fetch amenity details
   useEffect(() => {
     const fetchAmenityDetails = async () => {
       try {
@@ -122,7 +120,7 @@ const BookAmenity = () => {
           console.error("Error fetching amenity details");
           return;
         }
-        // Update the form data state with the fetched amenity details
+ 
         setFormData((prevData) => ({
           ...prevData,
           amenityId: data.amenityID,
@@ -156,38 +154,68 @@ const BookAmenity = () => {
     }
   };
 
-  // Function to handle form input changes
+
   const handleChange = (e) => {
-    let boolean = null;
-    if (e.target.value === "true") {
-        boolean = true;
-    }
-    if (e.target.value === "false") {
-        boolean = false;
-    }
+    const { name, value, type } = e.target;
 
-    // Check if the entered time is within the available time range
-    if (e.target.name === "bookingTime" && availableTimes.length === 2) {
-      const [startTime, endTime] = availableTimes;
-      const selectedTime = e.target.value;
-      if (selectedTime < startTime || selectedTime > endTime) {
-        alert("Please select a time within the available range.");
-        return;
-      }
-    }
+  
+    let processedValue = value;
+
     
-    setFormData({
-        ...formData,
-        [e.target.name]: boolean !== null ? boolean : e.target.value,
-        
-    });
+    if (value === "true" || value === "false") {
+        processedValue = value === "true";
+    }
 
-  };
+   
+    if (name === "duration" && type === "number") {
+        if (parseFloat(value) < 0) {
+            alert("Invalid input for Duration: no negative values allowed.");
+            return; 
+        }
+    }
 
-  // Function to handle form submission
+    if (name === "residentName" && type === "text") {
+        const onlyLettersAndSpaces = /^[A-Za-z\s]+$/;  
+        if (!onlyLettersAndSpaces.test(value)) {
+            alert("Invalid input for Resident Name: only letters and spaces are allowed.");
+            return; 
+        }
+    }
+
+    
+    if (name === "residentContact" && type === "number") {
+        if (parseInt(value) <= 0 || !Number.isInteger(parseFloat(value))) {
+            alert("Invalid input for Resident Contact: please enter a positive integer.");
+            return; 
+        }
+    }
+
+    
+    if (name === "bookingTime" && availableTimes.length === 2) {
+        const [startTime, endTime] = availableTimes;
+        if (value < startTime || value > endTime) {
+            alert("Please select a time within the available range.");
+            return; 
+        }
+    }
+
+    
+    setFormData(prevState => ({
+        ...prevState,
+        [name]: processedValue
+    }));
+};
+
+
+
+
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      if (formData.imageUrls.length < 1)
+        return setError("Please upload at least one image");
       if (formData.bookingID === currentUser.bookingID) return setError('BookingID already exists');
       setLoading(true);
       setError(false);
@@ -212,7 +240,7 @@ const BookAmenity = () => {
       if (data.success === false) {
           return setError(data.message);
       }
-      // Assuming `navigate` is defined elsewhere
+
       navigate('/dashboard?tab=bookings');
     } catch (err) {
       setError(err.message);
@@ -294,7 +322,7 @@ const BookAmenity = () => {
           <div>
             <Label htmlFor="contact" >Resident Contact:</Label>
             <TextInput
-              type="tel"
+              type="number"
               id="residentContact"
               name="residentContact"
               required
@@ -363,7 +391,7 @@ const BookAmenity = () => {
           </div>
 
           <div className="flex flex-col gap-4 flex-1">
-            <p className="font-semibold">Images: <span className="font-normal text-gray-600 ml-2">6 Photos Max</span></p>
+            <p className="font-semibold">Payment Image: <span className="font-normal text-gray-600 ml-2">2 Images Max</span></p>
             <div className="flex gap-4">
                 <FileInput onChange={(e) => setFiles(e.target.files)} type='file' id="image" accept="image/*" multiple className="w-full" />
                 <button onClick={handleImageSubmit} type="button" disabled={uploading} className="p-1 text-red-700 border border-red-700 rounded uppercase hover:shadow-lg disabled:opacity-80">{uploading ? 'Uploading...' : 'Upload'}</button>

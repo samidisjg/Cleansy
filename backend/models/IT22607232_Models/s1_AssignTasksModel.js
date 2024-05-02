@@ -9,7 +9,16 @@ const TaskAssignSchema = new mongoose.Schema({
       type: String,
       required: true,
    },
-   
+   AssignDate: {
+      type: Date,
+      required: true
+  },
+
+  type:{
+   type: String,
+   required: true,
+
+ },
    Name: {
       type: String,
       required: true,
@@ -30,6 +39,7 @@ const TaskAssignSchema = new mongoose.Schema({
       type: Number,
       required: true,
    }
+
  
 }, {timestamps:true});
 

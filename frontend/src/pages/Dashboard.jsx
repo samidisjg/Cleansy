@@ -15,10 +15,12 @@ import DashComments_02 from "../components/IT22577160_Components/DashComments_02
 import BookingList_05 from "../components/IT22003546_Components/BookingList_05";
 import AdminPayments_03 from "./IT22602978_Pages/AdminPayments_03";
 import AmenityList_05 from "../components/IT22003546_Components/AmenityList_05";
+import DashServiceBookList_06 from "../components/IT22350114_Components/DashServiceBookList_06";
 import PropertyAdminDashboard_02 from "../components/IT22577160_Components/PropertyAdminDashboard_02";
 import RequestLeave_04 from "./IT22603418_Pages/RequestLeave_04";
 import AdminLeaveRequestHandle_04 from "../components/IT22603418_Components/AdminLeaveRequestHandle_04";
 import StaffAttendance_04 from "./IT22603418_Pages/StaffAttendance_04";
+import InboxMessageForPropertyAdmin_02 from "../components/IT22577160_Components/InboxMessageForPropertyAdmin_02";
 import FaceRecognition_04 from "./IT22603418_Pages/FaceRecognition_04";
 
 const Dashboard = () => {
@@ -68,11 +70,16 @@ const Dashboard = () => {
       {/* Booking */}
       {tab == "bookings" && <BookingList_05 />}
       {/*admin add payments */}
+      {tab==='Adminaddpayments'&& <AdminPayments_03/>}
+      {/* service bookings */}
+      {tab === 'serviceBookings' && <DashServiceBookList_06 />}
       {tab === "Adminaddpayments" && <AdminPayments_03 />}
       {/*property admin dashboard*/}
       {tab === "propertyAdminDash" && <PropertyAdminDashboard_02 />}
       {/* VisitorAdmin Dashboard */}
       {tab === "addVisitors" && <VisitorAdminPage />}
+      {/* inboxMessage for property admin */}
+      {tab === "inboxMessage" && <InboxMessageForPropertyAdmin_02 />}
     </div>
   );
 };
