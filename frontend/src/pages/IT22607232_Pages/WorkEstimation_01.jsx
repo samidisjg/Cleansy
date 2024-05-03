@@ -1,6 +1,13 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Button, Checkbox, FileInput, Label, Select, TextInput } from "flowbite-react";
+import {
+  Button,
+  Checkbox,
+  FileInput,
+  Label,
+  Select,
+  TextInput,
+} from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
 
 const generateTaskID = () => `TID-${Math.floor(10000 + Math.random() * 90000)}`;
@@ -22,7 +29,6 @@ const WorkEstimation_01 = () => {
   const handleChange = (e) => {
     let boolean = null; // Declare boolean variable here
 
-   
     if (e.target.name === "Date") {
       setFormData({
         ...formData,
@@ -35,10 +41,7 @@ const WorkEstimation_01 = () => {
       if (e.target.value === "false") {
         boolean = false;
       }
-      if (
-        e.target.type === "number" ||
-        e.target.type === "text"
-      ) {
+      if (e.target.type === "number" || e.target.type === "text") {
         setFormData({
           ...formData,
           [e.target.name]: e.target.value,
@@ -74,8 +77,17 @@ const WorkEstimation_01 = () => {
       setLoading(false);
       if (data.success === false) {
         setError(data.message);
+      }else {
+        // Reset form state
+        setFormData({
+          TaskID: generateTaskID(),
+          DurationDays: "2",
+          Category: "",
+          Size: "",
+          Complexity: "",
+        });
       }
-      navigate("/dashboard?tab=maintenance");
+      navigate("/task-estimate");
     } catch (error) {
       setError(error.message);
       setLoading(false);
@@ -96,17 +108,22 @@ const WorkEstimation_01 = () => {
         Work Estimation Generation
       </h1>
       <div className="flex p-3 w-[40%] mx-auto flex-col md:flex-row md:items-center gap-20 md:gap-20 mt-10">
-        <form 
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-4 w-full justify-center">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-4 w-full justify-center"
+        >
           <div>
             <Label value="TaskID" />
 
-            <TextInput name="TaskID" type="text" placeholder="TaskID" 
-             required
-             onChange={handleChange}
-             value={formData.TaskID}
-             readOnly/>
+            <TextInput
+              name="TaskID"
+              type="text"
+              placeholder="TaskID"
+              required
+              onChange={handleChange}
+              value={formData.TaskID}
+              readOnly
+            />
           </div>
           <div>
             <Label value="Duration" />
@@ -115,16 +132,18 @@ const WorkEstimation_01 = () => {
               type="number"
               placeholder="Duration"
               required
-                  onChange={handleChange}
-                  value={formData.DurationDays}
+              onChange={handleChange}
+              value={formData.DurationDays}
             />
           </div>
           <div>
             <Label value="Category" />
-            <Select name="Category"
-             onChange={(e) =>
-              setFormData({ ...formData, Category: e.target.value })
-            }>
+            <Select
+              name="Category"
+              onChange={(e) =>
+                setFormData({ ...formData, Category: e.target.value })
+              }
+            >
               <option value="Select">Select a Category</option>
               <option value="Pest-control">Pest-control</option>
               <option value="Elevator">Elevator</option>
@@ -138,17 +157,18 @@ const WorkEstimation_01 = () => {
               name="Size"
               type="number"
               placeholder="Size in sq feet"
-                  onChange={handleChange}
-                  value={formData.Size}
+              onChange={handleChange}
+              value={formData.Size}
             />
           </div>
 
           <div>
             <Label value="Complexity" />
-            <Select name="Complexity"
-             onChange={(e) =>
-              setFormData({ ...formData, Complexity: e.target.value })
-            }
+            <Select
+              name="Complexity"
+              onChange={(e) =>
+                setFormData({ ...formData, Complexity: e.target.value })
+              }
             >
               <option value="Low">Low</option>
               <option value="Medium">Medium</option>
@@ -179,7 +199,13 @@ const WorkEstimation_01 = () => {
           >
             {loading ? "Generating..." : "Generate Estimation"}
           </Button>
+          
           {error && <p className="text-red-700 text-sm">{error}</p>}
+          <Button type="submit"
+            gradientDuoTone="purpleToBlue"
+            className="uppercase">
+              <Link to="/estimation">View Estimation</Link>
+            </Button>
         </form>
       </div>
     </div>

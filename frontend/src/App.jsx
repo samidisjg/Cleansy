@@ -49,9 +49,10 @@ import FinalAdminPayments_03 from "./pages/IT22602978_Pages/FinalAdminPayments_0
 import BookServiceCreate from "./pages/IT22350114_Pages/BookServiceCreate_06";
 import UpdateVisitorListing from "./pages/IT22561466_Pages/UpdateVisitorListing";
 import VisitorDetails from "./pages/IT22561466_Pages/VisitorDetails";
-import TaskTracker_01 from './components/IT22607232_Components/TaskTracker_01'
-import  WorkEstimation_01 from './pages/IT22607232_Pages/WorkEstimation_01'
-
+import TaskTracker_01 from './components/IT22607232_Components/TaskTracker_01';
+import  WorkEstimation_01 from './pages/IT22607232_Pages/WorkEstimation_01';
+import EstimationOne_01 from './pages/IT22607232_Pages/EstimationOne_01';
+import WorkEstimate_01 from './pages/IT22607232_Pages/WorkEstimate_01';
 function App() {
   return (
     <>
@@ -187,6 +188,8 @@ function App() {
             />
                  <Route path="/task-tracker" element={<TaskTracker_01/>} />
                 <Route path="/task-estimate" element={<WorkEstimation_01/>} />
+                <Route path="/estimation" element={<EstimationOne_01/>} />
+                <Route path="/get-estimation/:taskid" element={<WorkEstimate_01/>} />
           </Routes>
         </div>
 

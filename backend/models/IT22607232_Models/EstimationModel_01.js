@@ -22,6 +22,22 @@ const EstimationSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+  estimationCost: { 
+      type: Number,
+      required: true,
+    },
+    estimatedManHours: { 
+      type: Number,
+      required: true,
+    },
+    PersonnelCapability: {
+      type: Number,
+      required: true,
+    },
+    RiskFactor: {
+      type: Number,
+      required: true,
+    },
   },
   { timestamps: true }
 );
