@@ -2,6 +2,7 @@ import { Button, TextInput } from 'flowbite-react'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import Contact from '../../components/IT22561466_Components/Contact';
 
 export default function RequestCarPark() {
   const [formData, setFormData] = useState({
@@ -17,6 +18,7 @@ export default function RequestCarPark() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
+  const [contact, setContact] = useState(false);
 
   const handleChange = (e) => {
     if (e.target) {
@@ -83,6 +85,13 @@ export default function RequestCarPark() {
         <Button type='submit' gradientDuoTone='purpleToBlue'>{loading ? 'Proceeding...' : 'Proceed'}</Button>
         {error && <p className="text-red-700 text-sm">{error}</p>}
       </form>
+
+      {!contact && (
+      <div className="flex justify-center mt-5 py-5">
+        <Button onClick={() => setContact(true)} gradientDuoTone="purpleToBlue">Contact for Help</Button>
+      </div>
+      )}
+      {contact && <Contact />}
       
     </div>
   )
