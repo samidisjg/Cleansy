@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-
-import { Button, Label, TextInput, Textarea } from "flowbite-react";
+/*import TaskAssignRoute from "../../routes/IT22607232_Routes/s1_TaskAssignRoute";*/
+import { Button, Label, Textarea } from "flowbite-react";
 import { FaTasks, FaStar } from "react-icons/fa";
+
+
 
 const RateReview_01 = () => {
   const [showTasksError, setShowTasksError] = useState(false);
@@ -11,7 +13,6 @@ const RateReview_01 = () => {
   const dispatch = useDispatch();
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
-  
 
   const navigate = useNavigate();
   const params = useParams();
@@ -28,7 +29,6 @@ const RateReview_01 = () => {
 
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  console.log(formData);
 
   useEffect(() => {
     const fetchTask = async () => {
@@ -89,37 +89,34 @@ const RateReview_01 = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (!rating) {
-        setError("Please provide a rating");
-        return;
-      }
-      
+      if (formData.TaskID === currentUser.TaskID)
+        return setError("TaskID already exists");
       setLoading(true);
       setError(false);
-  
-      const res = await fetch("/api/taskRating/create", {
-        method: "POST",
+
+      const res = await fetch(`/api/taskAssign/rate/${params.taskid}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          Ratings: rating, 
+          ...formData,
+          userRef: currentUser._id,
         }),
       });
       const data = await res.json();
       setLoading(false);
-      if (!data.success) {
-        setError(data.error);
-        return;
+      if (data.success === false) {
+        setError(data.message);
       }
-  
-      navigate("/star-ratingWorkers");
+
+      navigate("/RatingWorkGroup_01");
     } catch (error) {
-      setError("Internal Server Error");
+      setError(error.message);
       setLoading(false);
     }
   };
-  
+
   return (
     <div className="min-h-screen mt-20" style={{ backgroundImage: "url('./components/IT22607232_Components/images_01/man2.jpeg')" }}>
 
@@ -186,18 +183,17 @@ const RateReview_01 = () => {
               maxLength="200"
               required
               onChange={handleChange}
-              value={formData.review_Text}
+              value={formData.Ratings}
             />
           </div>
           <div>
-          <Label value="Rating" />
+          <Label value="Ratings" />
           <div className="flex justify-center items-center">
           
       {[...Array(5)].map((star, i) => {
         const ratingValue = i + 1;
         return (
           <FaStar
-          name="Ratings"
             key={i}
             className="cursor-pointer"
             color={ratingValue <= (hover || rating) ? "#ffc107" : "#e4e5e9"}

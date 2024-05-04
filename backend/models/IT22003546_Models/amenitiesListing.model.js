@@ -4,8 +4,7 @@ const AmenitiesListingSchema = new mongoose.Schema({
 
     amenityID: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
 
     amenityTitle: {

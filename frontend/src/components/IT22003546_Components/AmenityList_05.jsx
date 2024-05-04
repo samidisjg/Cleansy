@@ -185,7 +185,7 @@ const AmenityList_05 = () => {
                             <Table.HeadCell>Update Status</Table.HeadCell>
                             <Table.HeadCell onClick={() => handleAmenitiesDelete(amenity._id)}>Delete</Table.HeadCell>
                             <Table.HeadCell>
-                                <span>Update</span>
+                                <span>Edit</span>
                             </Table.HeadCell>
                         </Table.Head>
                         {filteredAmenities.map((amenity) => (
@@ -223,7 +223,7 @@ const AmenityList_05 = () => {
                                         <Link
                                             className="text-teal-500 hover:underline"
                                             to={`/edit-amenity/${amenity._id}`}>
-                                                <span>Update</span>
+                                                <span>Edit</span>
                                             </Link>
                                     </Table.Cell>
                                 </Table.Row>

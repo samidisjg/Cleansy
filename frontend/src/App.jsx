@@ -19,6 +19,7 @@ import OnlyPropertyAdminPrivateRoute_02 from "./components/IT22577160_Components
 import CreateSharedResources_02 from "./pages/IT22577160_Pages/CreateSharedResources_02";
 import UpdateSharedResources_02 from "./pages/IT22577160_Pages/UpdateSharedResources_02";
 import Updatepaymentpage_03 from "./pages/IT22602978_Pages/Updatepaymentpage_03";
+
 import SharedResourcesPage_02 from "./pages/IT22577160_Pages/SharedResourcesPage_02";
 import ScrollToTop_02 from "./components/IT22577160_Components/ScrollToTop_02";
 import MarketPlace from "./pages/IT22577160_Pages/MarketPlace";
@@ -49,11 +50,6 @@ import FinalAdminPayments_03 from "./pages/IT22602978_Pages/FinalAdminPayments_0
 import BookServiceCreate from './pages/IT22350114_Pages/BookServiceCreate_06';
 import DashServiceBookList_06 from './components/IT22350114_Components/DashServiceBookList_06';
 import ServiceUpdate_06 from './pages/IT22350114_Pages/ServiceUpdate_06';
-import UpdateVisitorListing from "./pages/IT22561466_Pages/UpdateVisitorListing";
-import VisitorDetails from "./pages/IT22561466_Pages/VisitorDetails";
-import UserCoversation_02 from "./components/IT22577160_Components/UserCoversation_02";
-import TaskTracker_01 from './components/IT22607232_Components/TaskTracker_01'
-import  WorkEstimation_01 from './pages/IT22607232_Pages/WorkEstimation_01'
 
 function App() {
   return (
@@ -89,10 +85,8 @@ function App() {
                 path="/service-User:serviceID"
                 element={<ResidentServiceView />}
               />
-              <Route
-                path="/book-service/:serviceID"
-                element={<BookServiceCreate />}
-              />
+              <Route path="/book-service/:serviceID" element={<BookServiceCreate />} />
+
 
               <Route path="/checkout" element={<CheckOutPage_02 />} />
               <Route path="/amenity-create" element={<AmenityCreate />} />
@@ -145,15 +139,6 @@ function App() {
             
               <Route path="/service-update/:serviceID" element={<ServiceUpdate_06 />} />
 
-              <Route
-                path="/visitorListing/:visitorListingId"
-                element={<VisitorDetails />}
-              />
-              <Route
-                path="/update-list/:visitorListingId"
-                element={<UpdateVisitorListing />}
-              />
-              <Route path="/conversation/:conversationId" element={<UserCoversation_02 />}/>
             </Route>
             <Route element={<OnlyPropertyAdminPrivateRoute_02 />}>
               <Route
@@ -189,8 +174,6 @@ function App() {
               path="/update-paymentprofile/:data"
               element={<Updatepaymentpage_03 />}
             />
-                 <Route path="/task-tracker" element={<TaskTracker_01/>} />
-                <Route path="/task-estimate" element={<WorkEstimation_01/>} />
           </Routes>
         </div>
 

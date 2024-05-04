@@ -2,9 +2,30 @@ import ServiceBooking from "../../models/IT22350114_Models/serviceBookingModel.j
 
 export const createServiceBooking = async (req, res, next) => {
   try {
-    // Create a new service bookings using the data from the request body
-    const newServiceBooking = await ServiceBooking.create(req.body);
 
+    const isBookingExist = await ServiceBooking.findOne({
+      serviceID: req.body.serviceID,
+      bookingDate: req.body.bookingDate,
+      bookingTime: req.body.bookingTime,
+      bookingStatus: "Confirmed",
+    });
+
+    let newServiceBooking = null;
+    if (isBookingExist) {
+       newServiceBooking = await ServiceBooking.create({
+        ...req.body,
+        bookingStatus: "Pending",
+       });
+    }else{
+    // Create a new service bookings using the data from the request body
+     newServiceBooking = await ServiceBooking.create(
+      {
+    
+        ...req.body,
+        bookingStatus: "Confirmed",
+      }
+     );
+    }
     // Send a success response with the newly created service booking
     return res.status(201).json({
       success: true,

@@ -1,7 +1,7 @@
 import { Button, Spinner } from 'flowbite-react';
 import { useEffect, useState } from 'react';
 import { AiFillHeart, AiFillStar, AiOutlineEye, AiOutlineHeart, AiOutlineShoppingCart, AiOutlineStar } from 'react-icons/ai';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { FaRegMessage } from "react-icons/fa6";
 import CommentSection_02 from '../../components/IT22577160_Components/CommentSection_02';
 import { useSelector, useDispatch } from "react-redux";
@@ -13,7 +13,6 @@ import { addToWishlist, removeFromWishlist } from '../../../redux/IT22577160_red
 const SharedResourcesPage_02 = () => {
    const { cart } = useSelector((state) => state.cart);
    const { wishlist } = useSelector((state) => state.wishlist);
-   const {currentUser} = useSelector(state => state.user);
    const { resourceSlug } = useParams();
    const [loading, setLoading] = useState(true);
    const [error, setError] = useState(false);
@@ -21,7 +20,6 @@ const SharedResourcesPage_02 = () => {
    const [count, setCount] = useState(1);
    const [click, setClick] = useState(false);
    const dispatch = useDispatch()
-   const navigate = useNavigate();
 
    const decrementCount = () => {
       if (count > 1) {
@@ -95,36 +93,6 @@ const SharedResourcesPage_02 = () => {
          setClick(false);
       }
    }, [wishlist, resources])
-
-   const handleMessageSubmit = async (e) => {
-      try {   
-         const groupTitle = resources._id + currentUser._id;
-         const userId = currentUser._id;
-         const adminId = resources.userId;
-   
-         const res = await fetch('/api/conversation/createNewConversation', {
-            method: 'POST',
-            headers: {
-               'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ groupTitle, userId, adminId })
-         })
-
-         // .then((res) => {
-         //    navigate(`/conversation/${groupTitle}`)
-         // }).catch((error) => {
-         //    toast.error(error.response.data.message);
-         // });
-
-         if(res.ok) {
-            const data = await res.json();
-            const conversationId = data._id;
-            navigate(`/conversation/${conversationId}`);
-         }
-      } catch (error) {
-         toast.error("Please login to create a conversation");
-      }
-   }
 
    if(loading) {
       return (
@@ -210,9 +178,9 @@ const SharedResourcesPage_02 = () => {
             <div className='flex-1 justify-center flex flex-col '>
                <h2 className='text-2xl'>Want to get more details about Shared Resources?</h2>
                <p className='text-gray-500 my-2'>Send Message For Us? Hurry UP!</p>
-               <div onClick={handleMessageSubmit}>
+               <Link>
                   <Button gradientDuoTone='purpleToBlue' className='rounded-tl-xl rounded-bl-none w-full'>Send Message <span className='pl-2'><FaRegMessage size={15} /></span></Button>
-               </div>
+               </Link>
             </div>
             <div className='p-7 flex-1'>
                <img src="https://media.istockphoto.com/id/1311966784/photo/chat-speech-bubble-on-smart-phone-screen.jpg?s=612x612&w=0&k=20&c=6qC75HU6r9pWmlFCJ7kjyHhbFUx27J1gYD02sS0aufU=" alt="" />

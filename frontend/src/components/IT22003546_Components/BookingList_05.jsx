@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Table, Button, TextInput} from "flowbite-react";
+import { Table, Button, TextInput } from "flowbite-react";
 import { Link } from "react-router-dom";
 import jsPDF from 'jspdf';
 import "jspdf-autotable";
-
-
 
 const BookingList_05 = () => {
     const { currentUser } = useSelector((state) => state.user);
@@ -109,51 +107,29 @@ const BookingList_05 = () => {
 
 
     const handleDownloadPDF = () => {
-        const bookingPDF = new jsPDF('l');
+        const payDoc = new jsPDF('l');
         const tableColumn = ["Booking ID", "Amenity Title", "Resident Name", "Resident Email", "Resident Contact", "Date", "Time", "Duration", "Total Amount", "Status"];
         const tableRows = [];
 
-       showBooking.forEach(booking => {
-
-        const bookingDate = new Date(booking.bookingDate);
-    
-        const year = bookingDate.getFullYear();
-        const m = bookingDate.getMonth() + 1; 
-        const date = bookingDate.getDate();
-        
-        const formattedDate = `${year}-${m.toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}`;
-
-        const rowData = [
-            booking.bookingID,
-            booking.amenityTitle,
-            booking.residentName,
-            booking.residentEmail,
-            booking.residentContact,
-            formattedDate,
-            booking.bookingTime,
-            booking.duration,
-            booking.bookingPrice,
-            booking.bookingStatus,
-        ];
-        tableRows.push(rowData);
+        showBooking.forEach(booking => {
+            const rowData = [
+                booking.bookingID,
+                booking.amenityTitle,
+                booking.residentName,
+                booking.residentEmail,
+                booking.residentContact,
+                booking.bookingDate,
+                booking.bookingTime,
+                booking.duration,
+                booking.bookingPrice,
+                booking.bookingStatus,
+            ];
+            tableRows.push(rowData);
         });
 
-        const d = new Date();
-        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        const month = monthNames[d.getMonth()];
-
-        bookingPDF.autoTable({
-            startY: 30,
-            head: [tableColumn],
-            body: tableRows,
-            theme: 'grid',
-            didDrawCell: (data) => {
-                bookingPDF.rect(data.cell.x, data.cell.y, data.cell.width, data.cell.height);
-            }
-        });
-    
-        bookingPDF.text(`Cleansy Facility Management Services (Pvt) Ltd \nBooking List`, 14, 15);
-        bookingPDF.save(`Booking_List_${month}.pdf`);
+        payDoc.autoTable(tableColumn, tableRows, { startY: 20 });
+        payDoc.text(`Booking List`, 10, 12);
+        payDoc.save(`Booking_List.pdf`);
     }
 
     const handleStatusChange = async (_id, newStatus) => {
@@ -232,7 +208,6 @@ const BookingList_05 = () => {
                             <Table.HeadCell>Total Amount</Table.HeadCell>
                             <Table.HeadCell>Status</Table.HeadCell>
                             <Table.HeadCell>Update Status</Table.HeadCell>
-                            <Table.HeadCell>Payment Image</Table.HeadCell>
                         </Table.Head>
                         {filteredBookings.map((booking) => (
                             <Table.Body key={booking._id} className="divide-y">
@@ -261,19 +236,7 @@ const BookingList_05 = () => {
                                             <option value="Confirmed">Confirmed</option>
                                         </select>
                                     </Table.Cell>
-                                    
-                                    <Table.Cell>
-                                        {booking.imageUrls.map((imageUrl, index) => (
-                                            <a key={index} href={imageUrl} target="_blank" rel="noopener noreferrer">
-                                            <img
-                                                src={imageUrl}
-                                                alt={`Image ${index}`}
-                                                style={{ maxWidth: '100px', maxHeight: '100px' }} // Adjust dimensions as needed
-                                            />
-                                            </a>
-                                        ))}
-                                    </Table.Cell>
-                                    <Table.Cell>
+                                    {/* <Table.Cell>
                                         <span onClick={() => handleBookingDelete(booking._id)} 
                                         className="font-medium text-red-500 hover:underline cursor-pointer">Delete</span>
                                     </Table.Cell>
@@ -283,7 +246,7 @@ const BookingList_05 = () => {
                                             to = {`/update-booking/${booking._id}`}>
                                                 <span>Update</span>
                                             </Link>
-                                    </Table.Cell>
+                                    </Table.Cell> */}
                                 </Table.Row>
                             </Table.Body>
                         ))}
@@ -359,7 +322,6 @@ const BookingList_05 = () => {
                             <Table.HeadCell>
                                 <span>Upadte</span>
                             </Table.HeadCell>
-                            <Table.HeadCell>Payment Image</Table.HeadCell>
                         </Table.Head>
                     {filteredBookings.filter(booking => booking.residentUsername === currentUser.username)
                         .map((booking) => (
@@ -370,7 +332,7 @@ const BookingList_05 = () => {
                                     <Table.Cell>{booking.residentName}</Table.Cell>
                                     <Table.Cell>{booking.residentEmail}</Table.Cell>
                                     <Table.Cell>{booking.residentContact}</Table.Cell>
-                                    <Table.Cell style={{ whiteSpace: 'nowrap' }}>{formatDate(booking.bookingDate)}</Table.Cell>
+                                    <Table.Cell>{booking.bookingDate}</Table.Cell>
                                     <Table.Cell>{booking.bookingTime}</Table.Cell>
                                     <Table.Cell>{booking.duration}</Table.Cell>
                                     <Table.Cell>{booking.bookingPrice}</Table.Cell>
@@ -389,17 +351,6 @@ const BookingList_05 = () => {
                                             to = {`/update-booking/${booking._id}`}>
                                                 <span>Update</span>
                                             </Link>
-                                    </Table.Cell>
-                                    <Table.Cell>
-                                        {booking.imageUrls.map((imageUrl, index) => (
-                                            <a key={index} href={imageUrl} target="_blank" rel="noopener noreferrer">
-                                            <img
-                                                src={imageUrl}
-                                                alt={`Image ${index}`}
-                                                style={{ maxWidth: '100px', maxHeight: '100px' }} // Adjust dimensions as needed
-                                            />
-                                            </a>
-                                        ))}
                                     </Table.Cell>
                                 </Table.Row>
                             </Table.Body>

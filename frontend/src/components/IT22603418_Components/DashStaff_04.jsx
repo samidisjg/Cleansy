@@ -1,18 +1,18 @@
-import React from "react";
+import { useSelector } from "react-redux";
+import RequestLeave_04 from "../../pages/IT22603418_Pages/RequestLeave_04";
 
-const DashStaff_04 = ({ isOpen, onClose, children }) => {
-  if (!isOpen) return null;
-
+const DashStaff_04 = () => {
+   const { currentUser } = useSelector((state) => state.user);
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="p-6 rounded-lg shadow-lg bg-opacity-90 bg-gray-400">
-        <button className="absolute top-0 right-0 p-2" onClick={onClose}>
-          &times;
-        </button>
-        {children}
-      </div>
+    <div>
+      {currentUser.isStaffAdmin && (
+         <div >
+            <RequestLeave_04/>
+         </div>
+         
+      )}
     </div>
-  );
-};
+  )
+}
 
-export default DashStaff_04;
+export default DashStaff_04

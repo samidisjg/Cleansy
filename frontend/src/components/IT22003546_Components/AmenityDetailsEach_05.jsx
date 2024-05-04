@@ -47,7 +47,7 @@ const AmenityDetails = () => {
         <Link
           to={"/amenity-User:amenityID"}
           className="text-black-500 font-semibold hover:underline"
-          style={{ display: "block", paddingTop: "1px" }}
+          style={{ display: "block", paddingTop: "4px" }}
         >
           ← Amenity
         </Link>
@@ -60,8 +60,7 @@ const AmenityDetails = () => {
           <img
             src={amenity.imageURLs[0]}
             alt="Transparent Image"
-            className="absolute inset-0 w-full opacity-10"
-
+            className="absolute inset-0 w-full h-full opacity-10"
             style={{ pointerEvents: "none", zIndex: -1 }}
           />
     

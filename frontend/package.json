@@ -17,8 +17,6 @@
     "@stripe/stripe-js": "^3.3.0",
     "antd": "^5.16.2",
     "axios": "^1.6.8",
-    "boxicons": "^2.1.4",
-    "chart.js": "^4.4.2",
     "emailjs-com": "^3.2.0",
     "file-saver": "^2.0.5",
     "firebase": "^10.8.0",
@@ -41,11 +39,9 @@
     "redux-persist": "^6.0.0",
     "router-dom": "^2.2.11",
     "slick-carousel": "^1.8.1",
-    "socket.io-client": "^4.7.5",
     "swiper": "^11.1.1",
     "tailwind-scrollbar": "^3.0.5",
-    "xlsx": "^0.18.5",
-     "react-chartjs-2": "^5.2.0"
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",
@@ -58,6 +54,6 @@
     "eslint-plugin-react-refresh": "^0.4.5",
     "postcss": "^8.4.33",
     "tailwindcss": "^3.4.1",
-    "vite": "^5.0.8"
+    "vite": "^5.2.11"
   }
 }

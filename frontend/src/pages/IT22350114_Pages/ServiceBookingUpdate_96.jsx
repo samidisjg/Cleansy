@@ -123,21 +123,28 @@ const BookingUpdate_05 = () => {
         })
         }
     
-
         const handleChange = (e) => {
-            const { name, value } = e.target;
-    
-            // Update the database immediately when date or time changes
-            if (name === "Date" || name === "Time") {
-                updateDatabase(name, value);
+            const { name, value, type } = e.target;
+        
+            // Convert the input value if it's meant to be a boolean
+            let adjustedValue = value;
+            if (value === "true") {
+                adjustedValue = true;
+            } else if (value === "false") {
+                adjustedValue = false;
             }
-    
+        
+            // Update the formData state with the adjusted value
             setFormData({
                 ...formData,
-                [name]: value,
+                [name]: adjustedValue,
             });
-
+        
+            // Log the name and adjusted value (remove or limit this in production)
+            console.log("Name:", name);
+            console.log("Value:", adjustedValue);
         };
+        
     
         const updateDatabase = async (fieldName, fieldValue) => {
             try {
