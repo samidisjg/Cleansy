@@ -26,7 +26,7 @@ export const bookAmenity = async (req, res, next) => {
             //bookingID: req.body.bookingID,
             bookingDate: req.body.bookingDate,
             bookingTime: bookingTime,
-            bookingStatus: 'Confirmed',
+            bookingStatus: { $in: ['Confirmed', 'Pending'] },
         });
 
         console.log("Existing Booking:", isBookingExist);  // Log found booking

@@ -279,7 +279,7 @@ const BookAmenity = () => {
                 hourCycle: 'h23' // Ensures 0-23 hour format
             }),
         });
-        currentTime.setTime(currentTime.getTime() + 30 * 60000);
+        currentTime.setTime(currentTime.getTime() + 60 * 60000);
     }
     return timeslots;
 }
