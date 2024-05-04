@@ -115,7 +115,9 @@ const CreateAnnouncementForm = () => {
                         Clear
                     </Button>
                 </div>
-                {loading && <span>Loading...........</span>}
+                {loading && (
+                        <span className="text-white text-lg"></span>
+                )}
             </form>
             {error && <p className="text-red-700 text-sm">{error}</p>}
             {success && <p className="text-green-700 text-sm">Announcement created Successfully!</p>}

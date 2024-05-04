@@ -47,6 +47,21 @@ const AnnouncementForAdmin = () => {
         return announcements.filter(announcement => announcement.Category_ID === 'customer').length;
     };
 
+    const sendPDFByEmail = async () => {
+        setDownloadingPDF(true);
+        try {
+            const response = await axios.post('/api/send-pdf', {
+                email: 'uvinduudakara001@gmail.com', 
+                pdfData: <PDFAnnouncementForm announcements={announcements} />
+            });
+            console.log('PDF sent successfully');
+        } catch (error) {
+            console.error('Error sending PDF:', error);
+        } finally {
+            setDownloadingPDF(false);
+        }
+    };
+
     return (
         <div className="w-full">
             <h1 className='text-center mb-5 font-extrabold text-3xl underline'>Announcements</h1>
@@ -106,6 +121,7 @@ const AnnouncementForAdmin = () => {
                 document={<PDFAnnouncementForm announcements={announcements} />}
                 fileName="announcement_list.pdf"
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                onClick={sendPDFByEmail}
             >
                 {({ loading }) => (loading ? "Loading document..." : "Download PDF")}
             </PDFDownloadLink>
