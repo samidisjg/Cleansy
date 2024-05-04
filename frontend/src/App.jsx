@@ -46,13 +46,18 @@ import BookingUpdate_05 from "./pages/IT22003546_Pages/BookingUpdate_05";
 import ResidentServiceView from "./components/IT22350114_Components/ServiceResidentView_06";
 import DashServiceList_06 from "./components/IT22350114_Components/DashServiceList_06";
 import FinalAdminPayments_03 from "./pages/IT22602978_Pages/FinalAdminPayments_03";
-import BookServiceCreate from "./pages/IT22350114_Pages/BookServiceCreate_06";
+import BookServiceCreate from './pages/IT22350114_Pages/BookServiceCreate_06';
+import DashServiceBookList_06 from './components/IT22350114_Components/DashServiceBookList_06';
+import ServiceUpdate_06 from './pages/IT22350114_Pages/ServiceUpdate_06';
 import UpdateVisitorListing from "./pages/IT22561466_Pages/UpdateVisitorListing";
 import VisitorDetails from "./pages/IT22561466_Pages/VisitorDetails";
-import TaskTracker_01 from './components/IT22607232_Components/TaskTracker_01';
-import  WorkEstimation_01 from './pages/IT22607232_Pages/WorkEstimation_01';
+import UserCoversation_02 from "./components/IT22577160_Components/UserCoversation_02";
+import TaskTracker_01 from './components/IT22607232_Components/TaskTracker_01'
+import  WorkEstimation_01 from './pages/IT22607232_Pages/WorkEstimation_01'
 import EstimationOne_01 from './pages/IT22607232_Pages/EstimationOne_01';
 import WorkEstimate_01 from './pages/IT22607232_Pages/WorkEstimate_01';
+
+
 function App() {
   return (
     <>
@@ -132,17 +137,17 @@ function App() {
                 element={<ServiceListingCreate />}
               />
               <Route
-                path="/service-list/:serviceID"
-                element={<DashServiceList_06 />}
-              />
-              <Route
-                path="/dashboard/service-list/:serviceID"
+                path="service-list:serviceID"
                 element={<DashServiceList_06 />}
               />
               <Route
                 path="/service-User:serviceID"
                 element={<ResidentServiceView />}
               />
+              <Route path="/service-booking-List:bookingID" element={<DashServiceBookList_06 />}/>
+            
+              <Route path="/service-update/:serviceID" element={<ServiceUpdate_06 />} />
+
               <Route
                 path="/visitorListing/:visitorListingId"
                 element={<VisitorDetails />}
@@ -151,6 +156,7 @@ function App() {
                 path="/update-list/:visitorListingId"
                 element={<UpdateVisitorListing />}
               />
+              <Route path="/conversation/:conversationId" element={<UserCoversation_02 />}/>
             </Route>
             <Route element={<OnlyPropertyAdminPrivateRoute_02 />}>
               <Route
