@@ -1,5 +1,6 @@
 import AmenitiesBooking from "../../models/IT22003546_Models/amenitiesBooking.model_05.js";
-
+import amenitiesBookingEmailTemplate from "../../utils/email_templates/amenityBookingEmailTemplate.js";
+import sendEmail from "../../utils/sendEmail.js";
 // //Book amenity
 // export const bookAmenity = async (req, res, next) => {
 //     try {
@@ -75,8 +76,19 @@ export const bookAmenity = async (req, res, next) => {
             // If no confirmed booking exists, create a new confirmed booking
             const newAmenitiesBooking = await AmenitiesBooking.create({
                 ...req.body,
-                bookingStatus: "Pending",
+                bookingStatus: "Confirmed",
             });
+
+            const emailTemplate = amenitiesBookingEmailTemplate(req.body.residentName,{
+                ...req.body,
+                bookingStatus: "Confirmed",
+            });
+            sendEmail(
+                req.body.residentEmail,
+                "Amenity Booking Confirmation",
+                emailTemplate
+            );
+
 
             // Send a success response with the newly created booking
             return res.status(201).json({
@@ -115,6 +127,24 @@ export const updateAmenityBooking = async (req, res, next) => {
     try {
         const { bookingId } = req.params;
         const updateAmenityBooking = await AmenitiesBooking.findByIdAndUpdate(bookingId, req.body, { new: true, upsert: true });
+
+        if (
+            req.body.bookingStatus === "Confirmed" &&
+            updateAmenityBooking.bookingStatus === "Pending"
+        ) {
+            // Send an email notification to the resident
+            const emailTemplate = amenitiesBookingEmailTemplate({
+                ...req.body,
+                bookingStatus: "Confirmed",
+            });
+            
+            sendEmail(
+                req.body.residentEmail,
+                "Amenity Booking Confirmation",
+                emailTemplate
+            );
+        }
+        
         return res.status(200).json(updateAmenityBooking);
     }
     catch (error) {
