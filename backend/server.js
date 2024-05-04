@@ -27,6 +27,7 @@ import conversationRoutes from "./routes/IT22577160_Routes/conversation.route_02
 import messageRoutes from "./routes/IT22577160_Routes/messages.route_02.js";
 import AnnouncementsRoutes from "./routes/IT22196460_Routes/AnnouncementsRoutes.js";
 import cors from "cors";
+import EstimationRoutes_01 from './routes/IT22607232_Routes/EstimationRoutes_01.js';
 dotenv.config();
 
 const app = express();
@@ -62,6 +63,7 @@ app.use("/api/taskRating", RateTasksRoutes);
 app.use("/api/taskAnalysis", TaskAnalysisRoute);
 app.use("/api/categeories",taskcategoriesRoutes);
 app.use("/api/labels",tasklabelsRoutes);
+app.use("/api/workEstimation",EstimationRoutes_01)
 
 // IT22577160 Routes
 app.use("/api/apartmentListing", apartmentListingRoutes);

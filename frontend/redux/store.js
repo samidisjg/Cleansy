@@ -6,7 +6,7 @@ import wishlistReducer from './IT22577160_redux/wishList_02.js'
 import ratingReducer from './IT22577160_redux/ratingSlice_02.js'
 import { persistReducer, persistStore } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-import TaskchartSlice from './IT22607232_redux/Taskchart_01.js'
+import TaskchartSlice from './IT22607232_redux/Taskchart_01'
 import{apiSlice} from './IT22607232_redux/apiSlice.js'
 
 const rootReducer = combineReducers({
@@ -15,7 +15,7 @@ const rootReducer = combineReducers({
    cart: cartReducer,
    wishlist: wishlistReducer,
    rating: ratingReducer,
-   Taskchart: TaskchartSlice,
+   //Taskchart: TaskchartSlice,
    [apiSlice.reducerPath]: apiSlice.reducer
 })
 
@@ -33,6 +33,9 @@ export const store = configureStore({
    middleware: (getDefaultMiddleware) => getDefaultMiddleware({
       serializableCheck: false,
    }).concat(apiSlice.middleware),
+   Taskchart_01: {
+   Taskchart: TaskchartSlice,
+   }
 })
 
 export const persistor = persistStore(store) 
