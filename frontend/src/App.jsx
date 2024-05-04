@@ -54,6 +54,14 @@ import VisitorDetails from "./pages/IT22561466_Pages/VisitorDetails";
 import UserCoversation_02 from "./components/IT22577160_Components/UserCoversation_02";
 import TaskTracker_01 from './components/IT22607232_Components/TaskTracker_01'
 import  WorkEstimation_01 from './pages/IT22607232_Pages/WorkEstimation_01'
+import announcementList from './components/IT22196460_Components/announcementList';
+import DeleteAnnouncementform from './components/IT22196460_Components/DeleteAnnouncementform';
+import AnnouncementForAdmin from './components/IT22196460_Components/AnnouncementForAdmin';
+import AnnouncementList from './pages/IT22196460_Pages/AnnouncementList';
+import UpdateAnnouncementForm from './pages/IT22196460_Pages/UpdateAnnouncementForm';
+import AnnouncementDetails from './pages/IT22196460_Pages/AnnouncementDetails';
+import CreateAnnouncementForm from './pages/IT22196460_Pages/CreateAnnouncementForm';
+import AnnouncementPage from './components/IT22196460_Components/AnnouncementPage';
 import EstimationOne_01 from './pages/IT22607232_Pages/EstimationOne_01';
 import WorkEstimate_01 from './pages/IT22607232_Pages/WorkEstimate_01';
 
@@ -194,8 +202,15 @@ function App() {
             />
                  <Route path="/task-tracker" element={<TaskTracker_01/>} />
                 <Route path="/task-estimate" element={<WorkEstimation_01/>} />
-                <Route path="/estimation" element={<EstimationOne_01/>} />
-                <Route path="/get-estimation/:taskid" element={<WorkEstimate_01/>} />
+              <Route exact path="/create-announcement" element={<CreateAnnouncementForm/>}/>
+              <Route path="/" element={<AnnouncementList/>}/>
+              <Route path="/announcement/:id" element={<AnnouncementDetails/>}/>
+              <Route path="/delete-announcement/:id" element={<DeleteAnnouncementform/>}/>
+              <Route exact path="/announcements" element={<AnnouncementForAdmin/>}/>
+              <Route path="/announcements" element={<AnnouncementPage/>}/>
+              <Route exact path="/update-announcement/:id" element={<UpdateAnnouncementForm/>}/>
+              <Route path="/estimation" element={<EstimationOne_01/>} />
+              <Route path="/get-estimation/:taskid" element={<WorkEstimate_01/>} />
           </Routes>
         </div>
 
