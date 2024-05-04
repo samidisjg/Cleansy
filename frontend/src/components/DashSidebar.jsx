@@ -363,28 +363,8 @@ const DashSidebar = () => {
           }
 
          
-            {
-              !currentUser.isAdmin && (
-                <>
-                  <Link to='/dashboard?tab=apartmentList'>
-                    <Sidebar.Item active={tab === 'apartmentList'} icon={MdOutlineHomeWork} as='div'>
-                      Apartment List
-                    </Sidebar.Item>
-                  </Link>
-                </>
-              )
-            }
-            {
-              currentUser.isPropertyAdmin && (
-                <>
-                  <Link to='/dashboard?tab=comments'>
-                    <Sidebar.Item active={tab === 'comments'} icon={HiAnnotation} as='div'>
-                      Comments
-                    </Sidebar.Item>
-                  </Link>
-                </>
-              )
-            }
+           
+           
             {
               currentUser.isVisitorAdmin && (
                 <>
@@ -411,7 +391,7 @@ const DashSidebar = () => {
                   icon={MdAnnouncement}
                   as="div"
                 >
-                 Today's announcements
+                 Today's updates
                 </Sidebar.Item>
               </Link>
             </>
@@ -434,11 +414,7 @@ const DashSidebar = () => {
             </>
           )}
 
-          <Link to="/add-visitors">
-            <Sidebar.Item icon={HiUser} as="div">
-              Add Visitors
-            </Sidebar.Item>
-          </Link>
+         
           {
             // !(currentUser.isAdmin) || currentUser.isBookingAdmin && (
             <>
@@ -466,14 +442,6 @@ const DashSidebar = () => {
               </Link>
             </>
           )}
-
-
-          <Link to="/dashboard?tab=bookings">
-            <Sidebar.Item active={tab === "bookings"} icon={HiUser} as="div">
-              Bookings
-            </Sidebar.Item>
-          </Link>
-
 
           <Link to="/car-park">
             <Sidebar.Item  icon={FaCar} as="div">
