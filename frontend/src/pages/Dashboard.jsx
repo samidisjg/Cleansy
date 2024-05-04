@@ -80,7 +80,6 @@ const Dashboard = () => {
       {tab==='Adminaddpayments'&& <AdminPayments_03/>}
       {/* service bookings */}
       {tab === 'serviceBookings' && <DashServiceBookList_06 />}
-      {tab === "Adminaddpayments" && <AdminPayments_03 />}
       {/*property admin dashboard*/}
       {tab === "propertyAdminDash" && <PropertyAdminDashboard_02 />}
       {/* VisitorAdmin Dashboard */}
