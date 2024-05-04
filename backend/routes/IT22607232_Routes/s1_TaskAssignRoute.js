@@ -16,6 +16,6 @@ router.get('/all/', verifyToken, allTasks);
 router.get('/one/:taskid', verifyToken, oneTask);
 router.put('/update/:taskid',verifyToken,updateTask);
 router.delete('/delete/:taskid',verifyToken,deleteTask);
-router.post('/sendemail/:to/:subject/:text', verifyToken, sendEmail);
+router.post('/sendemail', verifyToken, sendEmail);
 
 export default router;

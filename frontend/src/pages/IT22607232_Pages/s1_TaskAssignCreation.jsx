@@ -22,13 +22,13 @@ const TaskAssign = () => {
     TaskID: "",
     Category: "",
     AssignDate:"",
+    type: "",
+    email: "",
     Name: "",
     Description: "",
     WorkGroupID: "",
     Location: "",
-    DurationDays: "2",
-    type: "",
-    Email: ""
+    DurationDays: "2"
   });
 
   const [error, setError] = useState(false);
@@ -227,8 +227,8 @@ const TaskAssign = () => {
             <Label value="Email Address" />
             <TextInput
               type="text"
-              name="Email"
-              placeholder="Email"
+              name="email"
+              placeholder="email"
               required
               onChange={handleChange}
               value={formData.email}

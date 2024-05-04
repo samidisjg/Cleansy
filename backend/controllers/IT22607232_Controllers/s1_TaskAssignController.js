@@ -6,7 +6,7 @@ dotenv.config();
 
 
 //Send Email
-export const sendEmail = async(req,res,next)=>{
+/*export const sendEmail = async(req,res)=>{
   try {
     // Create a Nodemailer transporter
     const transporter = nodemailer.createTransport({
@@ -21,89 +21,68 @@ export const sendEmail = async(req,res,next)=>{
 
     // Send mail with defined transport object
     await transporter.sendMail({
-
       from: process.env.EMAIL_USER, // Sender email address
-      to: 'samiconquer727@gmail.com', // Recipient email address
-      subject: req.params.subject, 
-      text: req.params.text 
+      to: req.params.email, // Recipient email address
+      subject: `New Task Assigned: ${req.params.TaskID}`,
+      text : `Category: ${req.params.Category}\nAssignDate: ${req.params.AssignDate}\nName: ${req.params.Name}}`,
+
     });
     console.log('Email sent successfully');
   } catch (error) {
     console.error('Error sending email:', error);
   }
-}
- 
-
-//------------------------------------------------------------------------------------------------------------------
-
-/*export const sendEmail = async (req, res, next) => {
-//app.post('/send-email', (req, res) => {
-    // Extract email data from the request body
-    const { to, subject, text } = req.body;
-
-    // Create a transporter object using SMTP transport
-    let transporter = nodemailer.createTransport({
-        service: 'Gmail', // Use your email service provider
-        auth: {
-            user: process.env.EMAIL_USER, // Your email address from environment variables
-            pass: process.env.EMAIL_PASS // Your password from environment variables
-        }
-    });
-
-    // Create email data
-    let mailOptions = {
-      from: process.env.EMAIL_USER, // Sender email address
-      to: 'sandalirj@gmail.com', // Recipient email address
-      subject: 'Hello from Nodemailers Moda Samidi', // Subject line
-      text: 'This is a test email sent from Nodemailer!' // Plain text body
-    };
-
-    // Send email
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            console.log('Error occurred:', error.message);
-            res.status(500).send('Error occurred while sending email.');
-        } else {
-            console.log('Email sent:', info.response);
-            res.status(200).send('Email sent successfully.');
-        }
-    });
-};
-*/
-
-//----------------------------------------------------------------------------------------------------------------
-/*
-// Create a transporter object using SMTP transport
-let transporter = nodemailer.createTransport({
-  service: 'Gmail', // Use your email service provider
-  auth: {
-      user: process.env.EMAIL_USER, // Your email address from environment variables
-      pass: process.env.EMAIL_PASS // Your password from environment variables
-  }
-});
-
-
-// Create email data
-let mailOptions = {
-    from: process.env.EMAIL_USER, // Sender email address
-    to: 'sandalirj@gmail.com', // Recipient email address
-    subject: 'Hello from Nodemailer Moda Samidi', // Subject line
-    text: 'This is a test email sent from Nodemailer!' // Plain text body
-};
-
-// Send email
-transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-        console.log('Error occurred:', error.message);
-    } else {
-        console.log('Email sent:', info.response);
-    }
-});
-*/
-//----------------------------------------------------------------------------------------------------------------
-
+}*/
 
 //Create Task Assigning
+/*export const TaskAssigning = async (req, res, next) => {
+  try {
+    const newTaskAssign = await TaskAssign.create(req.body);
+
+    if (!newTaskAssign) {
+      return res.status(404).json({ msg: "Task Assigning failed" });
+    }
+    sendEmail(req,res);
+    return res
+      .status(200)
+      .json({ taskAssign: newTaskAssign, msg: "Task Assigned Successfully" });
+  } catch (error) {
+    next(error);
+  }
+};*/
+
+// Send Email
+export const sendEmail = async (req, res, next) => {
+  /*try {*/
+    const { to, subject, text } = req.body;
+
+    // Create a Nodemailer transporter
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 587,
+      secure: false,
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      }
+    });
+
+    // Send mail with defined transport object
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to,
+      subject,
+      text
+    });
+
+    console.log('Email sent successfully');
+    //res.status(200).json({ message: 'Email sent successfully' });
+  /*} catch (error) {
+    console.error('Error sending email:', error);
+    res.status(500).json({ error: 'Failed to send email' });
+  }*/
+};
+
+
 export const TaskAssigning = async (req, res, next) => {
   try {
     const newTaskAssign = await TaskAssign.create(req.body);
@@ -111,11 +90,16 @@ export const TaskAssigning = async (req, res, next) => {
     if (!newTaskAssign) {
       return res.status(404).json({ msg: "Task Assigning failed" });
     }
-    return res
-      .status(200)
-      .json({ taskAssign: newTaskAssign, msg: "Task Assigned Successfully" });
+
+    // Send email notification
+    const subject = `New Task Assigned: ${newTaskAssign.TaskID}`;
+    const text = `Category: ${newTaskAssign.Category}\nAssignDate: ${newTaskAssign.AssignDate}\nName: ${newTaskAssign.Name}`;
+    sendEmail({ body: { to: newTaskAssign.email, subject, text } });
+
+    res.status(200).json({ taskAssign: newTaskAssign, message: 'Task assigned successfully' });
   } catch (error) {
-    next(error);
+    console.error('Error assigning task:', error);
+    res.status(500).json({ error: 'Failed to assign task' });
   }
 };
 
