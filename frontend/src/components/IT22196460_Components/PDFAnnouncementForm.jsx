@@ -1,5 +1,6 @@
 import React from 'react';
-import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+import { Document, Page, Text, View, Image, StyleSheet } from '@react-pdf/renderer';
+import image from "/cleansyBG.png"
 
 const styles = StyleSheet.create({
   page: {
@@ -42,12 +43,19 @@ const styles = StyleSheet.create({
     borderRightWidth: 1,
     padding: 5,
     fontSize: 10,
+  }, 
+  backgroundImage: {
+    position: 'relative',
+    minWidth: '100%',
+    minHeight: '100%',
+    zIndex: -1,
   },
 });
 
 const PDFAnnouncementForm = ({ announcements }) => (
   <Document>
     <Page size="A4" style={styles.page}>
+      <Text style={{ fontSize: 20, marginBottom: 20 }}>Cleansy Sustainable Community Management System Pvt Ltd</Text>
       <Text style={{ fontSize: 20, marginBottom: 20 }}>Announcements</Text>
       <View style={styles.tableContainer}>
         <View style={styles.table}>
@@ -58,7 +66,7 @@ const PDFAnnouncementForm = ({ announcements }) => (
             <Text style={styles.tableColHeader}>Attachment URL</Text>
             <Text style={styles.tableColHeader}>Create At</Text>
           </View>
-          {announcements.map((announcement) => (
+          {announcements && announcements.map((announcement) => (
             <View key={announcement._id} style={styles.tableRow}>
               <Text style={styles.tableCol}>{announcement.Title}</Text>
               <Text style={styles.tableCol}>{announcement.Content}</Text>
