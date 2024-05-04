@@ -25,7 +25,9 @@ const AdminStaffRegisterView_04 = ({ index, request, onApprove, onReject }) => {
       <td className="border border-gray-300 px-4 py-2">{email}</td>
       <td className="border border-gray-300 px-4 py-2">{phoneNo}</td>
       <td className="border border-gray-300 px-4 py-2">{nic}</td>
-      <td className="border border-gray-300 px-4 py-2">{imageURL}</td>
+      <td className="border border-gray-300 px-4 py-2">
+        <img src={imageURL} alt="Staff Image" style={{ maxWidth: "100px" }} />
+      </td>
       <td className="border border-gray-300 px-4 py-2">{status}</td>
       <td className="border border-gray-300 px-8 py-2">
         <div className="flex flex-row md-2">

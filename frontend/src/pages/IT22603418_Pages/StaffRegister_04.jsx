@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 import * as faceapi from "face-api.js";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { Button, Label, TextInput } from "flowbite-react";
 import cameraImage from "./cameraImage.jpg"; // Import your camera image
@@ -126,7 +125,7 @@ function StaffRegister_04() {
 
     const storage = getStorage(app);
     const storageRef = ref(storage, "11Staffs");
-    const imageName = Date.now() + ".jpg";
+    const imageName = `${currentUser._id}_${formData.staffName}.jpg`;
     const imageRef = ref(storageRef, imageName);
 
     await uploadString(imageRef, photoData, "data_url");
@@ -201,11 +200,11 @@ function StaffRegister_04() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
   return (
-    <div className="max-w-6xl mx-auto p-3">
+    <div className="mx-auto p-3 w-full">
       <h1 className="text-3xl text-center mt-7 mb-10 font-extrabold underline text-blue-950 dark:text-slate-300">
         Staff Registration
       </h1>
-      <div className="flex flex-row gap-10">
+      <div className="ml-60 flex flex-row gap-10">
         <div>
           <div className="flex flex-col items-center mb-6">
             <div className="flex flex-col">

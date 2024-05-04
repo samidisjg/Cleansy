@@ -21,6 +21,7 @@ import { MdAddHomeWork } from "react-icons/md";
 import { FaPersonCircleCheck } from "react-icons/fa6";
 import { BsPersonPlusFill } from "react-icons/bs";
 import { IoChatbubbleEllipses } from "react-icons/io5";
+import Attendance from "./../../../backend/models/IT22603418_Models/StaffAttendance.model_04";
 
 const DashSidebar = () => {
   const location = useLocation();
@@ -206,17 +207,19 @@ const DashSidebar = () => {
             </>
           )}
 
-          <>
-            <Link to="/dashboard?tab=StaffRegister">
-              <Sidebar.Item
-                active={tab === "StaffRegister"}
-                icon={HiOutlineUserGroup}
-                as="div"
-              >
-                Staff Register
-              </Sidebar.Item>
-            </Link>
-          </>
+          {!currentUser.isAdmin && !currentUser.isStaff && (
+            <>
+              <Link to="/dashboard?tab=StaffRegister">
+                <Sidebar.Item
+                  active={tab === "StaffRegister"}
+                  icon={HiOutlineUserGroup}
+                  as="div"
+                >
+                  Staff Register
+                </Sidebar.Item>
+              </Link>
+            </>
+          )}
 
           {currentUser.isStaff && (
             <>
@@ -229,11 +232,20 @@ const DashSidebar = () => {
                   Staff
                 </Sidebar.Item>
               </Link>
-              {tab === "staffs" && (
+              {/* {tab === "staffs" && (
                 <div className="dropdown">
                   <Link to="/dashboard?tab=leaveRequest">
                     <Sidebar.Item active={tab === "leaveRequest"} as="div">
                       Leave Request
+                    </Sidebar.Item>
+                  </Link>
+                </div>
+              )}
+              {tab === "staffs" && (
+                <div className="dropdown">
+                  <Link to="/dashboard?tab=staffAttendance">
+                    <Sidebar.Item active={tab === "staffAttendance"} as="div">
+                      Staff Attendance
                     </Sidebar.Item>
                   </Link>
                 </div>
@@ -247,7 +259,7 @@ const DashSidebar = () => {
                     </Sidebar.Item>
                   </Link>
                 </div>
-              )}
+              )} */}
             </>
           )}
           {currentUser.isStaffAdmin && (
@@ -261,16 +273,6 @@ const DashSidebar = () => {
                   Staff Admin
                 </Sidebar.Item>
               </Link>
-
-              {tab === "staffAdmin" && (
-                <div className="dropdown">
-                  <Link to="/dashboard?tab=staffRegisterView">
-                    <Sidebar.Item active={tab === "staffRegisterView"} as="div">
-                      Staff Register
-                    </Sidebar.Item>
-                  </Link>
-                </div>
-              )}
             </>
           )}
 

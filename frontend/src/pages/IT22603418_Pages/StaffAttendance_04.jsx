@@ -25,6 +25,9 @@ function StaffAttendance_04() {
   const [startDate, setStartDate] = useState(new Date().getFullYear());
   const [endDate, setEndDate] = useState("");
   const [attendanceRecords, setAttendanceRecords] = useState([]);
+  // //face recognition
+  // const [recognizedName, setRecognizedName] = useState("");
+  // const webcamRef = useRef(null);
 
   useEffect(() => {
     const storedLoggedIn = localStorage.getItem("loggedIn");
@@ -69,72 +72,121 @@ function StaffAttendance_04() {
     clearInterval(intervalRef.current);
   };
 
-  const handleLogin = () => {
-    setShowLoginForm(true);
-  };
+  // const handleLogin = async () => {
+  //   setShowLoginForm(true);
+  //   // // Capture image from webcam
+  //   // const imageSrc = webcamRef.current.getScreenshot();
+
+  //   // // Send the image to the server for face recognition
+  //   // const response = await fetch("http://localhost:8000/recognize-face", {
+  //   //   method: "POST",
+  //   //   headers: {
+  //   //     "Content-Type": "application/json",
+  //   //   },
+  //   //   body: JSON.stringify({ image: imageSrc }),
+  //   // });
+
+  //   // if (response.ok) {
+  //   //   const data = await response.json();
+  //   //   if (data.success) {
+  //   //     // Face recognized successfully
+  //   //     // Mark attendance
+  //   //     markAttendance(data.staffID);
+  //   //     // Start timer
+  //   //     setLoggedIn(true);
+  //   //   } else {
+  //   //     // Face not recognized
+  //   //     toast.error("Face not recognized. Please try again.");
+  //   //   }
+  //   // } else {
+  //   //   // Error in face recognition
+  //   //   toast.error("Error recognizing face. Please try again.");
+  //   // }
+  // };
+
+  // Function to mark attendance
+  // const markAttendance = async (staffID) => {
+  //   try {
+  //     await fetch(`/api/StaffAttendance/attendance`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         userId: currentUser._id,
+  //         staffID: staffID,
+  //         loginTime: new Date().toLocaleString(),
+  //       }),
+  //     });
+  //     toast.success("Attendance marked successfully");
+  //   } catch (error) {
+  //     console.error("Error marking attendance:", error);
+  //     toast.error("Failed to mark attendance.");
+  //   }
+  // };
 
   // Function to handle logout
-  const handleLogout = async () => {
-    const confirmLogout = window.confirm("Are you sure you want to log out?");
-    if (confirmLogout) {
-      localStorage.removeItem("loggedIn");
-      localStorage.removeItem("startTime");
-      localStorage.removeItem("timer");
-      setLoggedIn(false);
-      setShowLoginForm(false);
-      setTimer(0);
-      // Send logout time to backend
-      try {
-        await fetch(`/api/StaffAttendance/attendance/${currentUser._id}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userId: currentUser._id,
-            logoutTime: new Date().toLocaleString(),
-          }),
-        });
+  // const handleLogout = async () => {
+  //   const confirmLogout = window.confirm("Are you sure you want to log out?");
+  //   if (confirmLogout) {
+  //     localStorage.removeItem("loggedIn");
+  //     localStorage.removeItem("startTime");
+  //     localStorage.removeItem("timer");
+  //     setLoggedIn(false);
+  //     setShowLoginForm(false);
+  //     setTimer(0);
+  //     // Send logout time to backend
+  //     try {
+  //       await fetch(`/api/StaffAttendance/attendance/${currentUser._id}`, {
+  //         method: "PUT",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({
+  //           userId: currentUser._id,
+  //           logoutTime: new Date().toLocaleString(),
+  //         }),
+  //       });
 
-        toast.success("You are Logged Out");
-      } catch (error) {
-        console.error("Error submitting logout time:", error);
-      }
-    }
-  };
+  //       toast.success("You are Logged Out");
+  //     } catch (error) {
+  //       console.error("Error submitting logout time:", error);
+  //     }
+  //   }
+  // };
 
   // Function to handle login
-  const handleLoginFormSubmit = async (e) => {
-    e.preventDefault();
-    setLoggedIn(true);
-    setShowLoginForm(false);
-    setFormData({ staffName: "" });
-    if (!intervalRef.current) {
-      startTimer();
-    }
+  // const handleLoginFormSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setLoggedIn(true);
+  //   setShowLoginForm(false);
+  //   setFormData({ staffName: "" });
+  //   if (!intervalRef.current) {
+  //     startTimer();
+  //   }
 
-    // Send login time and user info to backend
-    try {
-      await fetch("/api/StaffAttendance/attendance", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: currentUser._id, // Pass user ID from Redux store
-          staffName: formData.staffName,
-          loginTime: new Date().toLocaleString(),
-        }),
-      });
+  //   // Send login time and user info to backend
+  //   try {
+  //     await fetch("/api/StaffAttendance/attendance", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         userId: currentUser._id, // Pass user ID from Redux store
+  //         staffName: formData.staffName,
+  //         loginTime: new Date().toLocaleString(),
+  //       }),
+  //     });
 
-      toast.success("You are Logged In");
-      // Update the attendance records state with the new login record
-      setLoggedIn(true);
-    } catch (error) {
-      console.error("Error submitting login time:", error);
-      toast.error("Failed to log in. Please try again.");
-    }
-  };
+  //     toast.success("You are Logged In");
+  //     // Update the attendance records state with the new login record
+  //     setLoggedIn(true);
+  //   } catch (error) {
+  //     console.error("Error submitting login time:", error);
+  //     toast.error("Failed to log in. Please try again.");
+  //   }
+  // };
 
   // Function to format the timer value to HH:MM:SS
   const formatTime = (timeInSeconds) => {
@@ -329,7 +381,7 @@ function StaffAttendance_04() {
         Staff Attendance
       </h1>
       <div className="flex flex-row">
-        {!loggedIn && (
+        {/* {!loggedIn && (
           <Button
             onClick={handleLogin}
             gradientDuoTone="pinkToOrange"
@@ -337,7 +389,7 @@ function StaffAttendance_04() {
           >
             {showLoginForm ? "Cancel" : "Login"}
           </Button>
-        )}
+        )} */}
         {loggedIn && (
           <>
             <div className="flex flex-col justify-between p-3 bg-gray-200 border border-gray-300 rounded-md">
@@ -346,13 +398,13 @@ function StaffAttendance_04() {
                 Working Hours: {formatTime(timer)}
               </span>
             </div>
-            <Button
+            {/* <Button
               onClick={handleLogout}
               gradientDuoTone="pinkToOrange"
               className="m-2"
             >
               Logout
-            </Button>
+            </Button> */}
           </>
         )}
       </div>
@@ -431,7 +483,7 @@ function StaffAttendance_04() {
           </Button>
         </div>
       )}
-      <DashStaff_04
+      {/* <DashStaff_04
         isOpen={showLoginForm}
         onClose={() => setShowLoginForm(false)}
       >
@@ -453,7 +505,7 @@ function StaffAttendance_04() {
             Login
           </Button>
         </form>
-      </DashStaff_04>
+      </DashStaff_04> */}
       <StaffAttendanceView_04 currentUser={currentUser} />
     </div>
   );

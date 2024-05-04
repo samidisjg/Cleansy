@@ -88,32 +88,39 @@ const AdminStaffRegisterList_04 = () => {
   };
 
   return (
-    <div className="mx-auto p-3 w-full">
+    <div className="mx-auto p-3 w-full overflow-x-auto">
       <h1 className="text-3xl text-center my-7 font-extrabold underline text-blue-950 dark:text-slate-300">
-        Leave Requests
+        Staff Registration Requests
       </h1>
-      <table>
-        <thead>
-          <tr>
-            <th className="font-semibold">#</th>
-            <th className="font-semibold">Register ID</th>
-            <th className="font-semibold">Staff ID</th>
-            <th className="font-semibold">Status</th>
-            <th className="font-semibold">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {staffRegisters.map((request, index) => (
-            <AdminStaffRegisterView_04
-              key={request._id}
-              index={index + 1}
-              request={request}
-              onApprove={handleApprove}
-              onReject={handleReject}
-            />
-          ))}
-        </tbody>
-      </table>
+      <div className="w-full mx-auto" style={{ overflowX: "auto" }}>
+        <table>
+          <thead>
+            <tr>
+              <th className="font-semibold">#</th>
+              <th className="font-semibold">Register ID</th>
+              <th className="font-semibold">Staff ID</th>
+              <th className="font-semibold">Staff Name</th>
+              <th className="font-semibold">Email</th>
+              <th className="font-semibold">Phone No</th>
+              <th className="font-semibold">NIC</th>
+              <th className="font-semibold">Staff Image</th>
+              <th className="font-semibold">Status</th>
+              <th className="font-semibold">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {staffRegisters.map((request, index) => (
+              <AdminStaffRegisterView_04
+                key={request._id}
+                index={index + 1}
+                request={request}
+                onApprove={handleApprove}
+                onReject={handleReject}
+              />
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import DashStaff_04 from "./DashStaff_04";
+import PopUp_04 from "./PopUp_04";
 import { Button } from "flowbite-react";
 
 const AdminLeaveRequests_04 = ({ index, request, onAccept, onDeny }) => {
@@ -94,7 +94,7 @@ const AdminLeaveRequests_04 = ({ index, request, onAccept, onDeny }) => {
           </Button>
         </div>
       </td>
-      <DashStaff_04 isOpen={showPopup} onClose={togglePopup}>
+      <PopUp_04 isOpen={showPopup} onClose={togglePopup}>
         <div className="popup">
           <div className="popup-inner">
             <div className="max-w-md mx-auto border border-white shadow-md rounded-lg overflow-hidden">
@@ -153,7 +153,7 @@ const AdminLeaveRequests_04 = ({ index, request, onAccept, onDeny }) => {
             </div>
           </div>
         </div>
-      </DashStaff_04>
+      </PopUp_04>
     </tr>
   );
 };

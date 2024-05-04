@@ -74,13 +74,12 @@ export const getAllStaffRegisterRequests = async (req, res, next) => {
 
 // Accept Staff Register Request
 export const acceptStaffRegisterRequest = async (req, res) => {
-  const requestId = req.body.staffID;
-  console.log(requestId);
+  const requestId = req.params.requestId;
 
   try {
     // Find the Staff Register request by ID and update its status to "accepted" in the database
     const updatedStaffRegisterRequest = await StaffRegister.findOneAndUpdate(
-      requestId,
+      { staffID: requestId },
       { status: "approved" },
       { new: true }
     );
@@ -109,12 +108,11 @@ export const acceptStaffRegisterRequest = async (req, res) => {
 
 // Deny Staff Register Request
 export const denyStaffRegisterRequest = async (req, res) => {
-  const requestId = req.body.requestId;
-  console.log(requestId);
+  const requestId = req.params.requestId;
   try {
     // Find the Staff Register request by ID and update its status to "denied" in the database
     const updatedStaffRegisterRequest = await StaffRegister.findOneAndUpdate(
-      requestId,
+      { staffID: requestId },
       { status: "rejected" },
       { new: true }
     );

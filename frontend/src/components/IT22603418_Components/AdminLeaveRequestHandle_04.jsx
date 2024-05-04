@@ -134,19 +134,30 @@ const AdminLeaveRequestHandle_04 = () => {
     const logo = "/cleansyBG.png";
     const imgWidth = 180;
     const imgHeight = 120;
+    const watermark = () => {
+      doc.addImage(logo, "JPEG", centerX, centerY, imgWidth, imgHeight);
+    };
     const centerX = (doc.internal.pageSize.getWidth() - imgWidth) / 2;
     const centerY = (doc.internal.pageSize.getHeight() - imgHeight) / 2;
 
     doc.text("Leave Request Report", doc.internal.pageSize.getWidth() / 2, 15, {
       align: "center",
     });
+
+    // Increase row height by setting cell padding
+    const styles = {
+      cellPadding: 2.5,
+    };
+
     // Add table to PDF document
     doc.autoTable({
       head: [tableColumn],
       body: tableRows,
       startY: 20,
+      addPageContent: watermark,
+      styles: styles,
     });
-    doc.addImage(logo, "JPEG", centerX, centerY, imgWidth, imgHeight);
+
     // Save the PDF document
     doc.save("leave_requests_report.pdf");
   };
