@@ -246,8 +246,8 @@ const DashSidebar = () => {
                 </>
               )
             }
-            <Link to ='/add-visitors'>
-                <Sidebar.Item  icon={BsPersonPlusFill} as='div'>
+            <Link to ='/dashboard?tab=add-visitors'>
+                <Sidebar.Item active={tab === "add-visitors"} icon={BsPersonPlusFill} as='div'>
                   Add Visitors
                 </Sidebar.Item>
             </Link>
@@ -310,8 +310,8 @@ const DashSidebar = () => {
             </Sidebar.Item>
           </Link>
 
-          <Link to="/car-park">
-            <Sidebar.Item  icon={FaCar} as="div">
+          <Link to="/dashboard?tab=car-park">
+            <Sidebar.Item active={tab === "car-park"} icon={FaCar} as="div">
             Request Car park
             </Sidebar.Item>
           </Link>

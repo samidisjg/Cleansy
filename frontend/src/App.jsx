@@ -152,7 +152,7 @@ function App() {
               />
                   <Route path='/visitorListing/:visitorListingId' element={<VisitorDetails/>}/>
                  <Route path="/update-list/:visitorListingId" element={<UpdateVisitorListing/>} />
-                 <Route path="/car-park" element={<RequestCarPark />} />
+                 
             </Route>
             <Route element={<OnlyPropertyAdminPrivateRoute_02 />}>
               <Route
@@ -188,6 +188,7 @@ function App() {
             <Route path="/searchVisitor" element={<VisitorAdminPage />} />
             <Route path="/park-slot/:slotID" element={<Parkingslot />} />
             <Route path="/park-slot-order/:carparkListingId" element={<ParkingslotOrder />} />
+        
             
           </Routes>
         </div>
