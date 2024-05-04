@@ -368,7 +368,7 @@ const DashSidebar = () => {
                   icon={MdAnnouncement}
                   as="div"
                 >
-                 Today's announcements
+                 Today's updates
                 </Sidebar.Item>
               </Link>
             </>
