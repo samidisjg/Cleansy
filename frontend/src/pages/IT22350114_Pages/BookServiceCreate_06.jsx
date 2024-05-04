@@ -28,6 +28,7 @@ const BookServiceCreate = () => {
   const [files, setFiles] = useState([]);
   const [imageUploadError, setImageUploadError] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [timeslots, setTimeslots] = useState([]); // Array to store time slots
 
   // Function to generate a unique booking ID
   const generateBookingId = () =>
@@ -126,7 +127,8 @@ const BookServiceCreate = () => {
         console.error("Error fetching service details:", error);
       }
     };
-
+    
+    setTimeslots(generateTimeSlots());
     fetchServiceDetails();
   }, [serviceID]); // Run the effect whenever serviceID changes
 
@@ -187,6 +189,31 @@ const BookServiceCreate = () => {
       setLoading(false);
     }
   };
+
+  function generateTimeSlots() {
+    var timeSlots = [];
+    var startTime = new Date();
+    startTime.setHours(8, 0, 0, 0); // Set start time to 8:00 AM
+    var endTime = new Date();
+    endTime.setHours(18, 0, 0, 0); // Set end time to 6:00 PM
+
+    var currentTime = new Date(startTime);
+
+    while (currentTime < endTime) {
+        var timeSlotStart = new Date(currentTime);
+   
+
+        timeSlots.push({
+            start: timeSlotStart.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}),
+        });
+        currentTime.setTime(currentTime.getTime() + 30 * 60000); // Move to next 30-minute slot
+    }
+
+    return timeSlots;
+}
+
+
+console.log("timeslots",timeslots)
 
   return (
     <div className="container mx-auto p-4 max-w-md">
@@ -308,7 +335,16 @@ const BookServiceCreate = () => {
           <label htmlFor="bookingTime" className="block mb-1">
             Booking Time
           </label>
-          <input
+          <select
+          name="bookingTime"
+          value={formData.bookingTime}
+          onChange={handleChange}
+          className="w-full p-2 border rounded-md focus:outline-none focus:border-blue-500">
+                {timeslots.map((timeSlot, index) => (
+                    <option key={index} value={timeSlot.start}>{`${timeSlot.start}`}</option>
+                ))}
+            </select>
+          {/* <input
             type="time"
             name="bookingTime"
             value={formData.bookingTime}
@@ -316,7 +352,7 @@ const BookServiceCreate = () => {
             placeholder="Booking Time"
             className="w-full p-2 border rounded-md focus:outline-none focus:border-blue-500"
             required
-          />
+          /> */}
         </div>
         <div>
           <p className="font-semibold">

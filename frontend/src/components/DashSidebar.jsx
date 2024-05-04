@@ -198,6 +198,17 @@ const DashSidebar = () => {
             </>
           )}
 
+          {
+          currentUser.isFacilityServiceAdmin && (
+            <>
+              <Link to="/dashboard?tab=serviceBookings">
+              <Sidebar.Item icon={HiOutlineUserGroup}>
+                  Service Bookings
+                </Sidebar.Item>
+              </Link>
+            </>
+          )}
+
           {currentUser.isFacilityAdmin && (
             <>
               <Link to="/dashboard?tab=maintenance">
@@ -260,18 +271,6 @@ const DashSidebar = () => {
                     </Sidebar.Item>
                   </Link>
                 </>
-              }
-
-              {
-                //currentUser.isFacilityServiceAdmin &&
-                <Link
-                  to="/dashboard?tab=serviceBookings"
-                  className={tab === "serviceBookings" ? "active" : ""}
-                >
-                  <Sidebar.Item icon={HiOutlineUserGroup}>
-                    Service Bookings
-                  </Sidebar.Item>
-                </Link>
               }
 
               <Sidebar.Item
