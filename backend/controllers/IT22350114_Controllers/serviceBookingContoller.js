@@ -1,8 +1,9 @@
 import ServiceBooking from "../../models/IT22350114_Models/serviceBookingModel.js";
+import sendEmail from "../../utils/sendEmail.js";
+import serviceBookingEmailTemplate from "../../utils/email_templates/serviceBookingEmailTemplate.js";
 
 export const createServiceBooking = async (req, res, next) => {
   try {
-
     const isBookingExist = await ServiceBooking.findOne({
       serviceID: req.body.serviceID,
       bookingDate: req.body.bookingDate,
@@ -12,20 +13,36 @@ export const createServiceBooking = async (req, res, next) => {
 
     let newServiceBooking = null;
     if (isBookingExist) {
-       newServiceBooking = await ServiceBooking.create({
+      newServiceBooking = await ServiceBooking.create({
         ...req.body,
         bookingStatus: "Pending",
-       });
-    }else{
-    // Create a new service bookings using the data from the request body
-     newServiceBooking = await ServiceBooking.create(
-      {
-    
+      });
+      const emailTemplate = serviceBookingEmailTemplate(req.body.residentName, {
+        ...req.body,
+        bookingStatus: "Pending",
+      });
+      sendEmail(
+        req.body.residentEmail,
+        "Service Booking Confirmation",
+        emailTemplate
+      );
+    } else {
+      // Create a new service bookings using the data from the request body
+      newServiceBooking = await ServiceBooking.create({
         ...req.body,
         bookingStatus: "Confirmed",
-      }
-     );
+      });
+      const emailTemplate = serviceBookingEmailTemplate(req.body.residentName, {
+        ...req.body,
+        bookingStatus: "Confirmed",
+      });
+      sendEmail(
+        req.body.residentEmail,
+        "Service Booking Confirmation",
+        emailTemplate
+      );
     }
+
     // Send a success response with the newly created service booking
     return res.status(201).json({
       success: true,
