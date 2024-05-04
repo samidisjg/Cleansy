@@ -21,14 +21,6 @@ export const bookAmenity = async (req, res, next) => {
         // Ensure consistent formatting for bookingTime
         let bookingTime = req.body.bookingTime;
 
-        // Check if the length of the time string is less than 5 (HH:MM)
-        if (bookingTime.length < 5) {
-            // If the time is a single digit hour (e.g., "7:30"), we remove the leading zero
-            if (bookingTime[0] === '0') {
-                bookingTime = bookingTime.substring(1); // Remove the leading zero
-            }
-        }
-
 
         const isBookingExist = await AmenitiesBooking.findOne({
             //bookingID: req.body.bookingID,

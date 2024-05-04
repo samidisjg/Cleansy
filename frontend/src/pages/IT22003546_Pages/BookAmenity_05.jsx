@@ -15,15 +15,15 @@ import {
   Select,
 } from "flowbite-react";
 
-// const convertTimeRangeToArray = (timeRange) => {
-//   const [startTime, endTime] = timeRange.split('to').map(time => {
-//     const hourDigit = time.match(/\d{1,2}/);
-//     return hourDigit ? hourDigit[0] : time;
-// });
+const convertTimeRangeToArray = (timeRange) => {
+  const [startTime, endTime] = timeRange.split('to').map(time => {
+    const hourDigit = time.match(/\d{1,2}/);
+    return hourDigit ? hourDigit[0] : time;
+});
 
-//   const adjustedEndTime = endTime === '24:00' ? '24:00' : `${parseInt(endTime.split(':')[0])}`;
-//   return [startTime, adjustedEndTime];
-// };
+  const adjustedEndTime = endTime === '24:00' ? '24:00' : `${parseInt(endTime.split(':')[0])}`;
+  return [startTime, adjustedEndTime];
+};
 
 const BookAmenity = () => {
   const { amenityId } = useParams();
@@ -117,35 +117,37 @@ const BookAmenity = () => {
     })
  }
 
-  useEffect(() => {
-    const fetchAmenityDetails = async () => {
-      try {
-        const res = await fetch(`/api/amenitiesListing/get/${amenityId}`);
-        const data = await res.json();
-        if (data.success === false) {
-          console.error("Error fetching amenity details");
-          return;
-        }
- 
-        setFormData((prevData) => ({
-          ...prevData,
-          amenityId: data.amenityID,
-          amenityTitle: data.amenityTitle,
-          residentUsername: currentUser.username,
-          residentEmail: currentUser.email,
-          pricePerHour: data.amenityPrice,
-          amenityAvailableTimes: data.amenityAvailableTimes,
-        }));
-
-
-      } catch (error) {
-        console.error("Error fetching amenity details", error);
+ useEffect(() => {
+  const fetchAmenityDetails = async () => {
+    try {
+      const res = await fetch(`/api/amenitiesListing/get/${amenityId}`);
+      const data = await res.json();
+      if (data.success === false) {
+        console.error("Error fetching amenity details");
+        return;
       }
-    };
 
-    setTimeslots(generateTimeSlots());
+      setFormData((prevData) => ({
+        ...prevData,
+        amenityId: data.amenityID,
+        amenityTitle: data.amenityTitle,
+        residentUsername: currentUser.username,
+        residentEmail: currentUser.email,
+        pricePerHour: data.amenityPrice,
+      }));
+
+      const times = convertTimeRangeToArray(data.amenityAvailableTimes);
+      setAvailableTimes(times);
+      if (times.length === 2) {  // Ensure times are available before setting time slots
+        setTimeslots(generateTimeSlots(times));
+      }
+    } catch (error) {
+      console.error("Error fetching amenity details", error);
+    }
+  };
+
     fetchAmenityDetails();
-  }, [amenityId]);
+  }, [amenityId, currentUser]);
 
   const calculateTotalPrice = () => {
     if (formData.duration && formData.pricePerHour) {
@@ -201,13 +203,13 @@ const BookAmenity = () => {
     }
 
     
-    if (name === "bookingTime" && availableTimes.length === 2) {
-        const [startTime, endTime] = availableTimes;
-        if (value < startTime || value > endTime) {
-            alert("Please select a time within the available range.");
-            return; 
-        }
-    }
+    // if (name === "bookingTime" && availableTimes.length === 2) {
+    //     const [startTime, endTime] = availableTimes;
+    //     if (value < startTime || value > endTime) {
+    //         alert("Please select a time within the available range.");
+    //         return; 
+    //     }
+    // }
 
     
     setFormData(prevState => ({
@@ -256,28 +258,32 @@ const BookAmenity = () => {
   };
 
 
-  function generateTimeSlots() {
-
+  function generateTimeSlots(times) {
     var timeslots = [];
     var startTime = new Date();
-    startTime.setHours(6, 0, 0, 0);
+    startTime.setHours(parseInt(times[0]), 0, 0, 0);  // Use parsed time for start
     var endTime = new Date();
-    endTime.setHours(23, 0, 0, 0);
+    endTime.setHours(parseInt(times[1]), 0, 0, 0);    // Use parsed time for end
 
     var currentTime = new Date(startTime);
 
-    
-
     while (currentTime <= endTime) {
-      var timeSlotsStart = new Date(currentTime);
+        var timeSlotsStart = new Date(currentTime);
 
-      timeslots.push({
-        start: timeSlotsStart.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}),
-      });
-      currentTime.setTime(currentTime.getTime() + 30 * 60000);
-  }
-  return timeslots;
+        // Formatting to exclude the leading zero for single-digit hours
+        timeslots.push({
+            start: timeSlotsStart.toLocaleTimeString([], {
+                hour: 'numeric', // '2-digit' or 'numeric' for leading zero control
+                minute: '2-digit',
+                hour12: false,  // Use 24-hour time without AM/PM
+                hourCycle: 'h23' // Ensures 0-23 hour format
+            }),
+        });
+        currentTime.setTime(currentTime.getTime() + 30 * 60000);
+    }
+    return timeslots;
 }
+
 
   return (
     <div className="min-h-screen mt-20">
