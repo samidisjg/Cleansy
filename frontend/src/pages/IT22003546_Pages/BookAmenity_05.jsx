@@ -12,13 +12,18 @@ import {
   Textarea,
   Alert,
   FileInput,
+  Select,
 } from "flowbite-react";
 
-const convertTimeRangeToArray = (timeRange) => {
-  const [startTime, endTime] = timeRange.split('to').map(time => time.trim());
-  const adjustedEndTime = endTime === '24:00' ? '24:00' : `${parseInt(endTime.split(':')[0]) + 1}:00`;
-  return [startTime, adjustedEndTime];
-};
+// const convertTimeRangeToArray = (timeRange) => {
+//   const [startTime, endTime] = timeRange.split('to').map(time => {
+//     const hourDigit = time.match(/\d{1,2}/);
+//     return hourDigit ? hourDigit[0] : time;
+// });
+
+//   const adjustedEndTime = endTime === '24:00' ? '24:00' : `${parseInt(endTime.split(':')[0])}`;
+//   return [startTime, adjustedEndTime];
+// };
 
 const BookAmenity = () => {
   const { amenityId } = useParams();
@@ -29,7 +34,8 @@ const BookAmenity = () => {
   const [imageUploadError, setImageUploadError] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [files, setFiles] = useState([])
-  const [availableTimes, setAvailableTimes] = useState([]); 
+  const [availableTimes, setAvailableTimes] = useState([]);
+  const [timeslots, setTimeslots] = useState([]);
   
 
   const generateBookingId = () => `BID-${Math.floor(10000 + Math.random() * 90000)}`;
@@ -37,7 +43,7 @@ const BookAmenity = () => {
 
   const [formData, setFormData] = useState({
     bookingDate: "",
-    ime: "",
+    bookingTime: "",
     duration: "",
     amenityId: "",
     amenityTitle: "",
@@ -47,7 +53,7 @@ const BookAmenity = () => {
     residentContact: "",
     specialRequests: "",
     bookingID: generateBookingId(),
-    status: "Pending",
+    bookingStatus: "",
     pricePerHour: 0,
     bookingPrice: 0,
     imageUrls: [],
@@ -131,16 +137,13 @@ const BookAmenity = () => {
           amenityAvailableTimes: data.amenityAvailableTimes,
         }));
 
-        const availableTimes = convertTimeRangeToArray(data.amenityAvailableTimes);
-        setAvailableTimes(availableTimes);
-
-        console.log(availableTimes)
 
       } catch (error) {
         console.error("Error fetching amenity details", error);
       }
     };
 
+    setTimeslots(generateTimeSlots());
     fetchAmenityDetails();
   }, [amenityId]);
 
@@ -157,6 +160,13 @@ const BookAmenity = () => {
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
+
+    
+
+    console.log(name, value); // Add this line to log the input name and value
+      // rest of your handleChange code
+    
+    
 
   
     let processedValue = value;
@@ -208,9 +218,6 @@ const BookAmenity = () => {
 
 
 
-
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -221,9 +228,9 @@ const BookAmenity = () => {
       setError(false);
 
       const payload = {
-        ...formData,
-        userRef: currentUser._id,
-        bookingStatus: "Pending",
+          ...formData,
+          userRef: currentUser._id,
+          //bookingStatus: "Pending",
       };
 
       console.log("Submitting the following data to the backend:", payload);
@@ -247,6 +254,30 @@ const BookAmenity = () => {
       setLoading(false);
     }
   };
+
+
+  function generateTimeSlots() {
+
+    var timeslots = [];
+    var startTime = new Date();
+    startTime.setHours(6, 0, 0, 0);
+    var endTime = new Date();
+    endTime.setHours(23, 0, 0, 0);
+
+    var currentTime = new Date(startTime);
+
+    
+
+    while (currentTime <= endTime) {
+      var timeSlotsStart = new Date(currentTime);
+
+      timeslots.push({
+        start: timeSlotsStart.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}),
+      });
+      currentTime.setTime(currentTime.getTime() + 30 * 60000);
+  }
+  return timeslots;
+}
 
   return (
     <div className="min-h-screen mt-20">
@@ -342,7 +373,7 @@ const BookAmenity = () => {
             />
           </div>
 
-          <div>
+          {/* <div>
             <Label htmlFor="time" >Time:</Label>
             <TextInput
               type="time"
@@ -353,6 +384,21 @@ const BookAmenity = () => {
               required
               onChange={handleChange}
             />   
+          </div> */}
+
+          <div>
+            <Label htmlFor="time" className="bloack mb-1">Booking Time</Label>
+            <Select
+            name="bookingTime"
+            id="eventTime"
+            required
+            value={formData.bookingTime}
+            onChange={handleChange}
+            className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent">
+            {timeslots.map((timeslot, index) => (
+              <option key={index} value={timeslot.start}>{`${timeslot.start}`}</option>
+            ))}
+            </Select>
           </div>
 
           <div>

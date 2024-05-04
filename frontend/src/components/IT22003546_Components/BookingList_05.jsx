@@ -142,11 +142,23 @@ const BookingList_05 = () => {
         const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         const month = monthNames[d.getMonth()];
 
+        const logo = "/cleansyBG.png"
+
+        const imgHeight = 120;
+        const imgWidth = 160;
+
+        const centerX = (bookingPDF.internal.pageSize.getWidth() - imgWidth / 0.7);
+        const centerY = (bookingPDF.internal.pageSize.getHeight() - imgHeight / 0.8);
+
+        const addWaterMark = () => {
+            bookingPDF.addImage(logo, 'PNG', centerX, centerY, imgWidth, imgHeight);
+        }
         bookingPDF.autoTable({
             startY: 30,
             head: [tableColumn],
             body: tableRows,
             theme: 'grid',
+            startY: 40, addPageContent: addWaterMark,
             didDrawCell: (data) => {
                 bookingPDF.rect(data.cell.x, data.cell.y, data.cell.width, data.cell.height);
             }
