@@ -14,6 +14,7 @@ import AmenitiesBooking from "../../models/IT22003546_Models/amenitiesBooking.mo
 //     }
 // }
 
+
 export const bookAmenity = async (req, res, next) => {
     try {
         console.log("Request Body:", req.body);  // Log request data
@@ -21,6 +22,38 @@ export const bookAmenity = async (req, res, next) => {
         // Ensure consistent formatting for bookingTime
         let bookingTime = req.body.bookingTime;
 
+        // Check fair allocation rules here
+
+        const pastBookings = await AmenitiesBooking.find({
+            residentUsername: req.body.residentUsername,
+            amenityTitle: req.body.amenityTitle,
+            bookingStatus: { $in: ['Confirmed', 'Pending'] },
+            bookingDate: { $lt: req.body.bookingDate },
+        }).sort({ bookingDate: -1 }).limit(2);
+        
+        if (pastBookings.length === 2) {
+            const lastBookingDate = new Date(pastBookings[0].bookingDate);
+            const secondLastBookingDate = new Date(pastBookings[1].bookingDate);
+            const newBookingDate = new Date(req.body.bookingDate);
+        
+            // Calculate the difference in days between the last two bookings
+            const dayDifference = Math.abs((lastBookingDate - secondLastBookingDate) / (1000 * 60 * 60 * 24));
+        
+            // Check if the new booking date is consecutive with the last two bookings
+            if (dayDifference !== 1 || (newBookingDate - lastBookingDate) / (1000 * 60 * 60 * 24) !== 1) {
+                // Allow the user to book if the new booking date is not consecutive with the last two bookings
+                // Proceed with the booking process
+            } else {
+                // Deny the booking since the new booking date is consecutive with the last two bookings
+                return res.status(409).json({
+                    success: false,
+                    message: "You cannot book the same amenity for more than 2 consecutive days.",
+                });
+            }
+        }
+        
+
+        // If fair allocation rules pass, proceed with booking
 
         const isBookingExist = await AmenitiesBooking.findOne({
             //bookingID: req.body.bookingID,
@@ -57,6 +90,7 @@ export const bookAmenity = async (req, res, next) => {
         next(error);
     }
 };
+
 
 
 
