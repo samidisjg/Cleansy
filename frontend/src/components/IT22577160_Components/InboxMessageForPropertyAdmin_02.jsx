@@ -112,8 +112,8 @@ const InboxMessageForPropertyAdmin_02 = () => {
 
             if(res.ok) {
                const data = await res.json();
-               // setMessages([...messages, data.message]);
-               setMessages((prevMessages) => [...prevMessages, data.message]);
+               setMessages([...messages, data.message]);
+               // setMessages((prevMessages) => [...prevMessages, data.message]);
                updateLastMessage();
                setNewMessage("");
             }
@@ -152,7 +152,7 @@ const InboxMessageForPropertyAdmin_02 = () => {
    }
 
   return (
-    <div className="w-[90%] bg-white dark:border-gray-700 dark:bg-gray-800 m-5 h-full overflow-y-scroll rounded scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500 shadow-md ">
+    <div className="w-[90%] bg-white dark:border-gray-700 dark:bg-gray-800 m-5 h-full shadow-md rounded-md ">
       {
          !open && (
             <>
@@ -168,7 +168,7 @@ const InboxMessageForPropertyAdmin_02 = () => {
       }
       {
          open && (
-            <AdminInbox setOpen={setOpen} newMessage={newMessage} setNewMessage={setNewMessage} sendMessageHandler={sendMessageHandler} messages={messages} adminId={currentUser._id} userData={userData} activeStatus={activeStatus} />
+            <AdminInbox setOpen={setOpen} newMessage={newMessage} setNewMessage={setNewMessage} sendMessageHandler={sendMessageHandler} messages={messages} adminId={currentUser._id} userData={userData} activeStatus={activeStatus} setMessages={setMessages} />
          )
       }
     </div>
@@ -219,11 +219,11 @@ const MessageList = ({data, index, setOpen, setCurrentChat, me, setUserData, use
    )
 }
 
-const AdminInbox = ({ setOpen, newMessage, setNewMessage, sendMessageHandler, messages, adminId, userData, activeStatus }) => {
+const AdminInbox = ({ setOpen, newMessage, setNewMessage, sendMessageHandler, messages, adminId, userData, activeStatus, setMessages }) => {
    return (
-      <div className='w-full min-h-full flex flex-col justify-between rounded-md bg-white dark:bg-gray-800 shadow-md rounded-tl-md rounded-tr-md'>
+      <div className='w-full min-h-full flex flex-col justify-between rounded-md bg-white dark:bg-gray-800 shadow-md'>
          {/* message header */}
-         <div className="w-full flex p-3 items-center justify-between bg-slate-200 dark:bg-slate-700">
+         <div className="w-full flex p-3 items-center justify-between bg-slate-200 dark:bg-slate-700 shadow-md rounded-tl-md rounded-tr-md">
             <div className="flex">
                <img src={userData?.profilePicture} alt="" className='w-[60px] h-[60px] rounded-full'/>
                <div className="pl-3">
