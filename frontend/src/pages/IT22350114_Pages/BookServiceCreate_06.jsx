@@ -122,6 +122,7 @@ const BookServiceCreate = () => {
           ...prevFormData,
           serviceID: data.serviceID,
           serviceName: data.serviceName,
+          residentEmail: currentUser.email,
         }));
       } catch (error) {
         console.error("Error fetching service details:", error);
