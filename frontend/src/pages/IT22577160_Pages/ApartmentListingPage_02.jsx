@@ -67,7 +67,7 @@ const ApartmentListingPage_02 = () => {
                }} />
             </div>
             {copied && (
-               <p className='fixed z-10 top-[23%] right-[5%] rounded-md bg-slate-100 p-2'>Link copied!</p>
+               <p className='fixed z-10 top-[23%] right-[5%] rounded-md bg-slate-100 p-2 dark:text-slate-700'>Link copied!</p>
             )}
             <div className="flex flex-col max-w-4xl mx-auto p-3 my-7 gap-4">
                <p className="text-2xl font-semibold">
