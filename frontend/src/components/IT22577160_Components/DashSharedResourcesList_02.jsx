@@ -86,8 +86,26 @@ const DashSharedResourcesList_02 = () => {
     const month = d.getMonth() + 1;
     const date = d.getDate();
 
-    payDoc.autoTable(tableColumn, tableRows, { startY: 20 });
-    payDoc.text(`Shared Resources Report - ${year}/${month}/${date}`, 14, 15);
+    const logo = "/cleansyBG.png";
+
+    const imgWidth = 160;
+    const imgHeight = 120;
+
+    const centerX = (payDoc.internal.pageSize.getWidth() - imgWidth / 0.9);
+    const centerY = (payDoc.internal.pageSize.getHeight() - imgHeight /0.5);
+
+    payDoc.text(
+      "Cleansy Sustainable Community Management System Pvt Ltd",
+      14,
+      15
+    )
+
+    const addWatermark = () => {
+      payDoc.addImage(logo, "JPEG", centerX, centerY, imgWidth, imgHeight);
+    }
+
+    payDoc.text(`Shared Resources Report - ${year}/${month}/${date}`, 14, 25);
+    payDoc.autoTable(tableColumn, tableRows, { startY: 40, addPageContent: addWatermark});
     payDoc.save(`sharedResources_Report_${year}_${month}_${date}.pdf`);
   }
 

@@ -75,12 +75,15 @@ const AmenityUpdate_05 = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            if (formData.AmenityID === currentUser.AmenityID) {
+            if (formData.imageURLs.length < 1)
+                return setError("Please upload at least one image");
+            if (formData.amenityID === currentUser.AmenityID) {
+
                 setError("AmenityID already exists");
                 return;
             }
             setLoading(true);
-            console.log("Form Data:", formData); // Add this line
+            console.log("Form Data:", formData);
             setError(false);
             
             const res = await fetch(`/api/amenitiesListing/update/${params.amenityID}`, {
@@ -180,6 +183,7 @@ const AmenityUpdate_05 = () => {
                             required
                             value={formData.amenityID}
                             onChange={handleChange}
+                            readOnly
                         />
                     </div>
                     <div>

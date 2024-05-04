@@ -5,57 +5,84 @@ import { errorHandler } from "../utils/error.js";
 
 // sign up API
 export const signup = async (req, res, next) => {
-   const { username, email, password } = req.body;
+  const { username, email, password } = req.body;
 
-   if(!username || !email || !password || username === "" || email === "" || password === "") {
-      next(errorHandler(400, "All fields are required"));
-   }
+  if (
+    !username ||
+    !email ||
+    !password ||
+    username === "" ||
+    email === "" ||
+    password === ""
+  ) {
+    next(errorHandler(400, "All fields are required"));
+  }
 
-   const hashedPassword = bcryptjs.hashSync(password, 10);
+  const hashedPassword = bcryptjs.hashSync(password, 10);
 
-   const newUser = new User({
-      username,
-      email,
-      password: hashedPassword,
-   });
+  const newUser = new User({
+    username,
+    email,
+    password: hashedPassword,
+  });
 
-   try {
-      await newUser.save();
-      res.json("User Signup successfully");
-   } catch (error) {
-      next(error);
-   }
-}
+  try {
+    await newUser.save();
+    res.json("User Signup successfully");
+  } catch (error) {
+    next(error);
+  }
+};
 
 // sign in API
 export const signIn = async (req, res, next) => {
-   const { email, password } = req.body;
+  const { email, password } = req.body;
 
-   if(!email || !password || email === "" || password === "") {
-      next(errorHandler(400, "All fields are required"));
-   }
+  if (!email || !password || email === "" || password === "") {
+    next(errorHandler(400, "All fields are required"));
+  }
 
-   try {
-      const validUser = await User.findOne({ email });
-      if(!validUser) {
-         return next(errorHandler(400, "User not found"));
-      }
+  try {
+    const validUser = await User.findOne({ email });
+    if (!validUser) {
+      return next(errorHandler(400, "User not found"));
+    }
 
-      const validPassword = bcryptjs.compareSync(password, validUser.password);
-      if(!validPassword) {
-         return next(errorHandler(400, "Invalid password"));
-      }
+    const validPassword = bcryptjs.compareSync(password, validUser.password);
+    if (!validPassword) {
+      return next(errorHandler(400, "Invalid password"));
+    }
 
-      const token = jwt.sign({ id: validUser._id, Username :validUser.username,isAdmin: validUser.isAdmin, isUserAdmin: validUser.isUserAdmin, isPropertyAdmin: validUser.isPropertyAdmin, isVisitorAdmin: validUser.isVisitorAdmin, isAnnouncementAdmin: validUser.isAnnouncementAdmin, isBookingAdmin: validUser.isBookingAdmin, isStaffAdmin: validUser.isStaffAdmin, isBillingAdmin: validUser.isBillingAdmin, isFacilityAdmin: validUser.isFacilityAdmin, isFacilityServiceAdmin: validUser.isFacilityServiceAdmin }, process.env.JWT_SECRET);
+    const token = jwt.sign(
+      {
+        id: validUser._id,
+        Username: validUser.username,
+        isAdmin: validUser.isAdmin,
+        isUserAdmin: validUser.isUserAdmin,
+        isPropertyAdmin: validUser.isPropertyAdmin,
+        isVisitorAdmin: validUser.isVisitorAdmin,
+        isAnnouncementAdmin: validUser.isAnnouncementAdmin,
+        isBookingAdmin: validUser.isBookingAdmin,
+        isStaffAdmin: validUser.isStaffAdmin,
+        isBillingAdmin: validUser.isBillingAdmin,
+        isFacilityAdmin: validUser.isFacilityAdmin,
+        isFacilityServiceAdmin: validUser.isFacilityServiceAdmin,
+        isStaff: validUser.isStaff,
+      },
+      process.env.JWT_SECRET
+    );
 
-      const { password: pass, ...rest} = validUser._doc;
-      res.status(200).cookie('access_token', token, {
-         httpOnly: true,
-      }).json(rest)
-   } catch (error) {
-      next(error);
-   }
-}
+    const { password: pass, ...rest } = validUser._doc;
+    res
+      .status(200)
+      .cookie("access_token", token, {
+        httpOnly: true,
+      })
+      .json(rest);
+  } catch (error) {
+    next(error);
+  }
+};
 
 // google sign in API
 export const google = async (req, res, next) => {
