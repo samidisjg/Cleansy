@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 /*import TaskAssignRoute from "../../routes/IT22607232_Routes/s1_TaskAssignRoute";*/
@@ -10,31 +10,42 @@ import {
   Textarea,
 } from "flowbite-react";
 
+
+const generateTaskID = () => `TID-${Math.floor(10000 + Math.random() * 90000)}`;
+
+
 const TaskAssign = () => {
   const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
+  const [taskID, setTaskID] = useState("");
   const [formData, setFormData] = useState({
     TaskID: "",
     Category: "",
+    AssignDate:"",
+    type: "",
+    email: "",
     Name: "",
     Description: "",
     WorkGroupID: "",
     Location: "",
-    DurationDays: "2",
+    DurationDays: "2"
   });
 
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  
   console.log(formData);
+
+  
 
   const handleChange = (e) => {
     let boolean = null; // Declare boolean variable here
 
-    //handle datepicker change event
+   
     if (e.target.name === "Date") {
       setFormData({
         ...formData,
-        [e.target.name]: e.target.value, // assuming datepicker returns a string
+        date: formattedDate,
       });
     } else {
       if (e.target.value === "true") {
@@ -46,7 +57,8 @@ const TaskAssign = () => {
       if (
         e.target.type === "number" ||
         e.target.type === "text" ||
-        e.target.type === "textarea"
+        e.target.type === "textarea" ||
+        e.target.type === "date"
       ) {
         setFormData({
           ...formData,
@@ -80,6 +92,13 @@ const TaskAssign = () => {
         }),
       });
       const data = await res.json();
+      if (data.success === true) {
+        const subject = data.TaskID;
+
+        const text = `TaskID: ${data.TaskID} \'n Category: ${data.Category} \n AssignDate: ${data.AssignDate} \n Name: ${data.Name} \n Description: ${data.Description} \n WorkGroupID: ${data.WorkGroupID} \n Location: ${data.Location} \n DurationDays: ${data.DurationDays} \n type: ${data.type}`;
+        handleTasksEmailSending(data.Email, subject, text);
+      }
+
       setLoading(false);
       if (data.success === false) {
         setError(data.message);
@@ -92,6 +111,52 @@ const TaskAssign = () => {
     }
   };
 
+  
+  useEffect(() => {
+    const generatedID = generateTaskID();
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      TaskID: generatedID,
+    }));
+  }, []);
+
+
+  const handleTasksEmailSending = async (to, subject, text) => {
+    try {
+      const res = await fetch(`/api/taskAssign/sendEmail/${to}/${subject}/${text}`, {
+        method: "POST",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data.message);
+        return;
+      } /*else {
+        setShowTasks((prev) =>
+          prev.filter((task) => task._id !== taskIdToDelete)
+        );
+        setShowModal(false);
+      }*/
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+   
   return (
     <div className="min-h-screen mt-20">
       <main>
@@ -113,6 +178,7 @@ const TaskAssign = () => {
               required
               onChange={handleChange}
               value={formData.TaskID}
+              readOnly
             />
           </div>
           <div>
@@ -130,7 +196,44 @@ const TaskAssign = () => {
             </Select>
           </div>
 
+          <div>
+            <Label value="Date"/>
+            <TextInput
+              type="date"
+              id="AssignDate"
+              min={new Date().toISOString().split('T')[0]}
+              name="AssignDate"
+              required
+              onChange={handleChange}
+            />
+          </div>
+
+          <div>
+            <Label value="type" />
+            <Select
+              className=""
+              onChange={(e) =>
+                setFormData({ ...formData, type: e.target.value })
+              }
+            >
+              <option value="Select">Select a Category</option>
+              <option value="Pending">Pending</option>
+              <option value="Inprogress">Inprogress</option>
+              <option value="Completed">Completed</option>
+            </Select>
+          </div>
          
+          <div>
+            <Label value="Email Address" />
+            <TextInput
+              type="text"
+              name="email"
+              placeholder="email"
+              required
+              onChange={handleChange}
+              value={formData.email}
+            />
+          </div>
 
           <div>
             <Label value="Name" />
@@ -151,7 +254,6 @@ const TaskAssign = () => {
               placeholder="Add a Description..."
               rows="3"
               maxLength="200"
-              required
               onChange={handleChange}
               value={formData.Description}
             />
