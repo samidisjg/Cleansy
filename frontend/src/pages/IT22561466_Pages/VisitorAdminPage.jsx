@@ -57,12 +57,26 @@ export default function VisitorAdminPage() {
         listing.time,
         listing.purpose
       ]);
+
+      const logo = '/cleansyBG.png'
+
+      const imgWidth = 160;
+      const imgHeight = 120;
+
+      const centerX = (doc.internal.pageSize.getWidth() - imgWidth / 0.9);
+      const centerY = (doc.internal.pageSize.getHeight() - imgHeight / 0.5);
+
+      const addWaterMark = () => {
+        doc.addImage(logo, "JPEG", centerX, centerY, imgWidth, imgHeight)
+      }
     
       // Create the table
       doc.autoTable({
         startY: yPos,
         head: headers,
         body: data,
+        startY:40,
+        addPageContent: addWaterMark,
         theme: 'grid',
         styles: { cellPadding: 5, fontSize: 12, fontStyle: 'normal' }
       });

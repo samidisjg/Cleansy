@@ -63,7 +63,8 @@ export default function RequestCarPark() {
         if (data.success === false) {
           setError(data.message);
         }
-        navigate('/park-slot');
+        navigate(`/park-slot/${data.carparkListingId}`);
+
         
       } catch (error) {
         setError(error.message);

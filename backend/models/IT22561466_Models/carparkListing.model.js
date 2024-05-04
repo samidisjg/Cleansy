@@ -26,6 +26,9 @@ const carparkListingSchema = new mongoose.Schema (
             type: String,
             required: true,
         },
+        slotId:{
+            type:Number,
+        },
         userRef:{
             type: String,
             required: true,
