@@ -9,7 +9,24 @@ const TaskAssignSchema = new mongoose.Schema({
       type: String,
       required: true,
    },
+<<<<<<< HEAD
    
+=======
+   AssignDate: {
+      type: Date,
+      required: true
+  },
+
+  type:{
+   type: String,
+   required: true,
+
+ },
+ email:{
+   type: String,
+   required: true,
+ },
+>>>>>>> origin/Dev
    Name: {
       type: String,
       required: true,

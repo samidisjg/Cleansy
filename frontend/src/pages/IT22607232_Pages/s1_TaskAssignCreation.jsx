@@ -16,11 +16,21 @@ const TaskAssign = () => {
   const [formData, setFormData] = useState({
     TaskID: "",
     Category: "",
+<<<<<<< HEAD
+=======
+    AssignDate:"",
+    type: "",
+    email: "",
+>>>>>>> origin/Dev
     Name: "",
     Description: "",
     WorkGroupID: "",
     Location: "",
+<<<<<<< HEAD
     DurationDays: "2",
+=======
+    DurationDays: "2"
+>>>>>>> origin/Dev
   });
 
   const [error, setError] = useState(false);
@@ -80,6 +90,13 @@ const TaskAssign = () => {
         }),
       });
       const data = await res.json();
+      if (data.success === true) {
+        const subject = data.TaskID;
+
+        const text = `TaskID: ${data.TaskID} \'n Category: ${data.Category} \n AssignDate: ${data.AssignDate} \n Name: ${data.Name} \n Description: ${data.Description} \n WorkGroupID: ${data.WorkGroupID} \n Location: ${data.Location} \n DurationDays: ${data.DurationDays} \n type: ${data.type}`;
+        handleTasksEmailSending(data.Email, subject, text);
+      }
+
       setLoading(false);
       if (data.success === false) {
         setError(data.message);
@@ -91,7 +108,57 @@ const TaskAssign = () => {
       setLoading(false);
     }
   };
+<<<<<<< HEAD
 
+=======
+
+  
+  useEffect(() => {
+    const generatedID = generateTaskID();
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      TaskID: generatedID,
+    }));
+  }, []);
+
+
+  const handleTasksEmailSending = async (to, subject, text) => {
+    try {
+      const res = await fetch(`/api/taskAssign/sendEmail/${to}/${subject}/${text}`, {
+        method: "POST",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data.message);
+        return;
+      } /*else {
+        setShowTasks((prev) =>
+          prev.filter((task) => task._id !== taskIdToDelete)
+        );
+        setShowModal(false);
+      }*/
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+   
+>>>>>>> origin/Dev
   return (
     <div className="min-h-screen mt-20">
       <main>
@@ -131,6 +198,17 @@ const TaskAssign = () => {
           </div>
 
          
+          <div>
+            <Label value="Email Address" />
+            <TextInput
+              type="text"
+              name="email"
+              placeholder="email"
+              required
+              onChange={handleChange}
+              value={formData.email}
+            />
+          </div>
 
           <div>
             <Label value="Name" />

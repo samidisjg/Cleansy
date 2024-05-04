@@ -17,9 +17,25 @@ import BookingList_05 from "../components/IT22003546_Components/BookingList_05";
 import AdminPayments_03 from "./IT22602978_Pages/AdminPayments_03";
 import AmenityList_05 from "../components/IT22003546_Components/AmenityList_05";
 import DashServiceBookList_06 from "../components/IT22350114_Components/DashServiceBookList_06";
+<<<<<<< HEAD
 
 
 
+=======
+import PropertyAdminDashboard_02 from "../components/IT22577160_Components/PropertyAdminDashboard_02";
+import RequestLeave_04 from "./IT22603418_Pages/RequestLeave_04";
+import StaffAdminDash_04 from "./IT22603418_Pages/StaffAdminDash_04";
+import StaffAttendance_04 from "./IT22603418_Pages/StaffAttendance_04";
+import InboxMessageForPropertyAdmin_02 from "../components/IT22577160_Components/InboxMessageForPropertyAdmin_02";
+import VisitorAdminPage from "./IT22561466_Pages/VisitorAdminPage";
+//import FaceRecognition_04 from "./IT22603418_Pages/faceRecognition_04";
+import AdminDashboard from "./IT22196460_Pages/AnnouncementadminDashboard";
+import announcementList from "../components/IT22196460_Components/announcementList";
+import AnnouncementForAdmin from "../components/IT22196460_Components/AnnouncementForAdmin";
+import AnnouncementPage from "../components/IT22196460_Components/AnnouncementPage";
+import AllAnnouncemnts from "../components/IT22196460_Components/allannouncemnts";
+import AnnouncementadminDashboard from "./IT22196460_Pages/AnnouncementadminDashboard";
+>>>>>>> origin/Dev
 
 const Dashboard = () => {
   const location = useLocation();
@@ -67,7 +83,26 @@ const Dashboard = () => {
       {tab==='Adminaddpayments'&& <AdminPayments_03/>}
       {/* service bookings */}
       {tab === 'serviceBookings' && <DashServiceBookList_06 />}
+<<<<<<< HEAD
       
+=======
+      {tab === "Adminaddpayments" && <AdminPayments_03 />}
+      {/*property admin dashboard*/}
+      {tab === "propertyAdminDash" && <PropertyAdminDashboard_02 />}
+      {/* VisitorAdmin Dashboard */}
+      {tab === "addVisitors" && <VisitorAdminPage />}
+      {/* inboxMessage for property admin */}
+      {tab === "inboxMessage" && <InboxMessageForPropertyAdmin_02 />}
+       {/* Notification and Announcement Admin Dashboard */}
+      {tab === 'announcement' && <AnnouncementForAdmin />}
+      {tab === 'announcementpage' && <AnnouncementPage />}
+      {tab === 'allannouncemnts' && <AllAnnouncemnts/>}
+      {tab === 'announcemntsDash' && <AnnouncementadminDashboard/>}
+
+
+
+
+>>>>>>> origin/Dev
     </div>
   )
 }

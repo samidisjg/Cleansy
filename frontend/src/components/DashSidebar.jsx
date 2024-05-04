@@ -9,6 +9,18 @@ import { useSelector } from "react-redux";
 import { GrResources } from "react-icons/gr";
 import { FaPersonSwimming } from "react-icons/fa6";
 import { MdAddHomeWork } from "react-icons/md";
+<<<<<<< HEAD
+=======
+import { FaPersonCircleCheck } from "react-icons/fa6";
+import { BsPersonPlusFill } from "react-icons/bs";
+import { IoChatbubbleEllipses } from "react-icons/io5";
+import { CiAlarmOn } from "react-icons/ci";
+import { MdAnnouncement } from "react-icons/md";
+import { CiGrid31 } from "react-icons/ci";
+import { FaCar } from "react-icons/fa";
+
+
+>>>>>>> origin/Dev
 
 const DashSidebar = () => {
   const location = useLocation();
@@ -215,45 +227,231 @@ const DashSidebar = () => {
                       Comments
                     </Sidebar.Item>
                   </Link>
-                </>
-              )
-            }
+                </div>
+              )}
 
-            <Link to ='/add-visitors'>
-                <Sidebar.Item icon={HiUser} as='div'>
+              <Link to="/add-visitors">
+                <Sidebar.Item icon={HiUser} as="div">
                   Add Visitors
                 </Sidebar.Item>
-            </Link>
-            {
-              // !(currentUser.isAdmin) || currentUser.isBookingAdmin && (
-                (
+              </Link>
+              {
+                // !(currentUser.isAdmin) || currentUser.isBookingAdmin && (
                 <>
-                  <Link to ='/dashboard?tab=bookings'>
-                    <Sidebar.Item active={tab === 'bookings'} icon={FaPersonSwimming} as='div'>
+                  <Link to="/dashboard?tab=bookings">
+                    <Sidebar.Item
+                      active={tab === "bookings"}
+                      icon={FaPersonSwimming}
+                      as="div"
+                    >
                       Bookings
+                    </Sidebar.Item>
+                  </Link>
+                </>
+              }
+
+              {
+                //currentUser.isFacilityServiceAdmin &&
+                <Link
+                  to="/dashboard?tab=serviceBookings"
+                  className={tab === "serviceBookings" ? "active" : ""}
+                >
+                  <Sidebar.Item icon={HiOutlineUserGroup}>
+                    Service Bookings
+                  </Sidebar.Item>
+                </Link>
+              }
+
+<<<<<<< HEAD
+            <Sidebar.Item icon={HiArrowSmRight} className='cursor-pointer' onClick={handleSignout}>
+               Sign Out
+            </Sidebar.Item>
+         </Sidebar.ItemGroup>
+=======
+              <Sidebar.Item
+                icon={HiArrowSmRight}
+                className="cursor-pointer"
+                onClick={handleSignout}
+              >
+                Sign Out
+              </Sidebar.Item>
+
+              {tab === "staffs" && (
+                <div className="dropdown">
+                  <Link to="/dashboard?tab=staffAttendance">
+                    <Sidebar.Item active={tab === "staffAttendance"} as="div">
+                      Staff Attendance
+                    </Sidebar.Item>
+                  </Link>
+                </div>
+              )}
+            </>
+          )}
+          {currentUser.isStaffAdmin && (
+            <>
+              <Link to="/dashboard?tab=staffAdmin">
+                <Sidebar.Item
+                  active={tab === "staffAdmin"}
+                  icon={HiOutlineUserGroup}
+                  as="div"
+                >
+                  Staff Admin
+                </Sidebar.Item>
+              </Link>
+            </>
+          )}
+          {!currentUser.isAdmin && (
+            <>
+              <Link to="/dashboard?tab=apartmentList">
+                <Sidebar.Item
+                  active={tab === "apartmentList"}
+                  icon={MdOutlineHomeWork}
+                  as="div"
+                >
+                  Apartment List
+                </Sidebar.Item>
+              </Link>
+            </>
+          )}
+          {currentUser.isPropertyAdmin && (
+            <>
+              <Link to="/dashboard?tab=comments">
+                <Sidebar.Item
+                  active={tab === "comments"}
+                  icon={HiAnnotation}
+                  as="div"
+                >
+                  Comments
+                </Sidebar.Item>
+              </Link>
+            </>
+          )}
+
+          {currentUser.isAnnouncementAdmin && (
+            <>
+              <Link to="/dashboard?tab=announcemntsDash">
+                <Sidebar.Item
+                  active={tab === "announcemntsDash"}
+                  icon={CiGrid31}
+                  as="div"
+                >
+                  Announcement Dash
+                </Sidebar.Item>
+              </Link>
+            </>
+          )}
+
+          {
+            <>
+              <Link to="/dashboard?tab=allannouncemnts">
+                <Sidebar.Item
+                  active={tab === "allannouncemnts"}
+                  icon={CiAlarmOn}
+                  as="div"
+                >
+                  All Announcements 
+                </Sidebar.Item>
+              </Link>
+            </>
+
+          }
+
+         
+           
+           
+            {
+              currentUser.isVisitorAdmin && (
+                <>
+                  <Link to='/admin-page'>
+                    <Sidebar.Item active={tab === 'addVisitors'} icon={FaPersonCircleCheck} as='div'>
+                      Visitors
                     </Sidebar.Item>
                   </Link>
                 </>
               )
             }
-            
-            
-            {
-            //currentUser.isFacilityServiceAdmin && 
-            (
-               <Link to="/dashboard?tab=serviceBookings" className={tab === "serviceBookings" ? "active" : ""}>
-                <Sidebar.Item icon={HiOutlineUserGroup}>
-                  Service Bookings
+            <Link to ='/add-visitors'>
+                <Sidebar.Item  icon={BsPersonPlusFill} as='div'>
+                  Add Visitors
+                </Sidebar.Item>
+            </Link>
+
+
+          {
+            <>
+              <Link to="/dashboard?tab=announcementpage">
+                <Sidebar.Item
+                  active={tab === "announcementpage"}
+                  icon={MdAnnouncement}
+                  as="div"
+                >
+                 Today's updates
                 </Sidebar.Item>
               </Link>
-            )
-            }
+            </>
+          }
 
 
-            <Sidebar.Item icon={HiArrowSmRight} className='cursor-pointer' onClick={handleSignout}>
-               Sign Out
+
+
+          {currentUser.isVisitorAdmin && (
+            <>
+              <Link to="/admin-page">
+                <Sidebar.Item
+                  active={tab === "addVisitors"}
+                  icon={FaPersonCircleCheck}
+                  as="div"
+                >
+                  Visitors
+                </Sidebar.Item>
+              </Link>
+            </>
+          )}
+
+         
+          {
+            // !(currentUser.isAdmin) || currentUser.isBookingAdmin && (
+            <>
+              <Link to="/dashboard?tab=bookings">
+                <Sidebar.Item
+                  active={tab === "bookings"}
+                  icon={FaPersonSwimming}
+                  as="div"
+                >
+                  Bookings
+                </Sidebar.Item>
+              </Link>
+            </>
+          }
+          {currentUser.isPropertyAdmin && (
+            <>
+              <Link to="/dashboard?tab=inboxMessage">
+                <Sidebar.Item
+                  active={tab === "inboxMessage"}
+                  icon={IoChatbubbleEllipses}
+                  as="div"
+                >
+                  Inbox Messages
+                </Sidebar.Item>
+              </Link>
+            </>
+          )}
+
+          <Link to="/car-park">
+            <Sidebar.Item  icon={FaCar} as="div">
+            Request Car park
             </Sidebar.Item>
-         </Sidebar.ItemGroup>
+          </Link>
+
+          <Sidebar.Item
+            icon={HiArrowSmRight}
+            className="cursor-pointer"
+            onClick={handleSignout}
+          >
+            Sign Out
+          </Sidebar.Item>
+        </Sidebar.ItemGroup>
+>>>>>>> origin/Dev
       </Sidebar.Items>
     </Sidebar>
   );

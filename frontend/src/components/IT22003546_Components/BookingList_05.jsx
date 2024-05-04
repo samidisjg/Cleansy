@@ -127,9 +127,40 @@ const BookingList_05 = () => {
             tableRows.push(rowData);
         });
 
+<<<<<<< HEAD
         payDoc.autoTable(tableColumn, tableRows, { startY: 20 });
         payDoc.text(`Booking List`, 10, 12);
         payDoc.save(`Booking_List.pdf`);
+=======
+        const d = new Date();
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const month = monthNames[d.getMonth()];
+
+        const logo = "/cleansyBG.png"
+
+        const imgHeight = 120;
+        const imgWidth = 160;
+
+        const centerX = (bookingPDF.internal.pageSize.getWidth() - imgWidth / 0.7);
+        const centerY = (bookingPDF.internal.pageSize.getHeight() - imgHeight / 0.8);
+
+        const addWaterMark = () => {
+            bookingPDF.addImage(logo, 'PNG', centerX, centerY, imgWidth, imgHeight);
+        }
+        bookingPDF.autoTable({
+            startY: 30,
+            head: [tableColumn],
+            body: tableRows,
+            theme: 'grid',
+            startY: 40, addPageContent: addWaterMark,
+            didDrawCell: (data) => {
+                bookingPDF.rect(data.cell.x, data.cell.y, data.cell.width, data.cell.height);
+            }
+        });
+    
+        bookingPDF.text(`Cleansy Facility Management Services (Pvt) Ltd \nBooking List`, 14, 15);
+        bookingPDF.save(`Booking_List_${month}.pdf`);
+>>>>>>> origin/Dev
     }
 
     const handleStatusChange = async (_id, newStatus) => {
