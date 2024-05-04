@@ -12,13 +12,18 @@ import {
   Textarea,
   Alert,
   FileInput,
+  Select,
 } from "flowbite-react";
 
-const convertTimeRangeToArray = (timeRange) => {
-  const [startTime, endTime] = timeRange.split('to').map(time => time.trim());
-  const adjustedEndTime = endTime === '24:00' ? '24:00' : `${parseInt(endTime.split(':')[0]) + 1}:00`;
-  return [startTime, adjustedEndTime];
-};
+// const convertTimeRangeToArray = (timeRange) => {
+//   const [startTime, endTime] = timeRange.split('to').map(time => {
+//     const hourDigit = time.match(/\d{1,2}/);
+//     return hourDigit ? hourDigit[0] : time;
+// });
+
+//   const adjustedEndTime = endTime === '24:00' ? '24:00' : `${parseInt(endTime.split(':')[0])}`;
+//   return [startTime, adjustedEndTime];
+// };
 
 const BookAmenity = () => {
   const { amenityId } = useParams();
@@ -29,16 +34,16 @@ const BookAmenity = () => {
   const [imageUploadError, setImageUploadError] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [files, setFiles] = useState([])
-  const [availableTimes, setAvailableTimes] = useState([]); // State for available times
+  const [availableTimes, setAvailableTimes] = useState([]);
+  const [timeslots, setTimeslots] = useState([]);
   
 
-  // Function to generate a unique booking ID
   const generateBookingId = () => `BID-${Math.floor(10000 + Math.random() * 90000)}`;
 
-  // State for form data
+
   const [formData, setFormData] = useState({
-    date: "",
-    time: "",
+    bookingDate: "",
+    bookingTime: "",
     duration: "",
     amenityId: "",
     amenityTitle: "",
@@ -47,8 +52,8 @@ const BookAmenity = () => {
     residentEmail: "",
     residentContact: "",
     specialRequests: "",
-    bookingID: generateBookingId(), // Initial booking ID generated
-    status: "Pending",
+    bookingID: generateBookingId(),
+    bookingStatus: "",
     pricePerHour: 0,
     bookingPrice: 0,
     imageUrls: [],
@@ -112,7 +117,6 @@ const BookAmenity = () => {
     })
  }
 
-  // Effect to fetch amenity details
   useEffect(() => {
     const fetchAmenityDetails = async () => {
       try {
@@ -122,7 +126,7 @@ const BookAmenity = () => {
           console.error("Error fetching amenity details");
           return;
         }
-        // Update the form data state with the fetched amenity details
+ 
         setFormData((prevData) => ({
           ...prevData,
           amenityId: data.amenityID,
@@ -133,16 +137,13 @@ const BookAmenity = () => {
           amenityAvailableTimes: data.amenityAvailableTimes,
         }));
 
-        const availableTimes = convertTimeRangeToArray(data.amenityAvailableTimes);
-        setAvailableTimes(availableTimes);
-
-        console.log(availableTimes)
 
       } catch (error) {
         console.error("Error fetching amenity details", error);
       }
     };
 
+    setTimeslots(generateTimeSlots());
     fetchAmenityDetails();
   }, [amenityId]);
 
@@ -156,46 +157,80 @@ const BookAmenity = () => {
     }
   };
 
-  // Function to handle form input changes
+
   const handleChange = (e) => {
-    let boolean = null;
-    if (e.target.value === "true") {
-        boolean = true;
-    }
-    if (e.target.value === "false") {
-        boolean = false;
-    }
+    const { name, value, type } = e.target;
 
-    // Check if the entered time is within the available time range
-    if (e.target.name === "bookingTime" && availableTimes.length === 2) {
-      const [startTime, endTime] = availableTimes;
-      const selectedTime = e.target.value;
-      if (selectedTime < startTime || selectedTime > endTime) {
-        alert("Please select a time within the available range.");
-        return;
-      }
-    }
     
-    setFormData({
-        ...formData,
-        [e.target.name]: boolean !== null ? boolean : e.target.value,
-        
-    });
 
-  };
+    console.log(name, value); // Add this line to log the input name and value
+      // rest of your handleChange code
+    
+    
 
-  // Function to handle form submission
+  
+    let processedValue = value;
+
+    
+    if (value === "true" || value === "false") {
+        processedValue = value === "true";
+    }
+
+   
+    if (name === "duration" && type === "number") {
+        if (parseFloat(value) < 0) {
+            alert("Invalid input for Duration: no negative values allowed.");
+            return; 
+        }
+    }
+
+    if (name === "residentName" && type === "text") {
+        const onlyLettersAndSpaces = /^[A-Za-z\s]+$/;  
+        if (!onlyLettersAndSpaces.test(value)) {
+            alert("Invalid input for Resident Name: only letters and spaces are allowed.");
+            return; 
+        }
+    }
+
+    
+    if (name === "residentContact" && type === "number") {
+        if (parseInt(value) <= 0 || !Number.isInteger(parseFloat(value))) {
+            alert("Invalid input for Resident Contact: please enter a positive integer.");
+            return; 
+        }
+    }
+
+    
+    if (name === "bookingTime" && availableTimes.length === 2) {
+        const [startTime, endTime] = availableTimes;
+        if (value < startTime || value > endTime) {
+            alert("Please select a time within the available range.");
+            return; 
+        }
+    }
+
+    
+    setFormData(prevState => ({
+        ...prevState,
+        [name]: processedValue
+    }));
+};
+
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      if (formData.imageUrls.length < 1)
+        return setError("Please upload at least one image");
       if (formData.bookingID === currentUser.bookingID) return setError('BookingID already exists');
       setLoading(true);
       setError(false);
 
       const payload = {
-        ...formData,
-        userRef: currentUser._id,
-        bookingStatus: "Pending",
+          ...formData,
+          userRef: currentUser._id,
+          //bookingStatus: "Pending",
       };
 
       console.log("Submitting the following data to the backend:", payload);
@@ -212,13 +247,37 @@ const BookAmenity = () => {
       if (data.success === false) {
           return setError(data.message);
       }
-      // Assuming `navigate` is defined elsewhere
+
       navigate('/dashboard?tab=bookings');
     } catch (err) {
       setError(err.message);
       setLoading(false);
     }
   };
+
+
+  function generateTimeSlots() {
+
+    var timeslots = [];
+    var startTime = new Date();
+    startTime.setHours(6, 0, 0, 0);
+    var endTime = new Date();
+    endTime.setHours(23, 0, 0, 0);
+
+    var currentTime = new Date(startTime);
+
+    
+
+    while (currentTime <= endTime) {
+      var timeSlotsStart = new Date(currentTime);
+
+      timeslots.push({
+        start: timeSlotsStart.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}),
+      });
+      currentTime.setTime(currentTime.getTime() + 30 * 60000);
+  }
+  return timeslots;
+}
 
   return (
     <div className="min-h-screen mt-20">
@@ -294,7 +353,7 @@ const BookAmenity = () => {
           <div>
             <Label htmlFor="contact" >Resident Contact:</Label>
             <TextInput
-              type="tel"
+              type="number"
               id="residentContact"
               name="residentContact"
               required
@@ -314,7 +373,7 @@ const BookAmenity = () => {
             />
           </div>
 
-          <div>
+          {/* <div>
             <Label htmlFor="time" >Time:</Label>
             <TextInput
               type="time"
@@ -325,6 +384,21 @@ const BookAmenity = () => {
               required
               onChange={handleChange}
             />   
+          </div> */}
+
+          <div>
+            <Label htmlFor="time" className="bloack mb-1">Booking Time</Label>
+            <Select
+            name="bookingTime"
+            id="eventTime"
+            required
+            value={formData.bookingTime}
+            onChange={handleChange}
+            className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent">
+            {timeslots.map((timeslot, index) => (
+              <option key={index} value={timeslot.start}>{`${timeslot.start}`}</option>
+            ))}
+            </Select>
           </div>
 
           <div>
@@ -363,7 +437,7 @@ const BookAmenity = () => {
           </div>
 
           <div className="flex flex-col gap-4 flex-1">
-            <p className="font-semibold">Images: <span className="font-normal text-gray-600 ml-2">6 Photos Max</span></p>
+            <p className="font-semibold">Payment Image: <span className="font-normal text-gray-600 ml-2">2 Images Max</span></p>
             <div className="flex gap-4">
                 <FileInput onChange={(e) => setFiles(e.target.files)} type='file' id="image" accept="image/*" multiple className="w-full" />
                 <button onClick={handleImageSubmit} type="button" disabled={uploading} className="p-1 text-red-700 border border-red-700 rounded uppercase hover:shadow-lg disabled:opacity-80">{uploading ? 'Uploading...' : 'Upload'}</button>

@@ -2,11 +2,11 @@ import mongoose from "mongoose";
 
 const ServiceBookingSchema = new mongoose.Schema(
   {
-    bookingID: {
+    serviceID: {
       type: String,
       required: true,
     },
-    serviceID: {
+    serviceBookingID: {
       type: String,
       required: true,
     },
@@ -19,8 +19,8 @@ const ServiceBookingSchema = new mongoose.Schema(
       required: true,
     },
     bookingTime: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     residentName: {
       type: String,
@@ -34,9 +34,13 @@ const ServiceBookingSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    residentNIC: {
+      type: String,
+      required: true,
+    },
     bookingStatus: {
       type: String,
-        required: true,
+      required: true,
     },
     imageUrls: {
       type: Array,

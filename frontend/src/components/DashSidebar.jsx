@@ -20,6 +20,13 @@ import { FaPersonSwimming } from "react-icons/fa6";
 import { MdAddHomeWork } from "react-icons/md";
 import { FaPersonCircleCheck } from "react-icons/fa6";
 import { BsPersonPlusFill } from "react-icons/bs";
+import { IoChatbubbleEllipses } from "react-icons/io5";
+import { CiAlarmOn } from "react-icons/ci";
+import { MdAnnouncement } from "react-icons/md";
+import { CiGrid31 } from "react-icons/ci";
+import { FaCar } from "react-icons/fa";
+
+
 
 const DashSidebar = () => {
   const location = useLocation();
@@ -235,6 +242,46 @@ const DashSidebar = () => {
                 </div>
               )}
 
+              <Link to="/add-visitors">
+                <Sidebar.Item icon={HiUser} as="div">
+                  Add Visitors
+                </Sidebar.Item>
+              </Link>
+              {
+                // !(currentUser.isAdmin) || currentUser.isBookingAdmin && (
+                <>
+                  <Link to="/dashboard?tab=bookings">
+                    <Sidebar.Item
+                      active={tab === "bookings"}
+                      icon={FaPersonSwimming}
+                      as="div"
+                    >
+                      Bookings
+                    </Sidebar.Item>
+                  </Link>
+                </>
+              }
+
+              {
+                //currentUser.isFacilityServiceAdmin &&
+                <Link
+                  to="/dashboard?tab=serviceBookings"
+                  className={tab === "serviceBookings" ? "active" : ""}
+                >
+                  <Sidebar.Item icon={HiOutlineUserGroup}>
+                    Service Bookings
+                  </Sidebar.Item>
+                </Link>
+              }
+
+              <Sidebar.Item
+                icon={HiArrowSmRight}
+                className="cursor-pointer"
+                onClick={handleSignout}
+              >
+                Sign Out
+              </Sidebar.Item>
+
               {tab === "staffs" && (
                 <div className="dropdown">
                   <Link to="/dashboard?tab=staffAttendance">
@@ -285,6 +332,74 @@ const DashSidebar = () => {
               </Link>
             </>
           )}
+
+          {currentUser.isAnnouncementAdmin && (
+            <>
+              <Link to="/dashboard?tab=announcemntsDash">
+                <Sidebar.Item
+                  active={tab === "announcemntsDash"}
+                  icon={CiGrid31}
+                  as="div"
+                >
+                  Announcement Dash
+                </Sidebar.Item>
+              </Link>
+            </>
+          )}
+
+          {
+            <>
+              <Link to="/dashboard?tab=allannouncemnts">
+                <Sidebar.Item
+                  active={tab === "allannouncemnts"}
+                  icon={CiAlarmOn}
+                  as="div"
+                >
+                  All Announcements 
+                </Sidebar.Item>
+              </Link>
+            </>
+
+          }
+
+         
+           
+           
+            {
+              currentUser.isVisitorAdmin && (
+                <>
+                  <Link to='/admin-page'>
+                    <Sidebar.Item active={tab === 'addVisitors'} icon={FaPersonCircleCheck} as='div'>
+                      Visitors
+                    </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
+            <Link to ='/add-visitors'>
+                <Sidebar.Item  icon={BsPersonPlusFill} as='div'>
+                  Add Visitors
+                </Sidebar.Item>
+            </Link>
+
+
+          {
+            <>
+              <Link to="/dashboard?tab=announcementpage">
+                <Sidebar.Item
+                  active={tab === "announcementpage"}
+                  icon={MdAnnouncement}
+                  as="div"
+                >
+                 Today's updates
+                </Sidebar.Item>
+              </Link>
+            </>
+          }
+
+
+
+
           {currentUser.isVisitorAdmin && (
             <>
               <Link to="/admin-page">
@@ -298,11 +413,8 @@ const DashSidebar = () => {
               </Link>
             </>
           )}
-          <Link to="/add-visitors">
-            <Sidebar.Item icon={HiUser} as="div">
-              Add Visitors
-            </Sidebar.Item>
-          </Link>
+
+         
           {
             // !(currentUser.isAdmin) || currentUser.isBookingAdmin && (
             <>
@@ -317,6 +429,25 @@ const DashSidebar = () => {
               </Link>
             </>
           }
+          {currentUser.isPropertyAdmin && (
+            <>
+              <Link to="/dashboard?tab=inboxMessage">
+                <Sidebar.Item
+                  active={tab === "inboxMessage"}
+                  icon={IoChatbubbleEllipses}
+                  as="div"
+                >
+                  Inbox Messages
+                </Sidebar.Item>
+              </Link>
+            </>
+          )}
+
+          <Link to="/car-park">
+            <Sidebar.Item  icon={FaCar} as="div">
+            Request Car park
+            </Sidebar.Item>
+          </Link>
 
           <Sidebar.Item
             icon={HiArrowSmRight}
