@@ -6,6 +6,12 @@ import jsPDF from "jspdf";
 import cleancy from "/cleansy.png";
 import { ToastContainer, toast } from "react-toastify";
 import { Button, TextInput } from "flowbite-react";
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { BsTrash, BsPencilSquare } from 'react-icons/bs';
+import { ToastContainer, toast } from 'react-toastify';
+import { Button, TextInput } from 'flowbite-react';
 
 export default function AddVisitors() {
   const { currentUser } = useSelector((state) => state.user);
@@ -47,6 +53,17 @@ export default function AddVisitors() {
     } else if (!phoneNumberPattern.test(formData.telNo)) {
       toast.error("Enter valid phone number");
     } else {
+    const phoneNumberPattern = /^07\d{8}$/;
+    
+    
+    if (!namePattern.test(formData.ownerName) || !namePattern.test(formData.guestName)) {
+      toast.error('Name must not contain numbers.');
+      
+    }else if (!phoneNumberPattern.test(formData.telNo)) {
+      toast.error('Enter valid phone number');
+      
+      
+    }else{
       try {
         setLoading(true);
         setError(false);
@@ -152,6 +169,7 @@ export default function AddVisitors() {
     console.log("Report generated!");
   };
 
+
   const handleListingDelete = async (visitorListingId) => {
     try {
       const res = await fetch(
@@ -222,6 +240,13 @@ export default function AddVisitors() {
         <Button type="submit" gradientDuoTone="purpleToBlue">
           {loading ? "Submitting..." : "Submit"}
         </Button>
+        <TextInput type="text" placeholder="Owner Name"  id="ownerName" required onChange={handleChange} />
+        <TextInput type="text" placeholder="Guest Name"  id="guestName" required onChange={handleChange} />
+        <TextInput type="text" placeholder="Tel No(07XXXXXXXX)"  id="telNo" required onChange={handleChange} />
+        <TextInput type="date" placeholder="Date of visit"  id="date" required onChange={handleChange} />
+        <TextInput type="time" placeholder="Time of visit(around)"  id="time" required onChange={handleChange} />
+        <TextInput type="text" placeholder="Purpose of visit"  id="purpose" required onChange={handleChange} />
+        <Button type='submit' gradientDuoTone='purpleToBlue'>{loading ? 'Submitting...' : 'Submit'}</Button>
         {error && <p className="text-red-700 text-sm">{error}</p>}
       </form>
       <Button
@@ -235,6 +260,7 @@ export default function AddVisitors() {
         {error ? "Error Showing visitor list" : ""}
       </p>
 
+    
       {userListings && userListings.length > 0 && (
         <div className="flex flex-col gap-4">
           <h1 className="text-center mt-7 text-2xl font-semibold">

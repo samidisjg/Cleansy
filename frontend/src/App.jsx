@@ -64,6 +64,12 @@ import CreateAnnouncementForm from './pages/IT22196460_Pages/CreateAnnouncementF
 import AnnouncementPage from './components/IT22196460_Components/AnnouncementPage';
 import EstimationOne_01 from './pages/IT22607232_Pages/EstimationOne_01';
 import WorkEstimate_01 from './pages/IT22607232_Pages/WorkEstimate_01';
+import VisitorAdminPage from "./pages/IT22561466_Pages/VisitorAdminPage";
+import searchVisitor from './pages/IT22561466_Pages/VisitorAdminPage'
+import SearchVisitors from "./pages/IT22561466_Pages/SearchVisitors";
+import RequestCarPark from "./pages/IT22561466_Pages/RequestCarPark";
+import Parkingslot from "./pages/IT22561466_Pages/Parkingslot";
+import ParkingslotOrder from "./pages/IT22561466_Pages/ParkingslotOrder";
 
 
 function App() {
@@ -79,6 +85,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/sign-in" element={<SignIn />} />
             <Route path="/sign-up" element={<SignUp />} />
+            <Route path="/search" element={<SearchVisitors />} />
             <Route element={<PrivateRoute />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route
@@ -165,6 +172,7 @@ function App() {
                 element={<UpdateVisitorListing />}
               />
               <Route path="/conversation/:conversationId" element={<UserCoversation_02 />}/>
+                 <Route path="/car-park" element={<RequestCarPark />} />
             </Route>
             <Route element={<OnlyPropertyAdminPrivateRoute_02 />}>
               <Route
@@ -211,6 +219,12 @@ function App() {
               <Route exact path="/update-announcement/:id" element={<UpdateAnnouncementForm/>}/>
               <Route path="/estimation" element={<EstimationOne_01/>} />
               <Route path="/get-estimation/:taskid" element={<WorkEstimate_01/>} />
+
+            <Route path="/admin-page" element={<VisitorAdminPage />} />
+            <Route path="/searchVisitor" element={<VisitorAdminPage />} />
+            <Route path="/park-slot/:slotID" element={<Parkingslot />} />
+            <Route path="/park-slot-order/:carparkListingId" element={<ParkingslotOrder />} />
+            
           </Routes>
         </div>
 

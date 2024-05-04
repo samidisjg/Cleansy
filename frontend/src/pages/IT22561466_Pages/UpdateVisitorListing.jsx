@@ -53,7 +53,8 @@ export default function AddVisitors() {
     e.preventDefault();
 
     const namePattern = /^[A-Za-z\s]+$/;
-    const phoneNumberPattern = /^\d{10}$/;
+    const phoneNumberPattern = /^07\d{8}$/;
+
 
     if (!namePattern.test(formData.ownerName) || !namePattern.test(formData.guestName)) {
       toast.error('Name must not contain numbers.');
@@ -91,20 +92,6 @@ export default function AddVisitors() {
   }
   };
 
-  const handleShowListings = async () => {
-    try {
-      setError(false);
-      const res = await fetch(`/api/user/visitorListings/${currentUser._id}`);
-      const data = await res.json();
-      if (data.success === false) {
-        setError(true);
-        return;
-      }
-      setUserListings(data);
-    } catch (error) {
-      setError(true);
-    }
-  };
 
   return (
     <div className="p-3 max-w-lg mx-auto">
@@ -113,8 +100,8 @@ export default function AddVisitors() {
         <TextInput type="text" placeholder="Owner Name" id="ownerName" required onChange={handleChange} value={formData.ownerName}  />
         <TextInput type="text" placeholder="Guest Name" id="guestName" required onChange={handleChange} value={formData.guestName} />
         <TextInput type="text" placeholder="Tel No" id="telNo" required onChange={handleChange} value={formData.telNo} />
-        <TextInput type="text" placeholder="Date of visit" id="date" required onChange={handleChange} value={formData.date}  />
-        <TextInput type="text" placeholder="Time of visit(around)" id="time" required onChange={handleChange} value={formData.time}  />
+        <TextInput type="date" placeholder="Date of visit" id="date" required onChange={handleChange} value={formData.date}  />
+        <TextInput type="time" placeholder="Time of visit(around)" id="time" required onChange={handleChange} value={formData.time}  />
         <TextInput type="text" placeholder="Purpose of visit" id="purpose" required onChange={handleChange} value={formData.purpose}  />
         <Button type='submit' gradientDuoTone='purpleToBlue'>{loading ? 'Updating...' : 'Update'}</Button>
         {error && <p className="text-red-700 text-sm">{error}</p>}

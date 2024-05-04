@@ -21,6 +21,7 @@ import RequestLeave_04 from "./IT22603418_Pages/RequestLeave_04";
 import StaffAdminDash_04 from "./IT22603418_Pages/StaffAdminDash_04";
 import StaffAttendance_04 from "./IT22603418_Pages/StaffAttendance_04";
 import InboxMessageForPropertyAdmin_02 from "../components/IT22577160_Components/InboxMessageForPropertyAdmin_02";
+import VisitorAdminPage from "./IT22561466_Pages/VisitorAdminPage";
 //import FaceRecognition_04 from "./IT22603418_Pages/faceRecognition_04";
 import AdminDashboard from "./IT22196460_Pages/AnnouncementadminDashboard";
 import announcementList from "../components/IT22196460_Components/announcementList";

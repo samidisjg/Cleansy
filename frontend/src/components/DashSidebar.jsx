@@ -24,6 +24,7 @@ import { IoChatbubbleEllipses } from "react-icons/io5";
 import { CiAlarmOn } from "react-icons/ci";
 import { MdAnnouncement } from "react-icons/md";
 import { CiGrid31 } from "react-icons/ci";
+import { FaCar } from "react-icons/fa";
 
 
 
@@ -358,7 +359,49 @@ const DashSidebar = () => {
                 </Sidebar.Item>
               </Link>
             </>
+
           }
+
+         
+            {
+              !currentUser.isAdmin && (
+                <>
+                  <Link to='/dashboard?tab=apartmentList'>
+                    <Sidebar.Item active={tab === 'apartmentList'} icon={MdOutlineHomeWork} as='div'>
+                      Apartment List
+                    </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
+            {
+              currentUser.isPropertyAdmin && (
+                <>
+                  <Link to='/dashboard?tab=comments'>
+                    <Sidebar.Item active={tab === 'comments'} icon={HiAnnotation} as='div'>
+                      Comments
+                    </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
+            {
+              currentUser.isVisitorAdmin && (
+                <>
+                  <Link to='/admin-page'>
+                    <Sidebar.Item active={tab === 'addVisitors'} icon={FaPersonCircleCheck} as='div'>
+                      Visitors
+                    </Sidebar.Item>
+                  </Link>
+                </>
+              )
+            }
+            <Link to ='/add-visitors'>
+                <Sidebar.Item  icon={BsPersonPlusFill} as='div'>
+                  Add Visitors
+                </Sidebar.Item>
+            </Link>
+
 
           {
             <>
@@ -390,6 +433,7 @@ const DashSidebar = () => {
               </Link>
             </>
           )}
+
           <Link to="/add-visitors">
             <Sidebar.Item icon={HiUser} as="div">
               Add Visitors
@@ -422,6 +466,20 @@ const DashSidebar = () => {
               </Link>
             </>
           )}
+
+
+          <Link to="/dashboard?tab=bookings">
+            <Sidebar.Item active={tab === "bookings"} icon={HiUser} as="div">
+              Bookings
+            </Sidebar.Item>
+          </Link>
+
+
+          <Link to="/car-park">
+            <Sidebar.Item  icon={FaCar} as="div">
+            Request Car park
+            </Sidebar.Item>
+          </Link>
 
           <Sidebar.Item
             icon={HiArrowSmRight}
