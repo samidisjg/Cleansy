@@ -62,6 +62,9 @@ import UpdateAnnouncementForm from './pages/IT22196460_Pages/UpdateAnnouncementF
 import AnnouncementDetails from './pages/IT22196460_Pages/AnnouncementDetails';
 import CreateAnnouncementForm from './pages/IT22196460_Pages/CreateAnnouncementForm';
 import AnnouncementPage from './components/IT22196460_Components/AnnouncementPage';
+import EstimationOne_01 from './pages/IT22607232_Pages/EstimationOne_01';
+import WorkEstimate_01 from './pages/IT22607232_Pages/WorkEstimate_01';
+
 
 function App() {
   return (
@@ -199,9 +202,6 @@ function App() {
             />
                  <Route path="/task-tracker" element={<TaskTracker_01/>} />
                 <Route path="/task-estimate" element={<WorkEstimation_01/>} />
-
-             
-              
               <Route exact path="/create-announcement" element={<CreateAnnouncementForm/>}/>
               <Route path="/" element={<AnnouncementList/>}/>
               <Route path="/announcement/:id" element={<AnnouncementDetails/>}/>
@@ -209,13 +209,8 @@ function App() {
               <Route exact path="/announcements" element={<AnnouncementForAdmin/>}/>
               <Route path="/announcements" element={<AnnouncementPage/>}/>
               <Route exact path="/update-announcement/:id" element={<UpdateAnnouncementForm/>}/>
-
-
-
-
-
-              
-              
+              <Route path="/estimation" element={<EstimationOne_01/>} />
+              <Route path="/get-estimation/:taskid" element={<WorkEstimate_01/>} />
           </Routes>
         </div>
 

@@ -9,8 +9,8 @@ export const TaskchartSlice = createSlice({
         name: "Taskchart",
         initialState,
         reducers: {
-            getAnalysis: (state, action) => {
-                state.Analysis = action.payload;
+            getAnalysis: (action) => {
+                //state.Analysis = action.payload;
             },
         }
 });
