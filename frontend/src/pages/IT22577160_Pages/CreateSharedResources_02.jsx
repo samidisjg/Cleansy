@@ -77,6 +77,7 @@ const CreateSharedResources_02 = () => {
    const handleSubmit = async (e) => {
       e.preventDefault();
       try {
+         if(+formData.regularPrice < +formData.discountPrice) return setError('Discount price must be lower than regular price')
          if(!file) {
             setImageUploadError('Please select an image');
             return;

@@ -101,6 +101,7 @@ const UpdateSharedResources_02 = () => {
    const handleSubmit = async (e) => {
       e.preventDefault();
       try {
+         if(+formData.regularPrice < +formData.discountPrice) return setError('Discount price must be lower than regular price')
          const res = await fetch(`/api/sharedResourcesListing/updateSharedResource/${formData._id}/${currentUser._id}`, {
             method: 'PUT',
             headers: {

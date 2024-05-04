@@ -15,20 +15,44 @@ import {
 
 const AmenityCreate = () => {
    
+    // const fetchAmenity = async () => {
+    //     const amenityID = params.amenityID;
+    //     const res = await fetch(`/api/amenitiesListing/get/${amenityID}`);
+    //     const data = await res.json();
+    //     if (data.success === false) {
+    //         console.log(data.message);
+    //         return;
+    //     }
+    //     setFormData((prevData) => ({
+    //         ...prevData,
+    //         amenityID: data.amenityID,
+    //         amenityTitle: data.amenityTitle,
+    //         amenityDescription: data.amenityDescription,
+    //         amenityLocation: data.amenityLocation,
+    //         amenityCapacity: data.amenityCapacity,
+    //         amenityAvailableTimes: data.amenityAvailableTimes,
+    //         amenityPrice: data.amenityPrice,
+    //         imageURLs: data.imageURLs,
+    //     }));
+    // }
+    // fetchAmenity();
+
+    const generateAmenityId = () => `AMD-${Math.floor(1000 + Math.random() * 9000)}`;
     const [files, setFiles] = useState([]);
     const { currentUser } = useSelector((state) => state.user);
     const [formData, setFormData] = useState({
-        amenityID: '',
+        amenityID: generateAmenityId(),
         amenityTitle: '',
         amenityDescription: '',
         imageURLs: [],
         amenityLocation: '',
-        amenityCapacity: 500,
+        amenityCapacity: 0,
         amenityAvailableTimes: '',
         amenityPrice: '',
+        amenityStatus: "Unavailable",
     });
 
-    const { AmenityID, AmenityName, Description, Image, Location, Capacity, Availability, Price } = formData;
+    // const { AmenityID, AmenityName, Description, Image, Location, Capacity, Availability, Price } = formData;
     const [imageUploadError, setImageUploadError] = useState(false);
     const [uploading, setUploading] = useState(false);
     const [error, setError] = useState(false);
@@ -36,48 +60,78 @@ const AmenityCreate = () => {
     const navigate = useNavigate();
 
     const handleChange = (e) => {
-        let boolean = null;
-        if (e.target.value === "true") {
-            boolean = true;
+        const { name, value, type } = e.target;
+    
+        
+        let processedValue = value;
+    
+        
+        if (value === "true" || value === "false") {
+            processedValue = value === "true";
         }
-        if (e.target.value === "false") {
-            boolean = false;
+        
+
+        
+        if (name === "amenityPrice" && type === "number") {
+            if (parseFloat(value) < 0) {
+                console.log("Invalid input for Price: no negative values allowed.");
+                return; 
+            }
         }
-        if (
-            e.target.type === "number" ||
-            e.target.type === "text" ||
-            e.target.type === "textarea"
-        ) {
-            setFormData({
-                ...formData,
-                [e.target.name]: e.target.value,
-            });
-        } else {
-            setFormData({
-                ...formData,
-                [e.target.name]: boolean !== null ? boolean : e.target.value,
-            });
+
+        
+        if (name === "amenityCapacity" && type === "number") {
+            if (parseFloat(value) < 0) {
+                console.log("Invalid input for Capacity: no negative values allowed.");
+                return; 
+            }
         }
+
+        
+        if (name === "amenityTitle" && type === "text") {
+            const onlyLetters = /^[A-Za-z]+$/;  
+            if (!(value === "" || onlyLetters.test(value))) {
+                
+                console.log("Invalid input for Amenity Name: only letters are allowed.");
+                return; 
+            }
+        }
+    
+        
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: processedValue
+        }));
     };
+    
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             if(formData.imageURLs.length < 1) return setError('You must upload at least one image')
-            if (formData.amenityID === currentUser.AmenityID) return setError('AmenityID already exists');
+            if (formData.amenityID === currentUser.amenityID) return setError('AmenityID already exists');
             setLoading(true);
             setError(false);
 
-            const response = await fetch('/api/amenitiesListing/create', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    ...(formData),
-                    userRef: currentUser._id,
-            })
-            })
+            console.log(formData.amenityID, currentUser.AmenityID);
+
+            const payload = {
+                ...formData,
+                userRef: currentUser._id,
+                amenityStatus: "Unavailable",
+              };
+        
+              console.log("Submitting the following data to the backend:", payload);
+        
+              const response = await fetch('/api/amenitiesListing/create', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(payload)
+            });
+
             const data = await response.json();
             setLoading(false);
             if (data.success === false) {
@@ -156,17 +210,18 @@ const AmenityCreate = () => {
             <div className="flex p-3 w-[40%] mx-auto flex-col md:flex-row md:items-center gap-20 md:gap-20 mt-10">
                 <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full justify-center">
                     <div>
-                        <Label for="amenityID">Amenity ID</Label>
+                        <Label htmlFor="amenityID">Amenity ID</Label>
                         <TextInput
                             type="text"
                             name="amenityID"
                             value={formData.amenityID}
                             onChange={handleChange}
                             required
+                            
                         />
                     </div>
                     <div>
-                        <Label for="amenityTitle">Amenity Name</Label>
+                        <Label htmlFor="amenityTitle">Amenity Name</Label>
                         <TextInput
                             type="text"
                             name="amenityTitle"
@@ -176,7 +231,7 @@ const AmenityCreate = () => {
                         />
                     </div>
                     <div>
-                        <Label for="amenityDescription">Description</Label>
+                        <Label htmlFor="amenityDescription">Description</Label>
                         <Textarea
                             name="amenityDescription"
                             value={formData.amenityDescription}
@@ -186,7 +241,7 @@ const AmenityCreate = () => {
                     </div>
 
                     <div>
-                        <Label for="amenityLocation">Location</Label>
+                        <Label htmlFor="amenityLocation">Location</Label>
                         <TextInput
                             type="text"
                             name="amenityLocation"
@@ -197,7 +252,7 @@ const AmenityCreate = () => {
                     </div>
                     
                     <div>
-                        <Label for="amenityCapacity">Capacity</Label>
+                        <Label htmlFor="amenityCapacity">Capacity</Label>
                         <TextInput
                             type="number"
                             name="amenityCapacity"
@@ -208,7 +263,7 @@ const AmenityCreate = () => {
                     </div>
 
                     <div>
-                        <Label for="amenityAvailableTimes Times">Available Times</Label>
+                        <Label htmlFor="amenityAvailableTimes Times">Available Times</Label>
                         <TextInput
                             type="text"
                             name="amenityAvailableTimes"
@@ -219,7 +274,7 @@ const AmenityCreate = () => {
                     </div>
 
                     <div>
-                        <Label for="amenityPrice">Price</Label>
+                        <Label htmlFor="amenityPrice">Price</Label>
                         <TextInput
                             type="number"
                             name="amenityPrice"

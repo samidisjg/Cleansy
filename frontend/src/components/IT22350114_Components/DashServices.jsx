@@ -10,16 +10,18 @@ const DashServices = () => {
     <div>
       {currentUser.isFacilityServiceAdmin && (
         <div>
-          <h1>Create Services</h1>
+      <h1 className="text-2xl font-semibold mb-4">Book Service</h1>
 
           <div className="flex flex-wrap gap-2"></div>
           <Button pill>
                         <Link to="/service-create">Create Service</Link>
                     </Button>
+                    <br/>
                     <Button pill>
-                        <Link to="service-list/:serviceID">View Service</Link>
+                        <Link to="/service-list:serviceID">View Service</Link>
                     </Button>
                     <br />
+                    
                    
           <br />
         </div>
