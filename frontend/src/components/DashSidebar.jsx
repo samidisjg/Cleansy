@@ -21,6 +21,11 @@ import { MdAddHomeWork } from "react-icons/md";
 import { FaPersonCircleCheck } from "react-icons/fa6";
 import { BsPersonPlusFill } from "react-icons/bs";
 import { IoChatbubbleEllipses } from "react-icons/io5";
+import { CiAlarmOn } from "react-icons/ci";
+import { MdAnnouncement } from "react-icons/md";
+import { CiGrid31 } from "react-icons/ci";
+
+
 
 const DashSidebar = () => {
   const location = useLocation();
@@ -326,6 +331,52 @@ const DashSidebar = () => {
               </Link>
             </>
           )}
+
+          {currentUser.isAnnouncementAdmin && (
+            <>
+              <Link to="/dashboard?tab=announcemntsDash">
+                <Sidebar.Item
+                  active={tab === "announcemntsDash"}
+                  icon={CiGrid31}
+                  as="div"
+                >
+                  Announcement Dash
+                </Sidebar.Item>
+              </Link>
+            </>
+          )}
+
+          {
+            <>
+              <Link to="/dashboard?tab=allannouncemnts">
+                <Sidebar.Item
+                  active={tab === "allannouncemnts"}
+                  icon={CiAlarmOn}
+                  as="div"
+                >
+                  All Announcements 
+                </Sidebar.Item>
+              </Link>
+            </>
+          }
+
+          {
+            <>
+              <Link to="/dashboard?tab=announcementpage">
+                <Sidebar.Item
+                  active={tab === "announcementpage"}
+                  icon={MdAnnouncement}
+                  as="div"
+                >
+                 Today's announcements
+                </Sidebar.Item>
+              </Link>
+            </>
+          }
+
+
+
+
           {currentUser.isVisitorAdmin && (
             <>
               <Link to="/admin-page">
