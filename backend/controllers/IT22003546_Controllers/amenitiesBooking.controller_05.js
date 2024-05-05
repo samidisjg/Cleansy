@@ -1,6 +1,6 @@
 import AmenitiesBooking from "../../models/IT22003546_Models/amenitiesBooking.model_05.js";
 import amenitiesBookingEmailTemplate from "../../utils/email_templates/amenityBookingEmailTemplate.js";
-import sendEmail from "../../utils/sendEmail.js";
+import sendEmail from "../../utils/sendEmail_Tommy.js";
 // //Book amenity
 // export const bookAmenity = async (req, res, next) => {
 //     try {
@@ -52,6 +52,25 @@ export const bookAmenity = async (req, res, next) => {
                 });
             }
         }
+
+        // Split the bookingTime string into an array of start and end times
+        const [bookingTimeStart, bookingTimeEnd] = bookingTime.split(" to ");
+
+        // Convert start and end times to integers
+        const startTime = parseInt(bookingTimeStart.split(":")[0]);
+        const endTime = parseInt(bookingTimeEnd.split(":")[0]);
+
+        // Generate an array of time strings between start and end times
+        const bookingHours = [];
+        for (let i = startTime; i < endTime; i++) {
+            // Convert the integer to a time string (e.g., 6 => "6:00")
+            const hour = i < 10 ? `0${i}` : `${i}`; // Add leading zero if needed
+            const timeString = `${hour}:00`;
+            
+            // Push the time string to the array
+            bookingHours.push(timeString);
+        }
+        console.log("Booking Hours:", bookingHours); // Log generated hours
         
 
         // If fair allocation rules pass, proceed with booking
@@ -59,8 +78,12 @@ export const bookAmenity = async (req, res, next) => {
         const isBookingExist = await AmenitiesBooking.findOne({
             //bookingID: req.body.bookingID,
             bookingDate: req.body.bookingDate,
-            bookingTime: bookingTime,
-            bookingStatus: { $in: ['Confirmed', 'Pending'] },
+            $and: [
+                // { bookingTime: { $in: bookingHours } },
+                {startTime:{$gte:req.body.startTime}} ,
+                {endTime:{$gte:req.body.endTime}} ,// Check if any bookingTime falls within the bookingHours
+                { bookingStatus: { $in: ['Confirmed', 'Pending'] } } // Ensure bookingStatus is 'Confirmed' or 'Pending'
+            ]
         });
 
         console.log("Existing Booking:", isBookingExist);  // Log found booking
@@ -76,12 +99,12 @@ export const bookAmenity = async (req, res, next) => {
             // If no confirmed booking exists, create a new confirmed booking
             const newAmenitiesBooking = await AmenitiesBooking.create({
                 ...req.body,
-                bookingStatus: "Confirmed",
+                bookingStatus: "Pending",
             });
 
             const emailTemplate = amenitiesBookingEmailTemplate(req.body.residentName,{
                 ...req.body,
-                bookingStatus: "Confirmed",
+                bookingStatus: "Pending",
             });
             sendEmail(
                 req.body.residentEmail,
@@ -129,15 +152,13 @@ export const updateAmenityBooking = async (req, res, next) => {
         const updateAmenityBooking = await AmenitiesBooking.findByIdAndUpdate(bookingId, req.body, { new: true, upsert: true });
 
         if (
-            req.body.bookingStatus === "Confirmed" &&
-            updateAmenityBooking.bookingStatus === "Pending"
+            req.body.bookingStatus === "Confirmed"
         ) {
             // Send an email notification to the resident
-            const emailTemplate = amenitiesBookingEmailTemplate({
+            const emailTemplate = amenitiesBookingEmailTemplate(req.body.residentName,{
                 ...req.body,
                 bookingStatus: "Confirmed",
             });
-            
             sendEmail(
                 req.body.residentEmail,
                 "Amenity Booking Confirmation",

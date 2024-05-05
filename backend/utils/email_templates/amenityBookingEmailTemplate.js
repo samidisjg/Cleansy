@@ -12,7 +12,7 @@ const amenitiesBookingEmailTemplate = (residentName, amenityBookingData) => `
 </head>
 <body>
     <div class="container">
-        <img src="https://i.ibb.co/6syfN7M/cleansy.png" alt="Company Logo" class="logo">
+        
         <h1 class="message">Amenity Booking Confirmation</h1>
         <p>Hi ${residentName},</p>
         <p>Your service booking has been received and is currently ${amenityBookingData.bookingStatus}.</p>
@@ -35,6 +35,7 @@ const amenitiesBookingEmailTemplate = (residentName, amenityBookingData) => `
         <br />
         <p>Thank you for choosing our service!</p>
         <p>The Cleansy Team</p>
+        <img src="https://i.ibb.co/6syfN7M/cleansy.png" alt="Company Logo" class="logo">
     </div>
 </body>
 </html>

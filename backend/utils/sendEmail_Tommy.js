@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 //
-const APP_PASSWORD = process.env.APP_PASSWORD;
-const EMAIL = process.env.APP_EMAIL;
+const APP_PASSWORD = process.env.APP_PASSWORD_TOMMY;
+const EMAIL = process.env.APP_EMAIL_TOMMY;
 //
 // Function to send email
 const sendEmail = (email, subject, emailTemplate) => {
