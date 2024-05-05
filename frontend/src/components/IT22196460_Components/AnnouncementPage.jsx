@@ -12,7 +12,7 @@ const AnnouncementPage = () => {
 
     const fetchAnnouncementsToday = async () => {
         try {
-            const response = await axios.get('/api/announcements/today');
+            const response = await axios.get('/api/announcements/today?includeUpdated=true');
             setAnnouncements(response.data.announcements);
         } catch (error) {
             console.error('Error fetching announcements:', error.message);
@@ -26,7 +26,6 @@ const AnnouncementPage = () => {
     const handleCategoryChange = (event) => {
         setSelectedCategory(event.target.value);
     };
-
     const filteredAnnouncements = announcements.filter((announcement) =>
         announcement.Title.toLowerCase().includes(searchQuery.toLowerCase()) &&
         (selectedCategory === '' || announcement.Category_ID === selectedCategory)
@@ -67,9 +66,9 @@ const AnnouncementPage = () => {
                     >
                         <h2 className="text-lg font-bold mb-2 text-center">{announcement.Title}</h2>
                         <p className="text-gray-700">{announcement.Content}</p>
-                        <div className="mt-auto">
-                            <p className="text-sm text-gray-500">Created at: {new Date(announcement.Create_At).toLocaleString()}</p>
-                            <p className="text-center font-bold">Category: {announcement.Category_ID}</p>
+                        <div className="mt-auto gap-4">
+                        <p className="text-center font-bold">{announcement.Category_ID}</p>
+                            <p className="text-center text-gray-500 ">{new Date(announcement.Create_At).toLocaleString()}</p>
                         </div>
                     </div>
                 ))}

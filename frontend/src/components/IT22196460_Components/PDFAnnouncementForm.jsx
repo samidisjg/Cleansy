@@ -6,19 +6,19 @@ const styles = StyleSheet.create({
   page: {
     flexDirection: 'column',
     padding: 20,
-    alignItems: 'center', // Center items horizontally
+    alignItems: 'center', 
   },
   tableContainer: {
-    width: '100%', // Adjust as needed
+    width: '100%', 
   },
   table: {
     display: 'table',
-    width: '100%', // Fill the container
+    width: '100%', 
     borderStyle: 'solid',
     borderWidth: 1,
     borderRightWidth: 1,
     borderBottomWidth: 1,
-    marginBottom: 20, // Add space between title and table
+    marginBottom: 20, 
   },
   tableRow: { 
     flexDirection: 'row',
