@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Table, Button, TextInput} from "flowbite-react";
+import { Table, Button, TextInput } from "flowbite-react";
 import { Link } from "react-router-dom";
 import jsPDF from 'jspdf';
 import "jspdf-autotable";
 
-
-
-const BookingList_05 = () => {
+const DashServiceBookList_06 = () => {
     const { currentUser } = useSelector((state) => state.user);
     const [showBookingError, setShowBookingError] = useState(false);
     const [showBooking, setShowBooking] = useState([]);
@@ -24,7 +22,7 @@ const BookingList_05 = () => {
     
     const handleShowBooking = async () => {
         try {
-            const res = await fetch("/api/amenitiesBooking/getAll");
+            const res = await fetch("/api/serviceBooking/getAll");
             const data = await res.json();
             if (data.success === false) {
                 setShowBookingError(true);
@@ -35,13 +33,30 @@ const BookingList_05 = () => {
             setShowBookingError(true);
         }
     }
-
+    const filteredBookings = showBooking.filter((booking) => {
+      const bookingDate = new Date(booking.bookingDate);
+      return (
+          (
+              booking.serviceName && booking.serviceName.toLowerCase().includes(searchInput.toLowerCase()) ||
+              booking.residentName.toLowerCase().includes(searchInput.toLowerCase()) ||
+              booking.residentEmail.toLowerCase().includes(searchInput.toLowerCase())
+          ) &&
+          (
+              !startDate || !endDate || (bookingDate >= new Date(startDate) && bookingDate <= new Date(endDate))
+          ) &&
+          (
+              (!showConfirmOnly || booking.bookingStatus === 'Confirmed') &&
+              (!showPendingOnly || booking.bookingStatus === 'Pending')
+          )    
+      );
+  });
+/*  
     const filteredBookings = showBooking.filter((booking) => {
         const bookingDate = new Date(booking.bookingDate);
         return (
             (
-                booking.amenityTitle.toLowerCase().includes(searchInput.toLowerCase()) ||
-                booking.residentName.toLowerCase().includes(searchInput.toLowerCase()) ||
+              booking.ServiceName?.toLowerCase().includes(searchInput.toLowerCase()) ||
+              booking.residentName.toLowerCase().includes(searchInput.toLowerCase()) ||
                 booking.residentEmail.toLowerCase().includes(searchInput.toLowerCase())
             ) &&
             (
@@ -53,6 +68,8 @@ const BookingList_05 = () => {
             )    
         );
     });
+
+    */
 
     const handleChange = (e) => {
         console.log("Search query:", e.target.value);
@@ -84,7 +101,7 @@ const BookingList_05 = () => {
             return; 
         }
         try {
-            const res = await fetch(`/api/amenitiesBooking/delete/${_id}`, {
+            const res = await fetch(`/api/serviceBooking/delete/${_id}`, {
                 method: 'DELETE',
             });
             const data = await res.json();
@@ -109,56 +126,34 @@ const BookingList_05 = () => {
 
 
     const handleDownloadPDF = () => {
-        const bookingPDF = new jsPDF('l');
+        const payDoc = new jsPDF('l');
         const tableColumn = ["Booking ID", "Amenity Title", "Resident Name", "Resident Email", "Resident Contact", "Date", "Time", "Duration", "Total Amount", "Status"];
         const tableRows = [];
 
-       showBooking.forEach(booking => {
-
-        const bookingDate = new Date(booking.bookingDate);
-    
-        const year = bookingDate.getFullYear();
-        const m = bookingDate.getMonth() + 1; 
-        const date = bookingDate.getDate();
-        
-        const formattedDate = `${year}-${m.toString().padStart(2, '0')}-${date.toString().padStart(2, '0')}`;
-
-        const rowData = [
-            booking.bookingID,
-            booking.amenityTitle,
-            booking.residentName,
-            booking.residentEmail,
-            booking.residentContact,
-            formattedDate,
-            booking.bookingTime,
-            booking.duration,
-            booking.bookingPrice,
-            booking.bookingStatus,
-        ];
-        tableRows.push(rowData);
+        showBooking.forEach(booking => {
+            const rowData = [
+                booking.serviceBookingID,
+                booking.serviceID,
+                booking.serviceName,
+                booking.bookingDate,
+                booking.bookingTime,
+                booking.residentName,
+                booking.residentPhone,
+                booking.residentEmail,
+                booking.residentNIC,
+                booking.bookingStatus,
+            ];
+            tableRows.push(rowData);
         });
 
-        const d = new Date();
-        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        const month = monthNames[d.getMonth()];
-
-        bookingPDF.autoTable({
-            startY: 30,
-            head: [tableColumn],
-            body: tableRows,
-            theme: 'grid',
-            didDrawCell: (data) => {
-                bookingPDF.rect(data.cell.x, data.cell.y, data.cell.width, data.cell.height);
-            }
-        });
-    
-        bookingPDF.text(`Cleansy Facility Management Services (Pvt) Ltd \nBooking List`, 14, 15);
-        bookingPDF.save(`Booking_List_${month}.pdf`);
+        payDoc.autoTable(tableColumn, tableRows, { startY: 20 });
+        payDoc.text(`Service Booking List`, 10, 12);
+        payDoc.save(`Service_Booking_List.pdf`);
     }
 
     const handleStatusChange = async (_id, newStatus) => {
         try {
-            const res = await fetch(`/api/amenitiesBooking/update/${_id}`, {
+            const res = await fetch(`/api/serviceBooking/update/${_id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -183,8 +178,8 @@ const BookingList_05 = () => {
 
     return (
         <div className="w-full table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
-        <h1 className="text-2xl font-semibold text-gray-800 mb-4 text-center dark:text-white">Booking List</h1>    
-            {currentUser.isBookingAdmin ? (
+        <h1 className="text-2xl font-semibold text-gray-800 mb-4 text-center dark:text-white">Service Booking List</h1>    
+            {currentUser.isFacilityServiceAdmin ? (
                 <>
                     <div className="flex gap-4 mb-4">
                     <TextInput
@@ -193,58 +188,40 @@ const BookingList_05 = () => {
                             value={searchInput}
                             onChange= {handleChange}
                         />
-                        <Button onClick={handleToggleConfirmOnly} className={showConfirmOnly ? 'bg-green-500 text-white' : 'bg-gray-200'}>
-                            Confirmed Bookings
-                        </Button>
-                        <Button onClick={handleTogglePendingOnly} className={showPendingOnly ? 'bg-red-500 text-white' : 'bg-gray-200'}>
-                            Pending Bookings
-                        </Button>
-
                         
-                        <label className="block text-sm font-semibold text-gray-700 dark:text-white pt-3">Start Date</label>
-                        <input 
-                        type="date" 
-                        value={startDate} 
-                        onChange={handleStartDateChange}
-                        className="appearance-none block w-56 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        />
-
                         
-                        <label className="block text-sm font-semibold text-gray-700 dark:text-white pt-3">End Date</label>
-                        <input 
-                        type="date" 
-                        value={endDate} 
-                        onChange={handleEndDateChange} 
-                        className="appearance-none block w-56 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        />
+                        
 
                     </div>
                     {filteredBookings.length > 0 ? (
                     <Table hoverable className="shadow-md">
                         <Table.Head>
                             <Table.HeadCell>Booking ID</Table.HeadCell>
-                            <Table.HeadCell>Amenity Title</Table.HeadCell>
+                            <Table.HeadCell>Service ID</Table.HeadCell>
+                            <Table.HeadCell>Service Name</Table.HeadCell>
                             <Table.HeadCell>Resident Name</Table.HeadCell>
+                            <Table.HeadCell>Resident Phone</Table.HeadCell>
                             <Table.HeadCell>Resident Email</Table.HeadCell>
-                            <Table.HeadCell>Date</Table.HeadCell>
-                            <Table.HeadCell>Time</Table.HeadCell>
-                            <Table.HeadCell>Duration</Table.HeadCell>
-                            <Table.HeadCell>Total Amount</Table.HeadCell>
-                            <Table.HeadCell>Status</Table.HeadCell>
+                            <Table.HeadCell>Resident NIC</Table.HeadCell>
+                            <Table.HeadCell>Booking Date</Table.HeadCell>
+                            <Table.HeadCell>Booking Time</Table.HeadCell>
+                            <Table.HeadCell>Booking Status</Table.HeadCell>
                             <Table.HeadCell>Update Status</Table.HeadCell>
-                            <Table.HeadCell>Payment Image</Table.HeadCell>
+                            <Table.HeadCell onClick={() => handleServiceListingDelete(booking._id)}>Delete</Table.HeadCell>
+
                         </Table.Head>
                         {filteredBookings.map((booking) => (
                             <Table.Body key={booking._id} className="divide-y">
                                 <Table.Row className={`bg-white dark:border-gray-700 dark:bg-gray-800 ${booking.bookingStatus === 'Confirmed' ? 'text-green-500' : booking.bookingStatus === 'Pending' ? 'text-red-600' : ''}`}>
-                                    <Table.Cell>{booking.bookingID}</Table.Cell>
-                                    <Table.Cell>{booking.amenityTitle}</Table.Cell>
+                                    <Table.Cell>{booking.serviceBookingID}</Table.Cell>
+                                    <Table.Cell>{booking.serviceID}</Table.Cell>
+                                    <Table.Cell>{booking.serviceName}</Table.Cell>
                                     <Table.Cell>{booking.residentName}</Table.Cell>
+                                    <Table.Cell>{booking.residentPhone}</Table.Cell>
                                     <Table.Cell>{booking.residentEmail}</Table.Cell>
+                                    <Table.Cell>{booking.residentNIC}</Table.Cell>
                                     <Table.Cell style={{ whiteSpace: 'nowrap' }}>{formatDate(booking.bookingDate)}</Table.Cell>
                                     <Table.Cell>{booking.bookingTime}</Table.Cell>
-                                    <Table.Cell>{booking.duration}</Table.Cell>
-                                    <Table.Cell>{booking.bookingPrice}</Table.Cell>
                                     <Table.Cell className="py-2">
                                         <div className={`w-20 h-5 rounded-md text-center ${booking.bookingStatus === 'Confirmed' ? 'bg-green-500 text-white' : booking.bookingStatus === 'Pending' ? 'bg-red-700 text-white' : ''}`}>
                                             {booking.bookingStatus}
@@ -261,19 +238,11 @@ const BookingList_05 = () => {
                                             <option value="Confirmed">Confirmed</option>
                                         </select>
                                     </Table.Cell>
-                                    
                                     <Table.Cell>
-                                        {booking.imageUrls.map((imageUrl, index) => (
-                                            <a key={index} href={imageUrl} target="_blank" rel="noopener noreferrer">
-                                            <img
-                                                src={imageUrl}
-                                                alt={`Image ${index}`}
-                                                style={{ maxWidth: '100px', maxHeight: '100px' }} // Adjust dimensions as needed
-                                            />
-                                            </a>
-                                        ))}
+                                        <span onClick={() => handleBookingDelete(booking._id)} 
+                                        className="font-medium text-red-500 hover:underline cursor-pointer">Delete</span>
                                     </Table.Cell>
-                                    <Table.Cell>
+                                    {/* <Table.Cell>
                                         <span onClick={() => handleBookingDelete(booking._id)} 
                                         className="font-medium text-red-500 hover:underline cursor-pointer">Delete</span>
                                     </Table.Cell>
@@ -283,19 +252,19 @@ const BookingList_05 = () => {
                                             to = {`/update-booking/${booking._id}`}>
                                                 <span>Update</span>
                                             </Link>
-                                    </Table.Cell>
+                                    </Table.Cell> */}
                                 </Table.Row>
                             </Table.Body>
                         ))}
                     </Table>
                     ) : (
-                        <p className="text-gray-500 text-center">No matching amenities found.</p>
+                        <p className="text-gray-500 text-center">No matching services found.</p>
                     )}
                     <br />
-                    <Button onClick={handleDownloadPDF}>Download PDF</Button>
+                    <Button onClick={handleDownloadPDF}>Download report</Button>
 
                     <p className="text-red-700 mt-5">
-                        {showBookingError ? "Error fetching amenity" : ""}
+                        {showBookingError ? "Error fetching services" : ""}
                     </p>
 
                     {showBooking &&
@@ -346,22 +315,21 @@ const BookingList_05 = () => {
                 <Table hoverable className="shadow-md">
                     <Table.Head>
                             <Table.HeadCell>Booking ID</Table.HeadCell>
-                            <Table.HeadCell>Amenity Title</Table.HeadCell>
+                            <Table.HeadCell>Service ID</Table.HeadCell>
+                            <Table.HeadCell>Service Name</Table.HeadCell>
                             <Table.HeadCell>Resident Name</Table.HeadCell>
+                            <Table.HeadCell>Resident Phone</Table.HeadCell>
                             <Table.HeadCell>Resident Email</Table.HeadCell>
-                            <Table.HeadCell>Resident Contact</Table.HeadCell>
-                            <Table.HeadCell>Date</Table.HeadCell>
-                            <Table.HeadCell>Time</Table.HeadCell>
-                            <Table.HeadCell>Duration</Table.HeadCell>
-                            <Table.HeadCell>Total Amount</Table.HeadCell>
-                            <Table.HeadCell>Status</Table.HeadCell>
-                            <Table.HeadCell onClick={() => handleAmenitiesDelete(booking._id)}>Delete</Table.HeadCell>
+                            <Table.HeadCell>Booking Date</Table.HeadCell>
+                            <Table.HeadCell>Booking Time</Table.HeadCell>
+                            <Table.HeadCell>Booking Status</Table.HeadCell>
+                            <Table.HeadCell onClick={() => handleServiceListingDelete(booking._id)}>Delete</Table.HeadCell>
+                            {/* handleAmenitiesDelete */}
                             <Table.HeadCell>
                                 <span>Upadte</span>
                             </Table.HeadCell>
-                            <Table.HeadCell>Payment Image</Table.HeadCell>
                         </Table.Head>
-                    {filteredBookings.filter(booking => booking.residentUsername === currentUser.username)
+                    {filteredBookings.filter(booking => booking.residentEmail === currentUser.residentEmail)
                         .map((booking) => (
                             <Table.Body key={booking._id} className="divide-y">
                                 <Table.Row className={`bg-white dark:border-gray-700 dark:bg-gray-800 ${booking.bookingStatus === 'Confirmed' ? 'text-green-600' : booking.bookingStatus === 'Pending' ? 'text-red-600' : ''}`}>
@@ -370,7 +338,7 @@ const BookingList_05 = () => {
                                     <Table.Cell>{booking.residentName}</Table.Cell>
                                     <Table.Cell>{booking.residentEmail}</Table.Cell>
                                     <Table.Cell>{booking.residentContact}</Table.Cell>
-                                    <Table.Cell style={{ whiteSpace: 'nowrap' }}>{formatDate(booking.bookingDate)}</Table.Cell>
+                                    <Table.Cell>{booking.bookingDate}</Table.Cell>
                                     <Table.Cell>{booking.bookingTime}</Table.Cell>
                                     <Table.Cell>{booking.duration}</Table.Cell>
                                     <Table.Cell>{booking.bookingPrice}</Table.Cell>
@@ -389,17 +357,6 @@ const BookingList_05 = () => {
                                             to = {`/update-booking/${booking._id}`}>
                                                 <span>Update</span>
                                             </Link>
-                                    </Table.Cell>
-                                    <Table.Cell>
-                                        {booking.imageUrls.map((imageUrl, index) => (
-                                            <a key={index} href={imageUrl} target="_blank" rel="noopener noreferrer">
-                                            <img
-                                                src={imageUrl}
-                                                alt={`Image ${index}`}
-                                                style={{ maxWidth: '100px', maxHeight: '100px' }} // Adjust dimensions as needed
-                                            />
-                                            </a>
-                                        ))}
                                     </Table.Cell>
                                 </Table.Row>
                             </Table.Body>
@@ -423,4 +380,4 @@ const BookingList_05 = () => {
     );
 }
 
-export default BookingList_05;
+export default DashServiceBookList_06;

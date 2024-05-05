@@ -20,6 +20,7 @@ import { FaPersonSwimming } from "react-icons/fa6";
 import { MdAddHomeWork } from "react-icons/md";
 import { FaPersonCircleCheck } from "react-icons/fa6";
 import { BsPersonPlusFill } from "react-icons/bs";
+import { IoChatbubbleEllipses } from "react-icons/io5";
 
 const DashSidebar = () => {
   const location = useLocation();
@@ -235,6 +236,46 @@ const DashSidebar = () => {
                 </div>
               )}
 
+              <Link to="/add-visitors">
+                <Sidebar.Item icon={HiUser} as="div">
+                  Add Visitors
+                </Sidebar.Item>
+              </Link>
+              {
+                // !(currentUser.isAdmin) || currentUser.isBookingAdmin && (
+                <>
+                  <Link to="/dashboard?tab=bookings">
+                    <Sidebar.Item
+                      active={tab === "bookings"}
+                      icon={FaPersonSwimming}
+                      as="div"
+                    >
+                      Bookings
+                    </Sidebar.Item>
+                  </Link>
+                </>
+              }
+
+              {
+                //currentUser.isFacilityServiceAdmin &&
+                <Link
+                  to="/dashboard?tab=serviceBookings"
+                  className={tab === "serviceBookings" ? "active" : ""}
+                >
+                  <Sidebar.Item icon={HiOutlineUserGroup}>
+                    Service Bookings
+                  </Sidebar.Item>
+                </Link>
+              }
+
+              <Sidebar.Item
+                icon={HiArrowSmRight}
+                className="cursor-pointer"
+                onClick={handleSignout}
+              >
+                Sign Out
+              </Sidebar.Item>
+
               {tab === "staffs" && (
                 <div className="dropdown">
                   <Link to="/dashboard?tab=staffAttendance">
@@ -317,6 +358,19 @@ const DashSidebar = () => {
               </Link>
             </>
           }
+          {currentUser.isPropertyAdmin && (
+            <>
+              <Link to="/dashboard?tab=inboxMessage">
+                <Sidebar.Item
+                  active={tab === "inboxMessage"}
+                  icon={IoChatbubbleEllipses}
+                  as="div"
+                >
+                  Inbox Messages
+                </Sidebar.Item>
+              </Link>
+            </>
+          )}
 
           <Sidebar.Item
             icon={HiArrowSmRight}
