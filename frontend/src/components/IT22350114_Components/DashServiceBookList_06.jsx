@@ -247,6 +247,7 @@ const DashServiceBookList_06 = () => {
                 <Table.HeadCell>Booking Time</Table.HeadCell>
                 <Table.HeadCell>Booking Status</Table.HeadCell>
                 <Table.HeadCell>Update Status</Table.HeadCell>
+                <Table.HeadCell>Update</Table.HeadCell>
                 <Table.HeadCell
                   onClick={() => handleServiceListingDelete(booking._id)}
                 >
