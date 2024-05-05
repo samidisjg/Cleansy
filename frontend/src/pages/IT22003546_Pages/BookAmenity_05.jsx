@@ -244,13 +244,20 @@ const BookAmenity = () => {
       console.log("Finish Time:", finishTime);  // Log calculated finish time
 
       console.log("Submitting the following data to the backend:", payload);
+      console.log("Booking Time:", new Date(formData.bookingTime)); 
+      
+      console.log(formData)// Log booking time
 
       const response = await fetch('/api/amenitiesBooking/create', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
           },
-          body: JSON.stringify(payload)
+          body: JSON.stringify({
+              ...payload,
+              startTime: new Date(formData.bookingTime),
+              endTime: calEndTime(formData.bookingTime, formData.duration),
+          })
       });
       const data = await response.json();
       setLoading(false);
@@ -264,6 +271,12 @@ const BookAmenity = () => {
       setLoading(false);
     }
   };
+
+  function calEndTime(startTime, duration) {
+    const startMilise = new Date(startTime).getTime();
+    const endMilise = startMilise + (duration * 60 * 60 * 1000);
+    return new Date(endMilise);
+  }
 
   const calculateFinishTime = (startTime, duration) => {
     // Assuming startTime is in HH:mm format
@@ -495,3 +508,4 @@ const BookAmenity = () => {
 };
 
 export default BookAmenity;
+
