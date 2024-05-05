@@ -29,6 +29,7 @@ const BookServiceCreate = () => {
   const [imageUploadError, setImageUploadError] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [timeslots, setTimeslots] = useState([]); // Array to store time slots
+  const [agreeTerms, setAgreeTerms] = useState(false);
 
   // Function to generate a unique booking ID
   const generateBookingId = () =>
@@ -128,7 +129,7 @@ const BookServiceCreate = () => {
         console.error("Error fetching service details:", error);
       }
     };
-    
+
     setTimeslots(generateTimeSlots());
     fetchServiceDetails();
   }, [serviceID]); // Run the effect whenever serviceID changes
@@ -161,11 +162,11 @@ const BookServiceCreate = () => {
       if (formData.serviceBookingID === currentUser.serviceBookingID)
         return setError("Booking ID already exists");
 
-        const payload = {
-          ...formData,
-          userRef: currentUser._id,
-          bookingStatus: "Pending",
-        };
+      const payload = {
+        ...formData,
+        userRef: currentUser._id,
+        bookingStatus: "Pending",
+      };
 
       console.log(formData); // Log form data to console
 
@@ -173,11 +174,11 @@ const BookServiceCreate = () => {
       setError(false);
 
       const res = await fetch("/api/serviceBooking/create", {
-        method: 'POST',
+        method: "POST",
         headers: {
-            'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
       });
       const data = await res.json();
       setLoading(false);
@@ -201,20 +202,44 @@ const BookServiceCreate = () => {
     var currentTime = new Date(startTime);
 
     while (currentTime < endTime) {
-        var timeSlotStart = new Date(currentTime);
-   
+      var timeSlotStart = new Date(currentTime);
 
-        timeSlots.push({
-            start: timeSlotStart.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}),
-        });
-        currentTime.setTime(currentTime.getTime() + 30 * 60000); // Move to next 30-minute slot
+      timeSlots.push({
+        start: timeSlotStart.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+      });
+      currentTime.setTime(currentTime.getTime() + 30 * 60000); // Move to next 30-minute slot
     }
 
     return timeSlots;
-}
+  }
+  const handleToggleTerms = () => {
+    setAgreeTerms(!agreeTerms);
+    if (!agreeTerms) {
+      alert(`Terms and Conditions:
+  
+  1. Pricing:
+     - The price displayed during booking is for the first 30 minutes of service.
+     - Once the initial inspection is completed and the job requirements are assessed, the final price will be quoted accordingly.
+  
+  2. Service Duration:
+     - The duration of service may vary depending on the complexity of the job and the service provider's assessment.
+     - Additional charges may apply for extended service beyond the initial booking duration.
 
+  3. Payment:
+     - Payment is due upon completion of the service.
+     - We accept various payment methods, including credit/debit cards, online transfers, and cash.
+  
+ 
+  By checking the box, you agree to abide by the above terms and conditions.`);
+    }
+  };
+  
+  
 
-console.log("timeslots",timeslots)
+  console.log("timeslots", timeslots);
 
   return (
     <div className="container mx-auto p-4 max-w-md">
@@ -337,14 +362,18 @@ console.log("timeslots",timeslots)
             Booking Time
           </label>
           <select
-          name="bookingTime"
-          value={formData.bookingTime}
-          onChange={handleChange}
-          className="w-full p-2 border rounded-md focus:outline-none focus:border-blue-500">
-                {timeslots.map((timeSlot, index) => (
-                    <option key={index} value={timeSlot.start}>{`${timeSlot.start}`}</option>
-                ))}
-            </select>
+            name="bookingTime"
+            value={formData.bookingTime}
+            onChange={handleChange}
+            className="w-full p-2 border rounded-md focus:outline-none focus:border-blue-500"
+          >
+            {timeslots.map((timeSlot, index) => (
+              <option
+                key={index}
+                value={timeSlot.start}
+              >{`${timeSlot.start}`}</option>
+            ))}
+          </select>
           {/* <input
             type="time"
             name="bookingTime"
@@ -378,7 +407,9 @@ console.log("timeslots",timeslots)
               {uploading ? "Uploading..." : "Upload"}
             </button>
           </div>
-          <p className="text-blue-700">{imageUploadError && imageUploadError}</p>
+          <p className="text-blue-700">
+            {imageUploadError && imageUploadError}
+          </p>
           {formData.imageUrls.length > 0 &&
             formData.imageUrls.map((url, index) => (
               <div
@@ -400,13 +431,30 @@ console.log("timeslots",timeslots)
               </div>
             ))}
         </div>
+        <div>
+          <label className="flex items-center">
+            <input
+              type="checkbox"
+              checked={agreeTerms}
+              onChange={handleToggleTerms}
+              className="form-checkbox h-5 w-5 text-blue-600"
+            />
+            <span className="ml-2 text-sm text-gray-600">
+              I agree to the terms and conditions
+            </span>
+          </label>
+        </div>
         <Button
           type="submit"
           gradientDuoTone="purpleToBlue"
-          className="uppercase"
+          className={`uppercase ${
+            !agreeTerms && "opacity-50 cursor-not-allowed"
+          }`}
+          disabled={!agreeTerms}
         >
           {loading ? "Service Booking..." : "Service Booking"}
         </Button>
+
         {error && (
           <Alert className="mt-7 py-3 bg-gradient-to-r from-blue-500 via-black to-blue-900 shadow-lg text-center text-white text-lg font-semibold tracking-wide transform -translate-y-2 hover:translate-y-0 transition-transform">
             {error}

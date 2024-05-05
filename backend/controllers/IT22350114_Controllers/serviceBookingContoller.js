@@ -20,7 +20,9 @@ export const createServiceBooking = async (req, res, next) => {
       const emailTemplate = serviceBookingEmailTemplate(req.body.residentName, {
         ...req.body,
         bookingStatus: "Pending",
+        bookingID: newServiceBooking._id, // Pass the booking ID here
       });
+     
       sendEmail(
         req.body.residentEmail,
         "Service Booking Confirmation",
@@ -35,7 +37,9 @@ export const createServiceBooking = async (req, res, next) => {
       const emailTemplate = serviceBookingEmailTemplate(req.body.residentName, {
         ...req.body,
         bookingStatus: "Confirmed",
+        bookingID: newServiceBooking._id, // Pass the booking ID here
       });
+     
       sendEmail(
         req.body.residentEmail,
         "Service Booking Confirmation",

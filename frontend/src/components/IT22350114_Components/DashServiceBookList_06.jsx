@@ -302,6 +302,13 @@ const DashServiceBookList_06 = () => {
                       </select>
                     </Table.Cell>
                     <Table.Cell>
+                                        <Link
+                                            className="text-teal-500 hover:underline"
+                                            to = {`/update-sbooking/${booking._id}`}>
+                                                <span>Update</span>
+                                            </Link>
+                                    </Table.Cell>
+                    <Table.Cell>
                       <span
                         onClick={() => handleBookingDelete(booking._id)}
                         className="font-medium text-red-500 hover:underline cursor-pointer"
@@ -316,7 +323,7 @@ const DashServiceBookList_06 = () => {
                                     <Table.Cell>
                                         <Link
                                             className="text-teal-500 hover:underline"
-                                            to = {`/update-booking/${booking._id}`}>
+                                            to = {`/update-sbooking/${booking._id}`}>
                                                 <span>Update</span>
                                             </Link>
                                     </Table.Cell> */}
@@ -342,7 +349,7 @@ const DashServiceBookList_06 = () => {
               <Link
                 key={booking._id}
                 className="text-slate-700 font-semiblod hover:underline truncate flex-1"
-                to={`/update-booking/${booking._id}`}
+                to={`/update-sbooking/${booking._id}`}
               ></Link>
             ))}
         </>
@@ -464,7 +471,7 @@ const DashServiceBookList_06 = () => {
                       <Table.Cell>
                         <Link
                           className="text-teal-500 hover:underline"
-                          to={`/update-booking/${booking._id}`}
+                          to={`/update-sbooking/${booking._id}`}
                         >
                           <span>Update</span>
                         </Link>

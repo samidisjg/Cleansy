@@ -199,7 +199,7 @@ const DashSidebar = () => {
           )}
 
           {
-          currentUser.isFacilityServiceAdmin && (
+         // currentUser.isFacilityServiceAdmin && (
             <>
               <Link to="/dashboard?tab=serviceBookings">
               <Sidebar.Item icon={HiOutlineUserGroup}>
@@ -207,7 +207,8 @@ const DashSidebar = () => {
                 </Sidebar.Item>
               </Link>
             </>
-          )}
+          //)
+          }
 
           {currentUser.isFacilityAdmin && (
             <>

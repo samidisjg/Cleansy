@@ -12,13 +12,15 @@ const serviceBookingEmailTemplate = (residentName, bookingDetails) => `
 </head>
 <body>
     <div class="container">
-        <img src="https://i.ibb.co/6syfN7M/cleansy.png" alt="Company Logo" class="logo">
         <h1 class="message">Service Booking Confirmation</h1>
         <p>Hi ${residentName},</p>
         <p>Your service booking has been received and is currently ${bookingDetails.bookingStatus.toLowerCase()}.</p>
         <p>Booking Details:</p>
         <ul>
             <li><strong>Service ID:</strong> ${bookingDetails.serviceID}</li>
+            <li><strong>Booking ID:</strong> ${
+              bookingDetails.serviceBookingID
+            }</li>
             <li><strong>Service Name:</strong> ${
               bookingDetails.serviceName
             }</li>
@@ -35,6 +37,7 @@ const serviceBookingEmailTemplate = (residentName, bookingDetails) => `
         <br />
         <p>Thank you for choosing our service!</p>
         <p>The Cleansy Team</p>
+        <img src="https://i.ibb.co/6syfN7M/cleansy.png" alt="Company Logo" class="logo">
     </div>
 </body>
 </html>
