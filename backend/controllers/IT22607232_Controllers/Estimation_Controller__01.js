@@ -63,19 +63,18 @@ function calculateRiskFactor(Category) {
 // Function to calculate estimation cost
 function calculateEstimationCost(Size, Complexity,personnelCapability, riskFactor) {
     // Define base rates
-    const baseRate = 100; // Adjust as needed
+    const baseRate = 100; 
     
-    // Adjust base rate based on complexity
     let adjustedRate;
     switch (Complexity) {
       case 'Low':
-        adjustedRate = baseRate * 0.8; // Adjust based on complexity level
+        adjustedRate = baseRate * 0.8; 
         break;
       case 'Medium':
-        adjustedRate = baseRate * 1.0; // Adjust based on complexity level
+        adjustedRate = baseRate * 1.0; 
         break;
       case 'High':
-        adjustedRate = baseRate * 1.2; // Adjust based on complexity level
+        adjustedRate = baseRate * 1.2; 
         break;
       default:
         adjustedRate = baseRate;
@@ -91,10 +90,10 @@ function calculateEstimationCost(Size, Complexity,personnelCapability, riskFacto
   
   // Function to calculate estimated man-hours
   function calculateEstimatedManHours(Size, durationDays, Complexity, personnelCapability, riskFactor) {
-    // Define base rates
+    // Defining base rates
     const baseRate = 8; 
   
-    // Adjust base rate based on complexity
+    // base rate based on complexity
     let adjustedRate;
     switch (Complexity) {
       case 'Low':
@@ -110,7 +109,7 @@ function calculateEstimationCost(Size, Complexity,personnelCapability, riskFacto
     }
 
     
-    // Apply adjustments based on additional factors
+    //  based on additional factors
     adjustedRate *= personnelCapability;
     adjustedRate *= riskFactor;
   
@@ -129,10 +128,10 @@ function calculateEstimationCost(Size, Complexity,personnelCapability, riskFacto
     const riskFactor = calculateRiskFactor(DurationDays, Category);
  
 
-      console.log('Received inputs:');
+      /*console.log('Received inputs:');
       console.log('Size:', Size);
       console.log('DurationDays:', DurationDays);
-      console.log('Complexity:', Complexity);
+      console.log('Complexity:', Complexity);*/
   
       // Create a new input object
       const newInput = new Estimation({
@@ -149,8 +148,8 @@ function calculateEstimationCost(Size, Complexity,personnelCapability, riskFacto
     const estimationCost = calculateEstimationCost(Size, Complexity, personnelCapability, riskFactor);
     const estimatedManHours = calculateEstimatedManHours(Size, DurationDays, Complexity, personnelCapability, riskFactor);
   
-      console.log('Estimation cost:', estimationCost);
-      console.log('Estimated man-hours:', estimatedManHours);
+      /*console.log('Estimation cost:', estimationCost);
+      console.log('Estimated man-hours:', estimatedManHours);*/
   
       // Update the new input object with the estimation cost and estimated man-hours
       newInput.estimationCost = estimationCost;

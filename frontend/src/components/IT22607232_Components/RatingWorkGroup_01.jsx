@@ -87,7 +87,7 @@ const RatingWorkGroup_01 = () => {
                   <Button gradientDuoTone='purpleToBlue'  pill onClick={() => handleRating(task._id)}>
                     {/* Check if the task has been rated */}
                     {ratedTasks.includes(task._id) ? (
-                      <span className="text-green-500">Rated</span>
+                      <span className="text-red-500">Rated</span>
                     ) : (
                       <Link
                         // className=" hover:underline"
