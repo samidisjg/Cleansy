@@ -1,5 +1,41 @@
 //backend\controllers\IT22196460_Controllers\AnnouncementController.js
 import Announcement from "../../models/IT22196460_Models/AnnouncementModel.js";
+import nodemailer from 'nodemailer';
+
+//Function to send email notification
+const sendEmailNotification = (announcement) => {
+  // Create a transporter object using SMTP transport
+  let transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: 'uvinduudakara001@gmail.com', // your email address
+      pass: 'uvindu#%@123', // your email password
+    },
+  });
+
+  // Setup email data
+  let mailOptions = {
+    from: '"Your Name" <uvinduudakara001@gmail.com>', // sender address
+    to: 'hewageuvindu@gmail.com', // receiver address (announcement manager)
+    subject: 'New Announcement Created', // subject line
+    html: `<p>A new announcement has been created:</p>
+           <p>Announcement ID: ${announcement.Announcement_ID}</p>
+           <p>Title: ${announcement.Title}</p>
+           <p>Content: ${announcement.Content}</p>
+           <p>Create At: ${announcement.Create_At}</p>`,
+  };
+
+  // Send email
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error("Error sending email:", error);
+    } else {
+      console.log("Email sent:", info.response);
+    }
+  });
+};
+
+
 
 // create a new announcement 
 export const createAnnouncement = async(req, res) => {
@@ -16,6 +52,8 @@ export const createAnnouncement = async(req, res) => {
     });
     try{
         const savedAnnouncement = await newAnnouncement.save();
+
+        sendEmailNotification(savedAnnouncement);
         res.status(201).json(savedAnnouncement);
     } catch(error){
         console.error("Error creating announcement : ", error.message);
@@ -55,6 +93,7 @@ export const updateAnnouncement = async(req, res) => {
         if (!updatedAnnouncement) {
             return res.status(404).json({ message: "Announcement not found" });
         }
+        sendEmailNotification(updateAnnouncement);
 
         res.status(200).json(updatedAnnouncement);
     } catch (error) {
@@ -73,6 +112,8 @@ export const deleteAnnouncement = async(req, res, next) => {
         if(!deleteAnnouncement){
             return res.status(404).json({ message: "Announcement not found"});
         }
+        sendEmailNotification(deleteAnnouncement);
+
         res.status(200).json({message: "Announcement deleted successfully"});
     } catch(error){
 
