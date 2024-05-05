@@ -1,3 +1,4 @@
+//frontend\src\components\IT22196460_Components\AnnouncementForAdmin.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table } from 'flowbite-react';
@@ -8,9 +9,11 @@ import PDFAnnouncementForm from './PDFAnnouncementForm';
 const AnnouncementForAdmin = () => {
     const [announcements, setAnnouncements] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
+ 
 
     useEffect(() => {
         fetchAnnouncements();
+        
     }, []);
 
     const fetchAnnouncements = async () => {

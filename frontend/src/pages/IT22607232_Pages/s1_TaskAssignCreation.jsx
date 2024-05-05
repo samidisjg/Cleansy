@@ -1,18 +1,11 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 /*import TaskAssignRoute from "../../routes/IT22607232_Routes/s1_TaskAssignRoute";*/
-import {
-  Button,
-  Label,
-  Select,
-  TextInput,
-  Textarea,
-} from "flowbite-react";
-
+import { Button, Label, Select, TextInput, Textarea } from "flowbite-react";
+import { toast } from "react-toastify";
 
 const generateTaskID = () => `TID-${Math.floor(10000 + Math.random() * 90000)}`;
-
 
 const TaskAssign = () => {
   const navigate = useNavigate();
@@ -21,27 +14,24 @@ const TaskAssign = () => {
   const [formData, setFormData] = useState({
     TaskID: "",
     Category: "",
-    AssignDate:"",
+    AssignDate: "",
     type: "",
     email: "",
     Name: "",
     Description: "",
     WorkGroupID: "",
     Location: "",
-    DurationDays: "2"
+    DurationDays: "2",
   });
 
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  
-  console.log(formData);
 
-  
+  console.log(formData);
 
   const handleChange = (e) => {
     let boolean = null; // Declare boolean variable here
 
-   
     if (e.target.name === "Date") {
       setFormData({
         ...formData,
@@ -97,6 +87,9 @@ const TaskAssign = () => {
 
         const text = `TaskID: ${data.TaskID} \'n Category: ${data.Category} \n AssignDate: ${data.AssignDate} \n Name: ${data.Name} \n Description: ${data.Description} \n WorkGroupID: ${data.WorkGroupID} \n Location: ${data.Location} \n DurationDays: ${data.DurationDays} \n type: ${data.type}`;
         handleTasksEmailSending(data.Email, subject, text);
+        toast.success("Task assigned successfully! Email sent");
+      } else {
+        toast.error(data.message || "Failed to assign task!");
       }
 
       setLoading(false);
@@ -111,7 +104,6 @@ const TaskAssign = () => {
     }
   };
 
-  
   useEffect(() => {
     const generatedID = generateTaskID();
     setFormData((prevFormData) => ({
@@ -120,12 +112,14 @@ const TaskAssign = () => {
     }));
   }, []);
 
-
   const handleTasksEmailSending = async (to, subject, text) => {
     try {
-      const res = await fetch(`/api/taskAssign/sendEmail/${to}/${subject}/${text}`, {
-        method: "POST",
-      });
+      const res = await fetch(
+        `/api/taskAssign/sendEmail/${to}/${subject}/${text}`,
+        {
+          method: "POST",
+        }
+      );
       const data = await res.json();
       if (!res.ok) {
         console.log(data.message);
@@ -141,22 +135,6 @@ const TaskAssign = () => {
     }
   };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-   
   return (
     <div className="min-h-screen mt-20">
       <main>
@@ -197,11 +175,11 @@ const TaskAssign = () => {
           </div>
 
           <div>
-            <Label value="Date"/>
+            <Label value="Date" />
             <TextInput
               type="date"
               id="AssignDate"
-              min={new Date().toISOString().split('T')[0]}
+              min={new Date().toISOString().split("T")[0]}
               name="AssignDate"
               required
               onChange={handleChange}
@@ -222,7 +200,7 @@ const TaskAssign = () => {
               <option value="Completed">Completed</option>
             </Select>
           </div>
-         
+
           <div>
             <Label value="Email Address" />
             <TextInput
@@ -302,7 +280,14 @@ const TaskAssign = () => {
           >
             {loading ? "Assigning..." : "Assign task"}
           </Button>
-          {error && <p className="text-red-700 text-sm">{error}</p>}
+          {error && (
+            <Alert
+              className="mt-7 py-3 bg-gradient-to-r from-red-100 via-red-300 to-red-400 shadow-shadowOne text-center
+           text-red-600 text-base tracking-wide animate-bounce"
+            >
+              {error}
+            </Alert>
+          )}
         </form>
       </div>
     </div>
