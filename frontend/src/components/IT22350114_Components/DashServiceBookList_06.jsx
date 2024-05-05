@@ -191,8 +191,8 @@ const DashServiceBookList_06 = () => {
       startY: 25,
       addPageContent: addWatermark,
       headStyles: {
-        fillColor: [235,68,38], // Dark blue background for the header row
-        textColor: [246,147,53], // Dark orange color for the text (RGB)
+        fillColor: [0, 0, 139], // RGB for dark blue
+        textColor: [246, 147, 53], // Dark orange color for the text (RGB)
         halign: "center", // Center align text
         fontStyle: "bold", // Bold font style for header text
       },
@@ -350,7 +350,7 @@ const DashServiceBookList_06 = () => {
             </p>
           )}
           <br />
-          <Button onClick={handleDownloadPDF}>Download report</Button>
+          <Button className="bg-blue-500"onClick={handleDownloadPDF}>Download report</Button>
 
           <p className="text-red-700 mt-5">
             {showBookingError ? "Error fetching services" : ""}
