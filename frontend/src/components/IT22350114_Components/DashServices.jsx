@@ -11,7 +11,7 @@ const DashServices = () => {
       {currentUser.isFacilityServiceAdmin && (
         <div className="w-full max-w-xs">
           <h1 className="text-2xl font-semibold mt-8 mb-4 text-center"> 
-            Book Service
+            Dash Service
           </h1>
           <div className="flex justify-center gap-6">
             {" "}
