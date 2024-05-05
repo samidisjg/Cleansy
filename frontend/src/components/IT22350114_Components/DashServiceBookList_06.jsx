@@ -19,6 +19,8 @@ const DashServiceBookList_06 = () => {
     handleShowBooking();
   }, []);
 
+  
+
   const handleShowBooking = async () => {
     try {
       const res = await fetch("/api/serviceBooking/getAll");
@@ -53,6 +55,8 @@ const DashServiceBookList_06 = () => {
       (!showPendingOnly || booking.bookingStatus === "Pending")
     );
   });
+
+  
   /*  
     const filteredBookings = showBooking.filter((booking) => {
         const bookingDate = new Date(booking.bookingDate);
@@ -431,12 +435,8 @@ const DashServiceBookList_06 = () => {
                   <span>Upadte</span>
                 </Table.HeadCell>
               </Table.Head>
-              {filteredBookings
-                .filter(
-                  (booking) =>
-                    booking.residentEmail === currentUser.residentEmail
-                )
-                .map((booking) => (
+              {filteredBookings.filter(booking => booking.residentEmail === currentUser.email)
+                        .map((booking) => (
                   <Table.Body key={booking._id} className="divide-y">
                     <Table.Row
                       className={`bg-white dark:border-gray-700 dark:bg-gray-800 ${
