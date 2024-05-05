@@ -71,7 +71,6 @@ export const bookAmenity = async (req, res, next) => {
             bookingHours.push(timeString);
         }
         console.log("Booking Hours:", bookingHours); // Log generated hours
-        
 
         // If fair allocation rules pass, proceed with booking
 
@@ -249,4 +248,5 @@ export const getAllBookings = async (req, res, next) => {
         next(error);
     }
 }
+
 
