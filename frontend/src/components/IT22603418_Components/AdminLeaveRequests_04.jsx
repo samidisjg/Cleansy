@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import DashStaff_04 from "./DashStaff_04";
+import PopUp_04 from "./PopUp_04";
 import { Button } from "flowbite-react";
 
 const AdminLeaveRequests_04 = ({ index, request, onAccept, onDeny }) => {
@@ -77,16 +77,24 @@ const AdminLeaveRequests_04 = ({ index, request, onAccept, onDeny }) => {
       <td className={`border border-gray-300 px-4 py-2 ${statusClass}`}>
         {status}
       </td>
-      <td className="border border-gray-300 px-4 py-2">
-        <button className="mr-2" onClick={togglePopup}>
-          View More
-        </button>
-        <button className="mr-2" onClick={handleAccept}>
-          Accept
-        </button>
-        <button onClick={handleDeny}>Deny</button>
+      <td className="border border-gray-300 px-8 py-2">
+        <div className="flex flex-row md-2">
+          <Button
+            className="text-sm m-2"
+            onClick={togglePopup}
+            gradientDuoTone="purpleToBlue"
+          >
+            View More
+          </Button>
+          <Button className="text-sm m-2 bg-green-600" onClick={handleAccept}>
+            Accept
+          </Button>
+          <Button className="text-sm m-2 bg-red-800" onClick={handleDeny}>
+            Deny
+          </Button>
+        </div>
       </td>
-      <DashStaff_04 isOpen={showPopup} onClose={togglePopup}>
+      <PopUp_04 isOpen={showPopup} onClose={togglePopup}>
         <div className="popup">
           <div className="popup-inner">
             <div className="max-w-md mx-auto border border-white shadow-md rounded-lg overflow-hidden">
@@ -131,7 +139,7 @@ const AdminLeaveRequests_04 = ({ index, request, onAccept, onDeny }) => {
                   <tr className="border-b">
                     <td colSpan="2" className="py-2 px-4 text-center">
                       <Button
-                        gradientDuoTone="purpleToBlue"
+                        gradientDuoTone="pinkToOrange"
                         className="mx-auto"
                         style={{ width: "100px" }}
                         onClick={togglePopup}
@@ -145,7 +153,7 @@ const AdminLeaveRequests_04 = ({ index, request, onAccept, onDeny }) => {
             </div>
           </div>
         </div>
-      </DashStaff_04>
+      </PopUp_04>
     </tr>
   );
 };

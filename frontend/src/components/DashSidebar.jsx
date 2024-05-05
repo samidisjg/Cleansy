@@ -27,6 +27,7 @@ import { CiGrid31 } from "react-icons/ci";
 import { FaCar } from "react-icons/fa";
 
 
+import Attendance from "./../../../backend/models/IT22603418_Models/StaffAttendance.model_04";
 
 const DashSidebar = () => {
   const location = useLocation();
@@ -101,6 +102,7 @@ const DashSidebar = () => {
               Profile
             </Sidebar.Item>
           </Link>
+          {currentUser && (
           <>
             <Link to="/dashboard?tab=userpayments" onClick={toggleDropdown1}>
               <Sidebar.Item
@@ -122,7 +124,7 @@ const DashSidebar = () => {
               </div>
             )}
           </>
-
+           )}
           {currentUser.isBookingAdmin && (
             <>
               <Link to="/dashboard?tab=amenity">
@@ -223,6 +225,21 @@ const DashSidebar = () => {
               </Link>
             </>
           )}
+
+          {!currentUser.isAdmin && !currentUser.isStaff && (
+            <>
+              <Link to="/dashboard?tab=StaffRegister">
+                <Sidebar.Item
+                  active={tab === "StaffRegister"}
+                  icon={HiOutlineUserGroup}
+                  as="div"
+                >
+                  Staff Register
+                </Sidebar.Item>
+              </Link>
+            </>
+          )}
+
           {currentUser.isStaff && (
             <>
               <Link to="/dashboard?tab=staffs">
@@ -234,7 +251,7 @@ const DashSidebar = () => {
                   Staff
                 </Sidebar.Item>
               </Link>
-              {tab === "staffs" && (
+              {/* {tab === "staffs" && (
                 <div className="dropdown">
                   <Link to="/dashboard?tab=leaveRequest">
                     <Sidebar.Item active={tab === "leaveRequest"} as="div">
@@ -243,45 +260,6 @@ const DashSidebar = () => {
                   </Link>
                 </div>
               )}
-
-              {tab === "staffs" && (
-                <div className="dropdown">
-                  <Link to="/dashboard?tab=faceRecognition">
-                    <Sidebar.Item active={tab === "faceRecognition"} as="div">
-                      Face Recognition
-                    </Sidebar.Item>
-                  </Link>
-                </div>
-              )}
-
-              <Link to="/add-visitors">
-                <Sidebar.Item icon={HiUser} as="div">
-                  Add Visitors
-                </Sidebar.Item>
-              </Link>
-              {
-                // !(currentUser.isAdmin) || currentUser.isBookingAdmin && (
-                <>
-                  <Link to="/dashboard?tab=bookings">
-                    <Sidebar.Item
-                      active={tab === "bookings"}
-                      icon={FaPersonSwimming}
-                      as="div"
-                    >
-                      Bookings
-                    </Sidebar.Item>
-                  </Link>
-                </>
-              }
-
-              <Sidebar.Item
-                icon={HiArrowSmRight}
-                className="cursor-pointer"
-                onClick={handleSignout}
-              >
-                Sign Out
-              </Sidebar.Item>
-
               {tab === "staffs" && (
                 <div className="dropdown">
                   <Link to="/dashboard?tab=staffAttendance">
@@ -291,6 +269,16 @@ const DashSidebar = () => {
                   </Link>
                 </div>
               )}
+
+              {tab === "staffs" && (
+                <div className="dropdown">
+                  <Link to="/dashboard?tab=StaffRegister">
+                    <Sidebar.Item active={tab === "StaffRegister"} as="div">
+                      Staff Register
+                    </Sidebar.Item>
+                  </Link>
+                </div>
+              )} */}
             </>
           )}
           {currentUser.isStaffAdmin && (
@@ -306,6 +294,34 @@ const DashSidebar = () => {
               </Link>
             </>
           )}
+
+          {
+            // !(currentUser.isAdmin) || currentUser.isBookingAdmin && (
+            <>
+              <Link to="/dashboard?tab=bookings">
+                <Sidebar.Item
+                  active={tab === "bookings"}
+                  icon={FaPersonSwimming}
+                  as="div"
+                >
+                  Bookings
+                </Sidebar.Item>
+              </Link>
+            </>
+          }
+
+          {
+            //currentUser.isFacilityServiceAdmin &&
+            <Link
+              to="/dashboard?tab=serviceBookings"
+              className={tab === "serviceBookings" ? "active" : ""}
+            >
+              <Sidebar.Item icon={HiOutlineUserGroup}>
+                Service Bookings
+              </Sidebar.Item>
+            </Link>
+          }
+
           {!currentUser.isAdmin && (
             <>
               <Link to="/dashboard?tab=apartmentList">
@@ -413,22 +429,12 @@ const DashSidebar = () => {
               </Link>
             </>
           )}
+          <Link to="/add-visitors">
+            <Sidebar.Item icon={HiUser} as="div">
+              Add Visitors
+            </Sidebar.Item>
+          </Link>
 
-         
-          {
-            // !(currentUser.isAdmin) || currentUser.isBookingAdmin && (
-            <>
-              <Link to="/dashboard?tab=bookings">
-                <Sidebar.Item
-                  active={tab === "bookings"}
-                  icon={FaPersonSwimming}
-                  as="div"
-                >
-                  Bookings
-                </Sidebar.Item>
-              </Link>
-            </>
-          }
           {currentUser.isPropertyAdmin && (
             <>
               <Link to="/dashboard?tab=inboxMessage">

@@ -7,8 +7,8 @@ import RequestDetails_04 from "./RequestDetails_04";
 const RequestLeave_04 = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [formData, setFormData] = useState({
-    staffName: "",
-    email: "",
+    staffName: currentUser.username,
+    email: currentUser.email,
     phoneNo: "",
     leaveType: "",
     startDate: "",
@@ -19,6 +19,7 @@ const RequestLeave_04 = () => {
     status: "pending review",
   });
   const {
+    staffID,
     staffName,
     email,
     phoneNo,
@@ -170,24 +171,13 @@ const RequestLeave_04 = () => {
     e.preventDefault();
 
     // Form Fields validation
-    if (
-      !formData.staffName ||
-      !formData.email ||
-      !formData.phoneNo ||
-      !formData.leaveType
-    ) {
+    if (!formData.phoneNo || !formData.leaveType) {
       toast.error("Please fill out all the fields");
       return;
     }
     // Phone number validation
     if (formData.phoneNo.length !== 10 || isNaN(formData.phoneNo)) {
       toast.error("Phone number should have 10 digits");
-      return;
-    }
-    // Staff Name validation
-    const staffNameRegex = /^[a-zA-Z\s]+$/;
-    if (!staffNameRegex.test(formData.staffName)) {
-      toast.error("Staff Name should only contain letters and spaces");
       return;
     }
 
@@ -206,6 +196,8 @@ const RequestLeave_04 = () => {
         },
         body: JSON.stringify({
           staffID: currentUser._id,
+          staffName: currentUser.staffName,
+          email: currentUser.email,
           ...formData,
         }),
       });
@@ -225,22 +217,6 @@ const RequestLeave_04 = () => {
           setRequestCount(countData.count);
         }
 
-        // Submit to StaffAdmin
-        if (operation === "create") {
-          const staffAdminRes = await fetch("/api/StaffAdmin/create", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              staffID: currentUser._id,
-              reqType: formData.leaveType,
-              duration: "",
-              status: "pending", // Assuming status is defined elsewhere in your code
-            }),
-          });
-        }
-
         toast.success(
           operation === "create"
             ? "Leave Request Created Successfully"
@@ -248,8 +224,8 @@ const RequestLeave_04 = () => {
         );
         // Clear the form data after successful submission
         setFormData({
-          staffName: "",
-          email: "",
+          staffName: currentUser.username,
+          email: currentUser.email,
           phoneNo: "",
           leaveType: "",
           startDate: "",
@@ -300,14 +276,25 @@ const RequestLeave_04 = () => {
       </h1>
       <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
         <div>
+          <Label value="Staff ID" />
+          <TextInput
+            type="text"
+            id="staffID"
+            placeholder={currentUser._id}
+            value={staffID}
+            onChange={handleChange}
+            disabled
+          />
+        </div>
+        <div>
           <Label value="Staff Name" />
           <TextInput
             type="text"
             id="staffName"
-            placeholder="Staff Name"
+            placeholder={currentUser.username}
             value={staffName}
-            required
             onChange={handleChange}
+            disabled
           />
         </div>
         <div>
@@ -315,8 +302,8 @@ const RequestLeave_04 = () => {
           <TextInput
             type="email"
             id="email"
-            placeholder="example@gmail.com"
-            required
+            placeholder={currentUser.email}
+            disabled
             onChange={handleChange}
             value={email}
           />

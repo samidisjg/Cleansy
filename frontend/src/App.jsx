@@ -47,6 +47,9 @@ import ResidentServiceView from "./components/IT22350114_Components/ServiceResid
 import DashServiceList_06 from "./components/IT22350114_Components/DashServiceList_06";
 import FinalAdminPayments_03 from "./pages/IT22602978_Pages/FinalAdminPayments_03";
 import BookServiceCreate from './pages/IT22350114_Pages/BookServiceCreate_06';
+import SignInQR from "./pages/IT22602978_Pages/SignInQR_03";
+import PayNowpage_03 from './pages/IT22602978_Pages/PayNowpage_03';
+
 import DashServiceBookList_06 from './components/IT22350114_Components/DashServiceBookList_06';
 import ServiceUpdate_06 from './pages/IT22350114_Pages/ServiceUpdate_06';
 import UpdateVisitorListing from "./pages/IT22561466_Pages/UpdateVisitorListing";
@@ -87,6 +90,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/sign-in" element={<SignIn />} />
+            <Route path="/sign-in-QR"element={<SignInQR/>}/>
             <Route path="/sign-up" element={<SignUp />} />
             <Route path="/search" element={<SearchVisitors />} />
             <Route element={<PrivateRoute />}>
@@ -162,6 +166,14 @@ function App() {
                 path="/service-User:serviceID"
                 element={<ResidentServiceView />}
               />
+              
+              <Route
+                path="/pay-now/:HouseIdQR/:PaymentIdQR"
+                element={<PayNowpage_03/>}
+                />
+
+              
+              
               <Route path="/service-booking-List:bookingID" element={<DashServiceBookList_06 />}/>
             
               <Route path="/service-update/:serviceID" element={<ServiceUpdate_06 />} />

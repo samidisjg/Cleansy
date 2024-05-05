@@ -32,6 +32,9 @@ function StaffAttendanceView_04({ currentUser }) {
   };
 
   const calculateDuration = (loginTime, logoutTime) => {
+    if (!logoutTime) {
+      return "N/A";
+    }
     const login = new Date(loginTime);
     const logout = new Date(logoutTime);
     const duration = logout - login;
@@ -83,7 +86,7 @@ function StaffAttendanceView_04({ currentUser }) {
                   {formatTime(record.loginTime)}
                 </td>
                 <td className="py-2 px-4 text-center">
-                  {formatTime(record.logoutTime)}
+                  {record.logoutTime ? formatTime(record.logoutTime) : "N/A"}
                 </td>
                 <td className="py-2 px-4 text-center">
                   {record.logoutTime

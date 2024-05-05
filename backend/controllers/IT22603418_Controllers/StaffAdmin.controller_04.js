@@ -1,69 +1,89 @@
-import StaffAdmin from './../../models/IT22603418_Models/StaffAdmin.model_04.js';
+import RequestLeave from "../../models/IT22603418_Models/RequestLeave.model_04.js";
+import { errorHandler } from "../../utils/error.js";
 
-// Create Leave Request
-export const createLeaveRequest = async (req, res) => {
-    try {
-        const { staffID, leaveType, startDate, endDate } = req.body;
+// Controller function to get all leave requests
+export const getAllLeaveRequests = async (req, res, next) => {
+  try {
+    // Fetch all leave requests from the database
+    const allLeaveRequests = await RequestLeave.find();
 
-        // Calculate the difference in days between startDate and endDate
-        const oneDay = 24 * 60 * 60 * 1000; // Number of milliseconds in a day
-        const diffTime = Math.abs(new Date(endDate) - new Date(startDate));
-        const diffInDays = Math.ceil(diffTime / oneDay) + 1; // Add 1 to include both start and end dates
-
-        if (diffInDays <= 0) {
-            return res.status(400).json({ success: false, message: "End date should be after start date" });
-        }
-
-
-        const newLeaveRequest = new StaffAdmin({
-            staffID: staffID,
-            reqType: leaveType, // Assigning leaveType directly from the request body
-            duration: diffInDays.toString(),
-            status: 'pending',
-        });
-
-        await newLeaveRequest.save();
-
-        res.status(201).json({ success: true, message: "Leave request sent to admin successfully", data: newLeaveRequest });
-    } catch (error) {
-        console.error('Error creating leave request:', error);
-        res.status(500).json({ success: false, message: "Internal server error" });
+    // Check if any leave requests were found
+    if (!allLeaveRequests || allLeaveRequests.length === 0) {
+      return next(errorHandler(404, "No leave requests found"));
     }
+
+    // If leave requests are found, return them
+    return res.status(200).json(allLeaveRequests);
+  } catch (error) {
+    // If an error occurs during the process, pass it to the error handling middleware
+    next(error);
+  }
 };
-
-
 
 // Accept Leave Request
 export const acceptLeaveRequest = async (req, res) => {
-    try {
-        const { requestId } = req.params;
-        const leaveRequest = await StaffAdmin.findById(requestId);
+  const requestId = req.params.requestId;
 
-        // Update leave balance and status
-        // Implement your logic to update leave balance and status here
+  try {
+    // Find the leave request by ID and update its status to "accepted" in the database
+    const updatedRequest = await RequestLeave.findByIdAndUpdate(
+      requestId,
+      { status: "accepted" },
+      { new: true }
+    );
 
-        // Update status to "accepted"
-        leaveRequest.status = "accepted";
-        await leaveRequest.save();
-
-        res.status(200).json({ success: true, message: "Leave request accepted successfully", data: leaveRequest });
-    } catch (error) {
-        res.status(500).json({ success: false, message: "Internal server error" });
+    if (!updatedRequest) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Leave request not found" });
     }
+
+    // If the request was successfully updated, send a success response
+    res.status(200).json({
+      success: true,
+      message: "Leave request accepted successfully",
+      data: updatedRequest,
+    });
+  } catch (error) {
+    // If an error occurs during the update process, send an error response
+    console.error("Error accepting leave request:", error);
+    res.status(500).json({
+      success: false,
+      message: "An error occurred while accepting leave request",
+    });
+  }
 };
 
 // Deny Leave Request
 export const denyLeaveRequest = async (req, res) => {
-    try {
-        const { requestId } = req.params;
-        const leaveRequest = await StaffAdmin.findById(requestId);
+  const requestId = req.params.requestId;
 
-        // Update status to "denied"
-        leaveRequest.status = "denied";
-        await leaveRequest.save();
+  try {
+    // Find the leave request by ID and update its status to "denied" in the database
+    const updatedRequest = await RequestLeave.findByIdAndUpdate(
+      requestId,
+      { status: "denied" },
+      { new: true }
+    );
 
-        res.status(200).json({ success: true, message: "Leave request denied successfully", data: leaveRequest });
-    } catch (error) {
-        res.status(500).json({ success: false, message: "Internal server error" });
+    if (!updatedRequest) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Leave request not found" });
     }
+
+    // If the request was successfully updated, send a success response
+    res.status(200).json({
+      success: true,
+      message: "Leave request denied successfully",
+      data: updatedRequest,
+    });
+  } catch (error) {
+    // If an error occurs during the update process, send an error response
+    console.error("Error denying leave request:", error);
+    res.status(500).json({
+      success: false,
+      message: "An error occurred while denying leave request",
+    });
+  }
 };

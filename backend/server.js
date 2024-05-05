@@ -30,6 +30,7 @@ import cors from "cors";
 import EstimationRoutes_01 from './routes/IT22607232_Routes/EstimationRoutes_01.js';
 import carparkListingRoutes from './routes/IT22561466_Routes/carparkListing.route.js';
 
+import StaffRegisterRoutes from "./routes/IT22603418_Routes/StaffRegister.route_04.js";
 dotenv.config();
 
 const app = express();
@@ -54,6 +55,7 @@ app.use("/api/AdminPaymentHandling", AdminPaymentHandlingRoutes);
 app.use("/api/RequestLeave", RequestLeaveRoutes);
 app.use("/api/StaffAdmin", StaffAdminRoutes);
 app.use("/api/StaffAttendance", StaffAttendanceRoutes);
+app.use("/api/StaffRegister", StaffRegisterRoutes);
 
 // IT22350114 Routes
 app.use("/api/serviceListing", serviceListingRoutes);

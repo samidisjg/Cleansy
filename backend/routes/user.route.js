@@ -6,6 +6,8 @@ import {
   signout,
   test,
   updateUser,
+  approveAsStaff,
+  rejectAsStaff,
 } from "../controllers/user.controller.js";
 import { verifyToken } from "../utils/verifyUser.js";
 import { getVisitorListings } from "../controllers/IT22561466_Controllers/visitorListing.controller.js";
@@ -19,5 +21,7 @@ router.post("/signout", signout);
 router.get("/getusers", verifyToken, getUsers);
 router.get("/:id", verifyToken, getUserDetails);
 router.get("/visitorListings/:id", verifyToken, getVisitorListings);
+router.put("/:staffID/makeStaff", verifyToken, approveAsStaff);
+router.put("/:staffID/removeStaff", verifyToken, rejectAsStaff);
 
 export default router;
