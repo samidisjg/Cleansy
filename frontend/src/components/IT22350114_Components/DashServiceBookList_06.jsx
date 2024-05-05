@@ -186,6 +186,12 @@ const DashServiceBookList_06 = () => {
     payDoc.autoTable(tableColumn, tableRows, {
       startY: 25,
       addPageContent: addWatermark,
+      headStyles: {
+        fillColor: [235,68,38], // Dark blue background for the header row
+        textColor: [246,147,53], // Dark orange color for the text (RGB)
+        halign: "center", // Center align text
+        fontStyle: "bold", // Bold font style for header text
+      },
     });
 
     payDoc.setFont("helvetica", "bold");
