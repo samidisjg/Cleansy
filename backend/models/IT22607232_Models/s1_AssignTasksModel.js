@@ -19,6 +19,10 @@ const TaskAssignSchema = new mongoose.Schema({
    required: true,
 
  },
+ email:{
+   type: String,
+   required: true,
+ },
    Name: {
       type: String,
       required: true,

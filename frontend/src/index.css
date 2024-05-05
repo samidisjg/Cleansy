@@ -123,6 +123,7 @@ body {
    overflow: hidden;
 }
 
+
 .bg-yellow{
    background-color: var(--color-yellow);
 }
@@ -139,3 +140,10 @@ body {
    text-align: center;
  }
  
+  =======
+ :where(.css-dev-only-do-not-override-128z1ng).ant-modal-confirm .ant-modal-confirm-btns .ant-btn+.ant-btn {
+   margin-bottom: 0;
+   margin-inline-start: 8px;
+   background-color: blue !important;
+}
+

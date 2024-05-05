@@ -152,7 +152,6 @@ const ServiceListingCreate = () => {
     if (e.target.value === "false") {
       boolean = false;
     }
-
     // Check if the input is a file input
     if (e.target.type === "file") {
       setFiles(e.target.files);

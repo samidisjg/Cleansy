@@ -21,9 +21,16 @@ import RequestLeave_04 from "./IT22603418_Pages/RequestLeave_04";
 import AdminLeaveRequestHandle_04 from "../components/IT22603418_Components/AdminLeaveRequestHandle_04";
 import StaffAttendance_04 from "./IT22603418_Pages/StaffAttendance_04";
 import InboxMessageForPropertyAdmin_02 from "../components/IT22577160_Components/InboxMessageForPropertyAdmin_02";
+import VisitorAdminPage from "./IT22561466_Pages/VisitorAdminPage";
 import StaffRegister_04 from "./IT22603418_Pages/StaffRegister_04";
 import AdminStaffRegisterList_04 from "../components/IT22603418_Components/AdminStaffRegisterList_04";
 import DashAdmin_04 from "../components/IT22603418_Components/DashAdmin_04";
+import AdminDashboard from "./IT22196460_Pages/AnnouncementadminDashboard";
+import announcementList from "../components/IT22196460_Components/announcementList";
+import AnnouncementForAdmin from "../components/IT22196460_Components/AnnouncementForAdmin";
+import AnnouncementPage from "../components/IT22196460_Components/AnnouncementPage";
+import AllAnnouncemnts from "../components/IT22196460_Components/allannouncemnts";
+import AnnouncementadminDashboard from "./IT22196460_Pages/AnnouncementadminDashboard";
 
 const Dashboard = () => {
   const location = useLocation();
@@ -84,6 +91,15 @@ const Dashboard = () => {
       {tab === "addVisitors" && <VisitorAdminPage />}
       {/* inboxMessage for property admin */}
       {tab === "inboxMessage" && <InboxMessageForPropertyAdmin_02 />}
+       {/* Notification and Announcement Admin Dashboard */}
+      {tab === 'announcement' && <AnnouncementForAdmin />}
+      {tab === 'announcementpage' && <AnnouncementPage />}
+      {tab === 'allannouncemnts' && <AllAnnouncemnts/>}
+      {tab === 'announcemntsDash' && <AnnouncementadminDashboard/>}
+
+
+
+
     </div>
   );
 };

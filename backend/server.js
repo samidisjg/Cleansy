@@ -25,7 +25,11 @@ import StaffAdminRoutes from "./routes/IT22603418_Routes/StaffAdmin.route_04.js"
 import StaffAttendanceRoutes from "./routes/IT22603418_Routes/StaffAttendance.route_04.js";
 import conversationRoutes from "./routes/IT22577160_Routes/conversation.route_02.js";
 import messageRoutes from "./routes/IT22577160_Routes/messages.route_02.js";
+import AnnouncementsRoutes from "./routes/IT22196460_Routes/AnnouncementsRoutes.js";
 import cors from "cors";
+import EstimationRoutes_01 from './routes/IT22607232_Routes/EstimationRoutes_01.js';
+import carparkListingRoutes from './routes/IT22561466_Routes/carparkListing.route.js';
+
 import StaffRegisterRoutes from "./routes/IT22603418_Routes/StaffRegister.route_04.js";
 dotenv.config();
 
@@ -63,6 +67,7 @@ app.use("/api/taskRating", RateTasksRoutes);
 app.use("/api/taskAnalysis", TaskAnalysisRoute);
 app.use("/api/categeories",taskcategoriesRoutes);
 app.use("/api/labels",tasklabelsRoutes);
+app.use("/api/workEstimation",EstimationRoutes_01)
 
 // IT22577160 Routes
 app.use("/api/apartmentListing", apartmentListingRoutes);
@@ -75,8 +80,15 @@ app.use("/api/messages", messageRoutes);
 // IT22003546 Routes
 app.use("/api/amenitiesListing", amenitiesListingRoutes);
 app.use("/api/amenitiesBooking", amenitiesBookingRoutes);
+
 //IT22561466 Routes
-app.use("/api/visitorListing", visitorListingRoutes);
+app.use('/api/visitorListing', visitorListingRoutes);
+app.use('/api/carparkListing', carparkListingRoutes);
+
+// IT22196460 Routes
+app.use('/api/announcements', AnnouncementsRoutes);
+
+
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
