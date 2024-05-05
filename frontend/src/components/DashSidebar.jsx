@@ -454,6 +454,18 @@ const DashSidebar = () => {
             </Sidebar.Item>
           </Link>
 
+          {
+              currentUser.isVisitorAdmin && (
+                <>
+                  <Link to='/carpark-admin-page'>
+                    <Sidebar.Item active={tab === 'addcarparkDetails'} icon={FaPersonCircleCheck} as='div'>
+                      Car park List
+                    </Sidebar.Item>
+                  </Link>
+                </>
+             )
+          }
+
           <Sidebar.Item
             icon={HiArrowSmRight}
             className="cursor-pointer"

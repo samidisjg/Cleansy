@@ -1,15 +1,39 @@
 import React from 'react';
 import { Document, Page, Text, View, Image, StyleSheet } from '@react-pdf/renderer';
-import image from "/cleansyBG.png"
+import image from "/cleansyBG.png";
 
 const styles = StyleSheet.create({
   page: {
     flexDirection: 'column',
     padding: 20,
-    alignItems: 'center', 
+    alignItems: 'center',
+    position: 'relative', 
   },
+  watermark: {
+    position: 'relative',
+    top: '40%', 
+    left: '10%', 
+    transform: 'translate(-50%, -50%)', 
+    opacity: 2, 
+    zIndex: -1, 
+  },
+  titleContainer: {
+    position: 'absolute', 
+    top: 20, 
+    left: 20, 
+    textAlign: 'center',
+  },
+  title: {
+    position: 'relative',
+    fontSize: 20,
+    marginBottom: 80,
+    textAlign: 'center',
+  },
+  
   tableContainer: {
     width: '100%', 
+    position: 'absolute',
+    top: 100, 
   },
   table: {
     display: 'table',
@@ -30,10 +54,11 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderLeftWidth: 1,
     borderRightWidth: 1,
-    backgroundColor: '#f2f2f2',
+    backgroundColor: '#AED6F1', // Blue color for column headers
     textAlign: 'center',
     padding: 5,
     fontSize: 12,
+    color: 'black', // White text color for contrast
   },
   tableCol: {
     width: '20%',
@@ -44,19 +69,20 @@ const styles = StyleSheet.create({
     padding: 5,
     fontSize: 10,
   }, 
-  backgroundImage: {
-    position: 'relative',
-    minWidth: '100%',
-    minHeight: '100%',
-    zIndex: -1,
-  },
 });
 
 const PDFAnnouncementForm = ({ announcements }) => (
   <Document>
     <Page size="A4" style={styles.page}>
-      <Text style={{ fontSize: 20, marginBottom: 20 }}>Cleansy Sustainable Community Management System Pvt Ltd</Text>
-      <Text style={{ fontSize: 20, marginBottom: 20 }}>Announcements</Text>
+      {/* Watermark */}
+      <Image src={image} style={styles.watermark} />
+      
+      {/* Titles positioned at the top */}
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>Cleansy Sustainable Community Management System Pvt Ltd Announcements</Text>
+      </View>
+      
+      {/* Table positioned below the titles */}
       <View style={styles.tableContainer}>
         <View style={styles.table}>
           <View style={styles.tableRow}>

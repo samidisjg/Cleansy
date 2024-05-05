@@ -96,6 +96,8 @@ const Dashboard = () => {
       {tab === 'announcementpage' && <AnnouncementPage />}
       {tab === 'allannouncemnts' && <AllAnnouncemnts/>}
       {tab === 'announcemntsDash' && <AnnouncementadminDashboard/>}
+      {/* VisitorAdmin Dashboard */}
+      {tab === 'addcarparkDetails' && <CarParkAdminPage/>}
 
 
 

@@ -38,6 +38,14 @@ const AmenitiesBookingSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    startTime: {
+        type: Date,
+        required: false
+    },
+    endTime: {
+        type: Date,
+        required: false
+    },
     specialRequests: { 
         type: String,
         required: false

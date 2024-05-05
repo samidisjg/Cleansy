@@ -71,6 +71,7 @@ import RequestCarPark from "./pages/IT22561466_Pages/RequestCarPark";
 import Parkingslot from "./pages/IT22561466_Pages/Parkingslot";
 import ParkingslotOrder from "./pages/IT22561466_Pages/ParkingslotOrder";
 import ServiceBookingUpdate_06 from "./pages/IT22350114_Pages/ServiceBookingUpdate_96";
+import CarParkAdminPage from "./pages/IT22561466_Pages/CarParkAdminPage";
 
 
 
@@ -226,6 +227,7 @@ function App() {
             <Route path="/searchVisitor" element={<VisitorAdminPage />} />
             <Route path="/park-slot/:slotID" element={<Parkingslot />} />
             <Route path="/park-slot-order/:carparkListingId" element={<ParkingslotOrder />} />
+            <Route path="/carpark-admin-page" element={<CarParkAdminPage/>}/>
             
           </Routes>
         </div>

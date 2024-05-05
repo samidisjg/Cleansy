@@ -80,3 +80,29 @@ export const getAllBooked = async (req, res, next) => {
         next(error);
     }
 };
+
+export const getAllCarparkListings = async (req, res) => {
+    try {
+        const allCarparkListings = await carparkListing.find();
+        res.status(200).json(allCarparkListings);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+export const deletecarparkListing = async (req, res, next) => {
+    const listing = await carparkListing.findById(req.params.id);
+
+    if(!listing) {
+        return next(errorHandler(404, 'Carpark details not found!'));
+    }
+    if(req.user.id !== listing.userRef) {
+        return next(errorHandler(401,'You can only update your own listings!'));
+    }
+
+    try {
+        await carparkListing.findByIdAndDelete(req.params.id);
+        res.status(200).json('car park details has been deleted!');
+    } catch (error) {
+        next(error) }
+};
