@@ -36,13 +36,6 @@ const AdminAddPaymentHandlingSchema = new mongoose.Schema({
         required: true
         
     },
-   
-    
-    
-
-
-
-
 }, {timestamps:true});
 
 const AdminAddPaymentsHandling = mongoose.model('AdminAddPaymentHandling', AdminAddPaymentHandlingSchema);

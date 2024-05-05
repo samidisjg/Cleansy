@@ -102,6 +102,7 @@ const DashSidebar = () => {
               Profile
             </Sidebar.Item>
           </Link>
+          {currentUser && (
           <>
             <Link to="/dashboard?tab=userpayments" onClick={toggleDropdown1}>
               <Sidebar.Item
@@ -123,7 +124,7 @@ const DashSidebar = () => {
               </div>
             )}
           </>
-
+           )}
           {currentUser.isBookingAdmin && (
             <>
               <Link to="/dashboard?tab=amenity">

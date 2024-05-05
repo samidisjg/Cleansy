@@ -72,6 +72,11 @@ const AdminDuePayments_03 = () => {
 
   const handleDuepaymentsubmitdataForm = async (e) => {
     e.preventDefault();
+
+    if (DuepaymentdataForm.HouseID.length !== 3 || isNaN(DuepaymentdataForm.HouseID)) {
+      return setErrorMessageForm("House number should have 3 digits");
+      
+    }
     if (!agreeTerms) {
       return setErrorMessageForm("Please agree to the terms and conditions");
     }

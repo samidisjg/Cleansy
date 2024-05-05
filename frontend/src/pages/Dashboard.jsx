@@ -83,8 +83,7 @@ const Dashboard = () => {
       {/*admin add payments */}
       {tab === "Adminaddpayments" && <AdminPayments_03 />}
       {/* service bookings */}
-      {tab === "serviceBookings" && <DashServiceBookList_06 />}
-      {tab === "Adminaddpayments" && <AdminPayments_03 />}
+      {tab === 'serviceBookings' && <DashServiceBookList_06 />}
       {/*property admin dashboard*/}
       {tab === "propertyAdminDash" && <PropertyAdminDashboard_02 />}
       {/* VisitorAdmin Dashboard */}
