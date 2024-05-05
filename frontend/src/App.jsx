@@ -70,6 +70,8 @@ import SearchVisitors from "./pages/IT22561466_Pages/SearchVisitors";
 import RequestCarPark from "./pages/IT22561466_Pages/RequestCarPark";
 import Parkingslot from "./pages/IT22561466_Pages/Parkingslot";
 import ParkingslotOrder from "./pages/IT22561466_Pages/ParkingslotOrder";
+import ServiceBookingUpdate_06 from "./pages/IT22350114_Pages/ServiceBookingUpdate_96";
+
 
 
 function App() {
@@ -162,7 +164,7 @@ function App() {
               <Route path="/service-booking-List:bookingID" element={<DashServiceBookList_06 />}/>
             
               <Route path="/service-update/:serviceID" element={<ServiceUpdate_06 />} />
-
+              <Route path="/update-sbooking/:bookingID" element={<ServiceBookingUpdate_06 />} />
               <Route
                 path="/visitorListing/:visitorListingId"
                 element={<VisitorDetails />}
