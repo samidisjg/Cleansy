@@ -192,7 +192,7 @@ function AdminStaffAttendanceView_04() {
       <h1 className="text-2xl text-center my-7 font-extrabold underline text-blue-950 dark:text-slate-300">
         Attendance Report for All Staff
       </h1>
-      <div className="flex flex-row">
+      <div className="flex flex-col justify-center w-40">
         {/* generate report button */}
         <Button
           onClick={handleGenerateButtonClick}
