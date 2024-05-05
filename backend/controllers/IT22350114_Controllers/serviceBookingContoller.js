@@ -2,7 +2,7 @@ import ServiceBooking from "../../models/IT22350114_Models/serviceBookingModel.j
 
 export const createServiceBooking = async (req, res, next) => {
   try {
-    // Create a new service listing using the data from the request body
+    // Create a new service bookings using the data from the request body
     const newServiceBooking = await ServiceBooking.create(req.body);
 
     // Send a success response with the newly created service booking
@@ -17,7 +17,7 @@ export const createServiceBooking = async (req, res, next) => {
   }
 };
 
-//Read for all service listings
+//Read for all service Bookings
 export const getAllServiceBookings = async (req, res, next) => {
   try {
     const allServiceBookings = await ServiceBooking.find();
@@ -27,7 +27,7 @@ export const getAllServiceBookings = async (req, res, next) => {
   }
 };
 
-//Fetch a specific service listing
+//Fetch a specific service bookings
 export const getServiceBookingById = async (req, res, next) => {
   try {
     const { BookingId } = req.params;
@@ -41,7 +41,7 @@ export const getServiceBookingById = async (req, res, next) => {
   }
 };
 
-//Update a service listing
+//Update a service bookings
 export const updateServiceBooking = async (req, res, next) => {
   try {
     const { BookingId } = req.params;

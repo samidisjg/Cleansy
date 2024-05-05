@@ -55,7 +55,19 @@ const ServiceUpdate_06 = () => {
         console.log(data.message);
         return;
       }
-      setFormData(data);
+      setFormData((prevData) => ({
+        ...prevData,
+        serviceID: data.serviceID,
+        serviceName: data.serviceName,
+        serviceDescription: data.serviceDescription,
+        servicePrice: data.servicePrice,
+        serviceType: data.serviceType,
+        serviceAvailability: data.serviceAvailability,
+        servicePhone: data.servicePhone,
+        serviceEmail: data.serviceEmail,
+        serviceRequirements: data.serviceRequirements,
+        imageUrls: data.imageUrls,
+      }));
     };
     fetchServiceListings();
   }, []);
@@ -162,19 +174,9 @@ const ServiceUpdate_06 = () => {
 
   // Function to handle form field changes
   const handleChange = (e) => {
-    let boolean = null;
-    if (e.target.value === "true") {
-      boolean = true;
-    }
-    if (e.target.value === "false") {
-      boolean = false;
-    }
-    if (!e.target.files) {
-      setFormData((prevState) => ({
-        ...prevState,
-        [e.target.id]: boolean ?? e.target.value,
-      }));
-    }
+    console.log("Event:", e);
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
   return (
@@ -286,34 +288,69 @@ const ServiceUpdate_06 = () => {
           </div>
 
           {/* Update images section */}
-          <div>
-            <Label>Upload Images</Label>
-            <FileInput
-              onChange={(e) => setFiles(e.target.files)}
-              type="file"
-              id="imageUrls"
-              multiple
-            />
-            <Button onClick={handleImageSubmit} disabled={uploading}>
-              {uploading ? "Uploading..." : "Upload Images"}
+          <div className="flex flex-col gap-4 flex-1">
+            <p className="font-semibold">
+              Images:{" "}
+              <span className="font-normal text-gray-600 ml-2">
+                6 Photos Max
+              </span>
+            </p>
+            <div className="flex gap-4">
+              <FileInput
+                onChange={(e) => setFiles(e.target.files)}
+                type="file"
+                id="image"
+                accept="image/*"
+                multiple
+                className="w-full"
+              />
+              <button
+                onClick={handleImageSubmit}
+                type="button"
+                disabled={uploading}
+                className="p-1 text-red-700 border border-red-700 rounded uppercase hover:shadow-lg disabled:opacity-80"
+              >
+                {uploading ? "Uploading..." : "Upload"}
+              </button>
+            </div>
+            <p className="text-red-700">
+              {imageUploadError && imageUploadError}
+            </p>
+            {formData.imageUrls.length > 0 &&
+              formData.imageUrls.map((url, index) => (
+                <div
+                  key={`image-${index}`}
+                  className="flex justify-between p-3 border items-center"
+                >
+                  <img
+                    src={url}
+                    alt={`listing image ${index}`}
+                    className="w-20 h-20 object-contain rounded-lg"
+                  />
+                  <Button
+                    type="button"
+                    onClick={() => handleRemoveImage(index)}
+                    gradientDuoTone="pinkToOrange"
+                  >
+                    Delete
+                  </Button>
+                </div>
+              ))}
+            <Button
+              type="submit"
+              gradientDuoTone="purpleToBlue"
+              className="uppercase"
+            >
+              {loading ? "Service Listing..." : "Service Listing"}
             </Button>
-            {imageUploadError && <p>{imageUploadError}</p>}
-            {files.length > 0 && (
-              <div>
-                {files.map((file, index) => (
-                  <div key={index}>
-                    <p>{file.name}</p>
-                    <Button onClick={() => handleRemoveImage(index)}>
-                      Remove
-                    </Button>
-                  </div>
-                ))}
-              </div>
+            {error && (
+              <Alert className="mt-7 py-3 bg-gradient-to-r from-red-100 via-red-300 to-red-400 shadow-shadowOne text-center text-red-600 text-base tracking-wide animate-bounce">
+                {error}
+              </Alert>
             )}
           </div>
           {error && <p>{error}</p>}
 
-         
           {/* Add other form fields */}
           <button type="submit" disabled={loading}>
             {loading ? "Updating..." : "Update Service"}

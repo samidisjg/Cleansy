@@ -27,7 +27,7 @@ const AmenitiesBookingSchema = new mongoose.Schema({
         required: true
     },
     residentContact: {
-        type: String,
+        type: Number,
         required: true
     },
     bookingDate: {
@@ -37,6 +37,14 @@ const AmenitiesBookingSchema = new mongoose.Schema({
     bookingTime: {
         type: String,
         required: true
+    },
+    startTime: {
+        type: Date,
+        required: false
+    },
+    endTime: {
+        type: Date,
+        required: false
     },
     specialRequests: { 
         type: String,
