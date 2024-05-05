@@ -1,29 +1,19 @@
 import React, { useState } from "react";
-import RequestLeave_04 from "../../pages/IT22603418_Pages/RequestLeave_04"; // Import your leave request component
-import StaffRegister_04 from "../../pages/IT22603418_Pages/StaffRegister_04"; // Import your staff register component
+import RequestLeave_04 from "../../pages/IT22603418_Pages/RequestLeave_04";
 import StaffAttendance_04 from "../../pages/IT22603418_Pages/StaffAttendance_04";
 import { Button } from "flowbite-react";
 
 const DashStaff_04 = () => {
   const [showLeaveForms, setShowLeaveForms] = useState(false);
-  const [showStaffRegisterForms, setShowStaffRegisterForms] = useState(false);
   const [showAttendance, setShowAttendance] = useState(true);
 
   const handleLeaveButtonClick = () => {
     setShowLeaveForms(true);
-    setShowStaffRegisterForms(false);
-    setShowAttendance(false);
-  };
-
-  const handleStaffRegisterButtonClick = () => {
-    setShowStaffRegisterForms(true);
-    setShowLeaveForms(false);
     setShowAttendance(false);
   };
 
   const handleStaffAttendanceButtonClick = () => {
     setShowAttendance(true);
-    setShowStaffRegisterForms(false);
     setShowLeaveForms(false);
   };
 
@@ -46,21 +36,11 @@ const DashStaff_04 = () => {
             >
               Request Leave
             </Button>
-            <Button
-              gradientDuoTone={
-                showStaffRegisterForms ? "pinkToOrange" : "purpleToBlue"
-              }
-              className="w-96 items-center focus:outline-none py-3 text-lg"
-              onClick={handleStaffRegisterButtonClick}
-            >
-              Staff Register
-            </Button>
           </div>
         </div>
         <div>
           <div>
             {showLeaveForms && <RequestLeave_04 className="pb-5" />}
-            {showStaffRegisterForms && <StaffRegister_04 className="pb-5" />}
             {showAttendance && <StaffAttendance_04 className="pb-5" />}
           </div>
         </div>
