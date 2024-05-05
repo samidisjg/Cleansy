@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { toast } from 'react-toastify';
 import {
   Button,
   Checkbox,
@@ -77,7 +78,9 @@ const WorkEstimation_01 = () => {
       setLoading(false);
       if (data.success === false) {
         setError(data.message);
+        toast.error("Error generating estimation")
       }else {
+        toast.success("Work estimation generated successfully")
         // Reset form state
         setFormData({
           TaskID: generateTaskID(),

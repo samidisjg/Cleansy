@@ -33,8 +33,8 @@ const DashMaintenance = () => {
   };
 
   return (
-    <div className="p-3 md:mx-auto">
-      <div className="flex flex-wrap gap-4 justify-center">
+    <div className="p-3 max-w-full mx-auto">
+      {/* <div className="flex flex-wrap gap-4 justify-center">
         <div className="flex flex-col p-3 dark:bg-slate-800 gap-4 md:w-96 rounded-md shadow-md w-full">
           <div className="flex justify-between">
             <div>
@@ -63,7 +63,7 @@ const DashMaintenance = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div style={{ position: "relative" }}>
         <img
@@ -71,9 +71,7 @@ const DashMaintenance = () => {
           alt=""
           style={{
             position: "absolute",
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
+            backgroundImage: "cover",
             opacity: 0.1,
             zIndex: -1,
           }}
@@ -86,23 +84,27 @@ const DashMaintenance = () => {
             Maintenance Management
           </h1>
 
-          <div className="flex gap-2">
-            <Button pill>
+          <div className="flex gap-5 justify-between mt-5">
+            <Button className="rounded-md" gradientDuoTone='purpleToBlue'>
               <Link to="/tasks-table:taskid">Show Assigned Tasks</Link>
             </Button>
-            <Button pill>
+            <Button className="rounded-md" gradientDuoTone='purpleToBlue'>
               <Link to="/star-ratingWorkers">Rate the Work Groups</Link>
             </Button>
-            <Button pill>
+            <Button className="rounded-md" gradientDuoTone='purpleToBlue'>
               <Link to="/task-tracker">Analyse the tasks</Link>
             </Button>
 
-            <Button pill>
+            <Button className="rounded-md" gradientDuoTone='purpleToBlue'>
               <Link to="/task-estimate">Work Estimation</Link>
+            </Button>
+
+            <Button className="rounded-md" gradientDuoTone='purpleToBlue'>
+                <Link to="/task-assign" >Go to Task Assign</Link>
             </Button>
           </div>
 
-          <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-3 mb-6 gap-10">
+          {/* <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-3 mb-6 gap-10">
             <li
               className="group relative w-full border border-teal-500 overflow-hidden rounded-lg sm:w-[330px] transition-all"
               style={{ backgroundColor: "rgba(255, 255, 255, 2.0)" }}
@@ -111,9 +113,7 @@ const DashMaintenance = () => {
                 <div className="w-full p-[10px]">
                   <div className="flex items-center space-x-1">
                     <FaTasks className="h-4 w-4 text-blue-500" />
-                    <Button pill>
-                      <Link to="/task-assign">Go to Task Assign</Link>
-                    </Button>
+                    
                   </div>
                   <p className="font-semibold text-xl text-slate-700 dark:text-slate-200 truncate">
                     {}
@@ -132,7 +132,7 @@ const DashMaintenance = () => {
                 </div>
               </Link>
             </li>
-          </ul>
+          </ul> */}
         </div>
       </div>
       
