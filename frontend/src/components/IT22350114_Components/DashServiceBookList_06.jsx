@@ -171,12 +171,12 @@ const DashServiceBookList_06 = () => {
     const imgHeight = 120;
 
     const centerX = payDoc.internal.pageSize.getWidth() - imgWidth / 0.75;
-    const centerY = payDoc.internal.pageSize.getHeight() - imgHeight/0.8;
+    const centerY = payDoc.internal.pageSize.getHeight() - imgHeight / 0.8;
 
     payDoc.text(
       "Cleansy Sustainable Comunity Management System Pvt Ltd",
       14,
-      15
+      20
     );
 
     const addWatermark = () => {
@@ -184,13 +184,14 @@ const DashServiceBookList_06 = () => {
     };
 
     payDoc.autoTable(tableColumn, tableRows, {
-      startY: 20,
+      startY: 25,
       addPageContent: addWatermark,
     });
+
+    payDoc.setFont("helvetica", "bold");
     payDoc.text(`Service Booking List`, 10, 12);
     payDoc.save(`Service_Booking_List.pdf`);
   };
-
 
   const handleStatusChange = async (_id, newStatus) => {
     try {
@@ -303,12 +304,13 @@ const DashServiceBookList_06 = () => {
                       </select>
                     </Table.Cell>
                     <Table.Cell>
-                                        <Link
-                                            className="text-teal-500 hover:underline"
-                                            to = {`/update-sbooking/${booking._id}`}>
-                                                <span>Update</span>
-                                            </Link>
-                                    </Table.Cell>
+                      <Link
+                        className="text-teal-500 hover:underline"
+                        to={`/update-sbooking/${booking._id}`}
+                      >
+                        <span>Update</span>
+                      </Link>
+                    </Table.Cell>
                     <Table.Cell>
                       <span
                         onClick={() => handleBookingDelete(booking._id)}
