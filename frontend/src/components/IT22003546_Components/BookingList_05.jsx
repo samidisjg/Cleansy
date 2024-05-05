@@ -106,6 +106,31 @@ const BookingList_05 = () => {
         });
       };
     
+      const sortedBookings = filteredBookings.sort((a, b) => {
+        // Convert booking dates to Date objects
+        const dateA = new Date(a.bookingDate);
+        const dateB = new Date(b.bookingDate);
+      
+        // Compare dates
+        if (dateA < dateB) return -1;
+        if (dateA > dateB) return 1;
+      
+        // If dates are equal, compare times
+        const timeA = a.bookingTime.split(':').map(num => parseInt(num));
+        const timeB = b.bookingTime.split(':').map(num => parseInt(num));
+      
+        // Compare hours
+        if (timeA[0] < timeB[0]) return -1;
+        if (timeA[0] > timeB[0]) return 1;
+      
+        // If hours are equal, compare minutes
+        if (timeA[1] < timeB[1]) return -1;
+        if (timeA[1] > timeB[1]) return 1;
+      
+        // If both dates and times are equal, bookings are equal
+        return 0;
+      });
+    
 
 
     const handleDownloadPDF = () => {
@@ -246,7 +271,7 @@ const BookingList_05 = () => {
                             <Table.HeadCell>Update Status</Table.HeadCell>
                             <Table.HeadCell>Payment Image</Table.HeadCell>
                         </Table.Head>
-                        {filteredBookings.map((booking) => (
+                        {sortedBookings.map((booking) => (
                             <Table.Body key={booking._id} className="divide-y">
                                 <Table.Row className={`bg-white dark:border-gray-700 dark:bg-gray-800 ${booking.bookingStatus === 'Confirmed' ? 'text-green-500' : booking.bookingStatus === 'Pending' ? 'text-red-600' : ''}`}>
                                     <Table.Cell>{booking.bookingID}</Table.Cell>
@@ -373,7 +398,7 @@ const BookingList_05 = () => {
                             </Table.HeadCell>
                             <Table.HeadCell>Payment Image</Table.HeadCell>
                         </Table.Head>
-                    {filteredBookings.filter(booking => booking.residentUsername === currentUser.username)
+                    {sortedBookings.filter(booking => booking.residentUsername === currentUser.username)
                         .map((booking) => (
                             <Table.Body key={booking._id} className="divide-y">
                                 <Table.Row className={`bg-white dark:border-gray-700 dark:bg-gray-800 ${booking.bookingStatus === 'Confirmed' ? 'text-green-600' : booking.bookingStatus === 'Pending' ? 'text-red-600' : ''}`}>
