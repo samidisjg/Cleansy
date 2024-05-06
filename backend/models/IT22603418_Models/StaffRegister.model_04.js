@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
-const staffSchema = new mongoose.Schema({
+const StaffRegisterSchema = new mongoose.Schema({
+  staffID: {
+    type: String,
+    required: true,
+  },
   staffName: {
     type: String,
     required: true,
@@ -17,6 +21,10 @@ const staffSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  imageURL: {
+    type: String,
+    required: true,
+  },
   status: {
     type: String,
     enum: ["pending review", "approved", "rejected"],
@@ -24,6 +32,6 @@ const staffSchema = new mongoose.Schema({
   },
 });
 
-const Staff = mongoose.model("StaffRegister", staffSchema);
+const StaffRegister = mongoose.model("StaffRegister", StaffRegisterSchema);
 
-module.exports = StaffRegister;
+export default StaffRegister;

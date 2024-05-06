@@ -36,3 +36,18 @@ export const getAdminFinalPayments = async (req, res, next) => {
         next(error);
     }
 }
+
+
+export const getoutstandigBalance = async (req, res, next) => {
+    try {
+        const payments = await FinalPayment.find({ HouseID: req.params.houseid }).sort({ createdAt: -1 });
+        if (payments.length > 0) {
+            const OutstandingAmount = payments[0].OutstandingAmount;
+            return res.status(200).json({ OutstandingAmount });
+        } else {
+            return res.status(404).json({ message: "No payments found for the provided house ID." });
+        }
+    } catch (error) {
+        next(error);
+    }
+}

@@ -80,6 +80,9 @@ const AdminAddPayments_03 = () => {
 
   const handleAddpaymentsubmitdataForm = async (e) => {
     e.preventDefault();
+    if (AddpaymentdataForm.HouseID.length !== 3 || isNaN(AddpaymentdataForm.HouseID)) {
+      return setErrorMessageForm("House number should have 3 digits");
+    }
     if (!agreeTerms) {
       return setErrorMessageForm("Please agree to the terms and conditions");
     }
@@ -149,6 +152,16 @@ const AdminAddPayments_03 = () => {
                 placeholder="Username"
                 id="UserID"
                 value={AddpaymentdataForm.UserID}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <Label value="NIC" className="text-black dark:text-black" />
+              <TextInput
+                type="text"
+                placeholder="NIC"
+                id="NIC"
+                value={AddpaymentdataForm.NIC}
                 onChange={handleChange}
               />
             </div>

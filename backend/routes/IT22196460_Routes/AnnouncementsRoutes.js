@@ -25,4 +25,7 @@ router.get("/today", verifyToken, getAnnouncementsToday);
 
 router.get("/", verifyToken, getAllAnnouncements);
 
+
+
+
 export default router;

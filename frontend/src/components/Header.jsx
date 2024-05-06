@@ -79,11 +79,20 @@ const Header = () => {
                   <Dropdown.Item onClick={handleSignout}>Sign Out</Dropdown.Item>
                </Dropdown>
             ) : (
-               <Link to='/sign-in'>
+               <div className="flex flex-row">
+                   <Link to='/sign-in'>
                   <Button gradientDuoTone='purpleToBlue' outline>
                      Sign In
                   </Button>
+               </Link>,
+               <Button gradientDuoTone='purpleToBlue' outline >
+               <Link to='/sign-in-QR'>
+                    QR payments
                </Link>
+               </Button>
+
+               </div>
+              
             )
          }
          <Navbar.Toggle className="text-sm"/>
@@ -107,6 +116,17 @@ const Header = () => {
             <Navbar.Link active={path === '/marketPlace'} as={'div'}>
                <Link to='/marketPlace' className="hover:text-orange-500 active:text-orange-600 hover:underline">Market Place</Link>
             </Navbar.Link> 
+            {
+               currentUser && (
+                  <>
+                  <Navbar.Link active={path === '/dashboard?tab=userpayments'} as={'div'}>
+               <Link to='/dashboard?tab=userpayments' className="hover:text-orange-500 active:text-orange-600 hover:underline">User Payments</Link>
+            </Navbar.Link>
+                     
+                  </>
+               )
+            }
+            
             <Navbar.Link active={path === '/about'} as={'div'}>
                <Link to='/about' className="hover:text-orange-500 active:text-orange-600 hover:underline">About</Link>
             </Navbar.Link>
@@ -119,6 +139,8 @@ const Header = () => {
             <Navbar.Link active={path === '/contact'} as={'div'}>
                <Link to='/contact' className="hover:text-orange-500 active:text-orange-600 hover:underline">Contact Us</Link>
             </Navbar.Link>
+            
+
          </Navbar.Collapse>
     </Navbar>
   )

@@ -106,18 +106,39 @@ const TasksTable_01 = () => {
     const month = d.getMonth() + 1;
     const date = d.getDate();
 
-    TaskAssign.autoTable(tableColumn, tableRows, { startY: 20 });
+    const logo = "/cleansyBG.png";
+
+    const imgWidth = 120;
+    const imgHeight = 80;
+
+    const centerX = (TaskAssign.internal.pageSize.getWidth() - imgWidth) / 2;
+    const centerY = (TaskAssign.internal.pageSize.getHeight() - imgHeight) / 2;
+
+    // Add text
     TaskAssign.text(
-      "Cleansy Sustainable Community Management Sytstem Pvt Ltd",
+      "Cleansy Sustainable Community Management System Pvt Ltd",
       14,
       15
     );
+
+    // Add watermark function
+    const addWatermark = () => {
+      TaskAssign.addImage(logo, "JPEG", centerX, centerY, imgWidth, imgHeight);
+    };
+
+    // Add watermark to each page
+    TaskAssign.autoTable(tableColumn, tableRows, { 
+      startY: 20,
+      addPageContent: addWatermark
+    });
+    
     TaskAssign.save(
       `Assigned_Mainataianace_Tasks_Report_${
         year + " " + month + " " + date
       }.pdf`
     );
-  };
+};
+
 
   return (
     <div className="w-full table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
@@ -136,7 +157,6 @@ const TasksTable_01 = () => {
               <Table.HeadCell>WorkGroupID</Table.HeadCell>
               <Table.HeadCell>Location</Table.HeadCell>
               <Table.HeadCell>Duration(Days)</Table.HeadCell>
-              <Table.HeadCell>Status</Table.HeadCell>
               <Table.HeadCell onClick={() => handleTasksDelete(task._id)}>
                 Delete
               </Table.HeadCell>
@@ -159,7 +179,6 @@ const TasksTable_01 = () => {
                   <Table.Cell>{task.WorkGroupID}</Table.Cell>
                   <Table.Cell>{task.Location}</Table.Cell>
                   <Table.Cell>{task.DurationDays}</Table.Cell>
-                  <Table.Cell>Inital</Table.Cell>
                   <Table.Cell>
                     <span
                       onClick={() => {
@@ -184,7 +203,7 @@ const TasksTable_01 = () => {
             ))}
           </Table>
           <br></br>
-          <Button onClick={handleDownloadPDF}>Download PDF</Button>
+          <Button className="rounded-md" gradientDuoTone='purpleToBlue' onClick={handleDownloadPDF}>Download PDF</Button>
           <p className="text-red-700 mt-5">
             {showTasksError ? "Error fetching tasks" : ""}
           </p>

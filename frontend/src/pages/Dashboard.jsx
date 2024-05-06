@@ -18,11 +18,13 @@ import AmenityList_05 from "../components/IT22003546_Components/AmenityList_05";
 import DashServiceBookList_06 from "../components/IT22350114_Components/DashServiceBookList_06";
 import PropertyAdminDashboard_02 from "../components/IT22577160_Components/PropertyAdminDashboard_02";
 import RequestLeave_04 from "./IT22603418_Pages/RequestLeave_04";
-import StaffAdminDash_04 from "./IT22603418_Pages/StaffAdminDash_04";
+import AdminLeaveRequestHandle_04 from "../components/IT22603418_Components/AdminLeaveRequestHandle_04";
 import StaffAttendance_04 from "./IT22603418_Pages/StaffAttendance_04";
 import InboxMessageForPropertyAdmin_02 from "../components/IT22577160_Components/InboxMessageForPropertyAdmin_02";
 import VisitorAdminPage from "./IT22561466_Pages/VisitorAdminPage";
-//import FaceRecognition_04 from "./IT22603418_Pages/faceRecognition_04";
+import StaffRegister_04 from "./IT22603418_Pages/StaffRegister_04";
+import AdminStaffRegisterList_04 from "../components/IT22603418_Components/AdminStaffRegisterList_04";
+import DashAdmin_04 from "../components/IT22603418_Components/DashAdmin_04";
 import AdminDashboard from "./IT22196460_Pages/AnnouncementadminDashboard";
 import announcementList from "../components/IT22196460_Components/announcementList";
 import AnnouncementForAdmin from "../components/IT22196460_Components/AnnouncementForAdmin";
@@ -54,10 +56,12 @@ const Dashboard = () => {
       {tab === "users" && <DashUsers />}
       {/* staffs */}
       {tab === "staffs" && <DashStaff_04 />}
-      {tab === "leaveRequest" && <RequestLeave_04 />}
-      {/* {tab === "faceRecognition" && <FaceRecognition_04 />} */}
-      {tab === "staffAttendance" && <StaffAttendance_04 />}
-      {tab === "staffAdmin" && <StaffAdminDash_04 />}
+      {/* {tab === "leaveRequest" && <RequestLeave_04 />}
+            {tab === "staffAttendance" && <StaffAttendance_04 />} */}
+      {/* {tab === "staffAdmin" && <AdminLeaveRequestHandle_04 />} */}
+      {/* {tab === "staffRegisterView" && <AdminStaffRegisterList_04 />} */}
+      {tab === "StaffRegister" && <StaffRegister_04 />}
+      {tab === "staffAdmin" && <DashAdmin_04 />}
       {/* services */}
       {tab === "services" && <DashServices />}
       {/* Apartment List */}
@@ -77,10 +81,9 @@ const Dashboard = () => {
       {/* Booking */}
       {tab == "bookings" && <BookingList_05 />}
       {/*admin add payments */}
-      {tab==='Adminaddpayments'&& <AdminPayments_03/>}
+      {tab === "Adminaddpayments" && <AdminPayments_03 />}
       {/* service bookings */}
       {tab === 'serviceBookings' && <DashServiceBookList_06 />}
-      {tab === "Adminaddpayments" && <AdminPayments_03 />}
       {/*property admin dashboard*/}
       {tab === "propertyAdminDash" && <PropertyAdminDashboard_02 />}
       {/* VisitorAdmin Dashboard */}
@@ -92,6 +95,8 @@ const Dashboard = () => {
       {tab === 'announcementpage' && <AnnouncementPage />}
       {tab === 'allannouncemnts' && <AllAnnouncemnts/>}
       {tab === 'announcemntsDash' && <AnnouncementadminDashboard/>}
+      {/* VisitorAdmin Dashboard */}
+      {tab === 'addcarparkDetails' && <CarParkAdminPage/>}
 
 
 

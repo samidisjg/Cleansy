@@ -47,6 +47,9 @@ import ResidentServiceView from "./components/IT22350114_Components/ServiceResid
 import DashServiceList_06 from "./components/IT22350114_Components/DashServiceList_06";
 import FinalAdminPayments_03 from "./pages/IT22602978_Pages/FinalAdminPayments_03";
 import BookServiceCreate from './pages/IT22350114_Pages/BookServiceCreate_06';
+import SignInQR from "./pages/IT22602978_Pages/SignInQR_03";
+import PayNowpage_03 from './pages/IT22602978_Pages/PayNowpage_03';
+
 import DashServiceBookList_06 from './components/IT22350114_Components/DashServiceBookList_06';
 import ServiceUpdate_06 from './pages/IT22350114_Pages/ServiceUpdate_06';
 import UpdateVisitorListing from "./pages/IT22561466_Pages/UpdateVisitorListing";
@@ -70,6 +73,9 @@ import SearchVisitors from "./pages/IT22561466_Pages/SearchVisitors";
 import RequestCarPark from "./pages/IT22561466_Pages/RequestCarPark";
 import Parkingslot from "./pages/IT22561466_Pages/Parkingslot";
 import ParkingslotOrder from "./pages/IT22561466_Pages/ParkingslotOrder";
+import ServiceBookingUpdate_06 from "./pages/IT22350114_Pages/ServiceBookingUpdate_96";
+import CarParkAdminPage from "./pages/IT22561466_Pages/CarParkAdminPage";
+
 
 
 function App() {
@@ -84,6 +90,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/sign-in" element={<SignIn />} />
+            <Route path="/sign-in-QR"element={<SignInQR/>}/>
             <Route path="/sign-up" element={<SignUp />} />
             <Route path="/search" element={<SearchVisitors />} />
             <Route element={<PrivateRoute />}>
@@ -159,10 +166,18 @@ function App() {
                 path="/service-User:serviceID"
                 element={<ResidentServiceView />}
               />
+              
+              <Route
+                path="/pay-now/:HouseIdQR/:PaymentIdQR"
+                element={<PayNowpage_03/>}
+                />
+
+              
+              
               <Route path="/service-booking-List:bookingID" element={<DashServiceBookList_06 />}/>
             
               <Route path="/service-update/:serviceID" element={<ServiceUpdate_06 />} />
-
+              <Route path="/update-sbooking/:bookingID" element={<ServiceBookingUpdate_06 />} />
               <Route
                 path="/visitorListing/:visitorListingId"
                 element={<VisitorDetails />}
@@ -224,6 +239,7 @@ function App() {
             <Route path="/searchVisitor" element={<VisitorAdminPage />} />
             <Route path="/park-slot/:slotID" element={<Parkingslot />} />
             <Route path="/park-slot-order/:carparkListingId" element={<ParkingslotOrder />} />
+            <Route path="/carpark-admin-page" element={<CarParkAdminPage/>}/>
             
           </Routes>
         </div>

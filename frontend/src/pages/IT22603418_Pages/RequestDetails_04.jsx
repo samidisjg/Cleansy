@@ -13,6 +13,7 @@ const RequestDetails_04 = ({
 
   // Destructure request details from props
   const {
+    staffID,
     _id,
     staffName,
     email,
@@ -46,6 +47,10 @@ const RequestDetails_04 = ({
     <div className="max-w-md mx-auto border border-white shadow-md rounded-lg overflow-hidden">
       <table className="w-full">
         <tbody>
+          <tr className="border-b">
+            <td className="py-2 px-4 font-semibold">Staff ID:</td>
+            <td className="py-2 px-4">{staffID}</td>
+          </tr>
           <tr className="border-b">
             <td className="py-2 px-4 font-semibold">Request ID:</td>
             <td className="py-2 px-4">{_id}</td>

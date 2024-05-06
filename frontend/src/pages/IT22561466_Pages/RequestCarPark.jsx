@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Contact from '../../components/IT22561466_Components/Contact';
+import { ToastContainer, toast } from 'react-toastify';
+
 
 export default function RequestCarPark() {
   const [formData, setFormData] = useState({
@@ -34,16 +36,17 @@ export default function RequestCarPark() {
 
     const namePattern = /^[A-Za-z\s]+$/;
     const phoneNumberPattern = /^07\d{8}$/;
+    const nicPattern = /^\d{11}(V|\d)$/;
+
     
     
     if (!namePattern.test(formData.ownerName)) {
       toast.error('Name must not contain numbers.');
-      
-    }else if (!phoneNumberPattern.test(formData.telNo)) {
-      toast.error('Enter valid phone number');
-      
-      
-    }else{
+    } else if (!phoneNumberPattern.test(formData.telNo)) {
+      toast.error('Enter a valid phone number');
+    } else if (!nicPattern.test(formData.nic)) {
+      toast.error('NIC must be either a 12-digit number or 11 digits followed by a V');
+    } else {
       try {
         setLoading(true);
         setError(false);

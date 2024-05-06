@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button, Label, TextInput, Textarea,Table } from "flowbite-react";
+import { Button, Label, TextInput, Textarea, Table } from "flowbite-react";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
-import logo from "../../components/IT22607232_Components/images_01/cleansy.jpg"
+import logo from "../../components/IT22607232_Components/images_01/cleansy.jpg";
 const WorkEstimate_01 = () => {
   const [showTasksError, setShowTasksError] = useState(false);
-  const [showTasks, setShowTasks] = useState([]);
-    const navigate = useNavigate();
+  const [showTasks, setShowTasks,showEstimate] = useState([]);
+  const navigate = useNavigate();
   const params = useParams();
   const { currentUser } = useSelector((state) => state.user);
   const [formData, setFormData] = useState({
@@ -36,7 +36,7 @@ const WorkEstimate_01 = () => {
       }
       setFormData({
         TaskID: data.TaskID,
-        DurationDays: data.DurationDays.toString(), 
+        DurationDays: data.DurationDays.toString(),
         Category: data.Category,
         Size: data.Size,
         Complexity: data.Complexity,
@@ -48,7 +48,6 @@ const WorkEstimate_01 = () => {
     };
     fetchTask();
   }, []);
-  
 
   const handleChange = (e) => {
     let boolean = null;
@@ -75,21 +74,20 @@ const WorkEstimate_01 = () => {
     }
   };
 
-
   const handleDownloadPDF = () => {
     const TaskAssign = new jsPDF();
     const tableColumn = [
       "Date",
       "TaskID",
-      "DurationDays",
+      "Duration(Days)",
       "Category",
       "Size",
       "Complexity",
-      "estimationCost",
-      "estimatedManHours",
+      "EstimationCost",
+      "EstimatedManHours",
     ];
     const tableRows = [];
-  
+
     showTasks.forEach((task) => {
       const rowData = [
         new Date(task.updatedAt).toLocaleDateString(),
@@ -103,83 +101,42 @@ const WorkEstimate_01 = () => {
       ];
       tableRows.push(rowData);
     });
-  
+
     const d = new Date();
     const year = d.getFullYear();
     const month = d.getMonth() + 1;
     const date = d.getDate();
-  
-    // Create a preview modal
-    const previewModal = document.createElement("div");
-    previewModal.style.position = "fixed";
-    previewModal.style.top = "0";
-    previewModal.style.left = "0";
-    previewModal.style.width = "100%";
-    previewModal.style.height = "100%";
-    previewModal.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
-    previewModal.style.display = "flex";
-    previewModal.style.justifyContent = "center";
-    previewModal.style.alignItems = "center";
-  
-    const previewPDF = new jsPDF();
-    previewPDF.addImage(logo, "JPEG", 0, 0, 210, 297); // Add the image
-    previewPDF.autoTable(tableColumn, tableRows, { startY: 20 });
-    previewPDF.text(
+
+    const logo = "/cleansyBG.png";
+
+    const imgWidth = 160;
+    const imgHeight = 120;
+
+    const centerX = TaskAssign.internal.pageSize.getWidth() - imgWidth / 0.9;
+    const centerY = TaskAssign.internal.pageSize.getHeight() - imgHeight / 0.5;
+
+    TaskAssign.text(
       "Cleansy Sustainable Community Management System Pvt Ltd",
       14,
       15
     );
-    previewPDF.text(
-      "Maintenance Work Estimation Report",
+
+    const addWatermark = () => {
+      TaskAssign.addImage(logo, "JPEG", centerX, centerY, imgWidth, imgHeight);
+    };
+
+    TaskAssign.text(
+      `Work Estimation Report - ${year}/${month}/${date}`,
       14,
       25
     );
-  
-    // Create a preview iframe
-    const previewIframe = document.createElement("iframe");
-    previewIframe.src = URL.createObjectURL(
-      new Blob([previewPDF.output("blob")], { type: "application/pdf" })
-    );
-    previewIframe.style.width = "80%";
-    previewIframe.style.height = "80%";
-    previewModal.appendChild(previewIframe);
-  
-    // Add the preview modal to the document body
-    document.body.appendChild(previewModal);
-
-   
-  
-    // Add a button to close the preview modal
-    const closeButton = document.createElement("button");
-    closeButton.textContent = "Close Preview";
-    closeButton.addEventListener("click", () => {
-      document.body.removeChild(previewModal);
+    TaskAssign.autoTable(tableColumn, tableRows, {
+      startY: 40,
+      addPageContent: addWatermark,
     });
-    previewModal.appendChild(closeButton);
-  
-    // Save the PDF file
-    TaskAssign.addImage(logo, 'JPEG', 0, 0, 210, 297,'', 'FAST', 1); // Add the image with transparency
-    TaskAssign.autoTable(tableColumn, tableRows, { startY: 20 });
-    TaskAssign.text(
-      "Cleansy Sustainable Community Management Sytstem Pvt Ltd",
-      14,
-      15
-    );
-    previewPDF.text(
-        "", // Add a blank line
-        14,
-        30
-      );
-    TaskAssign.text(
-      "Maintainance Work Estimation Report",
-      14,
-      15
-    );
-    TaskAssign.save(
-      `WorkEstimation_Tasks_Report_${year + " " + month + " " + date}.pdf`
-    );
+    TaskAssign.save(`Work Estimation_${year}_${month}_${date}.pdf`);
   };
-  
+
   return (
     <div className="w-full table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
       {currentUser.isFacilityAdmin && (
@@ -197,13 +154,15 @@ const WorkEstimate_01 = () => {
               <Table.HeadCell>estimatedManHours</Table.HeadCell>
             </Table.Head>
             {showTasks &&
-  showTasks.length > 0 &&
-  showTasks.map((task) => (
+              showTasks.length > 0 &&
+              showTasks.map((task) => (
                 <Table.Body key={task._id} className="divide-y">
                   <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                  <Table.Cell>
-          {task.updatedAt ? new Date(task.updatedAt).toLocaleDateString() : ''}
-        </Table.Cell>
+                    <Table.Cell>
+                      {task.updatedAt
+                        ? new Date(task.updatedAt).toLocaleDateString()
+                        : ""}
+                    </Table.Cell>
                     <Table.Cell>{task.TaskID}</Table.Cell>
                     <Table.Cell>{task.DurationDays}</Table.Cell>
                     <Table.Cell>{task.Category}</Table.Cell>
@@ -211,14 +170,19 @@ const WorkEstimate_01 = () => {
                     <Table.Cell>{task.Complexity}</Table.Cell>
                     <Table.Cell>{task.estimationCost}</Table.Cell>
                     <Table.Cell>{task.estimatedManHours}</Table.Cell>
-                    
                   </Table.Row>
                 </Table.Body>
               ))}
-              Created by: {currentUser.isFacilityAdmin ? currentUser.name : ""}
+            Created by: {currentUser.isFacilityAdmin ? currentUser.name : ""}
           </Table>
           <br></br>
-          <Button onClick={handleDownloadPDF}>Download PDF</Button>
+          <Button
+            className="rounded-md"
+            gradientDuoTone="purpleToBlue"
+            onClick={handleDownloadPDF}
+          >
+            Download PDF
+          </Button>
           <p className="text-red-700 mt-5">
             {showTasksError ? "Error fetching tasks" : ""}
           </p>
@@ -227,6 +191,5 @@ const WorkEstimate_01 = () => {
     </div>
   );
 };
-
 
 export default WorkEstimate_01;

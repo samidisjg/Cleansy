@@ -14,6 +14,7 @@ const Updatepaymentpage_03 = () => {
   const params = useParams();
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [agreedToTerms, setAgreedToTerms] = useState(false); 
   
   
   useEffect(() => {
@@ -37,10 +38,11 @@ const Updatepaymentpage_03 = () => {
     };
     fetchPaymentProfiles();
   }, []);
-  
-
   const handleChange = (e) => {
     const { id, value } = e.target;
+    if (id === "agree") {
+      setAgreedToTerms(e.target.checked); // Update agreedToTerms state when checkbox changes
+    }
     setFormData((prevFormData) => ({
       ...prevFormData,
       [id]: value
@@ -49,6 +51,16 @@ const Updatepaymentpage_03 = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+     // Check if all fields are filled
+     if (!PaymentProfileName || !ownerhousenumber || !password) {
+      return setErrorMessage('Please fill out all the fields');
+    }
+    
+    // Password validation
+    if (!/^(?=.*[A-Z]).{8,}$/.test(password)) {
+      return setErrorMessage('Password must have at least 8 characters with the first letter capitalized');
+    }
     try {
       setLoading(true);
       setErrorMessage(null);
