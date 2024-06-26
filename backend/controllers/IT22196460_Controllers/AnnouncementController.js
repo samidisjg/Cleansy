@@ -9,7 +9,7 @@ const sendEmailNotification = (announcement) => {
     service: 'Gmail',
     auth: {
       user: 'uvinduudakara001@gmail.com', // your email address
-      pass: 'uvindu#%@123', // your email password
+      pass: '', // your email password
     },
   });
 
